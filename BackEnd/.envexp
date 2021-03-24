@@ -1,0 +1,5 @@
+
+NODE_ENV =
+MONGO_URI =
+MONGO_MAIN = enter your mongodb uri here
+SECRET = enter your secret here

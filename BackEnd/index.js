@@ -1,36 +1,44 @@
-const express = require('express');
-const expressLayout = require('express-ejs-layouts');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const flash = require('connect-flash');
-const expressSession = require('express-session');
-const passport = require('passport');
+const express = require("express");
+const expressLayout = require("express-ejs-layouts");
+const flash = require("connect-flash");
+const expressSession = require("express-session");
+const cookieParser = require("cookie-parser");
+const passport = require("passport");
 
 const app = express();
 
 // Passport Config
-require('./config/passport')(passport);
+require("./config/passport")(passport);
 
 //DB Config
-const db = require('./config/keys').MongoURI;
+const CONNECTDB = require("./config/db");
+
+//Load Config
+// dotenv.config();
 
 //Connect to MongoDB ATLAS
-mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
-.then(()=>console.log('MongoDB Connected ...'))
-.catch(err =>console.log(err));
+CONNECTDB();
 
 //EJS
 app.use(expressLayout);
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
+
+app.use(express.json());
+app.use(cookieParser("foo"));
 
 //bodyParser
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({ extended: false }));
 
 //Express session
-app.use(expressSession({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
+app.use(
+  expressSession({
+    secret: "foo",
+    resave: false,
+    cookie : {
+      expires: false,
+      // domain: config.cookie.domain
+      },
+    saveUninitialized: false,
   })
 );
 
@@ -42,13 +50,12 @@ app.use(passport.session());
 app.use(flash());
 
 //Global variables for different messages (maybe add this in a separate file)
-app.use((req, res, next) =>{
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  next();
-  }
-);
+// app.use((req, res, next) => {
+//   res.locals.success_msg = req.flash("success_msg");
+//   res.locals.error_msg = req.flash("error_msg");
+//   res.locals.error = req.flash("error");
+//   next();
+// });
 
 /* ROUTES */
 
@@ -56,4 +63,4 @@ app.use("/", require("./routes/index"));
 app.use("/users", require("./routes/users"));
 
 const port = process.env.PORT || 3000; //port setting
-app.listen(port, () => console.log('App listening on port ' + port));
+app.listen(port, () => console.log("App listening on port " + port));

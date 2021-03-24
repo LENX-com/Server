@@ -1,110 +1,82 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const passport = require('passport');
-const bcrypt = require('bcryptjs');
-const User = require('../models/User');
+const passport = require("passport");
+const {
+  registerValidations,
+  loginValidations,
+} = require("../config/validation");
 
 //Get Requests
-  //Login
-router.get('/login',
-  (req, res) => res.render('login')
+//Login
+router.get("/login", (req, res) =>
+  res.render("login", { message: req.flash("loginMessage") })
 );
-  //Register
-router.get('/register',
-  (req, res) => res.render('register')
-);
-
-//Post Requests
-router.post('/register',
-  (req, res) =>{
-    const{name,email,password, password2} = req.body;
-    let errors = [];
-
-    //Check fields are all filled
-    if(!name || !email || !password || !password2){
-      errors.push({msg: 'Please fill all the fields'});
-    }
-
-    //Check both passwords match
-    if(password !== password2){
-      errors.push({msg: 'Passwords do not match'});
-    }
-
-    //Check password length
-    if(password.length < 8){
-      errors.push({msg: "Password has to be at least 8 characters long"});
-    }
-
-    if(errors.length > 0){
-      res.render('register', {
-        errors,
-        name,
-        email,
-        password,
-        password2
-      });
-    }else{
-      //Validation has been succesful
-      User.findOne({email: email})
-        .then(user => {
-          if(user) {
-            //User exist
-            errors.push({msg: 'Email is already registered'})
-            res.render('register', {
-              errors,
-              name,
-              email,
-              password,
-              password2
-            });
-          }else{
-            const newUser = new User({
-              name,
-              email,
-              password
-            });
-
-            //Hash password
-            bcrypt.genSalt(10, (err, salt) =>
-              bcrypt.hash(newUser.password, salt, (err, hash) =>
-                {
-                  if(err) throw err;
-                  //Here we encrypt the password
-                  newUser.password = hash;
-
-                  //Save the user in the database
-                  newUser.save()
-                    .then(user => {
-                      req.flash('success_msg', 'You are now registered and can log in');
-                      res.redirect('login');
-                    })
-                    .catch(err => console.log(err));
-                })
-              );
-          }
-        })
-      ;
-    }
-
-  }
+//Register
+router.get("/register", (req, res) =>
+  res.render("register", { message: req.flash("signupMessage") })
 );
 
 //Login with Passport
-
-router.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/dashboard',
-    failureRedirect: '/users/login',
-    failureFlash: true
+router.post("/login", function (req, res, next) {
+  passport.authenticate("login", function (err, user, info) {
+    if (err) {
+      return res.json(err);
+    }
+    const { error } = loginValidations(req.body);
+    if (error) {
+      req.flash("loginMessage", error.details[0].message);
+      return res.redirect("/users/login");
+      // return res.json(error);
+    }
+    if (info) {
+      // res.status(401);
+      req.flash("loginMessage", info.message);
+      // return res.redirect("/users/login");
+      return res.json(info.message);
+    }
+    req.logIn(user, function (err) {
+      if (err) {
+        return next(err);
+      }
+      // return res.redirect("../dashboard");
+      // return res.redirect('/users/' + user.username);
+      return res.status(200).json(req.user);
+    });
+    // createSendToken(req.user, res);
   })(req, res, next);
 });
 
+router.post("/register", function (req, res, next) {
+  passport.authenticate("register", function (err, user, info) {
+    if (err) {
+      return res.json(err);
+    }
+    const { error } = registerValidations(req.body);
+    if (error) {
+      req.flash("signupMessage", error.details[0].message);
+      return res.redirect("/users/register");
+      // return res.json(error);
+    }
+    if (info) {
+      // res.status(401);
+      req.flash("signupMessage", info.message);
+      return res.redirect("/users/register");
+      // res.json(info.message);
+    }
+    if (user) {
+      req.flash("signupMessage", "user created successfully");
+      return res.redirect("/users/login");
+    }
+    // return res.status(200).json("User created succesfully");
+    // createSendToken(req.user, res);
+  })(req, res, next);
+});
 
 //Logout
 
-router.get('/logout', (req, res) =>{
+router.get("/logout", (req, res) => {
   req.logout();
-  req.flash('success_msg', 'You are logged out');
-  res.redirect('/users/login');
+  req.flash("success_msg", "You are logged out");
+  res.redirect("/users/login");
 });
 module.exports = router;
