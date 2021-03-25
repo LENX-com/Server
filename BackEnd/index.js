@@ -29,7 +29,7 @@ app.use(cookieParser("foo"));
 
 //bodyParser
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors("*"));
 
 //Express session
 app.use(
