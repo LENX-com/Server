@@ -16,6 +16,9 @@ router.get("/register", (req, res) =>
   res.render("register", { message: req.flash("signupMessage") })
 );
 
+router.post("/login", passport.authenticate("log", {}), function (req, res) {
+  console.log(req);
+});
 //Login with Passport
 router.post("/login", function (req, res, next) {
   passport.authenticate("login", function (err, user, info) {
@@ -25,8 +28,8 @@ router.post("/login", function (req, res, next) {
     const { error } = loginValidations(req.body);
     if (error) {
       req.flash("loginMessage", error.details[0].message);
-      return res.redirect("/users/login");
-      // return res.json(error);
+      // return res.redirect("/users/login");
+      return res.json(error);
     }
     if (info) {
       // res.status(401);
@@ -47,31 +50,29 @@ router.post("/login", function (req, res, next) {
 });
 
 router.post("/register", function (req, res, next) {
-  passport.authenticate("register", function (err, user, info) {
+  passport.authenticate("register2", function (err, user, info) {
     if (err) {
       return res.json(err);
     }
     const { error } = registerValidations(req.body);
     if (error) {
       req.flash("signupMessage", error.details[0].message);
-      return res.redirect("/users/register");
-      // return res.json(error);
+      // return res.redirect("/users/register");
+      return res.json(error);
     }
     if (info) {
       // res.status(401);
       req.flash("signupMessage", info.message);
-      return res.redirect("/users/register");
-      // res.json(info.message);
+      res.json(info.message);
     }
-    if (user) {
-      req.flash("signupMessage", "user created successfully");
-      return res.redirect("/users/login");
-    }
-    // return res.status(200).json("User created succesfully");
+    // if (user) {
+    //   req.flash("signupMessage", "user created successfully");
+    //   console.log(req.user);
+    // }
+    return res.status(200).json("User created succesfully");
     // createSendToken(req.user, res);
   })(req, res, next);
 });
-
 //Logout
 
 router.get("/logout", (req, res) => {
