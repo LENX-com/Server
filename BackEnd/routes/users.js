@@ -49,7 +49,7 @@ router.post("/login", function (req, res, next) {
 router.post("/register", function (req, res, next) {
   passport.authenticate("register", function (err, user, info) {
     if (err) {
-      return res.json(err);
+      req.flash("signupMessage", err);
     }
     const { error } = registerValidations(req.body);
     if (error) {
@@ -60,9 +60,15 @@ router.post("/register", function (req, res, next) {
     if (info) {
       // res.status(401);
       req.flash("signupMessage", info.message);
-      //  return res.status(401).json(info.message);
+      return res.redirect("/users/register");
+      // res.status(401).json(info.message);
     }
-    return res.status(200).json("User created succesfully");
+    if (req.user) {
+      req.flash("signupMessage", "user created successfully");
+      // console.log(req.user);
+      return res.redirect("/users/login");
+    }
+    // return res.status(200).json("User created succesfully");
     // createSendToken(req.user, res);
   })(req, res, next);
 });

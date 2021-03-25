@@ -1,5 +1,5 @@
 const joi = require("joi");
-
+const pattern = /^[a-zA-Z0-9!@#$%&*]{3,25}$/;
 const registerValidations = (data) => {
   const schema = joi.object({
     name: joi.string().required(),
@@ -8,8 +8,7 @@ const registerValidations = (data) => {
       .string()
       .min(6)
       .max(30)
-      .required()
-      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+      .required().regex(pattern)
       .required(),
     // role: joi.string(),
   });

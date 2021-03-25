@@ -25,7 +25,7 @@ module.exports = function (passport) {
           newUser.password = password;
 
           user = await newUser.save();
-          return done(null, user, { message: "successfully registerd" });
+          return done(null, user, { message: "signed up successfully" });
         } catch (error) {
           console.log(error);
           // return done(error);
