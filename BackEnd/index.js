@@ -3,6 +3,7 @@ const expressLayout = require("express-ejs-layouts");
 const flash = require("connect-flash");
 const expressSession = require("express-session");
 const cookieParser = require("cookie-parser");
+const cors = require("cors")
 const passport = require("passport");
 
 const app = express();
@@ -28,6 +29,7 @@ app.use(cookieParser("foo"));
 
 //bodyParser
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 //Express session
 app.use(
