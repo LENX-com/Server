@@ -1,0 +1,17 @@
+@import "src/variables.scss";
+
+.sidebar{
+    background: $black;
+   
+    a.active {
+        color:$orange;
+    }
+    a {
+        color:$gray;
+
+        &:hover{
+            color:$orange;
+        }
+    }
+    
+}

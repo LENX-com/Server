@@ -1,0 +1,20 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './App.scss'
+import { BrowserRouter} from 'react-router-dom';
+import 'antd/dist/antd.css'
+import { Provider } from 'react-redux'
+import 'react-toastify/dist/ReactToastify.css';
+import store from './store'
+
+
+ReactDOM.render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>,
+  document.getElementById('root')
+);
+
