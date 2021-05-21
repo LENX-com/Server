@@ -1,0 +1,16 @@
+@import "src/variables.scss";
+
+.header{
+    background: $black;
+    
+}
+
+.header.wrapper{
+    display:flex;
+}
+
+.logo img{
+    width:40%;
+
+}
+
