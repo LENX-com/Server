@@ -1,10 +1,16 @@
 const Product = require("../models/profile");
 const Market = require("../models/marketplace");
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.API_SECRET,
+});
 
 exports.addBgImage = async (req, res) => {
   try {
-    const market = await Market.findById(req.params.marketId);
-    if (!market) {
+    const market = await Market.find({ userId: req.user._id });
+    if (!market.length) {
       return res.status(400).json({ error: "cant perform this operation" });
     }
     const file = req.file;
@@ -13,7 +19,9 @@ exports.addBgImage = async (req, res) => {
     const { ...args } = req.body;
     args.bg = result.public_id;
     const newDp = await Market.findOneAndUpdate(
-      req.params.marketId,
+      {
+        userId: req.user._id,
+      },
       {
         args,
       },
@@ -27,8 +35,8 @@ exports.addBgImage = async (req, res) => {
 };
 exports.addProfileImage = async (req, res) => {
   try {
-    const market = await Market.findById(req.params.marketId);
-    if (!market) {
+    const market = await Market.find({ userId: req.user._id });
+    if (!market.length) {
       return res.status(400).json({ error: "cant perform this operation" });
     }
     const file = req.file;
@@ -37,7 +45,10 @@ exports.addProfileImage = async (req, res) => {
     const { ...args } = req.body;
     args.avatar = result.public_id;
     const newDp = await Market.findOneAndUpdate(
-      req.params.marketId,
+      {
+        userId: req.user._id,
+      },
+
       {
         args,
       },
@@ -52,7 +63,6 @@ exports.addProfileImage = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const file = req.file;
     const { ...args } = req.body;
     args.userId = req.user._id;
     const newmarket = await Market.create(args);

@@ -1,12 +1,12 @@
 let STATIC_CHANNELS = [{
-    name: 'Global chat',
+    name: "Eduardo's chat",
     participants: 0,
-    id: 1,
+    id: '608ad6f01712f91b846c3c52',
     sockets: []
 }, {
     name: 'LENX Support',
     participants: 0,
-    id: 2,
+    id: '608c2200ae60861df408d70c',
     sockets: []
 }];
 

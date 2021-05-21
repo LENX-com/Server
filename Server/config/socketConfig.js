@@ -1,11 +1,16 @@
 let { STATIC_CHANNELS } = require('../utils/channels');
+const Chat = require('../models/chat');
+const { storeMedia } = require('../helpers/mediaHandler');
 
 exports.setSocket = (io) => {
     io.on('connection', (socket) => { // socket object may be used to send specific messages to the new connected client
         console.log('New User Connected');
+
         socket.emit('connection', null);
+
         socket.on('channel-join', id => {
             console.log('channel join', id);
+
             STATIC_CHANNELS.forEach(c => {
                 if (c.id === id) {
                     if (c.sockets.indexOf(socket.id) == (-1)) {
@@ -22,14 +27,37 @@ exports.setSocket = (io) => {
                     }
                 }
             });
-    
+                
             return id;
         });
         
         socket.on('send-message', message => {
-            io.emit('message', message);
+
+            console.log(message);
+            
+            let chat = new Chat({
+                messageID: message.id,
+                senderID: message.senderId,
+                receiverID: message.channel_id,
+                message: message.text,
+                senderName: message.senderName
+            });
+        
+            chat.save((err, result) => {
+                if (err) throw err;
+                io.emit('message', message);
+            })
+            
         });
-    
+
+        socket.on('send-audio', audio => {
+            storeMedia(audio, io);
+        });
+
+        socket.on('send-media', media => {
+            storeMedia(media, io);
+        });
+
         socket.on('disconnect', () => {
             STATIC_CHANNELS.forEach(c => {
                 let index = c.sockets.indexOf(socket.id);
