@@ -43,11 +43,11 @@ router.post(
 );
 router.put("/edit:/productId", auth, protected(1));
 router.delete("/delete:/productId", auth, protected(1));
-router.get("/category/:categoryId", auth, getProductByCategory);
-router.get("/brands/:brandId", auth, getProductByBrand);
-router.get("/:productId", auth, getProductById);
-router.post("/tags", auth, getProductByTags);
-router.get("/", auth, allProduct);
+router.get("/category/:categoryId",  getProductByCategory);
+router.get("/brands/:brandId", getProductByBrand);
+router.get("/:productId", getProductById);
+router.post("/tags", getProductByTags);
+router.get("/", allProduct);
 //*********************************** */
 
 router.get("/", list);

@@ -17,7 +17,7 @@ exports.addBgImage = async (req, res) => {
     if (!file) throw new Error("Enter a valid file");
     const result = await cloudinary.uploader.upload(req.file.path);
     const { ...args } = req.body;
-    args.bg = result.public_id;
+    args.bg = result.secure_url;
     const newDp = await Market.findOneAndUpdate(
       {
         userId: req.user._id,
@@ -43,7 +43,7 @@ exports.addProfileImage = async (req, res) => {
     if (!file) throw new Error("Enter a valid file");
     const result = await cloudinary.uploader.upload(req.file.path);
     const { ...args } = req.body;
-    args.avatar = result.public_id;
+    args.avatar = result.secure_url;
     const newDp = await Market.findOneAndUpdate(
       {
         userId: req.user._id,
@@ -133,5 +133,16 @@ exports.remove = async (req, res) => {
   try {
   } catch (error) {
     console.log(error);
+  }
+};
+
+//get market place by user id
+exports.getMarketPlaceByUser = async (req, res) => {
+  try {
+    const market = await Market.find({ userId: req.params.profileId });
+    return res.status(200).json({ data: market });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: error });
   }
 };

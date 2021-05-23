@@ -3,6 +3,7 @@ const router = express.Router();
 const { auth } = require("../middlewares/verify");
 const {
   createCategory,
+  getCategory,
   createBrand,
   create,
   categoryById,
@@ -29,6 +30,7 @@ router.param("userId", userById);
 
 //new routes setup for categories
 router.post("/create", auth, createCategory);
+router.get("/", getCategory);
 //routes for brand
 router.post("/brands/create", auth, createBrand);
 

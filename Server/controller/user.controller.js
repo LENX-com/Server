@@ -15,7 +15,11 @@ exports.getUserById = async (req, res) => {
   const user = await User.findById(req.params.userId)
     .populate({ path: "wishlists", populate: { path: "productId" } })
     .populate("order")
-    .populate("profile");
+    .populate("profile")
+    .populate("story")
+    .populate("blogs")
+    .populate("reviews")
+    .populate("products");
   try {
     if (!user) {
       return res.json("no user found");
@@ -23,6 +27,7 @@ exports.getUserById = async (req, res) => {
     return res.json(user);
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ error: error });
   }
 };
 
@@ -245,7 +250,7 @@ exports.createStory = async (req, res) => {
     });
     const { ...args } = req.body;
     args.userId = req.user._id;
-    args.video = result.public_id;
+    args.url = result.secure_url;
     const newStatus = await Story.create(args);
     return res.json(newStatus);
   } catch (error) {

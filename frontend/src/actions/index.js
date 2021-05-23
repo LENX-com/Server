@@ -3,7 +3,7 @@ import axios from 'axios'
 import cookie from 'js-cookie';
 
 export const signup = user => {
-    return fetch(`${API}/signup`, {
+    return fetch(`${API}/auth/signup`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -20,7 +20,7 @@ export const signup = user => {
 };
 
 export const signin = user => {
-    return fetch(`${API}/signin`, {
+    return fetch(`${API}/auth/signin`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -47,7 +47,7 @@ export const signout = next => {
      if (typeof window !== 'undefined') {
         localStorage.removeItem('jwt');
         next();
-        return fetch(`${API}/signout`, {
+        return fetch(`${API}/auth/signout`, {
             method: 'GET'
         })
             .then(response => {

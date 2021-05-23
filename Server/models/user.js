@@ -8,7 +8,7 @@ const opts = { toJSON: { virtuals: true } };
 
 const StorySchema = new mongoose.Schema(
   {
-    video: {
+    url: {
       type: String,
     },
     userId: {
@@ -111,6 +111,12 @@ userSchema.virtual("wishlists", {
   foreignField: "userId",
   justOne: false,
 });
+userSchema.virtual("products", {
+  localField: "_id",
+  ref: "Product",
+  foreignField: "author",
+  justOne: false,
+});
 //virtual fields
 userSchema.virtual("order", {
   localField: "_id",
@@ -125,6 +131,28 @@ userSchema.virtual("profile", {
   foreignField: "userId",
   justOne: false,
 });
+//virtual fields
+userSchema.virtual("blogs", {
+  localField: "_id",
+  ref: "Blog",
+  foreignField: "userId",
+  justOne: false,
+});
+//virtual fields
+userSchema.virtual("story", {
+  localField: "_id",
+  ref: "Story",
+  foreignField: "userId",
+  justOne: false,
+});
+//virtual fields
+userSchema.virtual("review", {
+  localField: "_id",
+  ref: "Review",
+  foreignField: "userId",
+  justOne: false,
+});
+
 
 //Virtual Fields
 userSchema

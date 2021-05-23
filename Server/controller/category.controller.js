@@ -15,6 +15,19 @@ exports.createCategory = async (req, res) => {
   }
 };
 
+exports.getCategory = async (req, res) => {
+  try {
+    const category = await Category.find();
+    if (!category.length) {
+      return res.status(200).json({ data: "No category yet" });
+    }
+    return res.status(200).json({ data: category });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error });
+  }
+};
+
 exports.categoryById = (req, res, next, id) => {
   Category.findById(id).exec((err, category) => {
     if (err || !category) {

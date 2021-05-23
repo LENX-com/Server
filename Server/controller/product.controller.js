@@ -26,6 +26,7 @@ exports.allProduct = async (req, res) => {
 
 //create a product route accessible by only manufacturer(role 1) and add category from req.body.category
 exports.createProduct = async (req, res) => {
+  const file = req.file;
   try {
     if (!file) throw new Error("Enter a valid file");
     const result = await cloudinary.uploader.upload(req.file.path, {
@@ -34,10 +35,11 @@ exports.createProduct = async (req, res) => {
 
     const { ...args } = req.body;
     args.author = req.user._id;
-    args.photo = result.public_id;
+    args.photo = result.secure_url;
     const newProduct = await Product.create(args);
     return res.status(200).json(newProduct);
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .json({ error: "oops somethib went wrong try again" });

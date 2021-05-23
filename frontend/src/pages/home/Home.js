@@ -13,7 +13,8 @@ function Home() {
             if(data.error) {
                 setError(data.error)
             } else {
-                setProductsBySell(data)
+                setProductsBySell(data.data)
+                console.log(data, "data for produt by sell")
             }
         })
     }
@@ -23,7 +24,8 @@ function Home() {
             if(data.error) {
                 setError(data.error)
             } else {
-                setProducstByArrival (data)
+                setProducstByArrival (data.data)
+                console.log(data, "data for produt by arrival")
             }
         })
     }
@@ -38,7 +40,7 @@ function Home() {
             <div className="container px-5 py-24 mx-auto">
             <h2 className="mb-4">New Arrivals</h2>
               <div className="flex flex-wrap -m-4">
-                  {productsByArrival.map((product, i) => (
+                  {productsByArrival && productsByArrival.map((product, i) => (
                     <ProductCard
                     product={product}
                     key={i}
@@ -50,7 +52,7 @@ function Home() {
             <div className="container px-5 py-24 mx-auto">
               <h2 className="mb-4">Best sellerss</h2>
                 <div className="flex flex-wrap -m-4">
-                  {producstBySell.map((product, i) => (
+                  {producstBySell && producstBySell.map((product, i) => (
                     <ProductCard
                     product={product}
                     key={i}

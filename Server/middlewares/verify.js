@@ -8,7 +8,7 @@ const auth = async (req, res, next) => {
 
   // Check if not token
   if (!token) {
-    return res.status(401).json({ msg: "No token, authorization denied" });
+    return res.status(401).json({ msg: "No tok, authorization denied" });
   }
   const TokenArray = token.split(" ");
   // Verify token

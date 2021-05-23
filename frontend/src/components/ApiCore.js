@@ -13,7 +13,7 @@ export const getProducts = sortBy => {
 };
 
 export const getCategories = () => {
-    return fetch(`${API}/categories`, {
+    return fetch("http://localhost:8000/api/categories", {
         method: "GET"
     })
         .then(response => {
@@ -57,7 +57,7 @@ export const list = params => {
 };
 
 export const read = productId => {
-    return fetch(`${API}/product/${productId}`, {
+    return fetch(`${API}/products/${productId}`, {
         method: "GET"
     })
         .then(response => {

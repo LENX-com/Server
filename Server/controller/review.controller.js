@@ -13,7 +13,7 @@ exports.addReview = async (req, res) => {
       resource_type: auto,
     });
     const { ...args } = req.body;
-    args.asset = result.public_id;
+    args.asset = result.secure_url
     const newVideo = await Review.create(args);
     return res.status(200).json({ data: newVideo });
   } catch (error) {

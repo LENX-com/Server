@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("/api/users/register", userData)
+    .post(`${API}/auth/signup`, userData)
     .then(res => history.push("/login"))
     .catch(err =>
       dispatch({
@@ -23,7 +23,7 @@ export const registerUser = (userData, history) => dispatch => {
 // Login - get user token
 export const signin = userData => dispatch => {
   axios
-    .post(`${API}/signin`, userData)
+    .post(`${API}/auth/signin`, userData)
     .then(res => {
       // Save to localStorage
 

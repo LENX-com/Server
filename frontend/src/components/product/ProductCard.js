@@ -1,9 +1,7 @@
-import React, {useState} from 'react'
-import {Link, Redirect} from 'react-router-dom' 
-import ShowImage from '../card/ShowImage'
-import { addItem, updateItem, removeItem } from '../cart/CartHelper'
-
-
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+import ShowImage from "../card/ShowImage";
+import { addItem, updateItem, removeItem } from "../cart/CartHelper";
 
 const ProductCard = ({
   product,
@@ -11,34 +9,34 @@ const ProductCard = ({
   showAddToCartButton = true,
   cartUpdate = false,
   showRemoveProductButton = false,
-  setRun = f => f,
-  run = undefined
+  setRun = (f) => f,
+  run = undefined,
   // changeCartSize
-}) => {     
+}) => {
   const [redirect, setRedirect] = useState(false);
   const [count, setCount] = useState(product.count);
- 
-  const showViewButton = showViewProductButton => {
+
+  const showViewButton = (showViewProductButton) => {
     return (
       showViewProductButton && (
-        <Link to={`/product/${product._id}`} >
+        <Link to={`/product/${product._id}`}>
           <button className="btn">View Product</button>
         </Link>
       )
     );
   };
-  
-const addToCart = () => {
+
+  const addToCart = () => {
     addItem(product, setRedirect(true));
   };
- 
-  const shouldRedirect = redirect => {
+
+  const shouldRedirect = (redirect) => {
     if (redirect) {
       return <Redirect to="/cart" />;
     }
   };
- 
-  const showAddToCartBtn = showAddToCartButton => {
+
+  const showAddToCartBtn = (showAddToCartButton) => {
     return (
       showAddToCartButton && (
         <button onClick={addToCart} className="btn">
@@ -47,24 +45,20 @@ const addToCart = () => {
       )
     );
   };
- 
-  const showStock = quantity => {
-    return quantity > 0 ? (
-      <span> In Stock </span>
-    ) : (
-      <span> Out of Stock </span>
-    );
+
+  const showStock = (quantity) => {
+    return quantity > 0 ? <span> In Stock </span> : <span> Out of Stock </span>;
   };
- 
-  const handleChange = productId => event => {
+
+  const handleChange = (productId) => (event) => {
     setRun(!run); // run useEffect in parent Cart
     setCount(event.target.value < 1 ? 1 : event.target.value);
     if (event.target.value >= 1) {
       updateItem(productId, event.target.value);
     }
   };
- 
-  const showCartUpdateOptions = cartUpdate => {
+
+  const showCartUpdateOptions = (cartUpdate) => {
     return (
       cartUpdate && (
         <div>
@@ -72,13 +66,18 @@ const addToCart = () => {
             <div className="input-group-prepend">
               <span className="input-group-text">Adjust Quantity</span>
             </div>
-            <input type="number" className="form-control" value={count} onChange={handleChange(product._id)} />
+            <input
+              type="number"
+              className="form-control"
+              value={count}
+              onChange={handleChange(product._id)}
+            />
           </div>
         </div>
-      )    
+      )
     );
   };
-  const showRemoveButton = showRemoveProductButton => {
+  const showRemoveButton = (showRemoveProductButton) => {
     return (
       showRemoveProductButton && (
         <button
@@ -92,28 +91,39 @@ const addToCart = () => {
         </button>
       )
     );
-  };  
+  };
   return (
     <div className="lg:w-1/4 md:w-1/2 p-4 w-full">
       <a className="block relative h-48 rounded overflow-hidden">
-        <ShowImage clase="bg-white object-cover object-center w-full h-full block" item={product} url="product" />
+        <ShowImage
+          clase="bg-white object-cover object-center w-full h-full block"
+          item={product}
+          url="product"
+        />
       </a>
       <div className="mt-4">
         {shouldRedirect(redirect)}
-          <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">{product.category && product.category.name}</h3>
-          <h2 className="text-gray-900 title-font text-lg font-medium">{product.name}</h2>
-          <p className="mt-1">$ {product.price}</p>
-          </div>
- 
-        {showViewButton(showViewProductButton)}
- 
-        {showAddToCartBtn(showAddToCartButton)}
- 
-        {showRemoveButton(showRemoveProductButton)}
- 
-        {showCartUpdateOptions(cartUpdate)}
+        <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
+          {product.category && product.category.name}
+        </h3>
+        <span>
+          <Link to={`/manufacturer/${product.author}`}>seller profile</Link>
+        </span>
+        <h2 className="text-gray-900 title-font text-lg font-medium">
+          {product.name}
+        </h2>
+        <p className="mt-1">$ {product.price}</p>
+      </div>
+
+      {showViewButton(showViewProductButton)}
+
+      {showAddToCartBtn(showAddToCartButton)}
+
+      {showRemoveButton(showRemoveProductButton)}
+
+      {showCartUpdateOptions(cartUpdate)}
     </div>
   );
 };
- 
+
 export default ProductCard;

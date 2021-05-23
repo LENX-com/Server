@@ -1,14 +1,11 @@
-import './App.scss';
-import Routes from './Routes'
-import UserDashboard from './pages/dashboard/UserDashboard'
-
-
+import "./App.scss";
+import Routes from "./Routes";
 function App() {
-  return (  
+  return (
     <div>
       <Routes />
     </div>
   );
 }
 
-export default App;
+export default App;                                                         

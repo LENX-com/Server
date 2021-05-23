@@ -53,8 +53,8 @@ App.get("/", (req, res) =>
 );
 App.use("/api/auth", require("./routes/auth"));
 App.use("/api/user", require("./routes/user"));
-App.use("/api/category", require("./routes/category"));
-App.use("/api/product", require("./routes/product"));
+App.use("/api/categories", require("./routes/category"));
+App.use("/api/products", require("./routes/product"));
 App.use("/api/braintree", require("./routes/braintree"));
 App.use("/api/order", require("./routes/order"));
 App.use("/api/chat", require("./routes/chat"));
@@ -66,7 +66,7 @@ App.use("/api/market", require("./routes/marketplace"));
 App.use(passport.initialize());
 require("./middlewares/jwt")(passport);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 
 http.listen(port, () => {
   console.log(`Server hosted on: http://localhost:${port}`);
