@@ -1,17 +1,29 @@
 const mongoose = require("mongoose");
 
 const chatSchema = new mongoose.Schema({
+    messageID: {
+        type: Number,
+        required: true
+    },
     senderID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type: String // mongoose.Schema.Types.ObjectId,
+        // ref: "User",
     },
     receiverID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type: String // mongoose.Schema.Types.ObjectId,
+        // ref: "User",
     },
     message: {
+        type: String
+    },
+    audio: {
         type: String,
-        required: true
+    },
+    media: {
+        type: String
+    }, // This is for testing
+    senderName: {
+        type: String
     }
 }, 
 {
