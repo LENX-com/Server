@@ -13,16 +13,16 @@ export const getProducts = sortBy => {
 };
 
 export const getCategories = () => {
-    return fetch("http://localhost:8000/api/categories", {
+    return fetch("http://localhost:5000/api/categories", {
         method: "GET"
     })
         .then(response => {
             return response.json();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err));  
 };
 
-export const getFilteredProducts = (skip, limit, filters = {}) => {
+export const getFilteredProducts = (skip, limit, filters = {}) => {  
     const data = {
         limit,
         skip,
@@ -40,9 +40,10 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
             return response.json();
         })
         .catch(err => {
-            console.log(err);
+            console.log(err);  
         });
 };
+
 
 export const list = params => {
     const query = queryString.stringify(params);
@@ -50,7 +51,7 @@ export const list = params => {
     return fetch(`${API}/products/search?${query}`, {
         method: "GET"
     })
-        .then(response => {
+        .then(response => {  
             return response.json();
         })
         .catch(err => console.log(err));

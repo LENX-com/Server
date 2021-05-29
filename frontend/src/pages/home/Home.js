@@ -13,7 +13,7 @@ function Home() {
             if(data.error) {
                 setError(data.error)
             } else {
-                setProductsBySell(data.data)
+                setProductsBySell(data)
                 console.log(data, "data for produt by sell")
             }
         })
@@ -24,7 +24,7 @@ function Home() {
             if(data.error) {
                 setError(data.error)
             } else {
-                setProducstByArrival (data.data)
+                setProducstByArrival (data)
                 console.log(data, "data for produt by arrival")
             }
         })

@@ -20,7 +20,7 @@ const {
   getProductById,
   getProductByTags,
   getProductByBrand,
-  allProduct,
+  allProduct,  
   list,
   listRelated,
   listCategories,
@@ -29,33 +29,36 @@ const {
   photo,
   listSearch,
 } = require("../controller/product.controller");
+const { getCategory } = require("../controller/category.controller");
 const { auth, protected } = require("../middlewares/verify");
 const { userById } = require("../controller/user.controller");
 const { uploadImage } = require("../middlewares/cloudinary");
 
 //new implementation route
 router.post(
-  "/create",
+  "/product/create",
   upload.single("file"),
   auth,
   protected(1),
   createProduct
 );
+router.get("/products", list);
+router.get("/products/search", listSearch);
 router.put("/edit:/productId", auth, protected(1));
 router.delete("/delete:/productId", auth, protected(1));
 router.get("/category/:categoryId",  getProductByCategory);
 router.get("/brands/:brandId", getProductByBrand);
-router.get("/:productId", getProductById);
+router.get("product/:productId", getProductById);
 router.post("/tags", getProductByTags);
 router.get("/", allProduct);
 //*********************************** */
 
-router.get("/", list);
+router.get("/products", list);
 router.get("/search", listSearch);
 router.get("/related/:productId", listRelated);
-router.get("/categories", listCategories);
-router.post("/by/search", listBySearch);
-router.get("/photo/:productId", photo);
+router.get("/categories", getCategory);  
+router.post("/product/by/search", listBySearch);
+router.get("/product/photo/:productId", photo);
 
 router.param("userId", userById);
 router.param("productId", productById);

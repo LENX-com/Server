@@ -9,31 +9,31 @@ const CategoryList = () => {
   useEffect(() => {
     setLoading(true);
     getCategories().then((c) => {
-      console.log(c.data);
-      setCategories(c);
+      setCategories(c.data);
       setLoading(false);
     });
   }, []);
 
-  // const showCategories = () =>
-  //   categories &&
-  //   categories.map((c) => (
-  //     <div
-  //       key={c._id}
-  //       className="col btn btn-outlined-primary btn-lg btn-block btn-raised m-3"
-  //     >
-  //       <Link to={`/category/${c._id}`}>{c.name}</Link>
-  //     </div>
-  //   ));
+  console.log(categories)
+
+  const showCategories = () =>
+    categories &&
+    categories.map((c) => (
+      <div
+        key={c._id}
+        className="col btn btn-outlined-primary btn-lg btn-block btn-raised m-3"
+      >
+        <Link to={`/category/${c._id}`}>{c.name}</Link>
+      </div>
+    ));
 
   return (
-    <div className="container">
+  <div className="container">
       <div className="row">
         {loading ? (
           <h4 className="text-center">Loading...</h4>
         ) : (
-          <h1>category</h1>
-          // showCategories()
+          showCategories()
         )}
       </div>
     </div>

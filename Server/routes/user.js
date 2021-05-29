@@ -67,9 +67,9 @@ router.get("/secret", requireSignin, (req, res) => {
   });
 });
 
-router.get("/:userId", getUserById);
-router.get("/:userId", requireSignin, read);
-router.put("/:userId", requireSignin, isAuth, update);
+router.get("user/:userId", getUserById);
+router.get("user/:userId", requireSignin, read);
+router.put("user/:userId", requireSignin, isAuth, update);
 router.get("/orders/by/user/:userId", requireSignin, isAuth, purchaseHistory);
 
 //Password RESET
