@@ -40,17 +40,19 @@ const AddProduct = () => {
     // load categories and set form data
     const init = () => {
         getCategories().then(data => {
+            console.log(data)
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
                 setValues({
                     ...values,
-                    categories: data,
+                    categories: data.data,
                     formData: new FormData()
                 });
             }
         });
     };
+    console.log(categories)
 
     useEffect(() => {
         init();
