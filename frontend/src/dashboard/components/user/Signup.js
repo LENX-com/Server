@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
-import Layout from '../layout/Layout'
-import {signup} from '../../actions/index'
+import {signup} from '../../../actions/index'
 
 function Signup() {
 
@@ -92,16 +91,12 @@ function Signup() {
      )
 
     return (
-         <Layout 
-         title="Signup"
-         description="LENX"
-         className="container"
-         >
+         <>
             {showSuccess()}
             {showError()}
             {signUpForm()}
 
-        </Layout>
+        </>
     )
 }
 

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { Redirect, Link } from "react-router-dom"
-import Layout from "../layout/Layout"
-import { isAuth, authenticateHelper, isAuthenticated}from "../../actions"
-import { signin } from '../../actions/authAction'
-import Google from '../../containers/social-login/Google'
+import { isAuth, authenticateHelper, isAuthenticated}from "../../../actions"
+import { signin } from '../../../actions/authAction'
+import Google from '../../../marketplace/containers/social-login/Google'
 import { ToastContainer, toast } from 'react-toastify';
 import { connect, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -114,18 +113,14 @@ const Signin = ({history, signin}) => {
     };
 
     return (
-        <Layout
-            title="Signin"
-            description="Signin to LENX"
-            className="container"
-        >
+        <>
             {showLoading()}
             {showError()}
             {signUpForm()}
             <Google informParent={informParent} />
             {redirectUser()}
 
-        </Layout>
+        </>
     );
 };
 

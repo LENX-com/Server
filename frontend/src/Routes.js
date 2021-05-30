@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Signin from "./marketplace/components/user/Signin";
-import Signup from "./marketplace/components/user/Signup";
+import Signin from "./dashboard/components/user/Signin";
+import Signup from "./dashboard/components/user/Signup";
 import PrivateRoutes from "../src/auth/PrivateRoutes";
 import Dashboard from "./dashboard/Dashboard";
 import AdminRoute from "../src/auth/AdminRoute";
@@ -12,7 +12,7 @@ import Shop from "./marketplace/components/shop/Shop";
 import Product from "./pages/product/Product";
 import Cart from "./marketplace/components/cart/Cart";
 import Orders from "./admin/Orders";
-import Profile from "./marketplace/components/user/Profile";
+import Profile from "./dashboard/components/user/Profile";
 import ManageProducts from "./admin/ManageProducts";
 import UpdateProduct from "./admin/UpdateProduct";
 import Header from "./marketplace/components/header/Header";

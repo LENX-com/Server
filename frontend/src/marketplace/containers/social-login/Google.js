@@ -1,7 +1,7 @@
 import React from 'react';
 import GoogleLogin from 'react-google-login';
 import axios from 'axios';
-import { API } from '../../config';
+import { API } from '../../../config';
 
 
 const Google = ({ informParent = f => f }) => {
