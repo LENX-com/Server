@@ -69,6 +69,7 @@ const AddProduct = () => {
         setValues({ ...values, error: '', loading: true });
 
         createProduct(user._id, token, formData).then(data => {
+            console.log(data)
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {

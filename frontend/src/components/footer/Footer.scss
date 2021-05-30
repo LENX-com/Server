@@ -2,4 +2,16 @@
 
 .footer {
     background: $black !important;
+
+    h2{
+        color: $background-light;
+        font-weight: 800;;
+    }
+    a{
+        color:$background-light;
+
+        &:hover {
+            color: $gray;
+        }
+    }
 }
