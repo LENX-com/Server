@@ -1,6 +1,6 @@
 import React, {Fragment, useState} from 'react'
 import {Link, withRouter, Redirect} from 'react-router-dom'
-import {signout, isAuthenticated} from '../../actions/authAction'
+import {signout, isAuthenticated} from '../../../actions/authAction'
 import {itemTotal} from '../cart/CartHelper'
 import {Menu} from 'antd'
 import { AppstoreOutlined} from '@ant-design/icons'

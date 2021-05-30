@@ -2,7 +2,7 @@ import React from 'react'
 import MenuMain from '../menu/Menu'
 import { Link, withRouter } from "react-router-dom";
 import './Header.scss'
-import Logo from '../../assets/Logo 1 white gif.gif'
+import Logo from '../../../assets/Logo 1 white gif.gif'
 
 function Header() {
     return (

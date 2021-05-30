@@ -1,7 +1,8 @@
 @import "src/variables.scss";
 
 .footer {
-    background: $black !important;
+    background: $dark-gradient !important;
+    box-shadow: $dark-shadow;
 
     h2{
         color: $background-light;

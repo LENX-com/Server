@@ -1,9 +1,9 @@
   
 import React, { useState, useEffect } from "react";
-import Layout from "../layout/Layout";
+import Layout from "../../../marketplace/components/layout/Layout";
 import { isAuthenticated } from "../../actions";
 import { Link, Redirect } from "react-router-dom";
-import { read, update, updateUser } from "../user/apiUser";
+import { read, update, updateUser } from "./apiUser";
 
 const Profile = ({ match }) => {
     const [values, setValues] = useState({

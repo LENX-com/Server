@@ -43,7 +43,7 @@ router.post(
   createProduct
 );
 router.get("/products", list);
-router.get("/products/search", listSearch);
+router.get("/products/search", listSearch);   
 router.put("/edit:/productId", auth, protected(1));
 router.delete("/delete:/productId", auth, protected(1));
 router.get("/category/:categoryId",  getProductByCategory);

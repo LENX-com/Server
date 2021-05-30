@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../components/layout/Layout';
+import Layout from '../../marketplace/components/layout/Layout';
 import { isAuthenticated } from '../actions';
 import { Link } from 'react-router-dom';
 import { createProduct, getCategories } from './ApiAdmin';

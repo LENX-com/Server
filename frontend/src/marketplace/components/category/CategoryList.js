@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getCategories } from "../../actions/categoryAction";
+import { getCategories } from "../../../actions/categoryAction";
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);

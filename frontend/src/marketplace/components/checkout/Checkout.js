@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getProducts, getBraintreeClientToken, processPayment, createOrder } from '../ApiCore';
 import { emptyCart } from '../cart/CartHelper';
 import Card from '../card/Card';
-import { isAuthenticated } from '../../actions';
+import { isAuthenticated } from '../../../actions';
 import { Link } from 'react-router-dom';
 import DropIn from 'braintree-web-drop-in-react';
 

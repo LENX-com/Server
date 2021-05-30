@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import formatDate from '../../utils/formatDate';
 import { connect } from 'react-redux';
-import { addLike, removeLike, deletePost } from '../../actions/postAction.js';
+import { addLike, removeLike, deletePost } from '../../../actions/postAction.js';
 import { BiDislike, BiLike, BiX } from "react-icons/bi";
-import { isAuthenticated } from '../../actions/authAction';
+import { isAuthenticated } from '../../../actions/authAction';
 
 const PostItem = ({
   addLike,

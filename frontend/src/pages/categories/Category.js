@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { getCategory } from "../../actions/categoryAction";
-import ProductCard from "../../components/product/ProductCard";
-import { getFilteredProducts} from '../../components/ApiCore'
-import RadioBox from '../../components/shop/RadioBox'
-import {prices} from '../../components/shop/FixedPrices'
-import Checkbox from '../../components/checkbox/Checkbox'
+import ProductCard from "../../marketplace/components/product/ProductCard";
+import { getFilteredProducts} from '../../marketplace/components/ApiCore'
+import RadioBox from '../../marketplace/components/shop/RadioBox'
+import {prices} from '../../marketplace/components/shop/FixedPrices'
+import Checkbox from '../../marketplace/components/checkbox/Checkbox'
 
 
 const CategoryHome = ({ match }) => {

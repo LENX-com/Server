@@ -1,7 +1,8 @@
 @import "src/variables.scss";
 
 .header{
-    background: $black;
+    background: $dark-gradient !important;
+    box-shadow: $dark-shadow;
     
 }
 

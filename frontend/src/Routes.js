@@ -1,28 +1,28 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Signin from "./components/user/Signin";
-import Signup from "./components/user/Signup";
+import Signin from "./marketplace/components/user/Signin";
+import Signup from "./marketplace/components/user/Signup";
 import PrivateRoutes from "../src/auth/PrivateRoutes";
 import Dashboard from "./dashboard/Dashboard";
 import AdminRoute from "../src/auth/AdminRoute";
 import AdminDashboard from "./pages/dashboard/AdminDashboard";
 import AddCategory from "./admin/AddCategory";
 import AddProduct from "./admin/AddProduct";
-import Shop from "./components/shop/Shop";
+import Shop from "./marketplace/components/shop/Shop";
 import Product from "./pages/product/Product";
-import Cart from "./components/cart/Cart";
+import Cart from "./marketplace/components/cart/Cart";
 import Orders from "./admin/Orders";
-import Profile from "./components/user/Profile";
+import Profile from "./marketplace/components/user/Profile";
 import ManageProducts from "./admin/ManageProducts";
 import UpdateProduct from "./admin/UpdateProduct";
-import Header from "./components/header/Header";
+import Header from "./marketplace/components/header/Header";
 import ForgotPassword from "./pages/password/ForgotPassword";
 import ResetPassword from "./pages/password/ResetPassword";
 import Home from "./pages/home/Home";
-import Posts from "./components/posts/Posts";
-import Post from "./components/post/Post";
+import Posts from "./marketplace/components/posts/Posts";
+import Post from "./marketplace/components/post/Post";
 import Category from "./pages/categories/Category";
-import Footer from "./components/footer/Footer";
+import Footer from "./marketplace/components/footer/Footer";
 import Manufacturer from "./manufacturer/Manufacturer";
 
 function Routes() {
@@ -30,7 +30,7 @@ function Routes() {
     <>
       <Header />
       <Switch>
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact component={Home} options={{header: () => null}}/>
         <Route path="/shop" exact component={Shop} />
         <Route path="/signin" exact component={Signin} />
         <Route path="/signup" exact component={Signup} />

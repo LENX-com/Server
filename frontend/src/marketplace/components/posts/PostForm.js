@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addComment } from '../../actions/postAction';
-import { isAuthenticated } from '../../actions/authAction';
+import { addPost } from '../../../actions/postAction.js';
+import { isAuthenticated } from '../../../actions/authAction';
 
-const CommentForm = ({ postId, addComment }) => {
-  const { user, token } = isAuthenticated();
+const PostForm = ({ addPost }) => {
   const [text, setText] = useState('');
+  const { user, token } = isAuthenticated();
 
   return (
     <div className='post-form'>
       <div className='bg-primary p'>
-        <h3>Leave a Comment</h3>
+        <h3>Say Something...</h3>
       </div>
       <form
         className='form my-1'
         onSubmit={e => {
           e.preventDefault();
-          addComment(user._id, postId, { text }, token);
+          addPost( user._id, { text }, token);
           setText('');
         }}
       >
@@ -25,7 +25,7 @@ const CommentForm = ({ postId, addComment }) => {
           name='text'
           cols='30'
           rows='5'
-          placeholder='Comment the post'
+          placeholder='Create a post'
           value={text}
           onChange={e => setText(e.target.value)}
           required
@@ -36,11 +36,11 @@ const CommentForm = ({ postId, addComment }) => {
   );
 };
 
-CommentForm.propTypes = {
-  addComment: PropTypes.func.isRequired
+PostForm.propTypes = {
+  addPost: PropTypes.func.isRequired
 };
 
 export default connect(
   null,
-  { addComment }
-)(CommentForm);
+  { addPost }
+)(PostForm);
