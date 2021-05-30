@@ -14,7 +14,7 @@ export  const authReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: !_.isEmpty(action.payload),
         user: action.payload
-      };
+      };                                                      
     case USER_LOADING:
       return {
         ...state,

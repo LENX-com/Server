@@ -20,7 +20,6 @@ const {
   getProductById,
   getProductByTags,
   getProductByBrand,
-  allProduct,
   list,
   listRelated,
   listCategories,
@@ -47,7 +46,6 @@ router.get("/category/:categoryId",  getProductByCategory);
 router.get("/brands/:brandId", getProductByBrand);
 router.get("/:productId", getProductById);
 router.post("/tags", getProductByTags);
-router.get("/", allProduct);
 //*********************************** */
 
 router.get("/", list);

@@ -9,7 +9,6 @@ const CategoryList = () => {
   useEffect(() => {
     setLoading(true);
     getCategories().then((c) => {
-      console.log(c.data);
       setCategories(c);
       setLoading(false);
     });

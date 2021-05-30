@@ -52,7 +52,6 @@ export default function Manufacturer({ match }) {
             <img alt="img" src={item.photo} />
           </div>
         ))}
-
       <div>Blogs</div>
     </div>
   );

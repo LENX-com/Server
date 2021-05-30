@@ -37,7 +37,6 @@ const marketSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "User",
     },
-   
   },
   opts,
   { timestamps: true }

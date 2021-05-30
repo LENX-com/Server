@@ -10,20 +10,6 @@ cloudinary.config({
 });
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
-//get all products
-exports.allProduct = async (req, res) => {
-  try {
-    const product = await Product.find().populate("category", "_id, name");
-    if (!product.length) {
-      return res.status(400).json({ error: "No product uploaded yet" });
-    }
-    return res.status(200).json({ data: product });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: error });
-  }
-};
-
 //create a product route accessible by only manufacturer(role 1) and add category from req.body.category
 exports.createProduct = async (req, res) => {
   const file = req.file;
