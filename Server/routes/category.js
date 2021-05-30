@@ -19,18 +19,18 @@ const {
 } = require("../controller/auth.controller");
 const { userById } = require("../controller/user.controller");
 
-router.get("/:categoryId", read);
+router.get("category/:categoryId", read);
 router.post("/create/:userId", requireSignin, isAuth, isAdmin, create);
 router.put("/:categoryId/:userId", requireSignin, isAuth, isAdmin, update);
-router.delete("/:categoryId/:userId", requireSignin, isAuth, isAdmin, remove);
-router.get("/categories", list);
+router.delete("category/:categoryId/:userId", requireSignin, isAuth, isAdmin, remove);
+router.get("/categoriess", list);
 
 router.param("categoryId", categoryById);
 router.param("userId", userById);
 
 //new routes setup for categories
-router.post("/create", auth, createCategory);
-router.get("/", getCategory);
+router.post("/category/create", auth, createCategory);
+router.get("/category", getCategory);
 //routes for brand
 router.post("/brands/create", auth, createBrand);
 

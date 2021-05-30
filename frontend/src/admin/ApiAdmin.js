@@ -61,18 +61,18 @@ export const getCategory = categoryId => {
             return response.json();
         })
         .catch(err => console.log(err));
-};
+};  
 
 export const getCategories = () => {
     return fetch(`${API}/categories`, {
-        method: 'GET'
+        method: "GET"
     })
         .then(response => {
-            return response.json();
+            return response.json()
         })
         .catch(err => console.log(err));
 };
-
+ 
 export const listOrders = (userId, token) => {
     return fetch(`${API}/order/list/${userId}`, {
         method: 'GET',

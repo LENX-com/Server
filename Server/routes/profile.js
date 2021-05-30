@@ -9,6 +9,6 @@ const {
 
 router.post("/create", auth, protected(1), createProfile);
 router.get("/read", auth, getProfile);
-router.get("/:profileId", getProfile);
+router.get("/profile/:profileId", getProfile);
 
 module.exports = router;
