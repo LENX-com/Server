@@ -32,7 +32,6 @@ const Shop = () => {
   const loadFilteredResults = (newFilters) => {
     // console.log(newFilters);
     getFilteredProducts(skip, limit, newFilters).then((data) => {
-      console.log(data + "wkjhdkj");
       if (data.error) {
           setError(data.error);
       } else {

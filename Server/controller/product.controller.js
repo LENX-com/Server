@@ -79,9 +79,6 @@ exports.getProductById = async (req, res) => {
       "category",
       "_id name"
     );
-    if (!product) {
-      return res.status(400).json({ error: "No product found" });
-    }
     return res.status(200).json({ data: product });
   } catch (error) {
     console.log(error);
@@ -96,9 +93,6 @@ exports.getProductByCategory = async (req, res) => {
     const product = await Product.find({
       category: req.body.categoryId,
     }).populate("category", "_id name");
-    if (!product.length) {
-      return res.status(200).json({ error: "No product for this category" });
-    }
     return res.status(200).json({ data: product });
   } catch (error) {
     console.log(error);
@@ -110,9 +104,6 @@ exports.getProductByCategory = async (req, res) => {
 exports.getProductByTags = async (req, res) => {
   try {
     const product = await Product.find({ tags: req.body.tags });
-    if (!product.length) {
-      return res.status(400).json({ error: "no product found with that tag" });
-    }
     return res.status(200).json({ data: product });
   } catch (error) {
     console.log(error);
@@ -124,11 +115,6 @@ exports.getProductByTags = async (req, res) => {
 exports.getProductByBrand = async (req, res) => {
   try {
     const product = await Product.find({ brand: req.params.brandId });
-    if (!product.length) {
-      return res
-        .status(400)
-        .json({ error: "no products with that brand for now" });
-    }
     return res.status(200).json({ data: product });
   } catch (error) {
     console.log(error);
@@ -295,7 +281,6 @@ exports.listBySearch = (req, res) => {
   }
 
   Product.find(findArgs)
-    .select("-photo")
     .populate("category")
     .sort([[sortBy, order]])
     .skip(skip)

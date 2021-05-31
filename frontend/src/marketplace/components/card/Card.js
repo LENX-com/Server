@@ -100,7 +100,7 @@ const addToCart = () => {
       <div className="card-header">{product.name}</div>
       <div className="card-body">
         {shouldRedirect(redirect)}
-        <ShowImage clase= "image-card" item={product} url="product" />
+        <ShowImage clase= "image-card" item={product} url={product.photo} />
         <p className="card-p">{product.description.substring(0, 100)} </p>
         <p className="card-p">$ {product.price}</p>
         <p>Category: {product.category && product.category.name}</p>

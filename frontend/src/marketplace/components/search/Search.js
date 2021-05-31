@@ -15,7 +15,8 @@ const Search = () => {
     const { categories, category, search, results, searched } = data;
 
     const loadCategories = () => {
-        getCategories().then(data => {
+        getCategories().then(resp => {
+            const {data} = resp;
             if (data.error) {
                 console.log(data.error);
             } else {
