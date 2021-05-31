@@ -37,15 +37,23 @@ router.delete("/cart/remove", auth, removeCart);
 const {
   createOrder,
   OrderByUser,
+  allOrder,
   purchaseHistory,
   UpdateOrderStatus,
   Orderbyid,
 } = require("../controller/order.controller");
-router.post("/create", auth, createOrder);
-router.get("/purchaseHistory", auth, OrderByUser);
-router.get("/history", purchaseHistory);
-router.get("/:orderId", auth, Orderbyid);
-router.post("/:orderId/update_status", auth, protected(1), UpdateOrderStatus);
+router.get("/order/status-values", auth, protected(1), getStatusValues);
+router.post("/order/create", auth, createOrder);
+router.get("/orders", auth, protected(1), allOrder);
+router.get("/order/purchaseHistory", auth, OrderByUser);
+router.get("/order/history", purchaseHistory);
+router.get("/order/:orderId", auth, Orderbyid);
+router.post(
+  "/order/:orderId/update_status",
+  auth,
+  protected(1),
+  UpdateOrderStatus
+);
 //****************************************************************orders routes********************************************************************//
 
 router.post(
@@ -58,13 +66,7 @@ router.post(
 );
 
 router.get("/list/:userId", requireSignin, isAuth, isAdmin, listOrders);
-router.get(
-  "/status-values/:userId",
-  requireSignin,
-  isAuth,
-  isAdmin,
-  getStatusValues
-);
+
 router.put(
   "/:orderId/status/:userId",
   requireSignin,

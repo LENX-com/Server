@@ -19,7 +19,7 @@ const Checkbox = ({ categories, handleFilters }) => {
         handleFilters(newCheckedCategoryId);
     };
 
-    return categories.map((c, i) => (
+    return categories && categories.map((c, i) => (
         <li key={i}>
             <input
                 onChange={handleToggle(c._id)}

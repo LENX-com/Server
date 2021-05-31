@@ -13,7 +13,7 @@ const AddProduct = () => {
         category: '',
         shipping: '',
         quantity: '',
-        photo: '',
+        file: '',
         loading: false,
         error: '',
         createdProduct: '',
@@ -40,7 +40,6 @@ const AddProduct = () => {
     // load categories and set form data
     const init = () => {
         getCategories().then(data => {
-            console.log(data)
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
@@ -59,16 +58,16 @@ const AddProduct = () => {
     }, []);
 
     const handleChange = name => event => {
-        const value = name === 'photo' ? event.target.files[0] : event.target.value;
+        const value = name === 'file' ? event.target.files[0] : event.target.value;
         formData.set(name, value);
         setValues({ ...values, [name]: value });
     };
-
+  
     const clickSubmit = event => {
         event.preventDefault();
         setValues({ ...values, error: '', loading: true });
-
-        createProduct(user._id, token, formData).then(data => {
+      
+        createProduct( token, formData).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
@@ -76,7 +75,7 @@ const AddProduct = () => {
                     ...values,
                     name: '',
                     description: '',
-                    photo: '',
+                    file: '',
                     price: '',
                     quantity: '', 
                     loading: false,
@@ -91,7 +90,7 @@ const AddProduct = () => {
             <h4>Post Photo</h4>
             <div className="form-group">
                 <label className="btn">
-                    <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" />
+                    <input onChange={handleChange('file')} type="file" name="file" accept="image/*" />
                 </label>
             </div>
 

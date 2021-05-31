@@ -98,7 +98,7 @@ const ProductCard = ({
         <ShowImage
           clase="bg-white object-cover object-center w-full h-full block"
           item={product}
-          url="product"
+          url={product.photo}
         />
       </a>
       <div className="mt-4">

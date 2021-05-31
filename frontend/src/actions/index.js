@@ -3,7 +3,7 @@ import axios from 'axios'
 import cookie from 'js-cookie';
 
 export const signup = user => {
-    return fetch(`${API}/auth/signup`, {
+    return fetch(`${API}/signup`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -20,7 +20,7 @@ export const signup = user => {
 };
 
 export const signin = user => {
-    return fetch(`${API}/auth/signin`, {
+    return fetch(`${API}/signin`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',

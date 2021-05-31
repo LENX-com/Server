@@ -22,7 +22,7 @@ const AddCategory = () => {
         e.preventDefault();
         setError("");
         setSuccess(false);
-        createCategory(user._id, token, { name }).then(data => {
+        createCategory(token, { name }).then(data => {
             if (data.error) {
                 setError(data.error);
             } else {

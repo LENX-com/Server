@@ -14,8 +14,6 @@ const CategoryList = () => {
     });
   }, []);
 
-  console.log(categories)
-
   const showCategories = () =>
     categories &&
     categories.map((c) => (
@@ -28,7 +26,7 @@ const CategoryList = () => {
     ));
 
   return (
-  <div className="container">
+    <div className="container">
       <div className="row">
         {loading ? (
           <h4 className="text-center">Loading...</h4>

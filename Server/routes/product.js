@@ -2,9 +2,6 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./public");
-  },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}_${file.originalname}`);
   },
@@ -20,7 +17,7 @@ const {
   getProductById,
   getProductByTags,
   getProductByBrand,
-  allProduct,  
+  allProduct,
   list,
   listRelated,
   listCategories,
@@ -42,22 +39,22 @@ router.post(
   createProduct
 );
 router.get("/products", list);
-router.get("/products/search", listSearch);
-router.put("/edit:/productId", auth, protected(1));
+router.post("/products/by/search", listBySearch);
+router.put("/edit/product/:productId", upload.single("file"), auth, protected(1), editProduct);
 router.delete("/delete:/productId", auth, protected(1));
-router.get("/category/:categoryId",  getProductByCategory);
+router.post("/related", getProductByCategory);
 router.get("/brands/:brandId", getProductByBrand);
-router.get("product/:productId", getProductById);
+router.get("/product/:productId", getProductById);
 router.post("/tags", getProductByTags);
 //*********************************** */
 
 router.get("/products", list);
 router.get("/search", listSearch);
-router.get("/related/:productId", listRelated); 
+router.get("/related/:productId", listRelated);
 router.post("/product/by/search", listBySearch);
-router.get("/product/photo/:productId", photo);
+// router.get("/product/photo/:productId", photo);
 
-router.param("userId", userById);
-router.param("productId", productById);
+// router.param("userId", userById);
+// router.param("productId", productById);
 
 module.exports = router;

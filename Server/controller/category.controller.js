@@ -1,5 +1,4 @@
-const Category = require("../models/category");
-const Brand = require("../models/category");
+const { Brand, Category } = require("../models/category");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
 //create a category
@@ -15,10 +14,9 @@ exports.createCategory = async (req, res) => {
   }
 };
 
-exports.getCategory = async (req, res) => {
+exports.allCategories = async (req, res) => {
   try {
     const category = await Category.find();
-    console.log(category)
     if (!category.length) {
       return res.status(200).json({ data: "No category yet" });
     }

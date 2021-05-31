@@ -10,18 +10,19 @@ const Product = (props) => {
   const [error, setError] = useState(false);
 
   const loadSingleProduct = (productId) => {
-    read(productId).then((data) => {
-      console.log(data)
+    read(productId).then((resp) => {
+      const { data } = resp;
       if (data.error) {
         setError(data.error);
       } else {
-        setProduct(data.data);
+        setProduct(data);
         // fetch related products
-        listRelated(data._id).then((data) => {
+        listRelated(data.category._id).then((resp) => {
+          const { data } = resp;
           if (data.error) {
             setError(data.error);
           } else {
-            setRelatedProduct(data.data);
+            setRelatedProduct(data);
           }
         });
       }
@@ -41,7 +42,7 @@ const Product = (props) => {
             <ShowImage
               clase="bg-white lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
               item={product}
-              url="product"
+              url={product.photo}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
@@ -207,11 +208,12 @@ const Product = (props) => {
       </section>
       <div className="col">
         <h4>Related products</h4>
-        {relatedProduct.map((p, i) => (
-          <div key={i}>
-            <Card product={p} />
-          </div>
-        ))}
+        {relatedProduct &&
+          relatedProduct.map((p, i) => (
+            <div key={i}>
+              <Card product={p} />
+            </div>
+          ))}
       </div>
     </>
   );
