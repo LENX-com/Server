@@ -93,7 +93,7 @@ const MenuMain = ({history}) => {
             {isAuthenticated() && (
                 <Item className="nav-item">
                     <span
-                        style={{ cursor: "pointer", color: "#ffffff" }}
+                        style={{ cursor: "pointer" }}
                         onClick={() =>
                             signout(() => {
                                 history.push("/");
