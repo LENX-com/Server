@@ -23,7 +23,8 @@ const Orders = () => {
     };
 
     const loadStatusValues = () => {
-        getStatusValues( token).then(data => {
+        getStatusValues( token).then(resp => {
+            const {data} = resp
             if (data.error) {
                 console.log(data.error);
             } else {
