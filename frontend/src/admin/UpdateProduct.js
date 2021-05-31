@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../components/layout/Layout";
-import { isAuthenticated } from "../actions";
-import { Link, Redirect } from "react-router-dom";
-import { getProduct, getCategories, updateProduct } from "./ApiAdmin";
+import React, { useState, useEffect } from 'react';
+import Layout from '../marketplace/components/layout/Layout';
+import { isAuthenticated } from '../actions';
+import { Link, Redirect } from 'react-router-dom';
+import { getProduct, getCategories, updateProduct } from './ApiAdmin';
 
 const UpdateProduct = ({ match }) => {
   const [values, setValues] = useState({

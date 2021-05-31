@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../components/layout/Layout";
-import { read, listRelated } from "../../components/ApiCore";
-import Card from "../../components/card/Card";
-import ShowImage from "../../components/card/ShowImage";
+import { read, listRelated } from "../../marketplace/components/ApiCore";
+import Card from "../../marketplace/components/card/Card";
+import ShowImage from "../../marketplace/components/card/ShowImage";
 
 const Product = (props) => {
   const [product, setProduct] = useState({});

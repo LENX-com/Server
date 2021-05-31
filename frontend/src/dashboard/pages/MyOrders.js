@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { isAuthenticated } from "../../actions";
-import { getPurchaseHistory } from "../../components/user/apiUser";
+import { getPurchaseHistory } from "../components/user/apiUser";
 import moment from "moment";
 import PageTitle from '../components/Typography/PageTitle'
 import SectionTitle from '../components/Typography/SectionTitle'

@@ -1,0 +1,17 @@
+@import "src/variables.scss";
+
+.header{
+    background: $dark-gradient !important;
+    box-shadow: $dark-shadow;
+    
+}
+
+.header.wrapper{
+    display:flex;
+}
+
+.logo img{
+    width:40%;
+
+}
+
