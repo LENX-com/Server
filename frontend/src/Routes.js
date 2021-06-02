@@ -30,7 +30,7 @@ function Routes() {
     <>
       <Header />
       <Switch>
-        <Route path="/" exact component={Home} options={{header: () => null}}/>
+        <Route path="/" exact component={Home} />
         <Route path="/shop" exact component={Shop} />
         <Route path="/signin" exact component={Signin} />
         <Route path="/signup" exact component={Signup} />

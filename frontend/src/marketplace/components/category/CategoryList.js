@@ -14,6 +14,8 @@ const CategoryList = () => {
     });
   }, []);
 
+  console.log(categories)
+
   const showCategories = () =>
     categories &&
     categories.map((c) => (
