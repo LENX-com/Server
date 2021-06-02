@@ -10,23 +10,10 @@ cloudinary.config({
 });
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
-//get all products
-exports.allProduct = async (req, res) => {
-  try {
-    const product = await Product.find().populate("category", "_id, name");
-    if (!product.length) {
-      return res.status(400).json({ error: "No product uploaded yet" });
-    }
-    return res.status(200).json({ data: product });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: error });
-  }
-};
-
 //create a product route accessible by only manufacturer(role 1) and add category from req.body.category
 exports.createProduct = async (req, res) => {
   const file = req.file;
+  console.log(req.file);
   try {
     if (!file) throw new Error("Enter a valid file");
     const result = await cloudinary.uploader.upload(req.file.path, {
@@ -36,6 +23,7 @@ exports.createProduct = async (req, res) => {
     const { ...args } = req.body;
     args.author = req.user._id;
     args.photo = result.secure_url;
+    args.photoId = result.public_id;
     const newProduct = await Product.create(args);
     return res.status(200).json(newProduct);
   } catch (error) {
@@ -48,20 +36,25 @@ exports.createProduct = async (req, res) => {
 
 //edit a product
 exports.editProduct = async (req, res) => {
+  const file = req.file;
+  console.log(req.file);
   try {
-    const product = await product.findById(req.params.productId);
+    const product = await Product.findById(req.params.productId);
     if (!product) {
       return res.status(400).json({ error: "no product found with that id" });
     }
+    if (!file) throw new Error("Enter a valid file");
+    await cloudinary.uploader.destroy(product.photoId);
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      resource_type: "auto",
+      invalidate: true,
+    });
     const { ...args } = req.body;
-
-    const updated = await Product.findOneAndUpdate(
-      req.params.productId,
-      {
-        args,
-      },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+    args.photo = result.secure_url;
+    args.photoId = result.public_id;
+    const updated = await Product.findOneAndUpdate(req.params.productId, args, {
+      new: true,
+    });
     return res.status(200).json({ data: updated });
   } catch (error) {
     console.log(error);
@@ -82,10 +75,10 @@ exports.deleteProduct = async (req, res) => {
 //get product by its id
 exports.getProductById = async (req, res) => {
   try {
-    const product = await Product(req.params.productId);
-    if (!product) {
-      return res.status(400).json({ error: "No product found" });
-    }
+    const product = await Product.findById(req.params.productId).populate(
+      "category",
+      "_id name"
+    );
     return res.status(200).json({ data: product });
   } catch (error) {
     console.log(error);
@@ -96,12 +89,10 @@ exports.getProductById = async (req, res) => {
 //get product by its category
 exports.getProductByCategory = async (req, res) => {
   try {
+    console.log(req.body);
     const product = await Product.find({
-      category: req.params.categoryId,
+      category: req.body.categoryId,
     }).populate("category", "_id name");
-    if (product.length < 0) {
-      return res.status(400).json({ error: "No product for this category" });
-    }
     return res.status(200).json({ data: product });
   } catch (error) {
     console.log(error);
@@ -113,9 +104,6 @@ exports.getProductByCategory = async (req, res) => {
 exports.getProductByTags = async (req, res) => {
   try {
     const product = await Product.find({ tags: req.body.tags });
-    if (!product.length) {
-      return res.status(400).json({ error: "no product found with that tag" });
-    }
     return res.status(200).json({ data: product });
   } catch (error) {
     console.log(error);
@@ -127,11 +115,6 @@ exports.getProductByTags = async (req, res) => {
 exports.getProductByBrand = async (req, res) => {
   try {
     const product = await Product.find({ brand: req.params.brandId });
-    if (!product.length) {
-      return res
-        .status(400)
-        .json({ error: "no products with that brand for now" });
-    }
     return res.status(200).json({ data: product });
   } catch (error) {
     console.log(error);
@@ -298,7 +281,6 @@ exports.listBySearch = (req, res) => {
   }
 
   Product.find(findArgs)
-    .select("-photo")
     .populate("category")
     .sort([[sortBy, order]])
     .skip(skip)

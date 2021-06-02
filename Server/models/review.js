@@ -33,7 +33,7 @@ const downvoteSchema = new mongoose.Schema(
 
 const reviewSchema = new mongoose.Schema(
   {
-    userID: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },

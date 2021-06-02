@@ -2,9 +2,6 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./public");
-  },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}_${file.originalname}`);
   },
@@ -35,29 +32,29 @@ const { uploadImage } = require("../middlewares/cloudinary");
 
 //new implementation route
 router.post(
-  "/create",
+  "/product/create",
   upload.single("file"),
   auth,
   protected(1),
   createProduct
 );
-router.put("/edit:/productId", auth, protected(1));
+router.get("/products", list);
+router.post("/products/by/search", listBySearch);
+router.put("/edit/product/:productId", upload.single("file"), auth, protected(1), editProduct);
 router.delete("/delete:/productId", auth, protected(1));
-router.get("/category/:categoryId",  getProductByCategory);
+router.post("/related", getProductByCategory);
 router.get("/brands/:brandId", getProductByBrand);
-router.get("/:productId", getProductById);
+router.get("/product/:productId", getProductById);
 router.post("/tags", getProductByTags);
-router.get("/", allProduct);
 //*********************************** */
 
-router.get("/", list);
+router.get("/products", list);
 router.get("/search", listSearch);
 router.get("/related/:productId", listRelated);
-router.get("/categories", listCategories);
-router.post("/by/search", listBySearch);
-router.get("/photo/:productId", photo);
+router.post("/product/by/search", listBySearch);
+// router.get("/product/photo/:productId", photo);
 
-router.param("userId", userById);
-router.param("productId", productById);
+// router.param("userId", userById);
+// router.param("productId", productById);
 
 module.exports = router;

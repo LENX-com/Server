@@ -19,7 +19,7 @@ const OrderSchema = new mongoose.Schema(
   {
     product: [
       {
-        type: ObjectId,      
+        type: ObjectId,
         ref: "Product",
       },
     ],
@@ -46,7 +46,7 @@ const OrderSchema = new mongoose.Schema(
       ], // enum means string objects
     },
     updated: Date,
-    user: { type: ObjectId, ref: "User" },
+    userId: { type: ObjectId, ref: "User" },
   },
   { timestamps: true }
 );

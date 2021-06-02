@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Layout from '../../components/layout/Layout'
+import Layout from '../../marketplace/components/layout/Layout'
 import { isAuthenticated}from "../../actions"
 import axios from 'axios'
 import { useDispatch } from 'react-redux'

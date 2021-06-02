@@ -33,5 +33,7 @@ const categorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Category", categorySchema);
-module.exports = mongoose.model("Brand", brandSchema);
+const Category = mongoose.model("Category", categorySchema);
+const Brand = mongoose.model("Brand", brandSchema);
+
+module.exports = {Category, Brand}

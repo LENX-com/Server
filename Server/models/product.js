@@ -44,6 +44,7 @@ const productSchema = new mongoose.Schema(
     category: {
       type: ObjectId,
       ref: "Category",
+      required: true,
     },
     brands: {
       type: ObjectId,
@@ -59,7 +60,9 @@ const productSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
-      required: true,
+    },
+    photoId: {
+      type: String,
     },
     shipping: {
       required: false,

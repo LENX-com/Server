@@ -1,7 +1,9 @@
 @import "src/variables.scss";
 
 .sidebar{
-    background: $black;
+    background: $dark-gradient;
+    box-shadow: $dark-shadow;
+    z-index: 99;
    
     a.active {
         color:$orange;
@@ -10,8 +12,9 @@
         color:$gray;
 
         &:hover{
-            color:$orange;
+            color:$orange;  
         }
     }
-    
+      
 }
+

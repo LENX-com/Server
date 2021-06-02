@@ -3,27 +3,37 @@ const { sendEmail } = require("../utils/email");
 const Product = require("../models/product");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
+exports.allOrder = async (req, res) => {
+  try {
+    const order = await Order.find().populate("product").populate("userId");
+    return res.status(200).json({ data: order });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: error });
+  }
+};
+
 //create order
 exports.createOrder = async (req, res) => {
   const carts = await CartItem.find({ userId: req.user._id });
   try {
     const { ...args } = req.body;
-    args.user = req.user._id;
-    args.product = carts;
+    args.userId = req.user._id;
+    args.product = carts.map((item) => item.productId);
 
     const newOrder = await Order.create(args);
     if (!newOrder) {
       return res.status(400).json({ error: "order failed" });
     }
-    await sendEmail(
-      req.user.email,
-      "Order created successfully",
-      {
-        name: "new charge",
-        link: "order link",
-      },
-      "../helpers/templates/order.ejs"
-    );
+    // await sendEmail(
+    //   req.user.email,
+    //   "Order created successfully",
+    //   {
+    //     name: "new charge",
+    //     link: "order link",
+    //   },
+    //   "../helpers/templates/order.ejs"
+    // );
     return res
       .status(200)
       .json({ data: newOrder, msg: "order initiated succesfully" });
@@ -48,13 +58,27 @@ exports.OrderByUser = async (req, res) => {
   }
 };
 
+//get all orders by admin user
+exports.OrderByAdmin = async (req, res) => {
+  const orders = await Order.find({ authorId: req.user._id });
+  try {
+    if (!orders.length) {
+      return res.status(400).json({ error: "No order yet" });
+    }
+    return res.status(200).json({ data: orders });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: error });
+  }
+};
+
 //get order by id
 exports.Orderbyid = async (req, res) => {
   const order = await Order.find({
     $and: [{ _id: req.params.orderId }, { user: req.user._id }],
   });
   try {
-    if (order < 1) {
+    if (!order.length) {
       return res.status(400).json({ error: "Resources not found" });
     }
     return res.status(200).json({ data: order });
@@ -95,7 +119,7 @@ exports.UpdateOrderStatus = async (req, res) => {
 exports.purchaseHistory = async (req, res) => {
   const order = await Order.find();
   try {
-    if (order < 1) {
+    if (!order.length) {
       return res.status(400).json({ error: "no orders for now" });
     }
     return res.status(200).json({ data: order });
@@ -103,6 +127,9 @@ exports.purchaseHistory = async (req, res) => {
     console.log(error);
     return res.status(500).json({ error: error });
   }
+};
+exports.getStatusValues = (req, res) => {
+  res.json(Order.schema.path("status").enumValues);
 };
 
 // ***************************************************************************************************
@@ -186,10 +213,6 @@ exports.listOrders = (req, res) => {
       }
       res.json(orders);
     });
-};
-
-exports.getStatusValues = (req, res) => {
-  res.json(Order.schema.path("status").enumValues);
 };
 
 exports.updateOrderStatus = (req, res) => {

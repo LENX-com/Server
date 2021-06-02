@@ -51,22 +51,22 @@ App.set("view engine", "ejs");
 App.get("/", (req, res) =>
   res.json({ message: "Welcome to LenX! - By Victor Alvarez" })
 );
-App.use("/api/auth", require("./routes/auth"));
-App.use("/api/user", require("./routes/user"));
-App.use("/api/categories", require("./routes/category"));
-App.use("/api/products", require("./routes/product"));
-App.use("/api/braintree", require("./routes/braintree"));
-App.use("/api/order", require("./routes/order"));
-App.use("/api/chat", require("./routes/chat"));
-App.use("/api/profile", require("./routes/profile"));
-App.use("/api/review", require("./routes/review"));
-App.use("/api/market", require("./routes/marketplace"));
+App.use("/api", require("./routes/auth"));
+App.use("/api", require("./routes/user"));
+App.use("/api", require("./routes/category"));
+App.use("/api", require("./routes/product"));
+App.use("/api", require("./routes/braintree"));
+App.use("/api", require("./routes/order"));
+App.use("/api", require("./routes/chat"));
+App.use("/api", require("./routes/profile"));
+App.use("/api", require("./routes/review"));
+App.use("/api", require("./routes/marketplace"));
 
 // Initialise passport middleware
 App.use(passport.initialize());
 require("./middlewares/jwt")(passport);
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 
 http.listen(port, () => {
   console.log(`Server hosted on: http://localhost:${port}`);

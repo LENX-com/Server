@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Layout from '../components/layout/Layout';
+import Layout from '../marketplace/components/layout/Layout';
 import { isAuthenticated } from "../actions";
 import { Link } from "react-router-dom";
 import { listOrders, getStatusValues, updateOrderStatus } from "./ApiAdmin";
@@ -12,7 +12,8 @@ const Orders = () => {
     const { user, token } = isAuthenticated();
 
     const loadOrders = () => {
-        listOrders(user._id, token).then(data => {
+        listOrders( token).then(resp => {
+            const {data} = resp
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -22,7 +23,8 @@ const Orders = () => {
     };
 
     const loadStatusValues = () => {
-        getStatusValues(user._id, token).then(data => {
+        getStatusValues( token).then(data => {
+
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -63,7 +65,7 @@ const Orders = () => {
     );
 
     const handleStatusChange = (e, orderId) => {
-        updateOrderStatus(user._id, token, orderId, e.target.value).then(
+        updateOrderStatus(token, orderId, e.target.value).then(
             data => {
                 if (data.error) {
                     console.log("Status update failed");
@@ -102,7 +104,7 @@ const Orders = () => {
                 <div>
                     {showOrdersLength()}
 
-                    {orders.map((o, oIndex) => {
+                    {orders && orders.map((o, oIndex) => {
                         return (
                             <div
                                 className="mt-5"
@@ -125,7 +127,7 @@ const Orders = () => {
                                         Amount: ${o.amount}
                                     </li>
                                     <li className="list-group-item">
-                                        Ordered by: {o.user.name}
+                                        Ordered by: {o.userId.name}
                                     </li>
                                     <li className="list-group-item">
                                         Ordered on:{" "}
@@ -138,10 +140,10 @@ const Orders = () => {
 
                                 <h3>
                                     Total products in the order:{" "}
-                                    {o.products.length}
+                                    {o.product.length}
                                 </h3>
 
-                                {o.products.map((p, pIndex) => (
+                                {o.product.map((p, pIndex) => (
                                     <div
                                         className="mb-4"
                                         key={pIndex}
@@ -152,7 +154,7 @@ const Orders = () => {
                                     >
                                         {showInput("Product name", p.name)}
                                         {showInput("Product price", p.price)}
-                                        {showInput("Product total", p.count)}
+                                        {/* {showInput("Product total", p.count)} */}
                                         {showInput("Product Id", p._id)}
                                     </div>
                                 ))}

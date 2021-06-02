@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../components/layout/Layout';
+import Layout from '../marketplace/components/layout/Layout';
 import { isAuthenticated } from '../actions';
 import { Link } from 'react-router-dom';
 import { createProduct, getCategories } from './ApiAdmin';
@@ -13,7 +13,7 @@ const AddProduct = () => {
         category: '',
         shipping: '',
         quantity: '',
-        photo: '',
+        file: '',
         loading: false,
         error: '',
         createdProduct: '',
@@ -45,28 +45,29 @@ const AddProduct = () => {
             } else {
                 setValues({
                     ...values,
-                    categories: data,
+                    categories: data.data,
                     formData: new FormData()
                 });
             }
         });
     };
+    console.log(categories)
 
     useEffect(() => {
         init();
     }, []);
 
     const handleChange = name => event => {
-        const value = name === 'photo' ? event.target.files[0] : event.target.value;
+        const value = name === 'file' ? event.target.files[0] : event.target.value;
         formData.set(name, value);
         setValues({ ...values, [name]: value });
     };
-
+  
     const clickSubmit = event => {
         event.preventDefault();
         setValues({ ...values, error: '', loading: true });
-
-        createProduct(user._id, token, formData).then(data => {
+      
+        createProduct( token, formData).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
@@ -74,7 +75,7 @@ const AddProduct = () => {
                     ...values,
                     name: '',
                     description: '',
-                    photo: '',
+                    file: '',
                     price: '',
                     quantity: '', 
                     loading: false,
@@ -89,7 +90,7 @@ const AddProduct = () => {
             <h4>Post Photo</h4>
             <div className="form-group">
                 <label className="btn">
-                    <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" />
+                    <input onChange={handleChange('file')} type="file" name="file" accept="image/*" />
                 </label>
             </div>
 

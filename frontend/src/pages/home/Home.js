@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import {getProducts} from '../../components/ApiCore'
-import ProductCard from '../../components/product/ProductCard' 
-import CategoryList from '../../components/category/CategoryList'
+import {getProducts} from '../../marketplace/components/ApiCore'
+import ProductCard from '../../marketplace/components/product/ProductCard' 
+import CategoryList from '../../marketplace/components/category/CategoryList'
 
 function Home() {
     const [ producstBySell, setProductsBySell ] = useState([])
@@ -13,7 +13,7 @@ function Home() {
             if(data.error) {
                 setError(data.error)
             } else {
-                setProductsBySell(data.data)
+                setProductsBySell(data)
                 console.log(data, "data for produt by sell")
             }
         })
@@ -24,7 +24,7 @@ function Home() {
             if(data.error) {
                 setError(data.error)
             } else {
-                setProducstByArrival (data.data)
+                setProducstByArrival (data)
                 console.log(data, "data for produt by arrival")
             }
         })

@@ -11,6 +11,9 @@ const StorySchema = new mongoose.Schema(
     url: {
       type: String,
     },
+    urlId: {
+      type: String,
+    },
     userId: {
       type: ObjectId,
       ref: "User",
@@ -152,7 +155,6 @@ userSchema.virtual("review", {
   foreignField: "userId",
   justOne: false,
 });
-
 
 //Virtual Fields
 userSchema
