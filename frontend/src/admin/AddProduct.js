@@ -18,7 +18,7 @@ const AddProduct = () => {
         error: '',
         createdProduct: '',
         redirectToProfile: false,
-        formData: ''
+        formData: new FormData()
     });
 
     const { user, token } = isAuthenticated();
@@ -46,7 +46,7 @@ const AddProduct = () => {
                 setValues({
                     ...values,
                     categories: data.data,
-                    formData: new FormData()
+                    formData
                 });
             }
         });
@@ -62,7 +62,7 @@ const AddProduct = () => {
         formData.set(name, value);
         setValues({ ...values, [name]: value });
     };
-  
+
     const clickSubmit = event => {
         event.preventDefault();
         setValues({ ...values, error: '', loading: true });
