@@ -151,7 +151,7 @@ const Shop = () => {
           <hr />
           {loadMoreButton()}
         </div>
-      </div>
+      </div>  
     </div>
   );
 };

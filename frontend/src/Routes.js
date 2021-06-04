@@ -28,6 +28,7 @@ import Manufacturer from "./manufacturer/Manufacturer";
 function Routes() {
   return (
     <>
+    
       <Header />
       <Switch>
         <Route path="/" exact component={Home} />

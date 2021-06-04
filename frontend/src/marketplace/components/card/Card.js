@@ -97,8 +97,7 @@ const addToCart = () => {
     );
   };
   return (
-<<<<<<< HEAD
-    <div className="bg-white shadow-xl rounded-lg overflow-hidden">
+      <div className="bg-white shadow-xl rounded-lg overflow-hidden">
                 <div className="bg-cover bg-center p-4" >
                   {shouldRedirect(redirect)}
                   <Link to={`/product/${product._id}`} >
@@ -129,19 +128,6 @@ const addToCart = () => {
                         </div>
                             <div className="flex">
                             {showAddToCartBtn(showAddToCartButton)}
-=======
-    <div className="card ">
-      <div className="card-header">{product.name}</div>
-      <div className="card-body">
-        {shouldRedirect(redirect)}
-        <ShowImage clase= "image-card" item={product} url={product.photo} />
-        <p className="card-p">{product.description.substring(0, 100)} </p>
-        <p className="card-p">$ {product.price}</p>
-        <p>Category: {product.category && product.category.name}</p>
-        <p>Added on {moment(product.createdAt).fromNow()}</p>
-        {showStock(product.quantity)}
-        <br />
->>>>>>> f755f8a95e2de9a82d61107f130123b158c9d1bc
  
                             {showRemoveButton(showRemoveProductButton)}
                     

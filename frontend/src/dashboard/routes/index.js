@@ -16,6 +16,8 @@ const Chat = lazy(() => import('../pages/Chat'))
 const Wishlist = lazy(() => import('../pages/Wishlist'))
 const AddNewPost = lazy(() => import('../pages/AddNewPost'))
 const Profile = lazy(() => import('../pages/Profile'))
+const Reviews = lazy(() => import('../pages/Reviews'))
+const FAQ = lazy(() => import('../pages/FAQ'))
 
 
 const routes = 
@@ -80,6 +82,14 @@ const routes =
     path: `${address}/wishlist`,
     component: Wishlist,
   },
+  {
+    path: `${address}/my-reviews`,
+    component: Reviews,
+  },
+    {
+    path: `${address}/faq`,
+    component: FAQ,
+  }
 ]
 
 export default routes

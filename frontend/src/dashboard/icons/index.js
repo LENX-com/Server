@@ -26,6 +26,9 @@ import { ReactComponent as DropdownIcon } from './dropdown.svg'
 import { ReactComponent as OutlinePersonIcon } from './outlinePerson.svg'
 import { ReactComponent as OutlineCogIcon } from './outlineCog.svg'
 import { ReactComponent as OutlineLogoutIcon } from './outlineLogout.svg'
+import { ReactComponent as order } from './order.svg'
+import { ReactComponent as conversation } from './conversation.svg'
+import { ReactComponent as Information } from './information.svg'
 
 export {
   ButtonsIcon,
@@ -56,4 +59,7 @@ export {
   OutlinePersonIcon,
   OutlineCogIcon,
   OutlineLogoutIcon,
+  order,
+  conversation,
+  Information
 }
