@@ -15,17 +15,29 @@ const colors = require('tailwindcss/colors')
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-
-      black: colors.black,
       white: colors.white,
+      blue: colors.blue,
+      black: colors.black,
       gray: colors.coolGray,
       red: colors.red,
       yellow: colors.amber,
       green: colors.emerald,
-      blue: colors.blue,
       indigo: colors.indigo,
       purple: colors.violet,
       pink: colors.pink,
+      orange: {
+        dark: '#ff480e',
+        DEFAULT: '#ff572',
+        light: '#ffa284',
+      },
+      Blue:{
+        light: '#99dee1',
+        DEFAULT:'#00adb5',
+        dark: '#008a90',
+
+      },
+      Black:"#222831",
+      lightBlack:"393e46",
     },
     spacing: {
       px: '1px',
@@ -157,7 +169,9 @@ const colors = require('tailwindcss/colors')
     },
     boxShadow: {
       sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+      button: "rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px",
       DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+      hover: "rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 3px 9px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px",
       md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
       lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
       xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
@@ -596,7 +610,7 @@ const colors = require('tailwindcss/colors')
     placeholderColor: (theme) => theme('colors'),
     placeholderOpacity: (theme) => theme('opacity'),
     ringColor: (theme) => ({
-      DEFAULT: theme('colors.blue.500', '#3b82f6'),
+      DEFAULT: theme('colors.blue.500', '#00adb5'),
       ...theme('colors'),
     }),
     ringOffsetColor: (theme) => theme('colors'),

@@ -29,6 +29,7 @@ import Categories from "./pages/categories/Categories";
 function Routes() {
   return (
     <>
+    
       <Header />
       <Switch>
         <Route path="/" exact component={Home} />

@@ -107,7 +107,7 @@ function Header ( { history } ) {
               </DropdownItem>
             </Dropdown>
           </li>
-          {/* <!-- Profile menu --> */}
+          {/* <!-- Profile menu --> */}  
           <li className="relative">
             <button
               className="rounded-full focus:shadow-outline-purple focus:outline-none"
@@ -134,6 +134,10 @@ function Header ( { history } ) {
               <DropdownItem tag="a">
                 <OutlineCogIcon className="w-4 h-4 mr-3" aria-hidden="true" />
                 <NavLink to={`${path}/settings`}>Settings</NavLink>
+              </DropdownItem>
+               <DropdownItem tag="a">
+                <OutlinePersonIcon className="w-4 h-4 mr-3" aria-hidden="true" />
+                <NavLink to={`${path}/faq`}>FAQ</NavLink>
               </DropdownItem>
               {isAuthenticated() && (
               <DropdownItem

@@ -46,12 +46,11 @@ function SidebarContent() {
         )}
       </ul>
       <div className="px-6 my-6">
-        <Button>
+        <Link to="/">
+        <Button className="link-marketplace">
           Explore Marketplace
-          <span className="ml-2" aria-hidden="true">
-            +
-          </span>
         </Button>
+        </Link>
       </div>
     </div>
   )
