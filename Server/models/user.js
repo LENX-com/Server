@@ -155,6 +155,20 @@ userSchema.virtual("review", {
   foreignField: "userId",
   justOne: false,
 });
+//virtual fields
+userSchema.virtual("following", {
+  localField: "_id",
+  ref: "following",
+  foreignField: "userId",
+  justOne: false,
+});
+//virtual fields
+userSchema.virtual("follower", {
+  localField: "_id",
+  ref: "follower",
+  foreignField: "userId",
+  justOne: false,
+});
 
 //Virtual Fields
 userSchema
