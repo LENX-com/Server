@@ -96,12 +96,8 @@ const Card = ({
     );
   };
   return (
-<<<<<<< HEAD
     <div className="bg-white shadow-xl rounded-lg overflow-hidden">
-=======
-<<<<<<< HEAD
       <div className="bg-white shadow-xl rounded-lg overflow-hidden">
->>>>>>> 286c0c357920b915ed3348499632b2aa128a478f
                 <div className="bg-cover bg-center p-4" >
                   {shouldRedirect(redirect)}
                   <Link to={`/product/${product._id}`} >
@@ -129,20 +125,17 @@ const Card = ({
                         <div>
                             <p className="text-sm text-gray-700">$ {product.price}</p>
                         </div>
-                        </div>
-                            <div className="flex">
-                            {showAddToCartBtn(showAddToCartButton)}
- 
-                            {showRemoveButton(showRemoveProductButton)}
-                    
-                            {showCartUpdateOptions(cartUpdate)}
-                            </div>
+                    </div>
+                    <div className="flex">
+                      {showAddToCartBtn(showAddToCartButton)}
+
+                      {showRemoveButton(showRemoveProductButton)}
+              
+                      {showCartUpdateOptions(cartUpdate)}
+                    </div>
                 </div>
             </div>
-<<<<<<< HEAD
-=======
-=======
-    <div className="card ">
+    <div className="card">
       <div className="card-header">{product.name}</div>
       <div className="card-body">
         {shouldRedirect(redirect)}
@@ -159,11 +152,7 @@ const Card = ({
         {showCartUpdateOptions(cartUpdate)}
       </div>
     </div>
->>>>>>> 905696a5f226256ebc647486bfd8a22635c6bb25
->>>>>>> 286c0c357920b915ed3348499632b2aa128a478f
   );
-  
-
 };
 
 export default Card;

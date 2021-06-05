@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Slider = () => {
+const CategoryCard = () => {
     return (
         <div>
-            <h1>SliderCard</h1>
+            
         </div>
     );
 };
 
-export default Slider;
+export default CategoryCard;
