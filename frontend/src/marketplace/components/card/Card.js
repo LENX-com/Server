@@ -152,6 +152,7 @@ const Card = ({
         {showCartUpdateOptions(cartUpdate)}
       </div>
     </div>
+    </div>
   );
 };
 
