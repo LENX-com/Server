@@ -14,6 +14,45 @@ import drink1 from "../../assets/drink.jpg";
 import Card from "../../marketplace/components/card/Card";
 import ShowImage from "../../marketplace/components/card/ShowImage";
 
+const dummystories = [
+  {
+    url: "https://i.imgur.com/aq39RMA.jpg",
+    id: "ehwkgfjw",
+  },
+  {
+    url: "https://i.imgur.com/aq39RMA.jpg",
+    id: "ehwkgfjw",
+  },
+  {
+    url: "https://i.imgur.com/aq39RMA.jpg",
+    id: "ehwkgfjw",
+  },
+  {
+    url: "https://i.imgur.com/aq39RMA.jpg",
+    id: "ehwkgfjw",
+  },
+  {
+    url: "https://i.imgur.com/aq39RMA.jpg",
+    id: "ehwkgfjw",
+  },
+  {
+    url: "https://i.imgur.com/aq39RMA.jpg",
+    id: "ehwkgfjw",
+  },
+];
+
+const dummyProductImage = [
+  {
+    url: drink1,
+  },
+  {
+    url: drink1,
+  },
+  {
+    url: drink1,
+  },
+];
+
 const Product = (props) => {
   const [product, setProduct] = useState({});
   const [relatedProduct, setRelatedProduct] = useState([]);
@@ -45,26 +84,18 @@ const Product = (props) => {
   }, [props]);
 
   return (
-    <section style={{ background: "white", width: "100%", overflow: "hidden" }}>
+    <section style={{ background: "white", width: "100%", overflow: "hidden", paddingTop:"2rem" }}>
       <div className="md:flex border-b-2 ">
         <div className="w-full md:w-3/6 border-b-2 md:border-b-0 pb-4">
           <ul className="flex">
             <Swiper slidesPerView={1} spaceBetween={2} freeMode={true}>
-              <SwiperSlide className="flex">
-                <li>
-                  <img src={drink1} alt="" />
-                </li>
-              </SwiperSlide>
-              <SwiperSlide className="flex">
-                <li>
-                  <img src={drink1} alt="" />
-                </li>
-              </SwiperSlide>
-              <SwiperSlide className="flex">
-                <li>
-                  <img src={drink1} alt="" />
-                </li>
-              </SwiperSlide>
+              {dummyProductImage.map((item, i) => (
+                <SwiperSlide className="flex" key={i}>
+                  <li>
+                    <img src={item.url} alt="" />
+                  </li>
+                </SwiperSlide>
+              ))}
             </Swiper>
           </ul>
         </div>
