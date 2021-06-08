@@ -96,12 +96,7 @@ const Card = ({
     );
   };
   return (
-<<<<<<< HEAD
     <div className="bg-white shadow-xl rounded-lg overflow-hidden">
-=======
-<<<<<<< HEAD
-      <div className="bg-white shadow-xl rounded-lg overflow-hidden">
->>>>>>> 286c0c357920b915ed3348499632b2aa128a478f
                 <div className="bg-cover bg-center p-4" >
                   {shouldRedirect(redirect)}
                   <Link to={`/product/${product._id}`} >
@@ -139,28 +134,23 @@ const Card = ({
                             </div>
                 </div>
             </div>
-<<<<<<< HEAD
-=======
-=======
-    <div className="card ">
-      <div className="card-header">{product.name}</div>
-      <div className="card-body">
-        {shouldRedirect(redirect)}
-        <ShowImage clase="image-card" item={product} url={product.photo} />
-        <p className="card-p">{product.description.substring(0, 100)} </p>
-        <p className="card-p">$ {product.price}</p>
-        <p>Category: {product.category && product.category.name}</p>
-        <p>Added on {moment(product.createdAt).fromNow()}</p>
-        {showStock(product.quantity)}
-        <br />
+    // <div className="card ">
+    //   <div className="card-header">{product.name}</div>
+    //   <div className="card-body">
+    //     {shouldRedirect(redirect)}
+    //     <ShowImage clase="image-card" item={product} url={product.photo} />
+    //     <p className="card-p">{product.description.substring(0, 100)} </p>
+    //     <p className="card-p">$ {product.price}</p>
+    //     <p>Category: {product.category && product.category.name}</p>
+    //     <p>Added on {moment(product.createdAt).fromNow()}</p>
+    //     {showStock(product.quantity)}
+    //     <br />
 
-        {showRemoveButton(showRemoveProductButton)}
+    //     {showRemoveButton(showRemoveProductButton)}
 
-        {showCartUpdateOptions(cartUpdate)}
-      </div>
-    </div>
->>>>>>> 905696a5f226256ebc647486bfd8a22635c6bb25
->>>>>>> 286c0c357920b915ed3348499632b2aa128a478f
+    //     {showCartUpdateOptions(cartUpdate)}
+    //   </div>
+    // </div>
   );
   
 
