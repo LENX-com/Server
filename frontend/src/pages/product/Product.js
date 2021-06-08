@@ -14,7 +14,7 @@ import drink1 from "../../assets/drink.jpg";
 import Card from "../../marketplace/components/card/Card";
 import ShowImage from "../../marketplace/components/card/ShowImage";
 
-const dummystories = [
+const reviews = [
   {
     url: "https://i.imgur.com/aq39RMA.jpg",
     id: "ehwkgfjw",
@@ -84,7 +84,14 @@ const Product = (props) => {
   }, [props]);
 
   return (
-    <section style={{ background: "white", width: "100%", overflow: "hidden", paddingTop:"2rem" }}>
+    <section
+      style={{
+        background: "white",
+        width: "100%",
+        overflow: "hidden",
+        paddingTop: "2rem",
+      }}
+    >
       <div className="md:flex border-b-2 ">
         <div className="w-full md:w-3/6 border-b-2 md:border-b-0 pb-4">
           <ul className="flex">
@@ -122,177 +129,27 @@ const Product = (props) => {
               <div className="border-b-2 md:w-3/6 overflow-hidden">
                 <ul className="flex">
                   <Swiper slidesPerView={6} spaceBetween={0} freeMode={true}>
-                    <SwiperSlide>
-                      <li className="flex flex-col items-center">
-                        <div className="rounded-full bg-gradient-to-br from-yellow-200 to-red-500 p-1">
-                          {" "}
-                          <a
-                            href="#div"
-                            className="bg-white p-1 rounded-full block transform transition hover:rotate-6"
-                          >
+                    {reviews.map((item, i) => (
+                      <SwiperSlide key={i}>
+                        <li className="flex flex-col items-center">
+                          <div className="rounded-full bg-gradient-to-br from-yellow-200 to-red-500 p-1">
                             {" "}
-                            <img
-                              src="https://i.imgur.com/aq39RMA.jpg"
-                              class="rounded-full"
-                              alt="status"
-                              width="60"
-                            />{" "}
-                          </a>{" "}
-                        </div>{" "}
-                      </li>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <li className="flex flex-col items-center">
-                        <div className="rounded-full bg-gradient-to-br from-yellow-200 to-red-500 p-1">
-                          {" "}
-                          <a
-                            href="#div"
-                            className="bg-white p-1 rounded-full block transform transition hover:rotate-6"
-                          >
-                            {" "}
-                            <img
-                              src="https://i.imgur.com/aq39RMA.jpg"
-                              class="rounded-full"
-                              alt="status"
-                              width="60"
-                            />{" "}
-                          </a>{" "}
-                        </div>{" "}
-                      </li>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <li className="flex flex-col items-center">
-                        <div className="rounded-full bg-gradient-to-br from-yellow-200 to-red-500 p-1">
-                          {" "}
-                          <a
-                            href="#div"
-                            className="bg-white p-1 rounded-full block transform transition hover:rotate-6"
-                          >
-                            {" "}
-                            <img
-                              src="https://i.imgur.com/aq39RMA.jpg"
-                              class="rounded-full"
-                              alt="status"
-                              width="60"
-                            />{" "}
-                          </a>{" "}
-                        </div>{" "}
-                      </li>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <li className="flex flex-col items-center">
-                        <div className="rounded-full bg-gradient-to-br from-yellow-200 to-red-500 p-1">
-                          {" "}
-                          <a
-                            href="#div"
-                            className="bg-white p-1 rounded-full block transform transition hover:rotate-6"
-                          >
-                            {" "}
-                            <img
-                              src="https://i.imgur.com/aq39RMA.jpg"
-                              class="rounded-full"
-                              alt="status"
-                              width="60"
-                            />{" "}
-                          </a>{" "}
-                        </div>{" "}
-                      </li>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <li className="flex flex-col items-center">
-                        <div className="rounded-full bg-gradient-to-br from-yellow-200 to-red-500 p-1">
-                          {" "}
-                          <a
-                            href="#div"
-                            className="bg-white p-1 rounded-full block transform transition hover:rotate-6"
-                          >
-                            {" "}
-                            <img
-                              src="https://i.imgur.com/aq39RMA.jpg"
-                              class="rounded-full"
-                              alt="status"
-                              width="60"
-                            />{" "}
-                          </a>{" "}
-                        </div>{" "}
-                      </li>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <li className="flex flex-col items-center">
-                        <div className="rounded-full bg-gradient-to-br from-yellow-200 to-red-500 p-1">
-                          {" "}
-                          <a
-                            href="#div"
-                            className="bg-white p-1 rounded-full block transform transition hover:rotate-6"
-                          >
-                            {" "}
-                            <img
-                              src="https://i.imgur.com/aq39RMA.jpg"
-                              class="rounded-full"
-                              alt="status"
-                              width="60"
-                            />{" "}
-                          </a>{" "}
-                        </div>{" "}
-                      </li>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <li className="flex flex-col items-center">
-                        <div className="rounded-full bg-gradient-to-br from-yellow-200 to-red-500 p-1">
-                          {" "}
-                          <a
-                            href="#div"
-                            className="bg-white p-1 rounded-full block transform transition hover:rotate-6"
-                          >
-                            {" "}
-                            <img
-                              src="https://i.imgur.com/aq39RMA.jpg"
-                              class="rounded-full"
-                              alt="status"
-                              width="60"
-                            />{" "}
-                          </a>{" "}
-                        </div>{" "}
-                      </li>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <li className="flex flex-col items-center">
-                        <div className="rounded-full bg-gradient-to-br from-yellow-200 to-red-500 p-1">
-                          {" "}
-                          <a
-                            href="#div"
-                            className="bg-white p-1 rounded-full block transform transition hover:rotate-6"
-                          >
-                            {" "}
-                            <img
-                              src="https://i.imgur.com/aq39RMA.jpg"
-                              class="rounded-full"
-                              alt="status"
-                              width="60"
-                            />{" "}
-                          </a>{" "}
-                        </div>{" "}
-                      </li>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <li className="flex flex-col items-center">
-                        <div className="rounded-full bg-gradient-to-br from-yellow-200 to-red-500 p-1">
-                          {" "}
-                          <a
-                            href="#div"
-                            className="bg-white p-1 rounded-full block transform transition hover:rotate-6"
-                          >
-                            {" "}
-                            <img
-                              src="https://i.imgur.com/aq39RMA.jpg"
-                              class="rounded-full"
-                              alt="status"
-                              width="60"
-                            />{" "}
-                          </a>{" "}
-                        </div>{" "}
-                      </li>
-                    </SwiperSlide>
+                            <a
+                              href="#div"
+                              className="bg-white p-1 rounded-full block transform transition hover:rotate-6"
+                            >
+                              {" "}
+                              <img
+                                src={item.url}
+                                class="rounded-full"
+                                alt="status"
+                                width="60"
+                              />{" "}
+                            </a>{" "}
+                          </div>{" "}
+                        </li>
+                      </SwiperSlide>
+                    ))}
                   </Swiper>
                 </ul>
               </div>
