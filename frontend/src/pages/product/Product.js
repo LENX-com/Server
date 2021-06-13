@@ -1,12 +1,74 @@
 import React, { useState, useEffect } from "react";
-import { read, listRelated } from "../../marketplace/components/ApiCore";
+import {
+  read,
+  listRelated,
+  getReviews,
+  addVote,
+  downVote,
+} from "../../marketplace/components/ApiCore";
+import ProductCard from "../../marketplace/components/product/ProductCard";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import Stories from "react-insta-stories";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { isAuthenticated } from "../../actions";
+
+// Import Swiper styles
+import "swiper/swiper.min.css";
+import "swiper/components/pagination/pagination.min.css";
+
+// import Swiper core and required modules
+import SwiperCore, { Pagination } from "swiper/core";
+import drink1 from "../../assets/drink.jpg";
 import Card from "../../marketplace/components/card/Card";
 import ShowImage from "../../marketplace/components/card/ShowImage";
 
+const reviews = [
+  {
+    url: drink1,
+    id: 1,
+  },
+  {
+    url: drink1,
+    id: 2,
+  },
+  {
+    url: drink1,
+    id: 3,
+  },
+  {
+    url: "https://i.imgur.com/aq39RMA.jpg",
+    id: 4,
+  },
+  {
+    url: "https://i.imgur.com/aq39RMA.jpg",
+    id: 5,
+  },
+  {
+    url: "https://i.imgur.com/aq39RMA.jpg",
+    id: 6,
+  },
+];
+
+const dummyProductImage = [
+  {
+    url: drink1,
+  },
+  {
+    url: drink1,
+  },
+  {
+    url: drink1,
+  },
+];
+
 const Product = (props) => {
+  const token = isAuthenticated() && isAuthenticated().token;
   const [product, setProduct] = useState({});
-  const [relatedProduct, setRelatedProduct] = useState([]);
+  const [relatedProduct, setRelatedProduct] = useState();
+  const [allReviews, setAllReviews] = useState();
   const [error, setError] = useState(false);
+  const [showReview, setShowReview] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState();
 
   const loadSingleProduct = (productId) => {
     read(productId).then((resp) => {
@@ -28,14 +90,181 @@ const Product = (props) => {
     });
   };
 
+  const loadReviews = (productId) => {
+    getReviews(productId).then((resp) => {
+      setAllReviews(resp.data);
+    });
+  };
+
   useEffect(() => {
     const productId = props.match.params.productId;
     loadSingleProduct(productId);
+    loadReviews(productId);
   }, [props]);
+
+  const handleUpvote = (reviewId) => {
+    addVote(reviewId, token).then((resp) => {
+      if (resp.error) return;
+      setCurrentStatus([resp]);
+      console.log(resp);
+    });
+  };
+  const handleDownvote = (reviewId) => {
+    downVote(reviewId, token).then((resp) => {
+      if (resp.error) return;
+      setCurrentStatus([resp]);
+      console.log(resp);
+    });
+  };
+  const handleReviewView = (id) => {
+    const resp = allReviews.find((item) => item._id === id);
+    setCurrentStatus([resp]);
+    setShowReview(!showReview);
+  };
+
+  const handlemodalview = (e) => {
+    if (e.target === e.currentTarget) {
+      setShowReview((prev) => !prev);
+    }
+  };
+
+  const ShowModal = () => (
+    <div className="form-container">
+      <div className="form-wrapper">
+        <div>
+          <button onClick={(e) => handlemodalview(e)}>Back</button>
+          <div>
+            <button onClick={() => handleDownvote(currentStatus[0]._id)}>
+              -
+            </button>
+            <span>{currentStatus[0].votes}</span>
+            <button onClick={() => handleUpvote(currentStatus[0]._id)}>
+              +
+            </button>
+          </div>
+        </div>
+        {currentStatus.length && (
+          <Stories stories={currentStatus} width="100%" />
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <>
-      <section className="text-gray-600 body-font overflow-hidden">
+      {showReview && <ShowModal />}
+      <section
+        style={{
+          background: "white",
+          width: "100%",
+          overflow: "hidden",
+          paddingTop: "2rem",
+        }}
+      >
+        <div className="md:flex border-b-2 ">
+          <div className="w-full md:w-3/6 border-b-2 md:border-b-0 pb-4">
+            <ul className="flex">
+              <Swiper
+                slidesPerView={1}
+                spaceBetween={2}
+                freeMode={true}
+                pagination={{ clickable: true }}
+              >
+                {dummyProductImage.map((item, i) => (
+                  <SwiperSlide className="flex" key={i}>
+                    <li>
+                      <img src={item.url} alt="" />
+                    </li>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </ul>
+          </div>
+          <div>
+            <div
+              className="flex flex-col my-8 md:w-3/6
+          
+          "
+            >
+              <p>
+                1850 By Folgers Sweet Cream Flavored Iced Coffee Beverage , 15
+                Fluid Ounces (Pack of 12), Ready to Drink
+              </p>
+              <span className="text-blue-400">Visit Adidas store</span>
+            </div>
+
+            <div>
+              <h2>Reviews</h2>
+              <div className="md:flex ">
+                <div className="border-b-2 md:w-3/6 overflow-hidden">
+                  <ul className="flex">
+                    <Swiper slidesPerView={6} spaceBetween={0} freeMode={true}>
+                      {allReviews &&
+                        allReviews.map((item, i) => (
+                          <SwiperSlide
+                            key={i}
+                            onClick={(e) => handleReviewView(item._id)}
+                          >
+                            <li
+                              className={`${
+                                showReview
+                                  ? "hidden"
+                                  : "flex flex-col items-center"
+                              }`}
+                            >
+                              <div className="rounded-full bg-gradient-to-br from-yellow-200 to-red-500 p-1">
+                                {" "}
+                                <a
+                                  href="#div"
+                                  className="bg-white p-1 rounded-full block transform transition hover:rotate-6"
+                                >
+                                  {" "}
+                                  <img
+                                    src={item.url}
+                                    class="rounded-full"
+                                    alt="status"
+                                    width="60"
+                                  />{" "}
+                                </a>{" "}
+                              </div>{" "}
+                            </li>
+                          </SwiperSlide>
+                        ))}
+                    </Swiper>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="md:w-3/6 ">
+              <Tabs className="mt-8">
+                <TabList>
+                  <Tab>About Item</Tab>
+                  <Tab>Product Description</Tab>
+                  <Tab>Product Details</Tab>
+                </TabList>
+                <TabPanel>blog items</TabPanel>
+                <TabPanel>status items</TabPanel>
+              </Tabs>
+            </div>
+          </div>
+        </div>
+        <div className="mt-8">
+          <h1>Related Products</h1>
+          {relatedProduct &&
+            relatedProduct.map((item, i) => (
+              <ProductCard product={item} key={i} />
+            ))}
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default Product;
+
+// eslint-disable-next-line no-lone-blocks
+{
+  /* <section className="text-gray-600 body-font overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <ShowImage
@@ -213,9 +442,5 @@ const Product = (props) => {
               <Card product={p} />
             </div>
           ))}
-      </div>
-    </>
-  );
-};
-
-export default Product;
+      </div>  */
+}

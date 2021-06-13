@@ -3,29 +3,105 @@
 @import "tailwindcss/utilities";
 @import "src/variables.scss";
 
-body{
-  background: $background-light!important;
+body {
+  background: $background-light !important;
 }
 
-*{
+* {
   box-sizing: border-box;
   font-family: sans-serif;
+  margin: 0;
+  padding: 0;
 }
+.custom-line,.custom-line2, .custom-line3{
+  position: relative;
+  z-index: 2;
+}
+.custom-line::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0.5rem;
+  left: 0;
+  right: 0;
+  width: 100%;
+  color: rgb(52, 104, 52);
+  background-color: rgb(121, 121, 121);
+  height: 1px;
+  display: flex;
+}
+.custom-line3::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0.5rem;
+ 
+  right: -50%;
+  width: 100%;
+  color: rgb(52, 104, 52);
+  background: $background-light;
+  height: 1px;
+  display: flex;
+}
+.custom-line2::before {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: -1;
+  height: 1px;
+  display: flex;
+}
+.form-container {
+  height: 100vh;
+  position: fixed;
+  z-index: 99999999999999999999999999999999999999999999999;
+  top: 0;
+  width: 100%;
+  background-color: $background-dark;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .form-wrapper {
+    button{
+      width:100px
+    }
+    display: flex;
+    flex-direction: column;
+    width: 98%;
+    margin: auto;
+    margin-bottom: 3rem;
+    border-radius: 5px;
+    padding: 30px;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    button {
+      padding: 5px;
+      border: 0.5px solid #bbf7e4;
+      background-image: linear-gradient(415deg, #edf9f5 0%, #f8fffc 74%);
+    }
+  }
+}
+
 
 @font-face {
   font-family: "Camphor";
-  src: url('https://lenx.co.uk/wp-content/fonts/Camphor%20W01%20Regular/CamphorW01-Regular.woff2') format('woff2'),
-    url('https://lenx.co.uk/wp-content/fonts/Camphor%20W01%20Regular/CamphorW01-Regular.woff') format('woff'),
-    url('https://lenx.co.uk/wp-content/fonts/Camphor%20W01%20Regular/CamphorW01-Regular.ttf') format('truetype'),
-    url('https://lenx.co.uk/wp-content/fonts/Camphor%20W01%20Regular/CamphorW01-Regular.svg') format('svg');
+  src: url("https://lenx.co.uk/wp-content/fonts/Camphor%20W01%20Regular/CamphorW01-Regular.woff2")
+      format("woff2"),
+    url("https://lenx.co.uk/wp-content/fonts/Camphor%20W01%20Regular/CamphorW01-Regular.woff")
+      format("woff"),
+    url("https://lenx.co.uk/wp-content/fonts/Camphor%20W01%20Regular/CamphorW01-Regular.ttf")
+      format("truetype"),
+    url("https://lenx.co.uk/wp-content/fonts/Camphor%20W01%20Regular/CamphorW01-Regular.svg")
+      format("svg");
   font-weight: normal;
   font-style: normal;
 }
 
 * {
-  font-family: 'Camphor',
-    'Open Sans',
-    'Segoe UI', 'sans-serif' !important;
+  font-family: "Camphor", "Open Sans", "Segoe UI", "sans-serif" !important;
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
@@ -39,7 +115,5 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Camphor',
-    'Open Sans',
-    'Segoe UI', 'sans-serif' !important;
+  font-family: "Camphor", "Open Sans", "Segoe UI", "sans-serif" !important;
 }

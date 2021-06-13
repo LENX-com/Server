@@ -207,9 +207,6 @@ exports.addWishlist = async (req, res) => {
   const product = await Product.findById(req.params.productId);
   const wish = await Wishlist.find({ productId: req.params.productId });
   try {
-    if (!product) {
-      return res.json({ error: "product not found" });
-    }
     if (wish.length > 1) {
       return res.status(400).json({ error: "wishlist already added" });
     }

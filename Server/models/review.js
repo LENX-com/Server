@@ -45,8 +45,9 @@ const reviewSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    asset: {
+    url: {
       type: String,
+      default: "https://i.imgur.com/aq39RMA.jpg",
     },
     votes: {
       type: Number,

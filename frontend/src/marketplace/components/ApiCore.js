@@ -1,5 +1,6 @@
 import { API } from "../../config";
 import queryString from "query-string";
+import axios from "axios";
 
 export const getProducts = (sortBy) => {
   return fetch(`${API}/products?sortBy=${sortBy}&order=desc&limit=6`, {
@@ -127,6 +128,66 @@ export const createOrder = (userId, token, createOrderData) => {
   })
     .then((response) => {
       return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const addWishList = (productId, token) => {
+  return fetch(`${API}/wishlist/create/${productId}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getReviews = (productId) => {
+  return fetch(`${API}/reviews/${productId}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const addVote = (reviewId, token) => {
+  return fetch(`${API}/review/vote`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ reviewId: reviewId, increase: 1 }),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => console.log(err));
+};
+export const downVote = (reviewId, token) => {
+  return fetch(`${API}/review/downvote`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ reviewId: reviewId, decrease: -1 }),
+  })
+    .then((res) => {
+      return res.json();
     })
     .catch((err) => console.log(err));
 };

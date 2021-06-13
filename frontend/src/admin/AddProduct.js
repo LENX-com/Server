@@ -5,86 +5,85 @@ import { Link } from "react-router-dom";
 import { createProduct, getCategories } from "./ApiAdmin";
 
 const AddProduct = () => {
-  const [values, setValues] = useState({
-    name: "",
-    description: "",
-    price: "",
-    categories: [],
-    category: "",
-    shipping: "",
-    quantity: "",
-    file: "",
-    loading: false,
-    error: "",
-    createdProduct: "",
-    redirectToProfile: false,
-    formData: new FormData(),
-  });
-
-  const { user, token } = isAuthenticated();
-  const {
-    name,
-    description,
-    price,
-    categories,
-    category,
-    shipping,
-    quantity,
-    loading,
-    error,
-    createdProduct,
-    redirectToProfile,
-    formData,
-  } = values;
-
-  // load categories and set form data
-  const init = () => {
-    getCategories().then((data) => {
-      if (data.error) {
-        setValues({ ...values, error: data.error });
-      } else {
-        setValues({
-          ...values,
-          categories: data.data,
-          formData,
-        });
-      }
+    const [values, setValues] = useState({
+        name: '',
+        description: '',
+        price: '',
+        categories: [],
+        category: '',
+        shipping: '',
+        quantity: '',
+        file: '',
+        loading: false,
+        error: '',
+        createdProduct: '',
+        redirectToProfile: false,
+        formData: new FormData()
     });
-  };
-  console.log(categories);
 
-  useEffect(() => {
-    init();
-  }, []);
+    const { user, token } = isAuthenticated();
+    const {
+        name,
+        description,
+        price,
+        categories,
+        category,
+        shipping,
+        quantity,
+        loading,
+        error,
+        createdProduct,
+        redirectToProfile,
+        formData
+    } = values;
 
-  const handleChange = (name) => (event) => {
-    const value = name === "file" ? event.target.files[0] : event.target.value;
-    console.log(event.target.files);
-    formData.set(name, value);
-    setValues({ ...values, [name]: value });
-  };
-
-  const clickSubmit = (event) => {
-    event.preventDefault();
-    setValues({ ...values, error: "", loading: true });
-
-    createProduct(token, formData).then((data) => {
-      if (data.error) {
-        setValues({ ...values, error: data.error });
-      } else {
-        setValues({
-          ...values,
-          name: "",
-          description: "",
-          file: "",
-          price: "",
-          quantity: "",
-          loading: false,
-          createdProduct: data.name,
+    // load categories and set form data
+    const init = () => {
+        getCategories().then(data => {
+            if (data.error) {
+                setValues({ ...values, error: data.error });
+            } else {
+                setValues({
+                    ...values,
+                    categories: data.data,
+                    formData
+                });
+            }
         });
-      }
-    });
-  };
+    };
+    console.log(categories)
+
+    useEffect(() => {
+        init();
+    }, []);
+
+    const handleChange = name => event => {
+        const value = name === 'file' ? event.target.files[0] : event.target.value;
+        formData.set(name, value);
+        setValues({ ...values, [name]: value });
+    };
+
+    const clickSubmit = event => {
+        event.preventDefault();
+        setValues({ ...values, error: '', loading: true });
+      
+        createProduct( token, formData).then(data => {
+            if (data.error) {
+                setValues({ ...values, error: data.error });
+            } else {
+                setValues({
+                    ...values,
+                    name: '',
+                    description: '',
+                    file: '',
+                    price: '',
+                    quantity: '', 
+                    loading: false,
+                    createdProduct: data.name
+                });
+            }
+        });
+      };
 
   const newPostForm = () => (
     <form className="form" onSubmit={clickSubmit}>

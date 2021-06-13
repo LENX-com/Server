@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import ShowImage from "../card/ShowImage";
+import { addWishList } from "../ApiCore";
 import { addItem, updateItem, removeItem } from "../cart/CartHelper";
+import { isAuthenticated } from "../../../actions";
 
 const ProductCard = ({
   product,
@@ -15,6 +17,7 @@ const ProductCard = ({
 }) => {
   const [redirect, setRedirect] = useState(false);
   const [count, setCount] = useState(product.count);
+  const token = isAuthenticated() && isAuthenticated().token;
 
   const showViewButton = (showViewProductButton) => {
     return (
@@ -90,11 +93,17 @@ const ProductCard = ({
           Remove Product
         </button>
       )
-    );  
+    );
+  };
+
+  const wishlist = (product) => {
+    addWishList(product, token).then((response) => {
+      console.log(response);
+    });
   };
   return (
     <div className="lg:w-1/4 md:w-1/2 p-4 w-full">
-      <a className="block relative h-48 rounded overflow-hidden">
+      <a className="block relative h-48 rounded overflow-hidden" href="#div">
         <ShowImage
           clase="bg-white object-cover object-center w-full h-full block"
           item={product}
@@ -109,6 +118,7 @@ const ProductCard = ({
         <span>
           <Link to={`/manufacturer/${product.author}`}>seller profile</Link>
         </span>
+        <button onClick={() => wishlist(product._id)}>Add wishlist</button>
         <h2 className="text-gray-900 title-font text-lg font-medium">
           {product.name}
         </h2>
