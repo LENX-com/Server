@@ -68,7 +68,7 @@ function Dashboard() {
         <CardInfo title="Resources" value= 
           {<>
             <NavLink to="/user/dashboard/faq">
-              <div className="flex ml-4 justify-between">
+              <div className="flex ml-4 justify-between hover:bg-Hover">
                 <h1>FAQ</h1>
                   <div>
                     <HiChevronRight className="w-4 h-4 mr-3" aria-hidden="true" />
@@ -77,7 +77,7 @@ function Dashboard() {
               </NavLink>
 
               <NavLink to="/user/dashboard/faq">
-                <div className="flex ml-4 justify-between">
+                <div className="flex ml-4 justify-between hover:bg-Hover">
                 <h1> What is LENX?</h1>
                   <div>
                     <HiChevronRight className="w-4 h-4 mr-3" aria-hidden="true" />
@@ -86,7 +86,7 @@ function Dashboard() {
               </NavLink>
 
               <NavLink to={`${path}/faq`}>
-                <div className="flex ml-4 justify-between">
+                <div className="flex ml-4 justify-between hover:bg-Hover">
                 <h1> Where is my order?</h1>
                   <div>
                     <HiChevronRight className="w-4 h-4 mr-3" aria-hidden="true" />

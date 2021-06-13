@@ -17,13 +17,13 @@ const Conversations = ({ color }) => {
                 "clickable": true
                 }} className="mySwiper"
                 >
-              {Data.map((data,i)=> (
+              {Data.map((data,i)=> (  
                 <li key={i}>
                     <SwiperSlide
                         className="z-999" 
                         onClick={e => {
                         e.preventDefault();
-                        setOpenTab(data._id);
+                        setOpenTab(data._id);   
                         }}
                         data-toggle="tab"
                         href="#link1"

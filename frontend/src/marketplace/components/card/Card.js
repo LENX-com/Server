@@ -96,7 +96,6 @@ const Card = ({
     );
   };
   return (
-<<<<<<< HEAD
       <div className="bg-white shadow-xl rounded-lg overflow-hidden">
                 <div className="bg-cover bg-center p-4" >
                   {shouldRedirect(redirect)}
@@ -135,25 +134,6 @@ const Card = ({
                             </div>
                 </div>
             </div>
-=======
-    <div className="card ">
-      <div className="card-header">{product.name}</div>
-      <div className="card-body">
-        {shouldRedirect(redirect)}
-        <ShowImage clase="image-card" item={product} url={product.photo} />
-        <p className="card-p">{product.description.substring(0, 100)} </p>
-        <p className="card-p">$ {product.price}</p>
-        <p>Category: {product.category && product.category.name}</p>
-        <p>Added on {moment(product.createdAt).fromNow()}</p>
-        {showStock(product.quantity)}
-        <br />
-
-        {showRemoveButton(showRemoveProductButton)}
-
-        {showCartUpdateOptions(cartUpdate)}
-      </div>
-    </div>
->>>>>>> 905696a5f226256ebc647486bfd8a22635c6bb25
   );
   
 

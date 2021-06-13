@@ -6,6 +6,7 @@ const colors = require('tailwindcss/colors')
    darkMode: false, // or 'media' or 'class'
    theme: {
     screens: {
+      mobile:{'max': '575px'},
       sm: '640px',
       md: '768px',
       lg: '1024px',
@@ -27,7 +28,7 @@ const colors = require('tailwindcss/colors')
       pink: colors.pink,
       orange: {
         dark: '#ff480e',
-        DEFAULT: '#ff572',
+        DEFAULT: '#ff5722',
         light: '#ffa284',
       },
       Blue:{
@@ -36,8 +37,10 @@ const colors = require('tailwindcss/colors')
         dark: '#008a90',
 
       },
+      Grey: 'eee',
       Black:"#222831",
       lightBlack:"393e46",
+      Hover:"#F7FAFC"
     },
     spacing: {
       px: '1px',
@@ -528,6 +531,7 @@ const colors = require('tailwindcss/colors')
     maxWidth: (theme, { breakpoints }) => ({
       none: 'none',
       0: '0rem',
+      7: "7rem",
       xs: '20rem',
       sm: '24rem',
       md: '28rem',

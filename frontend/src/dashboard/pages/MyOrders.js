@@ -17,12 +17,14 @@ import {
   Button,
   Pagination,
 } from '@windmill/react-ui'
-import { EditIcon, TrashIcon } from '../icons'
+import { HiChevronRight } from "react-icons/hi";
 import response from '../utils/demo/tableData'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import OrderStatus from '../components/orders/OrderStatus'
-
-
+import { Link } from 'react-router-dom'
+import { Data } from '../components/stories/Data'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SearchBar from '../components/elements/SearchBar'
 
 
 // make a copy of the data, for the second table
@@ -94,41 +96,43 @@ function MyOrders() {
             <tr>
               <TableCell>Client</TableCell>
               <TableCell>Amount</TableCell>
-              {/* <TableCell>Status</TableCell> */}
-              <TableCell> Purchase Date</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell className="mobile:hidden"> Purchase Date</TableCell>
             </tr>
           </TableHeader>
-          {history.map((h, i) => {
-                            return (
           <TableBody>
-            {h.products.map((p, i) => (
-              <TableRow key={i}>
+          {Data.map((h, i) => (
+              <TableRow key={i} className="hover:bg-Hover">
                 <TableCell>
                   <div className="flex items-center text-sm">
-                    <Avatar className="hidden mr-3 md:block" src={p.photo} alt="User avatar" />
+                    <Avatar className="hidden mr-3 md:block" src="https://images.unsplash.com/photo-1515041219749-89347f83291a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyJTIwY2FydG9vbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60" alt="User avatar" />
                     <div>
-                      <p className="font-semibold">{p.name}</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">{p.name}</p>
+                      <p className="font-semibold"> 3D Printer resin </p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400"> NewTech </p>
                     </div>
                   </div>
                 </TableCell>  
                 <TableCell>
-                  <span className="text-sm">$ {p.price}</span>
+                  <span className="text-sm">$ 55</span>
                 </TableCell>
-                {/* <TableCell>
-                  <Badge type={user.status}>{user.status}</Badge>
-                </TableCell> */}
                 <TableCell>
-                  <span className="text-sm">{moment(p.createdAt).fromNow()}</span>
+                  <Badge type="success"> Sucess </Badge>
                 </TableCell>
+                <TableCell className="mobile:hidden">
+                  <span className="text-sm"> 11/02/2088</span>
+                </TableCell>
+                <div className="table-cell align-middle cursor-pointer">
+                  <Link to="/user/dashboard/order">
+                  <HiChevronRight className="text-2xl" />
+                  </ Link>
+                </div>
               </TableRow>
-            ))}
-          </TableBody>
-            )
-          })}
+           ))}
+              </TableBody>
         </Table>
         <TableFooter>
           <Pagination
+            className="pagination"
             totalResults={totalResults}
             resultsPerPage={resultsPerPage}
             onChange={onPageChangeTable1}
@@ -146,16 +150,23 @@ return (
     <>
     <PageTitle>Tables</PageTitle>
     <SectionTitle>Purchase History</SectionTitle>
+    <SearchBar />
      <Tabs>
-      <TabList>
-        <Tab>All orders</Tab>
-        <Tab>In progress</Tab>
-        <Tab>Shipped</Tab>
-        <Tab>Received</Tab>
-      </TabList>
+        <Swiper
+           slidesPerView={5} spaceBetween={2} freeMode={true}  className="mySwiper"
+        >
+        <SwiperSlide>
+        <TabList className="flex whitespace-nowrap">
+            <Tab>All orders</Tab>
+            <Tab>In progress</Tab>
+            <Tab>Shipped</Tab>
+            <Tab>Received</Tab>
+        </TabList>
+        </SwiperSlide>
+        </Swiper>
 
       <TabPanel>
-        {purchaseHistory(history)}
+        {purchaseHistory()}
       </TabPanel>
       <TabPanel>
         <h2>Any content 2</h2>
@@ -166,7 +177,8 @@ return (
       <OrderStatus />
     </>
   )
-}
+} 
 
 export default MyOrders
 
+  

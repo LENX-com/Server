@@ -18,6 +18,8 @@ const AddNewPost = lazy(() => import('../pages/AddNewPost'))
 const Profile = lazy(() => import('../pages/Profile'))
 const Reviews = lazy(() => import('../pages/Reviews'))
 const FAQ = lazy(() => import('../pages/FAQ'))
+const SingleOrder = lazy(() => import('../pages/SingleOrder'))
+const WriteReview = lazy(() => import('../pages/WriteReview'))
 
 
 const routes = 
@@ -86,9 +88,17 @@ const routes =
     path: `${address}/my-reviews`,
     component: Reviews,
   },
-    {
+  {
     path: `${address}/faq`,
     component: FAQ,
+  },
+  {
+    path: `${address}/order`,
+    component: SingleOrder,
+  },
+   {
+    path: `${address}/write-review`,
+    component: WriteReview,
   }
 ]
 
