@@ -1,46 +1,53 @@
-import React from 'react'
-import { Data } from './Data'
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React, { useState } from 'react'
+import { Swiper, SwiperSlide } from "swiper/react";
+
+
+const ProductImage = [{
+  url: "https://sc04.alicdn.com/kf/Hdb74b0629dd443928f2d4d639bab8d55d.jpg",
+  number: 1,
+},
+{
+  url: "https://sc04.alicdn.com/kf/H46a5ac771b8b4ee7a3f1ae41248dbb4bc.jpg_50x50.jpg",
+  number: 2,
+},
+{
+  url: "https://sc04.alicdn.com/kf/H6bdcf18014fd42a2aaf2db1ee57d9f33E.jpg_50x50.jpg",
+  number: 3,
+},
+{
+  url: "https://sc04.alicdn.com/kf/H6bdcf18014fd42a2aaf2db1ee57d9f33E.jpg_50x50.jpg",
+  number: 4,
+}
+]
+
+
 
 const Stories = () => {
     return (
-        <section className="md:flex flex-col">
-                <Swiper slidesPerView={3} spaceBetween={30} freeMode={true} pagination={{
-                "clickable": true
-                }} className="mySwiper"
-                breakpoints={{
-                // when window width is >= 640px
-                360: {
-                width: 360,
-                slidesPerView: 5,
-                },
-                640: {
-                width: 640,
-                slidesPerView: 1,
-                },
-                // when window width is >= 768px
-                768: {
-                width: 768,
-                slidesPerView: 2,
-                },
-            }}
-            >
-                <ul className="md:flex items-center justify-center md:space-x-8">
-        {Data.map((data, i) => (
-            <SwiperSlide>
-             <li key={i} className="flex flex-col items-center space-y-2">
+      <>
+        <Swiper slidesPerView={3}
+                        spaceBetween={20}
+                        pagination={{"clickable": true}}
+                        className="mySwiper">
+          <ul className="md:flex items-center justify-center md:space-x-8">
+      {ProductImage.map((data, i) =>  (  
+      <SwiperSlide key={i}>
+        
+            <li key={i} className="flex flex-col items-center space-y-2">
+              {data.number}
             <div className="bg-gradient-to-tr from-yellow-500 to-pink-600 rounded-full p-1">
               <a className="block bg-white p-1 rounded-full transform transition hover:-rotate-12 duration-300" href="#">
-                <img className="h-24 w-24 rounded-full" src="https://i.ibb.co/yhh0Ljy/profile.jpg" alt="image" />
+                <img className="h-16 w-16 rounded-full" src="https://i.ibb.co/yhh0Ljy/profile.jpg" alt="image" />
               </a>
             </div>
-            <p>tahmina_tis_353</p>
           </li>
-          </SwiperSlide>
-    ))}
-     </ul>
-     </Swiper>
-     </section>
+        </SwiperSlide> ))
+          }
+          </ul>
+       </Swiper>
+      </>
+
+
     )
 }
 

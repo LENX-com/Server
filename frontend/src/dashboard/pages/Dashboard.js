@@ -44,7 +44,6 @@ function Dashboard() {
     <>
       <PageTitle>Dashboard</PageTitle>
       <UserCard user= {user.name} seen="3 days ago" image="not found" role="administrator"/>
-      {/* <Stories /> */}
 
         <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-3 mt-5">
         <CardInfo title="My orders" value="6389">
@@ -104,16 +103,6 @@ function Dashboard() {
           />
         </CardInfo>
         </div>
-
-      <PageTitle>My conversations</PageTitle>
-      <Conversations color="blue"/>
-
-      <PageTitle>Popular Posts</PageTitle>
-      <Twit />
-
-      {/* <PageTitle>My orders</PageTitle>
-      <Orders /> */}
-
     </>
   )
 }

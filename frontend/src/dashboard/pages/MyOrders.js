@@ -148,7 +148,7 @@ return (
 
   
     <>
-    <PageTitle>Tables</PageTitle>
+    <PageTitle> My orders </PageTitle>
     <SectionTitle>Purchase History</SectionTitle>
     <SearchBar />
      <Tabs>

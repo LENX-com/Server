@@ -32,15 +32,15 @@
 
 
 
-@media screen and (min-width: 768px) {
-    .swiper-container {
-        width: 768px;
-    }
-}
+// @media screen and (min-width: 768px) {
+//     .swiper-container {
+//         width: 768px;
+//     }
+// }
 
 @media screen and (min-width: 1040px) {
     .swiper-container {
-        width: 1040px;
+        max-width: 740px;
     }
 }
 

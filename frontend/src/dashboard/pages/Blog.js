@@ -1,52 +1,77 @@
 import React from 'react'
+import { Data } from '../components/stories/Data'
+import Card from '../components/Cards/Card'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { BsChat, BsHeart } from 'react-icons/bs'
 
-function Blog() {
+const Blog = () => {
+
+  const Blogs = () => {
     return (
-            <div className="container px-5 py-24 mx-auto">
-          <div className="flex flex-wrap w-full mb-20">
-            <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
-              <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Pitchfork Kickstarter Taxidermy</h1>
-              <div className="h-1 w-20 bg-indigo-500 rounded" />
-            </div>
-            <p className="lg:w-1/2 w-full leading-relaxed text-gray-500">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them man bun deep jianbing selfies heirloom prism food truck ugh squid celiac humblebrag.</p>
-          </div>
           <div className="flex flex-wrap -m-4">
-            <div className="xl:w-1/4 md:w-1/2 p-4">
-              <div className="bg-gray-100 p-6 rounded-lg">
-                <img className="h-40 rounded w-full object-cover object-center mb-6" src="https://dummyimage.com/720x400" alt="content" />
-                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">Chichen Itza</h2>
-                <p className="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
-              </div>
+            {Data.map((data, i) => (
+                  <div key={i} className="xl:w-1/3 md:w-1/2 p-4"> 
+                    <Card>
+                      <img className="h-40 rounded w-full object-cover object-center mb-6" src="https://dummyimage.com/720x400" alt="content" />
+                      <h3 className="tracking-widest text-orange text-xs font-medium title-font">SUBTITLE</h3>
+                      <h2 className="text-lg text-gray-900 font-medium title-font mb-4">Chichen Itza</h2>
+                      <p className="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+                      <div className="flex text-xl">
+                        <div className="mr-4 flex">
+                          <BsHeart className="mt-0.5" />
+                            <span className="text-base ml-1"> 22 </span>
+                        </div>
+                        <div className="flex">
+                          <BsChat className="mt-0.5" /> 
+                            <span className="text-base ml-1"> 3 </span>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+            ))}
             </div>
-            <div className="xl:w-1/4 md:w-1/2 p-4">
-              <div className="bg-gray-100 p-6 rounded-lg">
-                <img className="h-40 rounded w-full object-cover object-center mb-6" src="https://dummyimage.com/721x401" alt="content" />
-                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">Colosseum Roma</h2>
-                <p className="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
-              </div>
-            </div>
-            <div className="xl:w-1/4 md:w-1/2 p-4">
-              <div className="bg-gray-100 p-6 rounded-lg">
-                <img className="h-40 rounded w-full object-cover object-center mb-6" src="https://dummyimage.com/722x402" alt="content" />
-                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">Great Pyramid of Giza</h2>
-                <p className="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
-              </div>
-            </div>
-            <div className="xl:w-1/4 md:w-1/2 p-4">
-              <div className="bg-gray-100 p-6 rounded-lg">
-                <img className="h-40 rounded w-full object-cover object-center mb-6" src="https://dummyimage.com/723x403" alt="content" />
-                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">San Francisco</h2>
-                <p className="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
-              </div>
-            </div>
-            </div>
-            </div>
+      )
+    }
+    
 
+    const Manufacturers = () => (
+       <>
+        {Data.map((data,i) => (
+            <Tab>
+              <div className="relative rounded flex justify-center items-center w-14">
+                <img src="https://d33wubrfki0l68.cloudfront.net/fbcc8e7b98a6e0d1d16afc4eafceeb427a380273/95c82/assets/img/unlicensed/watch-1.png" alt="random" />
+              </div>
+            </Tab>
+        ))}
+      </>
     )
+
+  return (
+      <div className="py-8">
+        <Tabs>
+          <Swiper
+            slidesPerView={1}
+              spaceBetween={20}
+              freeMode={true}
+              className="mySwiper"
+          >
+            <SwiperSlide>
+                <TabList className="flex whitespace-nowrap">
+                  {Manufacturers()}
+                </TabList>
+            </SwiperSlide>
+          </Swiper>
+
+          <TabPanel>
+            {Blogs()}
+          </TabPanel>
+          <TabPanel>
+            <h2>Any content 2</h2>
+          </TabPanel>
+        </Tabs>
+      </div>
+  )
 }
 
 export default Blog
