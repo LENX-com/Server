@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import {
   read,
@@ -63,6 +64,7 @@ const dummyProductImage = [
 
 const Product = (props) => {
   const token = isAuthenticated() && isAuthenticated().token;
+
   const [product, setProduct] = useState({});
   const [relatedProduct, setRelatedProduct] = useState();
   const [allReviews, setAllReviews] = useState();

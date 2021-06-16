@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import Layout from '../../marketplace/components/layout/Layout'
 import {isAuthenticated} from '../../actions/index'

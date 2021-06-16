@@ -30,8 +30,8 @@ const Stories = () => {
             <SwiperSlide>
              <li key={i} className="flex flex-col items-center space-y-2">
             <div className="bg-gradient-to-tr from-yellow-500 to-pink-600 rounded-full p-1">
-              <a className="block bg-white p-1 rounded-full transform transition hover:-rotate-12 duration-300" href="#">
-                <img className="h-24 w-24 rounded-full" src="https://i.ibb.co/yhh0Ljy/profile.jpg" alt="image" />
+              <a className="block bg-white p-1 rounded-full transform transition hover:-rotate-12 duration-300" href="#div">
+                <img className="h-24 w-24 rounded-full" src="https://i.ibb.co/yhh0Ljy/profile.jpg" alt="tags" />
               </a>
             </div>
             <p>tahmina_tis_353</p>

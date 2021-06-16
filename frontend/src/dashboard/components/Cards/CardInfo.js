@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { Card, CardBody, Button } from '@windmill/react-ui'
+import { Card,Button } from '@windmill/react-ui'
 
 function CardInfo({ title, value, children: icon, button }) {
   return (

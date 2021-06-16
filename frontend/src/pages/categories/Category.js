@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { getCategory } from "../../actions/categoryAction";
 import ProductCard from "../../marketplace/components/product/ProductCard";
@@ -26,7 +27,6 @@ const CategoryHome = ({ match }) => {
   const init = () => {
     setLoading(true);
     getCategory(id).then((res) => {
-      console.log(res);
       setCategory(res.category);
       setProducts(res.products);
       setLoading(false);
@@ -62,6 +62,7 @@ const CategoryHome = ({ match }) => {
     });
   };
 
+  // eslint-disable-next-line no-unused-vars
   const loadMoreButton = () => {
     return (
       size > 0 && size >= limit && <button onClick={loadMore}>Load more</button>
@@ -71,6 +72,7 @@ const CategoryHome = ({ match }) => {
   useEffect(() => {
     init();
     loadFilteredResults(skip, limit, myFilters.filters);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleFilters = (filters, filterBy) => {

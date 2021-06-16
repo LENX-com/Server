@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from '../marketplace/components/layout/Layout';
 import { isAuthenticated } from "../actions";
-import { Link } from "react-router-dom";
 import { listOrders, getStatusValues, updateOrderStatus } from "./ApiAdmin";
 import moment from "moment";
 
@@ -36,6 +35,7 @@ const Orders = () => {
     useEffect(() => {
         loadOrders();
         loadStatusValues();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const showOrdersLength = () => {
