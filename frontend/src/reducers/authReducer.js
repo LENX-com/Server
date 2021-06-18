@@ -8,7 +8,6 @@ import {
   LOGOUT,
   ACCOUNT_DELETED,
 } from "../actions/types";
-import _ from "lodash";
 
 const initialState = {
   token: localStorage.getItem("token"),
@@ -23,6 +22,7 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
+        token: state.token,
         loading: false,
         user: action.payload,
       };

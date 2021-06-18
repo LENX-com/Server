@@ -4,12 +4,16 @@ import { authReducer } from "./authReducer";
 import { errorReducer } from "./errorReducer.js";
 import { postReducer } from "./postReducer";
 import { wishListReducer } from "./wishlistReducer";
+import { categoryReducer } from "./categoryReducers";
 import { alertReducer } from "./alertReducer";
+import { orderReducer } from "./orderReducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
   auth: authReducer,
   errors: errorReducer,
+  category: categoryReducer,
+  order: orderReducer,
   post: postReducer,
   alert: alertReducer,
   wishlist: wishListReducer,

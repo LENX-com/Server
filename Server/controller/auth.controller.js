@@ -49,6 +49,8 @@ exports.signin = (req, res) => {
   //find the user based inb email
   const { email, password } = req.body;
 
+  console.log(req.body);
+
   User.findOne({ email }, (err, user) => {
     if (err || !user) {
       return res.status(400).json({

@@ -2,36 +2,36 @@
 import React, { useState, useEffect } from "react";
 import { getCategory } from "../../actions/categoryAction";
 import ProductCard from "../../marketplace/components/product/ProductCard";
-import { getFilteredProducts} from '../../marketplace/components/ApiCore'
-import RadioBox from '../../marketplace/components/shop/RadioBox'
-import {prices} from '../../marketplace/components/shop/FixedPrices'
-import Checkbox from '../../marketplace/components/checkbox/Checkbox'
-
+import { getFilteredProducts } from "../../marketplace/components/ApiCore";
+import RadioBox from "../../marketplace/components/shop/RadioBox";
+import { prices } from "../../marketplace/components/shop/FixedPrices";
+import Checkbox from "../../marketplace/components/checkbox/Checkbox";
+import { useDispatch, useSelector } from "react-redux";
 
 const CategoryHome = ({ match }) => {
   const [myFilters, setMyFilters] = useState({
     filters: { price: [] },
   });
-
+  const dispatch = useDispatch();
+  const category = useSelector(state => state.category.category)
   const [error, setError] = useState(false);
   const [limit, setLimit] = useState(6);
   const [skip, setSkip] = useState(0);
   const [size, setSize] = useState(0);
   const [filteredResults, setFilteredResults] = useState([]);
-  const [category, setCategory] = useState({});
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const { id } = match.params;
 
-  const init = () => {
-    setLoading(true);
-    getCategory(id).then((res) => {
-      setCategory(res.category);
-      setProducts(res.products);
-      setLoading(false);
-    });
-  };
+  // const init = () => {
+  //   setLoading(true);
+  //   getCategory(id).then((res) => {
+  //     setCategory(res.category);
+  //     setProducts(res.products);
+  //     setLoading(false);
+  //   });
+  // };
 
   const loadFilteredResults = (newFilters) => {
     // console.log(newFilters);
@@ -70,10 +70,11 @@ const CategoryHome = ({ match }) => {
   };
 
   useEffect(() => {
-    init();
+    // init();
+    dispatch(getCategory(id))
     loadFilteredResults(skip, limit, myFilters.filters);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   const handleFilters = (filters, filterBy) => {
     // console.log("SHOP", filters, filterBy);
@@ -110,7 +111,8 @@ const CategoryHome = ({ match }) => {
             </h4>
           ) : (
             <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
-              {products && products.length} Products in "{category && category.name}" category
+              {category && category.products.length} Products in "
+              {category && category.name}" category
             </h4>
           )}
         </div>
@@ -138,8 +140,8 @@ const CategoryHome = ({ match }) => {
       </div>
 
       <div>
-        {products &&
-          products.map((p) => (
+        {category &&
+          category.products.map((p) => (
             <div key={p._id}>
               <ProductCard product={p} />
             </div>

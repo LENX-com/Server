@@ -2,7 +2,7 @@ import "./App.scss";
 import React, { useEffect } from "react";
 import setAuthToken from "./utils/setAuthToken";
 import store from "./store";
-import { loadUser } from "./actions/auth";
+import { loadUser } from "./actions/authAction";
 import { LOGOUT } from "./actions/types";
 import Routes from "./Routes";
 function App() {
@@ -17,7 +17,7 @@ function App() {
     window.addEventListener("storage", () => {
       if (!localStorage.token) store.dispatch({ type: LOGOUT });
     });
-  }, []);
+  },);
   return (
     <div>
       <Routes />
