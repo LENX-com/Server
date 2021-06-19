@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 const initialState = {
   isAuthenticated: false,
-  user: {},
+  user: {},  
   loading: false
 };
 

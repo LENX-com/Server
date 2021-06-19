@@ -1,23 +1,29 @@
-
 import React from 'react'
-import { Card, CardBody, Button } from '@windmill/react-ui'
+import { Link } from 'react-router-dom'
+import Button from '../elements/Button'
 
-function CardInfo({ title, value, children: icon, button }) {
+function CardInfo({ title, value, icon, button, children, padding, link }) {
   return (
-    <Card className="card-item">
+    <div>
+    <div className={`mt-3 bg-white rounded  border-solid border-2 border-Grey relative lg:h-80  h-60 overflow-y-scroll ${padding}`}>
       <div>
-        <div className="flex border-b-solid border-b-2 border-gray-200 justify-center mt-3">
+        <div className="flex border-b-solid border-b-2 border-gray-200 justify-center sticky top-0 bg-white py-2">
         {icon}
          <div className="">
-          <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">{title}</p>
+          <p className="text-lg font-semibold text-gray-700 dark:text-gray-200 mt-2 ">{title}</p>
         </div>
         </div>
         <div className="text-center">
-            <p className="text-lg mt-4 mb-4 text-sm font-medium text-gray-600 dark:text-gray-400">{value}</p>
-          { button ? <Button size="regular"> {button} </Button> : null } 
+            {children} 
         </div>
       </div>
-    </Card>
+    </div>
+    <div className="mt-3">
+      <Link to= {link}>
+      { button ? <Button> {button} </Button> : null }
+      </Link>
+    </div>
+    </div>
   )
 }
 

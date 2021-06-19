@@ -27,6 +27,7 @@ import Checkout from "./marketplace/components/checkout/Checkout"
 import Manufacturer from "./manufacturer/Manufacturer";
 import Categories from "./pages/categories/Categories";
 
+
 function Routes() {
   return (
     <>

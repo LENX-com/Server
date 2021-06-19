@@ -1,10 +1,11 @@
 import React from 'react'
+import Card from './Card'
 
 const UserCard = ({title, user, seen, image, role, email, description}) => {
   return(
-        <div>
+        <div className="mt-20">
         <div className="flex items-center justify-center mb-10">
-          <div className="flex flex-col items-center w-full max-w-xs p-4 bg-white rounded-3xl md:flex-row">
+          <Card className="flex flex-col items-center w-full max-w-xs  md:flex-row">
             <div className="-mt-28 md:-my-16 md:-ml-32" style={{clipPath: 'url(#roundedPolygon)'}}>
               <img className="w-auto h-48" src="https://avatars.githubusercontent.com/u/57622665?s=460&u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&v=4" alt="LENX" />
             </div>
@@ -14,7 +15,6 @@ const UserCard = ({title, user, seen, image, role, email, description}) => {
                 <p className="text-base font-medium text-gray-400">{description}</p>
               </div>
               <div className="flex items-center justify-center space-x-3 md:justify-start">
-                {/* Icons source => https://boxicons.com/ */}
                 <a href="lenx" target="_blank" className="transition-transform transform hover:scale-125">
                   <span className="sr-only">Twitter</span>
                   <svg aria-hidden="true" className="w-8 h-8 text-blue-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -23,11 +23,9 @@ const UserCard = ({title, user, seen, image, role, email, description}) => {
                 </a>
               </div>
             </div>
-          </div>
+          </Card>
           <svg width={0} height={0} xmlns="http://www.w3.org/2000/svg">
             <defs>
-              {/* rounded polygon generator => https://weareoutman.github.io/rounded-polygon/ */}
-              {/* polygon size 190 * 190 almost the same size as the image */}
               <clipPath id="roundedPolygon">
                 <path d="M79 6.237604307034a32 32 0 0 1 32 0l52.870489570875 30.524791385932a32 32 0 0 1 16 27.712812921102l0 61.049582771864a32 32 0 0 1 -16 27.712812921102l-52.870489570875 30.524791385932a32 32 0 0 1 -32 0l-52.870489570875 -30.524791385932a32 32 0 0 1 -16 -27.712812921102l0 -61.049582771864a32 32 0 0 1 16 -27.712812921102" />
               </clipPath>

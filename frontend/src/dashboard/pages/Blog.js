@@ -4,14 +4,19 @@ import Card from '../components/Cards/Card'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { BsChat, BsHeart } from 'react-icons/bs'
+import { Link, useRouteMatch } from 'react-router-dom'
+
 
 const Blog = () => {
+  const match = useRouteMatch();
+
 
   const Blogs = () => {
     return (
           <div className="flex flex-wrap -m-4">
             {Data.map((data, i) => (
-                  <div key={i} className="xl:w-1/3 md:w-1/2 p-4"> 
+                  <div key={i} className="xl:w-1/3 md:w-1/2 p-4">
+                    <Link to= {`${match.url}/11`} >
                     <Card>
                       <img className="h-40 rounded w-full object-cover object-center mb-6" src="https://dummyimage.com/720x400" alt="content" />
                       <h3 className="tracking-widest text-orange text-xs font-medium title-font">SUBTITLE</h3>
@@ -28,6 +33,7 @@ const Blog = () => {
                         </div>
                       </div>
                     </Card>
+                    </Link> 
                   </div>
             ))}
             </div>
