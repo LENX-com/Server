@@ -25,6 +25,7 @@ import Category from "./pages/categories/Category";
 import Footer from "./marketplace/components/footer/Footer";
 import Manufacturer from "./manufacturer/Manufacturer";
 import Categories from "./pages/categories/Categories";
+import SingleCategory from "./pages/categories/SingleCategory";
 
 function Routes() {
   return (
@@ -43,6 +44,7 @@ function Routes() {
         <Route path="/product/:productId" exact component={Product} />
         <Route path="/cart" exact component={Cart} />
         <Route path="/categories" exact component={Categories} />
+        <Route path="/category" exact component={SingleCategory} />
         <AdminRoute path="/admin/orders" exact component={Orders} />
         <PrivateRoutes path="/profile/:userId" exact component={Profile} />
         <PrivateRoutes

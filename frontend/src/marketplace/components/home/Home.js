@@ -47,7 +47,7 @@ function Home() {
       </div>
 
       <div className="row">
-        <h2 className="title"> Best sellers</h2>
+        <h2 className="title">Best sellers</h2>
         {producstBySell.map((product, i) => (
           <Card key={i} product={product} />
         ))}

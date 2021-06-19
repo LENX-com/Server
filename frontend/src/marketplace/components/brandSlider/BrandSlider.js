@@ -1,4 +1,5 @@
 import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const brands = [
     {
@@ -18,15 +19,20 @@ const brands = [
 const Slider = () => {
     return (
         <div>
-            <h1>Shop by Brand</h1>
+            <h1 className="text-2xl mb-5">Shop by Brand</h1>
+            <Swiper
+                spaceBetween={20}
+                slidesPerView={3}
+            >
             {
                 brands.map (brand => 
-                    <div>
+                    <SwiperSlide>
                         <img src={brand.img} alt="brand" />
                         <h4>{brand.name}</h4>
-                    </div>
+                    </SwiperSlide>
                 )
             }
+            </Swiper>
         </div>
     );
 };
