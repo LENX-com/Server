@@ -1,5 +1,4 @@
 import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import CategoriesList from '../../marketplace/components/categoriesList/CategoriesList';
 import CategoryCard from '../../marketplace/components/categoryCard/CategoryCard';
 import ManufactureCard from '../../marketplace/components/manufactureCard/ManufactureCard';

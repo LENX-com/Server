@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { auth,protected } = require("../middlewares/verify");
+const { auth, protected } = require("../middlewares/verify");
 const {
   createCategory,
+  getCategoryById,
   allCategories,
   createBrand,
   create,
@@ -37,6 +38,7 @@ router.param("userId", userById);
 //new routes setup for categories
 router.post("/category/create", auth, protected(1), createCategory);
 router.get("/categories", allCategories);
+router.get("/category/:categoryId", getCategoryById);
 //routes for brand
 router.post("/brands/create", auth, createBrand);
 

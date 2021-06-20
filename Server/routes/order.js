@@ -42,9 +42,9 @@ const {
   UpdateOrderStatus,
   Orderbyid,
 } = require("../controller/order.controller");
-router.get("/order/status-values", auth, protected(1), getStatusValues);
+router.get("/order/status-values", auth, getStatusValues);
 router.post("/order/create", auth, createOrder);
-router.get("/orders", auth, protected(1), allOrder);
+router.get("/orders", auth, allOrder);
 router.get("/order/purchaseHistory", auth, OrderByUser);
 router.get("/order/history", purchaseHistory);
 router.get("/order/:orderId", auth, Orderbyid);

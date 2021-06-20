@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import Layout from '../marketplace/components/layout/Layout';
-import { isAuthenticated } from '../actions';
-import { Link, Redirect } from 'react-router-dom';
-import { getProduct, getCategories, updateProduct } from './ApiAdmin';
+import React, { useState, useEffect } from "react";
+import Layout from "../marketplace/components/layout/Layout";
+import {  Redirect } from "react-router-dom";
+import {updateProduct, getProduct,} from "../actions/productAction"
+import {getCategories} from "../actions/categoryAction"
+import { useSelector, useDispatch } from "react-redux";
 
 const UpdateProduct = ({ match }) => {
   const [values, setValues] = useState({
@@ -20,9 +21,10 @@ const UpdateProduct = ({ match }) => {
     redirectToProfile: false,
     formData: "",
   });
-  const [categories, setCategories] = useState([]);
+  const auth = useSelector((state) => state.auth.user);
+  const categoryy = useSelector((state) => state.category.category);
+  const dispatch = useDispatch();
 
-  const { user, token } = isAuthenticated();
   const {
     name,
     description,
@@ -38,43 +40,45 @@ const UpdateProduct = ({ match }) => {
     formData,
   } = values;
 
-  const init = (productId) => {
-    getProduct(productId).then((resp) => {
-      const { data } = resp;
-      if (data.error) {
-        setValues({ ...values, error: data.error });
-      } else {
-        // populate the state
-        setValues({
-          ...values,
-          name: data.name,
-          description: data.description,
-          price: data.price,
-          category: data.category._id,
-          shipping: data.shipping,
-          quantity: data.quantity,
-          formData: new FormData(),
-        });
-        // load categories
-        initCategories();
-      }
-    });
-  };
+  // const init = (productId) => {
+  //   getProduct(productId).then((resp) => {
+  //     const { data } = resp;
+  //     if (data.error) {
+  //       setValues({ ...values, error: data.error });
+  //     } else {
+  //       // populate the state
+  //       setValues({
+  //         ...values,
+  //         name: data.name,
+  //         description: data.description,
+  //         price: data.price,
+  //         category: data.category._id,
+  //         shipping: data.shipping,
+  //         quantity: data.quantity,
+  //         formData: new FormData(),
+  //       });
+  //       // load categories
+  //       initCategories();
+  //     }
+  //   });
+  // };
 
-  // load categories and set form data
-  const initCategories = () => {
-    getCategories().then((resp) => {
-      const { data } = resp;
-      if (data.error) {
-        setValues({ ...values, error: data.error });
-      } else {
-        setCategories(data);
-      }
-    });
-  };
+  // // load categories and set form data
+  // const initCategories = () => {
+  //   getCategories().then((resp) => {
+  //     const { data } = resp;
+  //     if (data.error) {
+  //       setValues({ ...values, error: data.error });
+  //     } else {
+  //       setCategories(data);
+  //     }
+  //   });
+  // };
 
   useEffect(() => {
-    init(match.params.productId);
+    // init(match.params.productId);
+    dispatch(getProduct(match.params.productId));
+    dispatch(getCategories());
   }, []);
 
   const handleChange = (name) => (event) => {
@@ -86,25 +90,26 @@ const UpdateProduct = ({ match }) => {
   const clickSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: "", loading: true });
+    dispatch(updateProduct(match.params.productId, formData));
 
-    updateProduct(match.params.productId, token, formData).then((data) => {
-      if (data.error) {
-        setValues({ ...values, error: data.error });
-      } else {
-        setValues({
-          ...values,
-          name: "",
-          description: "",
-          file: "",
-          price: "",
-          quantity: "",
-          loading: false,
-          error: false,
-          redirectToProfile: true,
-          createdProduct: data.name,
-        });
-      }
-    });
+    // updateProduct(match.params.productId, token, formData).then((data) => {
+    //   if (data.error) {
+    //     setValues({ ...values, error: data.error });
+    //   } else {
+    //     setValues({
+    //       ...values,
+    //       name: "",
+    //       description: "",
+    //       file: "",
+    //       price: "",
+    //       quantity: "",
+    //       loading: false,
+    //       error: false,
+    //       redirectToProfile: true,
+    //       createdProduct: data.name,
+    //     });
+    //   }
+    // });
   };
 
   const newPostForm = () => (
@@ -154,8 +159,8 @@ const UpdateProduct = ({ match }) => {
         <label>Category</label>
         <select onChange={handleChange("category")}>
           <option>Please select</option>
-          {categories &&
-            categories.map((c, i) => (
+          {categoryy &&
+            categoryy.map((c, i) => (
               <option key={i} value={c._id}>
                 {c.name}
               </option>
@@ -214,7 +219,7 @@ const UpdateProduct = ({ match }) => {
   return (
     <Layout
       title="Add a new product"
-      description={`Hello ${user.name}, ready to add a new product?`}
+      description={`Hello ${auth.name}, ready to add a new product?`}
     >
       <div className="row">
         <div>

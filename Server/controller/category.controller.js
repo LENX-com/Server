@@ -5,9 +5,10 @@ const { errorHandler } = require("../helpers/dbErrorHandler");
 exports.createCategory = async (req, res) => {
   try {
     const { ...args } = req.body;
+    console.log(args);
     args.userId = req.user._id;
     const newCategory = await Category.create(args);
-    return res.status(200).json({ data: newCategory });
+    return res.status(200).json(newCategory);
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
@@ -17,10 +18,22 @@ exports.createCategory = async (req, res) => {
 exports.allCategories = async (req, res) => {
   try {
     const category = await Category.find();
-    return res.status(200).json({ data: category });
+    return res.status(200).json(category);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error });
+  }
+};
+
+exports.getCategoryById = async (req, res) => {
+  try {
+    const category = await Category.findById(req.params.categoryId).populate(
+      "products"
+    );
+    return res.json(category);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
   }
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import SectionTitle from '../../marketplace/components/Typography/SectionTitle';
-import ManufactureCard from './manufacture/ManufactureCard';
+import SectionTitle from '../Typography/SectionTitle';
+import ManufactureCard from '../manufactureCard/ManufactureCard';
 
 const TopManufacturer = () => {
     return (

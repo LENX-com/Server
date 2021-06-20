@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import ShowImage from "../card/ShowImage";
-import { addWishList } from "../ApiCore";
 import { addItem, updateItem, removeItem } from "../cart/CartHelper";
-import { isAuthenticated } from "../../../actions";
+import { addWishList } from "../../../actions/wishlistAction";
+import { useDispatch } from "react-redux";
 
 const ProductCard = ({
   product,
@@ -15,9 +15,9 @@ const ProductCard = ({
   run = undefined,
   // changeCartSize
 }) => {
+  const dispatch = useDispatch();
   const [redirect, setRedirect] = useState(false);
   const [count, setCount] = useState(product.count);
-  const token = isAuthenticated() && isAuthenticated().token;
 
   const showViewButton = (showViewProductButton) => {
     return (
@@ -97,9 +97,7 @@ const ProductCard = ({
   };
 
   const wishlist = (product) => {
-    addWishList(product, token).then((response) => {
-      console.log(response);
-    });
+    dispatch(addWishList(product));
   };
   return (
     <div className="lg:w-1/4 md:w-1/2 p-4 w-full">

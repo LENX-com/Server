@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../../marketplace/components/layout/Layout";
 import { isAuthenticated } from "../../../actions";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { read, update, updateUser } from "./apiUser";
 
 const Profile = ({ match }) => {
@@ -15,6 +15,7 @@ const Profile = ({ match }) => {
     });   
 
     const { token } = isAuthenticated();
+    // eslint-disable-next-line no-unused-vars
     const { name, email, password, error, success } = values;
 
     const init = userId => {

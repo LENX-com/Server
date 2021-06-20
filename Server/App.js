@@ -40,7 +40,7 @@ App.use(express.urlencoded({ extended: true }));
 App.use(express.static("public"));
 App.use(cookieParser());
 App.use(expressValidator());
-App.use(cors());
+App.use(cors("*"));
 
 // view engine setup
 App.set("views", path.join(__dirname, "views"));

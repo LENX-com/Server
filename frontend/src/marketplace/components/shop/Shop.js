@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Card from "../card/Card";
-import { getCategories, getFilteredProducts } from "../ApiCore";
+import { getFilteredProducts } from "../ApiCore";
+import { getCategories } from "../../../actions/categoryAction";
+import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "../checkbox/Checkbox";
 import RadioBox from "./RadioBox";
 import { prices } from "./FixedPrices";
@@ -8,36 +10,26 @@ import ListBox from "./ListBox";
 import "./Shop.scss";
 
 const Shop = () => {
+  const dispatch = useDispatch();
+  const categoryy = useSelector((state) => state.category.categories);
   const [myFilters, setMyFilters] = useState({
     filters: { category: [], price: [] },
   });
-  const [categories, setCategories] = useState([]);
   const [error, setError] = useState(false);
   const [limit, setLimit] = useState(6);
   const [skip, setSkip] = useState(0);
   const [size, setSize] = useState(0);
   const [filteredResults, setFilteredResults] = useState([]);
 
-  const init = () => {
-    getCategories().then((resp) => {
-      const { data } = resp;
-      if (data.error) {
-        setError(data.error);
-      } else {
-        setCategories(data);
-      }
-    });
-  };
-
   const loadFilteredResults = (newFilters) => {
     // console.log(newFilters);
     getFilteredProducts(skip, limit, newFilters).then((data) => {
       if (data.error) {
-          setError(data.error);
+        setError(data.error);
       } else {
-          setFilteredResults(data.data);
-          setSize(data.size);
-          setSkip(0);
+        setFilteredResults(data.data);
+        setSize(data.size);
+        setSkip(0);
       }
     });
   };
@@ -63,7 +55,7 @@ const Shop = () => {
   };
 
   useEffect(() => {
-    init();
+    dispatch(getCategories());
     loadFilteredResults(skip, limit, myFilters.filters);
   }, []);
 
@@ -104,7 +96,7 @@ const Shop = () => {
               <div className="mt-2 flex flex-col space-y-4>">
                 <ul>
                   <Checkbox
-                    categories={categories}
+                    categories={categoryy}
                     handleFilters={(filters) =>
                       handleFilters(filters, "category")
                     }
@@ -151,7 +143,7 @@ const Shop = () => {
           <hr />
           {loadMoreButton()}
         </div>
-      </div>  
+      </div>
     </div>
   );
 };

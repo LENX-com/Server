@@ -118,7 +118,7 @@ const Card = ({
           </div>
         </div>
         <div className="p-4 py-5">
-          <Link to={`/category/${product.category._id}`}>
+          <Link to={`/category/${product.category !== null ? product.category._id : ""}`}>
           
             <p className="uppercase tracking-wide text-sm font-bold text-gray-700">
               {product.category && product.category.name}

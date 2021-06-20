@@ -1,6 +1,6 @@
 import React from 'react';
-import SectionTitle from '../../marketplace/components/Typography/SectionTitle';
-import CategoryCard from '../../marketplace/components/categoryCard/CategoryCard';
+import SectionTitle from '../Typography/SectionTitle';
+import CategoryCard from '../categoryCard/CategoryCard';
 
 const PopularCategory = () => {
     return (
