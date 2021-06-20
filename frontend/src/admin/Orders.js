@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Layout from "../marketplace/components/layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -18,9 +18,8 @@ const Orders = () => {
     dispatch(getStatusValues());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   const showOrdersLength = () => {
-    if (orders.length > 0) {
+    if (orders && orders.length > 0) {
       return <h1 className="text">Total orders: {orders.length}</h1>;
     } else {
       return <h1 className="text">No orders</h1>;
@@ -67,7 +66,7 @@ const Orders = () => {
           {showOrdersLength()}
 
           {orders &&
-            orders.data.map((o, oIndex) => {
+            orders.map((o, oIndex) => {
               return (
                 <div className="mt-5" key={oIndex}>
                   <h2 className="mb-5">

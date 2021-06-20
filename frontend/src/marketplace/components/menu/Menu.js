@@ -5,6 +5,7 @@ import { itemTotal } from "../cart/CartHelper";
 import { Menu } from "antd";
 import { AppstoreOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
+import { LOGOUT } from "../../../actions/types";
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
@@ -18,11 +19,19 @@ const { SubMenu, Item } = Menu;
 
 const MenuMain = ({ history }) => {
   const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
   const [current, setCurrent] = useState("");
   const handleClick = (e) => {
     setCurrent(e.key);
   };
   const dispatch = useDispatch();
+
+  const loggedOut = () => {
+    dispatch({ type: LOGOUT });
+    if (!token) {
+      history.push("/");
+    }
+  };
 
   return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
@@ -66,10 +75,7 @@ const MenuMain = ({ history }) => {
 
         {user && (
           <Item className="nav-item">
-            <span
-              style={{ cursor: "pointer" }}
-              onClick={() => dispatch(() => logout())}
-            >
+            <span style={{ cursor: "pointer" }} onClick={() => console.log("logged out")}>
               Signout
             </span>
           </Item>

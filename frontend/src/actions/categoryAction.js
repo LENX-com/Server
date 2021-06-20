@@ -1,4 +1,4 @@
-import api from "../utils/api";
+import {api, publicApi} from "../utils/api";
 import { API } from "../config";
 // create category
 export const addCategory = (category) => async (dispatch) => {

@@ -12,8 +12,7 @@ const AddCategory = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth.user);
 
-  // destructure user and token from localstorage
-  const { user, token } = isAuthenticated();
+  
 
   const handleChange = (e) => {
     setError("");

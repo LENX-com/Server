@@ -7,10 +7,11 @@ import { wishListReducer } from "./wishlistReducer";
 import { categoryReducer } from "./categoryReducers";
 import { alertReducer } from "./alertReducer";
 import { orderReducer } from "./orderReducer";
+import { productReducer } from "./productReducer";
 
 const rootReducer = combineReducers({
-  user: userReducer,
   auth: authReducer,
+  product: productReducer,
   errors: errorReducer,
   category: categoryReducer,
   order: orderReducer,

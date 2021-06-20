@@ -1,6 +1,7 @@
 const initialState = {
   wishlists: [],
   loading: false,
+  error:{}
 };
 
 export const wishListReducer = (state = initialState, action) => {
@@ -8,10 +9,21 @@ export const wishListReducer = (state = initialState, action) => {
     case "ADD_WISHLIST":
       return {
         ...state,
-        wishlist: [...state.wishlist, action.payload],
+        wishlists: [...state.wishlists, action.payload.data],
         loading: false,
       };
-
+    case "GET_WISHLIST":
+      return {
+        ...state,
+        wishlists: action.payload,
+        loading: false,
+      };
+    case "WISHLIST_ERROR":
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
     default:
       return state;
   }

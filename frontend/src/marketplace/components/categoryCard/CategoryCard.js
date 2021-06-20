@@ -33,7 +33,7 @@ const CategoryCard = () => {
             {
                 products.map (product => 
                 <div className="grid-cols-6">
-                    <img src={product.img} alt="product image"/>
+                    <img  src={product.img} alt="productimage"/>
                     <h4>{product.title}</h4>
                     <h6>{product.price}</h6>
                     <span>{product.rating}</span>

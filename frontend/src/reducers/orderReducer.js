@@ -10,7 +10,7 @@ export const orderReducer = (state = initialState, action) => {
     case "GET_ORDERS":
       return {
         ...state,
-        orders: action.payload,
+        orders: action.payload.data,
         loading: false,
       };
     case "ORDER_STATUS_VALUES":

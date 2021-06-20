@@ -40,6 +40,7 @@ export const authReducer = (state = initialState, action) => {
         isAuthenticated: true,
         loading: false,
       };
+
     case ACCOUNT_DELETED:
       return {
         ...state,

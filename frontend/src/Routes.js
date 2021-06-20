@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Signin from "./dashboard/components/user/Signin";
 import Signup from "./dashboard/components/user/Signup";
@@ -23,30 +23,15 @@ import Posts from "./marketplace/components/posts/Posts";
 import Post from "./marketplace/components/post/Post";
 import Category from "./pages/categories/Category";
 import Footer from "./marketplace/components/footer/Footer";
-import Checkout from "./marketplace/components/checkout/Checkout"
+import Checkout from "./marketplace/components/checkout/Checkout";
 import Manufacturer from "./manufacturer/Manufacturer";
-import setAuthToken from "./utils/setAuthToken";
-import store from "./store";
-import { loadUser } from "./actions/authAction";
-import { LOGOUT } from "./actions/types";
 import Categories from "./pages/categories/Categories";
 
-function Routes() {
-   useEffect(() => {
-    // check for token in LS
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
-    }
-    store.dispatch(loadUser());
 
-    // log user out from all tabs if they log out in one tab
-    window.addEventListener("storage", () => {
-      if (!localStorage.token) store.dispatch({ type: LOGOUT });
-    });
-  }, []);
+function Routes() {
+  
   return (
     <>
-    
       <Header />
       <Switch>
         <Route path="/" exact component={Home} />
@@ -81,16 +66,8 @@ function Routes() {
         <Route exact path="/posts/" component={Posts} />
         <Route exact path="/posts/:id" component={Post} />
         <Route exact path="/category/:id" component={Category} />
-        <Route
-          exact
-          path="/manufacturer/:userId"
-          component={Manufacturer}
-        />
-        <Route
-          exact
-          path="/checkout"
-          component={Checkout}
-        />
+        <Route exact path="/manufacturer/:userId" component={Manufacturer} />
+        <Route exact path="/checkout" component={Checkout} />
       </Switch>
 
       <Footer />

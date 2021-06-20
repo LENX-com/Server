@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import { getCategory } from "../../actions/categoryAction";
+import { getCategory, } from "../../actions/categoryAction";
 import ProductCard from "../../marketplace/components/product/ProductCard";
 import { getFilteredProducts } from "../../marketplace/components/ApiCore";
 import RadioBox from "../../marketplace/components/shop/RadioBox";

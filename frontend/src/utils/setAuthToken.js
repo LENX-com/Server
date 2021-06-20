@@ -1,14 +1,12 @@
-import api from './api';
-import axios from "axios";
+import {api} from './api';
 
-const setAuthToken = token => {
+const setAuthToken = (token) => {
   if (token) {
     api.defaults.headers.common["Authorization"] = `bearer ${token}`;
     localStorage.setItem('token', token);
   } else {
-    delete api.defaults.headers.common['x-auth-token'];
+    delete api.defaults.headers.common['Authorization'];
     localStorage.removeItem('token');
   }
 };
-
 export default setAuthToken;
