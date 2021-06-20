@@ -32,11 +32,6 @@ const Banner = () => {
                 }
                 </Swiper>
             </div>
-
-            <div className="popular-category">
-                <h1>Popular Category</h1>
-                <CategotyCard />
-            </div>
         </div>
     );
 };

@@ -1,9 +1,12 @@
 import React from 'react';
+import SectionTitle from '../../marketplace/components/Typography/SectionTitle';
+import CategoryCard from '../../marketplace/components/categoryCard/CategoryCard';
 
 const TopSelling = () => {
     return (
         <div>
-            <h1>Best Selling</h1>
+            <SectionTitle>Top Selling</SectionTitle>
+            <CategoryCard></CategoryCard>
         </div>
     );
 };

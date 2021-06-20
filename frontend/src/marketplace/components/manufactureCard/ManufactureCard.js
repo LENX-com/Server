@@ -25,7 +25,6 @@ const manufacturers = [
 const ManufactureCard = () => {
     return (
         <div className="mb-5 mt-5">
-            <h1 className="text-2xl">Browse by Manufacturer</h1>
             <div className="grid grid-cols-2">
                 {
                     manufacturers.map (manufacturer => 
