@@ -9,7 +9,7 @@ const Reviews = () => {
     const reviewItem = () => {
         return (
             <div className="content mb-10">
-        <div className="flex items-center justify-between w-full my-4 pl-4 sm:pr-4">
+        <div className="flex items-center justify-between w-full my-2 ">
         </div>
         <div className="grid mt-8  gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-2">
         {Data.map((data, i)=> (
@@ -22,9 +22,9 @@ const Reviews = () => {
     return (
         <>
             <PageTitle>Reviews</PageTitle>
-            <SectionTitle>Purchase History</SectionTitle>
+            {/* <SectionTitle>Purchase History</SectionTitle> */}
             {reviewItem()}
-        </>
+        </>  
     )
 }
 

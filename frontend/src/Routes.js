@@ -23,9 +23,11 @@ import Posts from "./marketplace/components/posts/Posts";
 import Post from "./marketplace/components/post/Post";
 import Category from "./pages/categories/Category";
 import Footer from "./marketplace/components/footer/Footer";
+import Checkout from "./marketplace/components/checkout/Checkout"
 import Manufacturer from "./manufacturer/Manufacturer";
 import Categories from "./pages/categories/Categories";
 import SingleCategory from "./pages/categories/SingleCategory";
+
 
 function Routes() {
   return (
@@ -70,6 +72,11 @@ function Routes() {
           exact
           path="/manufacturer/:userId"
           component={Manufacturer}
+        />
+        <Route
+          exact
+          path="/checkout"
+          component={Checkout}
         />
       </Switch>
 

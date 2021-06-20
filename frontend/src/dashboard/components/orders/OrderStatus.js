@@ -3,43 +3,73 @@ import Questions from './Questions'
 import { HiArrowRight } from 'react-icons/hi'
 import Button from '../elements/Button'
 import { Link } from 'react-router-dom'
+import { Swiper, SwiperSlide } from "swiper/react";
+import Card from '../Cards/Card'
+import SectionTitle from '../Typography/SectionTitle'
+import { Badge } from '@windmill/react-ui'
+
+const ProductImage = [{
+  url: "https://sc04.alicdn.com/kf/Hdb74b0629dd443928f2d4d639bab8d55d.jpg",
+},
+{
+  url: "https://sc04.alicdn.com/kf/H46a5ac771b8b4ee7a3f1ae41248dbb4bc.jpg_50x50.jpg",
+},
+{
+  url: "https://sc04.alicdn.com/kf/H6bdcf18014fd42a2aaf2db1ee57d9f33E.jpg_50x50.jpg",
+}
+]
+
+
 
 const OrderStatus = () => {
     return (
-    <div className=" relative flex flex-col mb-10">
-            <div className="bg-white shadow-md  rounded-3xl p-4">
-              <div className="flex-none lg:flex">
-                <div className=" h-full w-full lg:h-48 lg:w-48   lg:mb-0 mb-3">
-                  <img src="https://images.unsplash.com/photo-1622180203374-9524a54b734d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Just a flower" className=" w-full  object-scale-down lg:object-cover  lg:h-48 rounded-2xl" />
+      <>
+        <Card>
+          <div>
+            <div className="flex">
+            <SectionTitle>Order status</SectionTitle>
+            <div className="table-cell align-middle cursor-pointer absolute right-4">
+                  <Link to="/user/dashboard/order">
+                  <HiArrowRight className="text-orange text text-lg" />
+                  </ Link>
                 </div>
-                <div className="flex-auto ml-3 justify-evenly py-2">
-                  <div className="flex flex-wrap ">
-                      <div className="absolute bottom-0 top-0 items-center pt-2 mb-3">
-                           <div class="mt-4">
-                              <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                              <h2 class="text-gray-900 title-font text-lg font-medium">The Catalyzer</h2>
-                              <p class="mt-1">$16.00</p>
-                            </div>
-                        </div>
-                    <div className="flex-none text-xs text-blue-700 font-medium ">
-                       <h2 class="text-gray-900 title-font text-lg font-medium"> What is happening to my order? </h2>
-                       <Questions />
-                    </div>
-                  </div>
-                  <p className="mt-3" />
-                  <div className="flex p-4 pb-2 border-t border-gray-200 " />
-                  <div className="absolute bottom-2 right-5 flex space-x-3 text-sm font-medium">
-                    <Button className="flex">
-                        <Link to="" className="flex text-Black font-bold">
-                          Proceed 
-                          <HiArrowRight className="ml-3 mt-1" />
-                        </Link> 
-                    </Button>
-                  </div>
-                </div>
-              </div> 
             </div>
+            <h2> Due date on 11/22/2022 </h2>
+            <Badge type="success" className="py-2 px-4 text-base mt-1 mb-3">success</Badge>
           </div>
+        <Swiper slidesPerView={2}
+                        spaceBetween={20}
+                        pagination={{"clickable": true}}
+                        className="mySwiper">
+      {ProductImage.map((data, i) =>  (  
+      <SwiperSlide key={i}>
+        
+        <section className="content bg-cover bg-center h-32 rounded" style={{backgroundImage: `url(${data.url})`}}>
+        <div className="flex items-end w-full h-full bg-black bg-opacity-20 text-white text-sm font-bold  p-4 rounded">
+        </div>
+      </section>
+        </SwiperSlide> ))
+          }
+       </Swiper>
+      <div className="my-4">
+        <Button className="flex">
+          <Link to="" className="flex text-Black font-bold">
+            Track Order
+            <HiArrowRight className="ml-3 mt-1" />
+          </Link> 
+        </Button>
+        </div>
+        <div className="mb-2">
+        <Button className="flex">
+          <Link to="" className="flex text-Black font-bold">
+             Requst Refund
+            <HiArrowRight className="ml-3 mt-1" />
+          </Link> 
+        </Button>
+        </div>
+      </Card>
+      </>
+
 
     )
 }

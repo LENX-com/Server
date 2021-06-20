@@ -18,6 +18,11 @@ const AddNewPost = lazy(() => import('../pages/AddNewPost'))
 const Profile = lazy(() => import('../pages/Profile'))
 const Reviews = lazy(() => import('../pages/Reviews'))
 const FAQ = lazy(() => import('../pages/FAQ'))
+const SingleOrder = lazy(() => import('../pages/SingleOrder'))
+const WriteReview = lazy(() => import('../pages/WriteReview'))
+const SingleBlog = lazy(() => import('../pages/SingleBlog'))
+const FindStatusOrder = lazy(() => import('../pages/FindStatusOrder'))
+const ChatApp = lazy(() => import('../../chat/ChatApp'))
 
 
 const routes = 
@@ -75,10 +80,6 @@ const routes =
     component: Blog,
   },
   {
-    path: `${address}/chat`,
-    component: Chat,
-  },
-  {
     path: `${address}/wishlist`,
     component: Wishlist,
   },
@@ -86,9 +87,29 @@ const routes =
     path: `${address}/my-reviews`,
     component: Reviews,
   },
-    {
+  {
     path: `${address}/faq`,
     component: FAQ,
+  },
+  {
+    path: `${address}/order`,
+    component: SingleOrder,
+  },
+   {
+    path: `${address}/write-review`,
+    component: WriteReview,
+  },
+   {
+    path: `${address}/blog/:id`,
+    component: SingleBlog,
+  },
+    {
+    path: `${address}/status-order`,
+    component: FindStatusOrder,
+  },
+   {
+    path: `${address}/chat`,
+    component: ChatApp,
   }
 ]
 
