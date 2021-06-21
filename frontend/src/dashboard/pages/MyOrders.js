@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { isAuthenticated } from "../../actions";
 import { getPurchaseHistory } from "../components/user/apiUser";
-import moment from "moment";
 import PageTitle from '../components/Typography/PageTitle'
 import SectionTitle from '../components/Typography/SectionTitle'
 import {
@@ -25,31 +23,32 @@ import { Link } from 'react-router-dom'
 import { Data } from '../components/stories/Data'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SearchBar from '../components/elements/SearchBar'
+import { useSelector } from 'react-redux'
 
 
 // make a copy of the data, for the second table
 const response2 = response.concat([])
 
+
 function MyOrders() {
     const [history, setHistory] = useState([]);
     const {
-        user: { _id, name, email, role, profile }
-    } = isAuthenticated();
-    const token = isAuthenticated().token;
+        user: { _id, name, email, role, profile, token }
+    } = useSelector( state => state.auth);
 
-    const init = (userId, token) => {
-        getPurchaseHistory(userId, token).then(data => {
-            if (data.error) {
-                console.log(data.error);
-            } else {
-                setHistory(data);
-            }
-        });
-    };
+    // const init = (userId, token) => {
+    //     getPurchaseHistory(userId, token).then(data => {
+    //         if (data.error) {
+    //             console.log(data.error);
+    //         } else {
+    //             setHistory(data);
+    //         }
+    //     });
+    // };
 
-    useEffect(() => {
-        init(_id, token);
-    }, []);
+    // useEffect(() => {
+    //     init(_id, token);
+    // }, []);
 
 
   // setup pages control for every table
