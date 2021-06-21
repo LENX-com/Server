@@ -5,6 +5,16 @@ const expressJwt = require("express-jwt"); // for the authorization check
 const { OAuth2Client } = require("google-auth-library");
 const Session = require("../models/session");
 
+exports.authUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    return res.json(user);
+  } catch (error) {
+    console.log(error);
+    return res.json(error);
+  }
+};
+
 exports.signup = (req, res) => {
   // console.log("req.body", req.body);
   // console.log("req.body", req.body);
@@ -38,6 +48,8 @@ exports.signin = (req, res) => {
 
   //find the user based inb email
   const { email, password } = req.body;
+
+  console.log(req.body);
 
   User.findOne({ email }, (err, user) => {
     if (err || !user) {

@@ -27,7 +27,7 @@ const Orders = () => {
               <span className="font-hkbold text-secondary text-sm uppercase text-center pb-2 block sm:hidden">Product Name</span>
               <div className="w-20 mx-auto sm:mx-0 relative sm:mr-3 sm:pr-0">
                 <div className="aspect-w-1 aspect-h-1 w-full">
-                  <img src="https://d33wubrfki0l68.cloudfront.net/be38c60bf34b2376b393e444d2da9a6b2dd54bf4/f1dfc/assets/img/unlicensed/shoes-3.png" alt="product image" className="object-cover" />
+                  <img alt="tags1" src="https://d33wubrfki0l68.cloudfront.net/be38c60bf34b2376b393e444d2da9a6b2dd54bf4/f1dfc/assets/img/unlicensed/shoes-3.png" alt="product image" className="object-cover" />
                 </div>
               </div>
               <span className="font-hk text-secondary text-base mt-2">Classic Beige</span>
@@ -52,7 +52,7 @@ const Orders = () => {
               <span className="font-hkbold text-secondary text-sm uppercase text-center pb-2 block sm:hidden">Product Name</span>
               <div className="w-20 mx-auto sm:mx-0 relative sm:mr-3 sm:pr-0">
                 <div className="aspect-w-1 aspect-h-1 w-full">
-                  <img src="https://d33wubrfki0l68.cloudfront.net/8be5370296df948ae63e956847bc4ca3cfd6e88b/19446/assets/img/unlicensed/backpack-3.png" alt="product image" className="object-cover" />
+                  <img alt="tags2" src="https://d33wubrfki0l68.cloudfront.net/8be5370296df948ae63e956847bc4ca3cfd6e88b/19446/assets/img/unlicensed/backpack-3.png" alt="product image" className="object-cover" />
                 </div>
               </div>
               <span className="font-hk text-secondary text-base mt-2">Party Blake</span>
@@ -77,7 +77,7 @@ const Orders = () => {
               <span className="font-hkbold text-secondary text-sm uppercase text-center pb-2 block sm:hidden">Product Name</span>
               <div className="w-20 mx-auto sm:mx-0 relative sm:mr-3 sm:pr-0">
                 <div className="aspect-w-1 aspect-h-1 w-full">
-                  <img src="https://d33wubrfki0l68.cloudfront.net/c4fad5f3a4b2cad2a6c78e8b687d7c48ba4d8786/f0790/assets/img/unlicensed/shoes-4.png" alt="product image" className="object-cover" />
+                  <img  alt="tags" src="https://d33wubrfki0l68.cloudfront.net/c4fad5f3a4b2cad2a6c78e8b687d7c48ba4d8786/f0790/assets/img/unlicensed/shoes-4.png" alt="product image" className="object-cover" />
                 </div>
               </div>
               <span className="font-hk text-secondary text-base mt-2">Siberian Boots</span>
@@ -102,7 +102,7 @@ const Orders = () => {
               <span className="font-hkbold text-secondary text-sm uppercase text-center pb-2 block sm:hidden">Product Name</span>
               <div className="w-20 mx-auto sm:mx-0 relative sm:mr-3 sm:pr-0">
                 <div className="aspect-w-1 aspect-h-1 w-full">
-                  <img src="https://d33wubrfki0l68.cloudfront.net/85500bc932caaf5aeccb1fe0518d682f5ba9a42e/bf094/assets/img/unlicensed/sunglass-1.png" alt="product image" className="object-cover" />
+                  <img  alt="tags3" src="https://d33wubrfki0l68.cloudfront.net/85500bc932caaf5aeccb1fe0518d682f5ba9a42e/bf094/assets/img/unlicensed/sunglass-1.png" alt="product image" className="object-cover" />
                 </div>
               </div>
               <span className="font-hk text-secondary text-base mt-2">Cat eye</span>
@@ -127,7 +127,7 @@ const Orders = () => {
               <span className="font-hkbold text-secondary text-sm uppercase text-center pb-2 block sm:hidden">Product Name</span>
               <div className="w-20 mx-auto sm:mx-0 relative sm:mr-3 sm:pr-0">
                 <div className="aspect-w-1 aspect-h-1 w-full">
-                  <img src="https://d33wubrfki0l68.cloudfront.net/d4d79d47d0a1502ea84435182ca6b6b4e0a88eb6/4a2b1/assets/img/unlicensed/watch-4.png" alt="product image" className="object-cover" />
+                  <img  alt="tags" src="https://d33wubrfki0l68.cloudfront.net/d4d79d47d0a1502ea84435182ca6b6b4e0a88eb6/4a2b1/assets/img/unlicensed/watch-4.png" alt="product image" className="object-cover" />
                 </div>
               </div>
               <span className="font-hk text-secondary text-base mt-2">Princess</span>
@@ -152,7 +152,7 @@ const Orders = () => {
               <span className="font-hkbold text-secondary text-sm uppercase text-center pb-2 block sm:hidden">Product Name</span>
               <div className="w-20 mx-auto sm:mx-0 relative sm:mr-3 sm:pr-0">
                 <div className="aspect-w-1 aspect-h-1 w-full">
-                  <img src="https://d33wubrfki0l68.cloudfront.net/1d230dd9ad94d5ec9cf250c1a88af71aa88a9887/b2584/assets/img/unlicensed/backpack-1.png" alt="product image" className="object-cover" />
+                  <img  alt="tags4" src="https://d33wubrfki0l68.cloudfront.net/1d230dd9ad94d5ec9cf250c1a88af71aa88a9887/b2584/assets/img/unlicensed/backpack-1.png" alt="product image" className="object-cover" />
                 </div>
               </div>
               <span className="font-hk text-secondary text-base mt-2">Black Blake</span>

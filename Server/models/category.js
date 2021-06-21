@@ -16,7 +16,7 @@ const brandSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+const opts = { toJSON: { virtuals: true } };
 const categorySchema = new mongoose.Schema(
   {
     name: {
@@ -30,10 +30,17 @@ const categorySchema = new mongoose.Schema(
       type: ObjectId,
     },
   },
+  opts,
   { timestamps: true }
 );
+categorySchema.virtual("products", {
+  localField: "_id",
+  ref: "Product",
+  foreignField: "category",
+  justOne: false,
+});
 
 const Category = mongoose.model("Category", categorySchema);
 const Brand = mongoose.model("Brand", brandSchema);
 
-module.exports = {Category, Brand}
+module.exports = { Category, Brand };

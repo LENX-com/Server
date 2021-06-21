@@ -1,20 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { getCategories } from "../../../actions/categoryAction";
+import { useSelector } from "react-redux";
 
 const CategoryList = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    getCategories().then((c) => {
-      setCategories(c.data);
-      setLoading(false);
-    });
-  }, []);
-
-  console.log(categories)
+  const categories = useSelector((state) => state.category.categories);
+  const loading = useSelector((state) => state.category.loading);
 
   const showCategories = () =>
     categories &&

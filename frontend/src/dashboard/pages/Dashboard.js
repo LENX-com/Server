@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import CardInfo from '../components/Cards/CardInfo'
 import UserCard from '../components/Cards/UserCard'

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Signin from "./dashboard/components/user/Signin";
 import Signup from "./dashboard/components/user/Signup";
@@ -23,15 +23,17 @@ import Posts from "./marketplace/components/posts/Posts";
 import Post from "./marketplace/components/post/Post";
 import Category from "./pages/categories/Category";
 import Footer from "./marketplace/components/footer/Footer";
-import Checkout from "./marketplace/components/checkout/Checkout"
+import Checkout from "./marketplace/components/checkout/Checkout";
 import Manufacturer from "./manufacturer/Manufacturer";
 import Categories from "./pages/categories/Categories";
+import SingleCategory from "./pages/categories/SingleCategory";
+
 
 
 function Routes() {
+  
   return (
     <>
-    
       <Header />
       <Switch>
         <Route path="/" exact component={Home} />  
@@ -45,6 +47,7 @@ function Routes() {
         <Route path="/product/:productId" exact component={Product} />
         <Route path="/cart" exact component={Cart} />
         <Route path="/categories" exact component={Categories} />
+        <Route path="/category" exact component={SingleCategory} />
         <AdminRoute path="/admin/orders" exact component={Orders} />
         <PrivateRoutes path="/profile/:userId" exact component={Profile} />
         <PrivateRoutes
@@ -66,16 +69,8 @@ function Routes() {
         <Route exact path="/posts/" component={Posts} />
         <Route exact path="/posts/:id" component={Post} />
         <Route exact path="/category/:id" component={Category} />
-        <Route
-          exact
-          path="/manufacturer/:userId"
-          component={Manufacturer}
-        />
-        <Route
-          exact
-          path="/checkout"
-          component={Checkout}
-        />
+        <Route exact path="/manufacturer/:userId" component={Manufacturer} />
+        <Route exact path="/checkout" component={Checkout} />
       </Switch>
 
       <Footer />

@@ -1,14 +1,12 @@
-  
-import axios from "axios";
+import {api} from './api';
 
-const setAuthToken = token => {
+const setAuthToken = (token) => {
   if (token) {
-    // Apply authorization token to every request if logged in
-    axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
+    api.defaults.headers.common["Authorization"] = `bearer ${token}`;
+    localStorage.setItem('token', token);
   } else {
-    // Delete auth header
-    delete axios.defaults.headers.common["Authorization"];
+    delete api.defaults.headers.common['Authorization'];
+    localStorage.removeItem('token');
   }
 };
-
 export default setAuthToken;

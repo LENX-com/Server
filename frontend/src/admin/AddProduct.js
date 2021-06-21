@@ -1,89 +1,75 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../marketplace/components/layout/Layout";
-import { isAuthenticated } from "../actions";
-import { Link } from "react-router-dom";
-import { createProduct, getCategories } from "./ApiAdmin";
+import { useSelector, useDispatch } from "react-redux";
+import { createProduct } from "./ApiAdmin";
+import { getCategories } from "../actions/categoryAction";
 
 const AddProduct = () => {
-    const [values, setValues] = useState({
-        name: '',
-        description: '',
-        price: '',
-        categories: [],
-        category: '',
-        shipping: '',
-        quantity: '',
-        file: '',
-        loading: false,
-        error: '',
-        createdProduct: '',
-        redirectToProfile: false,
-        formData: new FormData()
+  const auth = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
+  const categories = useSelector((state) => state.category.categories);
+  const dispatch = useDispatch();
+  const [values, setValues] = useState({
+    name: "",
+    description: "",
+    price: "",
+    categories: [],
+    category: "",
+    shipping: "",
+    quantity: "",
+    file: "",
+    loading: false,
+    error: "",
+    createdProduct: "",
+    redirectToProfile: false,
+    formData: new FormData(),
+  });
+
+  const {
+    name,
+    description,
+    price,
+    category,
+    shipping,
+    quantity,
+    loading,
+    error,
+    createdProduct,
+    redirectToProfile,
+    formData,
+  } = values;
+
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
+
+  const handleChange = (name) => (event) => {
+    const value = name === "file" ? event.target.files[0] : event.target.value;
+    formData.set(name, value);
+    setValues({ ...values, [name]: value });
+  };
+
+  const clickSubmit = (event) => {
+    event.preventDefault();
+    setValues({ ...values, error: "", loading: true });
+
+    createProduct(token, formData).then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        setValues({
+          ...values,
+          name: "",
+          description: "",
+          file: "",
+          price: "",
+          quantity: "",
+          loading: false,
+          createdProduct: data.name,
+        });
+      }
     });
-
-    const { user, token } = isAuthenticated();
-    const {
-        name,
-        description,
-        price,
-        categories,
-        category,
-        shipping,
-        quantity,
-        loading,
-        error,
-        createdProduct,
-        redirectToProfile,
-        formData
-    } = values;
-
-    // load categories and set form data
-    const init = () => {
-        getCategories().then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error });
-            } else {
-                setValues({
-                    ...values,
-                    categories: data.data,
-                    formData
-                });
-            }
-        });
-    };
-    console.log(categories)
-
-    useEffect(() => {
-        init();
-    }, []);
-
-    const handleChange = name => event => {
-        const value = name === 'file' ? event.target.files[0] : event.target.value;
-        formData.set(name, value);
-        setValues({ ...values, [name]: value });
-    };
-
-    const clickSubmit = event => {
-        event.preventDefault();
-        setValues({ ...values, error: '', loading: true });
-      
-        createProduct( token, formData).then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error });
-            } else {
-                setValues({
-                    ...values,
-                    name: '',
-                    description: '',
-                    file: '',
-                    price: '',
-                    quantity: '', 
-                    loading: false,
-                    createdProduct: data.name
-                });
-            }
-        });
-      };
+  };
 
   const newPostForm = () => (
     <form className="form" onSubmit={clickSubmit}>
@@ -159,7 +145,6 @@ const AddProduct = () => {
           value={quantity}
         />
       </div>
-
       <button className="btn btn-outline-primary">Create Product</button>
     </form>
   );
@@ -186,7 +171,7 @@ const AddProduct = () => {
   return (
     <Layout
       title="Add a new product"
-      description={`G'day ${user.name}, ready to add a new product?`}
+      description={`G'day ${auth.name}, ready to add a new product?`}
     >
       <div className="row">
         <div className="col-md-8 offset-md-2">
