@@ -1,11 +1,11 @@
 import {useEffect,  memo, useRef, useState} from 'react';
 import Avatar from '../components/Avatar/Avatar'
 import { MdCancel, MdSearch, MdPhoto, MdMic } from 'react-icons/md';
-import './SidebarChat.css';
+import './styles/SidebarChat.css';
 import { Link } from 'react-router-dom';
 import EcommerceLoader from '../components/Loader/EcommerceLoader'
-import { useStateValue } from './StateProvider';
 import { useDispatch, useSelector } from 'react-redux'
+
 //window
 const SidebarChat = ({ dataList, title, path, fetchList}) => {
     const {roomsData, page, pathID} = useSelector( state => state.chat);

@@ -5,10 +5,7 @@ import { Route, useLocation } from 'react-router-dom';
 import EcommerceLoader from '../components/Loader/EcommerceLoader'
 import { TransitionGroup, Transition, CSSTransition } from "react-transition-group";
 import { useSelector, useDispatch } from 'react-redux' 
-import './App.css';
-// import useRoomsData from './useRoomsData';
-import scalePage from "./scalePage";
-
+import './styles/App.css';
 
 
 const App = () => {
@@ -38,58 +35,6 @@ const App = () => {
     //   dispatch({ type: "set_scale_page", page: scalePage() });
     // })
   }, []);
-
-  // useEffect(() => {
-  //   if (user) {
-  //     db.collection("users").doc(user.uid).collection("chats").orderBy("timestamp", "desc").onSnapshot({ includeMetadataChanges: true }, snap => {
-  //       if (snap.docs?.length > 0) {
-  //         snap.docChanges().forEach(change => {
-  //           if (change.type === "added") {
-  //             setRoomsData(change.doc.data().userID, change.doc.id);
-  //           };
-  //         });
-  //         if (!snap.metadata.fromCache || (!window.navigator.onLine && snap.metadata.fromCache)) {
-  //           setChats(snap.docs.map(cur => ({
-  //             ...cur.data(),
-  //             id: cur.id
-  //           })));
-  //         };
-  //       } else {
-  //         setChats([]);
-  //       };
-  //     });
-  //     fetchRooms(() => null);
-  //     // fetchUsers(() => null);
-  //   };
-  // }, [user]);
-
-  // useEffect(() => {
-  //   if (chats?.length > 0) {
-  //     if (chats.every(cur => roomsData[cur.id]?.lastMessage)) {
-  //       setChatsFetched(true);
-  //     };
-  //   } else if (chats?.length === 0) {
-  //     setChatsFetched(true);
-  //   }
-  // }, [chats, roomsData]);
-
-  // useEffect(() => {
-  //   var s;
-  //   if (user) {
-  //     setOnlineStatus(user.uid);
-  //   }
-  //   return () => {
-  //     if (s) {
-  //       s();
-  //     };
-  //   };
-  // }, [user]);
-
-  // useEffect(() => {
-  //   var id = location.pathname.replace("/room/", "");
-  //   menus.forEach(cur => id = id.replace(cur, ""))
-  //   dispatch({ type: "set_path_id", id });
-  // }, [location.pathname]);
 
   return (
     <div className="app" style={{ ...page }} >

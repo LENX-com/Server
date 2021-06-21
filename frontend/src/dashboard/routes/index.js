@@ -12,7 +12,6 @@ const Page404 = lazy(() => import('../pages/404'))
 const Blank = lazy(() => import('../pages/Blank'))
 const MyOrders = lazy(() => import('../pages/MyOrders'))
 const Blog = lazy(() => import('../pages/Blog'))
-const Chat = lazy(() => import('../pages/Chat'))
 const Wishlist = lazy(() => import('../pages/Wishlist'))
 const AddNewPost = lazy(() => import('../pages/AddNewPost'))
 const Profile = lazy(() => import('../pages/Profile'))
@@ -22,7 +21,6 @@ const SingleOrder = lazy(() => import('../pages/SingleOrder'))
 const WriteReview = lazy(() => import('../pages/WriteReview'))
 const SingleBlog = lazy(() => import('../pages/SingleBlog'))
 const FindStatusOrder = lazy(() => import('../pages/FindStatusOrder'))
-const ChatApp = lazy(() => import('../../chat/ChatApp'))
 
 
 const routes = 
@@ -107,10 +105,7 @@ const routes =
     path: `${address}/status-order`,
     component: FindStatusOrder,
   },
-   {
-    path: `${address}/chat`,
-    component: ChatApp,
-  }
+  
 ]
 
 export default routes

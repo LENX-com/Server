@@ -1,6 +1,6 @@
 import {memo, useEffect, useState} from "react";
 import { MdClose}  from 'react-icons/md';
-import "./MediaPreview.css";
+import "./styles/MediaPreview.css";
 
 export default memo(function MediaPreview({imageSRC, mediaPreview, close}) {
 	const [height, setHeight] = useState("");

@@ -3,25 +3,19 @@ import SidebarChat from './SidebarChat';
 import Button from '../components/Buttons/Button'
 import Avatar from '../components/Avatar/Avatar'
 import { MdMessage, MdPeople, MdHome, MdExitToApp as LogOut, MdSearch, MdGetApp, MdAdd } from 'react-icons/md';
-import { useStateValue } from './StateProvider';
-import { NavLink, Route, useHistory, Switch } from 'react-router-dom';
-import './Sidebar.css';
-import audio from './notification.mp3'
+import { NavLink, Route, useHistory, Switch, useRouteMatch, BrowserRouter as Router } from 'react-router-dom';
+import './styles/Sidebar.css';
 import { useSelector } from 'react-redux'
+import Conversations from './Conversations'
 
 const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers }) => {
     const [searchList, setSearchList] = useState(null);
     const [searchInput, setSearchInput] = useState("");
     const [menu, setMenu] = useState(1);
     const [mounted, setMounted] = useState(false);
-    const { user, page, pathID } = useSelector( state => state.chat);
-    let history = useHistory();
-    const notification = new Audio(audio);
-    // const prevUnreadMessages = useRef((() => {
-    //     const data = {};
-    //     chats.forEach(cur => cur.unreadMessages || cur.unreadMessages === 0 ? data[cur.id] = cur.unreadMessages : null);
-    //     return data;
-    // })());
+    const { page } = useSelector( state => state.chat);
+    const { path, url } = useRouteMatch();
+
 
     var Nav;
     if (page.width > 760) {
@@ -33,20 +27,6 @@ const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers }) => {
         Nav = NavLink;
     }
 
-
-    // useEffect(() => {
-    //     const data = {};
-    //     chats.forEach(cur => {
-    //         if (cur.unreadMessages || cur.unreadMessages === 0) {
-    //             if ((cur.unreadMessages > prevUnreadMessages.current[cur.id] || !prevUnreadMessages.current[cur.id] && prevUnreadMessages.current[cur.id] !== 0) && pathID !== cur.id) {
-    //                 notification.play();
-    //             };
-    //             data[cur.id] = cur.unreadMessages;
-    //         };
-    //     });
-    //     prevUnreadMessages.current = data;
-    // }, [chats, pathID]);
-
     useEffect(() => {
         if (page.width <= 760 && chats && !mounted) {
             setMounted(true);
@@ -57,13 +37,14 @@ const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers }) => {
     }, [chats, mounted]);
 
     return (
-        <div className="sidebar_chat" style={{
+
+        <div className="sidebar-chat" style={{
             minHeight: page.width <= 760 ? page.height : "auto"
         }}>
             <div className="sidebar__header">
                 <div className="sidebar__header--left">
                     <Avatar src= "https://dmitripavlutin.com/static/2ba6203c53a01e6a7318dbd94203c96b/db982/profile-picture.webp" />
-                    <h4>{user?.displayName} </h4>
+                    <h4> UserName </h4>
                 </div>
                 <div className="sidebar__header--right">
                     <Button onClick={() => {
@@ -77,7 +58,8 @@ const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers }) => {
                         <MdGetApp />
                     </Button>
                     <Button onClick={() => {
-                        history.replace("/chats")
+                        console.log("")
+                        // history.replace("/chats")
                     }} >
                         <LogOut />
                     </Button>
@@ -101,7 +83,7 @@ const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers }) => {
             <div className="sidebar__menu text-3xl fill-current">
                 <Nav
                     classSelected={menu === 1 ? true : false}
-                    to="/chat"
+                    to= {`${url}`}
                     click={() => setMenu(1)}
                     activeClassName="sidebar__menu--selected"
                 >
@@ -112,7 +94,7 @@ const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers }) => {
                 </Nav>
                 <Nav
                     classSelected={menu === 2 ? true : false}
-                    to="/rooms"
+                    to= {`${url}/rooms`}
                     click={() => setMenu(2)}
                     activeClassName="sidebar__menu--selected"
                 >
@@ -123,7 +105,7 @@ const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers }) => {
                 </Nav>
                 <Nav
                     classSelected={menu === 3 ? true : false}
-                    to="/users"
+                    to= {`${url}/users`}
                     click={() => setMenu(3)}
                     activeClassName="sidebar__menu--selected"
                 >
@@ -137,20 +119,22 @@ const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers }) => {
             {page.width <= 760 ?
                 <>
                     <Switch>
-                        <Route path="/users" >
-                            <SidebarChat key="users" fetchList={fetchUsers} dataList={users} title="Users" path="/users" />
+                        <Route path= {`${path}/users`} component= {<div> hello  </div>}>
+                            <SidebarChat key="users" fetchList={fetchUsers} dataList={users} title="Users" path= {`${path}/users`} />
+
                         </Route>
-                        <Route path="/rooms" >
+                        <Route path= {`${path}/rooms`} >
                             <SidebarChat key="rooms" fetchList={fetchRooms} dataList={rooms} title="Rooms" path="/rooms" />
                         </Route>
                         <Route path="/search">
                             <SidebarChat key="search" dataList={searchList} title="Search Result" path="/search" />
-                        </Route>
-                        <Route path="/chats" >
+                        </Route>  
+                        <Route path= {path} >
                             <SidebarChat key="chats" dataList={chats} title="Chats" path="/chats" />
+                             <Conversations />
                         </Route>
                     </Switch>
-                </>  
+                </ >  
                 :
                 menu === 1 ?  
                     <SidebarChat key="chats" dataList={chats} title="Chats" />
@@ -162,11 +146,6 @@ const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers }) => {
                                 <SidebarChat key="search" dataList={searchList} title="Search Result" />
                                 : null
             }  
-            <div className="sidebar__chat--addRoom" onClick={console.log("createChat")}>
-                <Button >
-                    <MdAdd />
-                </Button>
-            </div>
         </div>
     );
 };

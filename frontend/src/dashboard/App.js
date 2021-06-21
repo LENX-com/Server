@@ -7,19 +7,19 @@ const Login = lazy(() => import('./pages/Login'))
 const CreateAccount = lazy(() => import('./pages/CreateAccount'))
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 
+
 function App() {
   const { path } = useRouteMatch();
-  console.log(path)
+
   return (
     <>
       <Router>
         <AccessibleNavigationAnnouncer />
         <Switch>
-          <Route path= {`${path}/login`} component={Login} />
+          <Route path= {`${path}/login`} component={Login} /> 
           <Route path= {`${path}`} component={Layout} />
           <Route path="/create-account" component={CreateAccount} />
           <Route path="/forgot-password" component={ForgotPassword} />
-          <Route path= {`${path}`}  component={Layout} />
         </Switch>
       </Router>
     </>

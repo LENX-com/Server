@@ -2,7 +2,7 @@ import { useState, useEffect, memo, useRef } from 'react';
 import { MdPlayCircleOutline, MdPause, MdPlayForWork} from 'react-icons/md';
 import EcommerceLoader from '../components/Loader/EcommerceLoader'
 import db from "./firebase";
-import "./AudioPlayer.css"
+import "./styles/AudioPlayer.css"
 
 export default memo(function AudioPlayer({sender, roomID, audioUrl, id, setAudioID, audioID, animState, audioPlayed}) {
 	const [isPlaying, setIsPlaying] = useState(false);

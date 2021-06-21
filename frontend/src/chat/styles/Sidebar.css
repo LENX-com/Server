@@ -1,8 +1,7 @@
-.sidebar_chat {
+.sidebar-chat {
     display: flex;
     flex-direction: column;
     flex: 0.30;
-    width: 30%;
     position: relative;
     background-color: white;
 }
