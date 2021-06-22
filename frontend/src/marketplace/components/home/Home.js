@@ -6,9 +6,11 @@ import {
 } from "../../../actions/productAction";
 import Card from "../card/Card";
 import { useDispatch, useSelector } from "react-redux";
+import {getSearchSelectors} from "redux-search"
 import Search from "../search/Search";
 
 function Home() {
+  const {text, result} = getSearchSelectors("books");
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product);
 
