@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { useHistory } from 'react-router-dom';
 import { useStateValue } from './StateProvider';
 import { MdClose } from 'react-icons/md';
-import "./ImagePreview.css"
+import "./styles/ImagePreview.css"
 
 export default memo(function ImagePreview({ imagePreview, animState }) {
     const history = useHistory();

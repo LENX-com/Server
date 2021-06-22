@@ -1,12 +1,12 @@
 import React, { useContext, Suspense, useEffect, lazy } from 'react'
 import { Switch, Route, Redirect, useLocation, useRouteMatch } from 'react-router-dom'
 import routes from '../routes'
-
 import Sidebar from '../components/Sidebar'
 import Header from '../components/Header'
 import Main from '../containers/Main'
 import ThemedSuspense from '../components/ThemedSuspense'
 import { SidebarContext } from '../context/SidebarContext'
+import ChatApp from '../../chat/ChatApp'
 
 const Page404 = lazy(() => import('../pages/404'))
 
@@ -41,6 +41,7 @@ function Layout() {
                   />
                 ) : null
               })}
+                <Route path={`${path}/chat`} component = {ChatApp} />
               
               <Redirect exact from= {`${path}`} to={`${path}/dashboard`} />
               <Route component={Page404} />
@@ -53,3 +54,4 @@ function Layout() {
 }
 
 export default Layout
+  

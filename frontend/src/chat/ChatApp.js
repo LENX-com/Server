@@ -1,5 +1,5 @@
 import React from "react";
-import './index.css';
+import './styles/index.css';
 import App from './App';
 
 const ChatApp = () => {
@@ -17,9 +17,11 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
       getUserMedia.call(navigator, constraints, resolve, reject);
     });
   }
-}
+}   
   return (
-     <App />
+    <>
+        <App />
+    </>
   )
 }
 

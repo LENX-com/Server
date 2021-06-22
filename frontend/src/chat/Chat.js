@@ -11,7 +11,7 @@ import ImagePreview from "./ImagePreview";
 import ChatFooter from "./ChatFooter";
 import anime from 'animejs/lib/anime.es.js';
 import AudioPlayer from "./AudioPlayer.js"
-import './Chat.css';
+import './styles/Chat.css';
 import { useSelector, useDispatch } from 'react-redux'
 
 

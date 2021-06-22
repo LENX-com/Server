@@ -132,7 +132,7 @@ em {
     height: 90px !important;
 }
 
-.scrollFetch > div > .MuiCircularProgress-svg {
+.scrollFetch > div > .MuiCircularProgress-svg {  
     transform: scale(1);
 }
 
