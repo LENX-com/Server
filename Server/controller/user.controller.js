@@ -190,12 +190,7 @@ exports.getWishlist = async (req, res) => {
     "productId"
   );
   try {
-    if (wish.length < 1) {
-      return res
-        .status(400)
-        .json({ error: "No wish list added continue shopping" });
-    }
-    return res.status(200).json({ data: wish });
+    return res.json(wish);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error });
