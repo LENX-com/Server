@@ -1,3 +1,6 @@
+@import "src/variables.scss";
+
+
 .chat {
     flex:0.7;
     width: 70%;
@@ -7,7 +10,7 @@
     position: absolute;
     right: 0;
     top: 0;
-    background-color: #e5ddd5;
+    background-color: $background-light;
     transform: translateZ(456px);
 }
 
@@ -34,7 +37,7 @@
 }
 
 .chat__background {
-    background-image: url("https://web.whatsapp.com/img/bg-chat-tile-light_686b98c9fdffef3f63127759e2057750.png");
+    background-image: url("https://i.pinimg.com/564x/d8/d4/dc/d8d4dceb7b39f652151d5f86b299b178.jpg");
     background-size: contain;
     background-position: center;
     position: absolute;
@@ -50,9 +53,15 @@
     padding-left: 12px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid lightgrey;
-    background-color: #ededed;
     z-index: 1;
+}
+
+@media screen and (max-width:360px) {
+    .chat__header{
+        max-height:45px!important;
+        padding-left: 0px!important;
+        padding: auto!important;
+    }
 }
 
 .chat__header--info {
@@ -100,7 +109,6 @@
 }
 
 .chat__body {
-    opacity: 0;
     background-color: transparent;
     padding: 0px 60px;
     padding-bottom: 98px !important;
@@ -146,7 +154,15 @@
 
 .chat__reciever {
     margin-left: auto;
-    background-color: #dcf8c6;
+    background-color: $blue;
+    color: #fff;
+
+    .chat__name {
+        color:#eee;
+    }
+    .chat__timestamp{
+        color:#eee;
+    }
 }
 
 .chat__lastMessage {
@@ -350,14 +366,14 @@
 @media (max-width: 760px) {
     .seen {
         right: 20px;
-    }
+    }  
     .chat {
         position: absolute;
         width: 100%;
         height: 100%;
         top: 0;
         left: 0;
-        background-color: #e5ddd5;
+        background-color: $background-light !important;
         opacity: 0;
         transform: scale(0.9);
         transition: transform 250ms cubic-bezier(0.37, 0, 0.63, 1), opacity 250ms cubic-bezier(0.37, 0, 0.63, 1);

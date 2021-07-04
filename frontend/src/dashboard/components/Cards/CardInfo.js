@@ -5,7 +5,7 @@ import Button from '../elements/Button'
 function CardInfo({ title, value, icon, button, children, padding, link }) {
   return (
     <div>
-    <div className={`mt-3 bg-white rounded  border-solid border-2 border-Grey relative lg:h-80  h-60 overflow-y-scroll ${padding}`}>
+    <div className={` box mt-3 bg-white rounded  border-solid border-2 border-Grey relative lg:h-80  h-60 overflow-y-scroll ${padding}`}>
       <div>
         <div className="flex border-b-solid border-b-2 border-gray-200 justify-center sticky top-0 bg-white py-2">
         {icon}

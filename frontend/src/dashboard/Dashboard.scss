@@ -74,3 +74,55 @@ button {
             }
         }
 }
+
+.box {
+
+    &::-webkit-scrollbar {
+        width: 0.4em;
+        height: 0.1em;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #909090;
+        border-radius: 5px;
+
+        &:hover {
+            background:#cccc;
+        }
+    }
+}
+
+.dashboard-footer {
+    height: 63px;
+
+    svg{
+        fill: $blue;
+    }
+
+    .col {
+        flex: 1;
+        background: white;
+    }
+    .wrapper {
+        text-align: center;
+    }
+    .icon-wrapper {
+       text-align: -webkit-center;
+    }
+}
+
+@media screen and (min-width: 360px) {
+    .dashboard-footer {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .dashboard-header{
+        max-height:65px;
+}
+}
+
+    .dashboard-header{
+        box-shadow: 0 2px 3px RGB(0 0 0 / 20%);
+}

@@ -1,7 +1,6 @@
 import { useState, useEffect, memo, useRef } from 'react';
 import { MdPlayCircleOutline, MdPause, MdPlayForWork} from 'react-icons/md';
 import EcommerceLoader from '../components/Loader/EcommerceLoader'
-import db from "./firebase";
 import "./styles/AudioPlayer.css"
 
 export default memo(function AudioPlayer({sender, roomID, audioUrl, id, setAudioID, audioID, animState, audioPlayed}) {
@@ -18,19 +17,19 @@ export default memo(function AudioPlayer({sender, roomID, audioUrl, id, setAudio
 	const interval = useRef();
 	const uploading = useRef(audioUrl === "uploading");
 
-	function play () {
-		audio.current.play();
-		if (!audioPlayed && !sender) {
-			db.collection("rooms").doc(roomID).collection("messages").doc(id).set({
-				audioPlayed: true
-			}, {merge: true});
-		}
-		if (audioID !== id) {
-			setAudioID(id);
-		}
-		interval.current = setInterval(seekUpdate, 50);
-		setIsPlaying(true);
-	}
+	// function play () {
+	// 	audio.current.play();
+	// 	if (!audioPlayed && !sender) {
+	// 		db.collection("rooms").doc(roomID).collection("messages").doc(id).set({
+	// 			audioPlayed: true
+	// 		}, {merge: true});
+	// 	}
+	// 	if (audioID !== id) {
+	// 		setAudioID(id);
+	// 	}
+	// 	interval.current = setInterval(seekUpdate, 50);
+	// 	setIsPlaying(true);
+	// }
 
 	function pause() {
 		audio.current.pause();
@@ -163,7 +162,7 @@ export default memo(function AudioPlayer({sender, roomID, audioUrl, id, setAudio
 				: isPlaying && !error? 
 					<MdPause className="pause" onClick={pause} /> 
 				: !isPlaying && !error ?
-					<MdPlayCircleOutline onClick={play} />
+					<MdPlayCircleOutline  />
 				: 
 					<MdPlayForWork onClick={loadAudioAgain} />
 				}

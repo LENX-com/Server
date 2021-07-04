@@ -1,13 +1,14 @@
 import scalePage from '../chat/scalePage'
+import { CURRENT_CHAT, CONVERSATION } from "../actions/types"
 
 export const initialState = {
-    user: null,
     path: "",
     pathID: "",
     dispatchMessages: {},
     audioID: null,
-    roomsData: {},
-    page: scalePage()
+    page: scalePage(),
+    currentChat: "",
+    conversations: []
 }
 
 export const  actionTypes = {  
@@ -23,11 +24,6 @@ export const ChatReducer = (state = initialState, action) => {
                 ...state,
                 page: action.page
             }  
-        case actionTypes.SET_USER :
-            return {
-                ...state,
-                user: action.user
-            }
         case "SET_PATH" :
             return {
                 ...state,
@@ -37,6 +33,16 @@ export const ChatReducer = (state = initialState, action) => {
             return {
                 ...state,
                 pathID: action.id
+            }
+        case CURRENT_CHAT :
+            return {
+                ...state,
+                currentChat: action.payload
+            }
+        case CONVERSATION :
+            return {
+                ...state,
+                conversations: action.payload
             }
         case actionTypes.SET_MESSAGES :
             const dispatchMessages = state.dispatchMessages;

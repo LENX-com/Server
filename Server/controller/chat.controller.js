@@ -24,7 +24,7 @@ exports.getChat = (req, res) => {
                 senderName: single.senderName,
                 audio: single.audio,
                 media: single.media
-            }
+            }  
 
             response.push(message);
         });

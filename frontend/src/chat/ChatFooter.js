@@ -21,8 +21,7 @@ export default memo(function ChatFooter({input, handleFocus, change, sendMessage
 	    if (!event.currentTarget.contains(event.relatedTarget) && !recording) {
 	    	setFocus(false)
 	    }
-	}
-
+	}  
 
 	async function startRecording(e) {
 		e.preventDefault();

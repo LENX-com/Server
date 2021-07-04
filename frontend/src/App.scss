@@ -117,3 +117,31 @@ h5,
 h6 {
   font-family: "Camphor", "Open Sans", "Segoe UI", "sans-serif" !important;
 }
+
+body {
+  ::-webkit-scrollbar {
+    width: 0.7em;
+    height: 0.1em;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #909090;
+    border-radius: 5px;
+
+  &:hover {
+    background: #cccc;
+  }
+  }
+}
+
+.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis!important;
+}
+
+.vertical-center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

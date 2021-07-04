@@ -17,7 +17,7 @@ export default function useFetchData(limitNumber, get,initCount, snapHandler, na
             };
             if (dataUnsub.current) {
                 dataUnsub.current();
-            };
+            };  
             if (initCount) {
             	snapCount.current = 0;
             };

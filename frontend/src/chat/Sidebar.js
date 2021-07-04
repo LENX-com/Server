@@ -1,75 +1,54 @@
-import { useEffect, useState, memo, useRef } from 'react';
+import { useEffect, useState, memo } from 'react';
 import SidebarChat from './SidebarChat';
-import Button from '../components/Buttons/Button'
 import Avatar from '../components/Avatar/Avatar'
-import { MdMessage, MdPeople, MdHome, MdExitToApp as LogOut, MdSearch, MdGetApp, MdAdd } from 'react-icons/md';
-import { NavLink, Route, useHistory, Switch, useRouteMatch, BrowserRouter as Router } from 'react-router-dom';
+import { MdMessage, MdPeople, MdHome, MdExitToApp as LogOut, MdSearch, MdPhoto } from 'react-icons/md';
+import { NavLink, Route, Link, useRouteMatch, Switch  } from 'react-router-dom';
 import './styles/Sidebar.css';
 import { useSelector } from 'react-redux'
-import Conversations from './Conversations'
+import Myorder from './MyOrder'
 
-const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers }) => {
-    const [searchList, setSearchList] = useState(null);
+const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers, user}) => {
+    const [searchList, setSearchList] = useState(null);  
     const [searchInput, setSearchInput] = useState("");
     const [menu, setMenu] = useState(1);
     const [mounted, setMounted] = useState(false);
-    const { page } = useSelector( state => state.chat);
+    const { page, pathID } = useSelector( state => state.chat);
     const { path, url } = useRouteMatch();
-
 
     var Nav;
     if (page.width > 760) {
         Nav = (props) =>
             <div className={`${props.classSelected ? "sidebar__menu--selected" : ""}`} onClick={props.click}>
                 {props.children}
-            </div>
+            </div>   
     } else {
-        Nav = NavLink;
+        Nav = NavLink; 
     }
 
     useEffect(() => {
-        if (page.width <= 760 && chats && !mounted) {
+        if (page.width <= 760) {
             setMounted(true);
             setTimeout(() => {
-                document.querySelector('.sidebar').classList.add('side');
+                document.querySelector('.sidebar-chat').classList.add('side');
             }, 10);
         };
     }, [chats, mounted]);
 
+    
+
+    
+
     return (
 
         <div className="sidebar-chat" style={{
-            minHeight: page.width <= 760 ? page.height : "auto"
+            minHeight: page.width <= 760 ? page.height : "auto"  
         }}>
-            <div className="sidebar__header">
-                <div className="sidebar__header--left">
-                    <Avatar src= "https://dmitripavlutin.com/static/2ba6203c53a01e6a7318dbd94203c96b/db982/profile-picture.webp" />
-                    <h4> UserName </h4>
-                </div>
-                <div className="sidebar__header--right">
-                    <Button onClick={() => {
-                        if (pwa) {
-                            console.log("prompting the pwa event")
-                            pwa.prompt()
-                        } else {
-                            console.log("pwa event is undefined")
-                        }
-                    }} >
-                        <MdGetApp />
-                    </Button>
-                    <Button onClick={() => {
-                        console.log("")
-                        // history.replace("/chats")
-                    }} >
-                        <LogOut />
-                    </Button>
-
-                </div>
+            <div className="p-3">
+                {/* <Myorder /> */}
             </div>
-
             <div className="sidebar__search">
                 <form className="sidebar__search--container">
-                    <MdSearch />
+                    <MdSearch className="ml-3"/>
                     <input
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
@@ -131,11 +110,11 @@ const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers }) => {
                         </Route>  
                         <Route path= {path} >
                             <SidebarChat key="chats" dataList={chats} title="Chats" path="/chats" />
-                             <Conversations />
                         </Route>
                     </Switch>
                 </ >  
                 :
+                
                 menu === 1 ?  
                     <SidebarChat key="chats" dataList={chats} title="Chats" />
                     : menu === 2 ?
@@ -145,9 +124,11 @@ const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers }) => {
                             : menu === 4 ?
                                 <SidebarChat key="search" dataList={searchList} title="Search Result" />
                                 : null
-            }  
+            } 
+ 
         </div>
     );
 };
 
 export default memo(Sidebar);
+          
