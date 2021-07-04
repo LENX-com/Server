@@ -42,16 +42,49 @@ exports.createOrder = async (req, res) => {
     return res.status(500).json(error);
   }
 };
+//create order
+exports.createOrders = async (req, res) => {
+  try {
+    const { ...args } = req.body;
+    args.userId = req.user._id;
+    // args.product = carts.map((item) => item.productId);
+
+    const newOrder = await Order.create(args);
+    if (!newOrder) {
+      return res.status(400).json({ error: "order failed" });
+    }
+    // await sendEmail(
+    //   req.user.email,
+    //   "Order created successfully",
+    //   {
+    //     name: "new charge",
+    //     link: "order link",
+    //   },
+    //   "../helpers/templates/order.ejs"
+    // );
+    return res
+      .status(200)
+      .json({ data: newOrder, msg: "order initiated succesfully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+};
 
 //get all orders by authenticated user
 exports.OrderByUser = async (req, res) => {
-  const orders = await Order.find({ user: req.user._id });
-  console.log(req.user);
+  const PAGE_SIZE = 2;
+  console.log(req.query);
+  const page = parseInt(req.query.page || "0");
+  console.log(PAGE_SIZE * page);
+  const total = await Order.countDocuments({});
+  const orders = await Order.find({ userId: req.user._id }).populate("product")
+    .limit(PAGE_SIZE)
+    .skip(PAGE_SIZE * page);
   try {
-    if (orders < 1) {
-      return res.status(400).json({ error: "You havent made any orders yet" });
-    }
-    return res.status(200).json({ data: orders });
+    return res
+      .status(200)
+      .json({ orders, total: Math.ceil(total / PAGE_SIZE) });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error });

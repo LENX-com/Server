@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { userReducer } from "./userReducer";
+import {reducer as searchReducer, } from "redux-search"
 import { authReducer } from "./authReducer";
 import { errorReducer } from "./errorReducer.js";
 import { postReducer } from './postReducer'
@@ -12,6 +12,7 @@ import { ChatReducer } from './ChatReducer'
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  search:searchReducer,
   product: productReducer,
   errors: errorReducer,
   category: categoryReducer,
