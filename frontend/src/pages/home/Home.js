@@ -18,4 +18,7 @@ const Home = () => {
 };
 
 export default Home;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 167753521104153367a460f9ffc59e0e71a8c07d

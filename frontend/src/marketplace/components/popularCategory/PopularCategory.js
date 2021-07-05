@@ -1,8 +1,11 @@
 import React from 'react';
 import SectionTitle from '../Typography/SectionTitle';
 import CategoryCard from '../categoryCard/CategoryCard';
+<<<<<<< HEAD
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+=======
+>>>>>>> 167753521104153367a460f9ffc59e0e71a8c07d
 
 const PopularCategory = () => {
     return (

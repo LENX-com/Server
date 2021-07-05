@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Signin from "./dashboard/components/user/Signin";
 import Signup from "./dashboard/components/user/Signup";
@@ -23,19 +23,20 @@ import Posts from "./marketplace/components/posts/Posts";
 import Post from "./marketplace/components/post/Post";
 import Category from "./pages/categories/Category";
 import Footer from "./marketplace/components/footer/Footer";
-import Checkout from "./marketplace/components/checkout/Checkout"
+import Checkout from "./marketplace/components/checkout/Checkout";
 import Manufacturer from "./manufacturer/Manufacturer";
 import Categories from "./pages/categories/Categories";
 import SingleCategory from "./pages/categories/SingleCategory";
 
 
+
 function Routes() {
+  
   return (
     <>
-    
       <Header />
       <Switch>
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact component={Home} />  
         <Route path="/shop" exact component={Shop} />
         <Route path="/signin" exact component={Signin} />
         <Route path="/signup" exact component={Signup} />
@@ -68,16 +69,8 @@ function Routes() {
         <Route exact path="/posts/" component={Posts} />
         <Route exact path="/posts/:id" component={Post} />
         <Route exact path="/category/:id" component={Category} />
-        <Route
-          exact
-          path="/manufacturer/:userId"
-          component={Manufacturer}
-        />
-        <Route
-          exact
-          path="/checkout"
-          component={Checkout}
-        />
+        <Route exact path="/manufacturer/:userId" component={Manufacturer} />
+        <Route exact path="/checkout" component={Checkout} />
       </Switch>
 
       <Footer />

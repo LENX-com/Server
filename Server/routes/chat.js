@@ -7,4 +7,4 @@ router.get('/getChannels', getChannels);
 
 router.get('/historicChat/:receiverID', getChat);
 
-module.exports = router;
+module.exports = router;    

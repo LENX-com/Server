@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import {
   read,
@@ -6,6 +7,7 @@ import {
   addVote,
   downVote,
 } from "../../marketplace/components/ApiCore";
+import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../../marketplace/components/product/ProductCard";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Stories from "react-insta-stories";
@@ -63,6 +65,8 @@ const dummyProductImage = [
 
 const Product = (props) => {
   const token = isAuthenticated() && isAuthenticated().token;
+  const dispatch = useDispatch();
+
   const [product, setProduct] = useState({});
   const [relatedProduct, setRelatedProduct] = useState();
   const [allReviews, setAllReviews] = useState();
@@ -244,6 +248,7 @@ const Product = (props) => {
                 </TabList>
                 <TabPanel>blog items</TabPanel>
                 <TabPanel>status items</TabPanel>
+                <TabPanel>another</TabPanel>
               </Tabs>
             </div>
           </div>

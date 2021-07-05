@@ -1,7 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const ejs = require("ejs");
 const multer = require("multer");
 const upload = multer();
 const cors = require("cors");
@@ -16,21 +15,12 @@ const connectToDB = require("./config/dbConnection");
 const App = express();
 const http = require("http").createServer(App);
 
-let io = require("socket.io")(http, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-    credentials: true,
-  },
-});
-
-const { setSocket } = require("./config/socketConfig");
 
 //debugger
 connectToDB();
 
 //middleware
-App.use(morgan("dev"));
+App.use(morgan("dev"));   
 App.use(express.json());
 App.use(express.urlencoded({ extended: true }));
 
@@ -40,7 +30,7 @@ App.use(express.urlencoded({ extended: true }));
 App.use(express.static("public"));
 App.use(cookieParser());
 App.use(expressValidator());
-App.use(cors());
+App.use(cors("*"));
 
 // view engine setup
 App.set("views", path.join(__dirname, "views"));
@@ -54,13 +44,15 @@ App.get("/", (req, res) =>
 App.use("/api", require("./routes/auth"));
 App.use("/api", require("./routes/user"));
 App.use("/api", require("./routes/category"));
-App.use("/api", require("./routes/product"));
+App.use("/api", require("./routes/product"));  
 App.use("/api", require("./routes/braintree"));
 App.use("/api", require("./routes/order"));
 App.use("/api", require("./routes/chat"));
 App.use("/api", require("./routes/profile"));
 App.use("/api", require("./routes/review"));
 App.use("/api", require("./routes/marketplace"));
+App.use("/api", require("./routes/message"));
+App.use("/api", require("./routes/conversation"));
 
 // Initialise passport middleware
 App.use(passport.initialize());
@@ -68,15 +60,22 @@ require("./middlewares/jwt")(passport);
 
 const port = process.env.PORT || 5000;
 
-http.listen(port, () => {
+const server = http.listen(port, () => {
   console.log(`Server hosted on: http://localhost:${port}`);
 });
 
-// Sets the configuration for socket io
-setSocket(io);
 
-/*
-App.listen(port, () =>{
-  console.log(`Server hosted on: http://localhost:${port}`)
-})
-*/
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+} );
+
+
+const { setSocket } = require("./config/socketConfig");
+
+// Sets the configuration for socket io
+setSocket(io);  
+

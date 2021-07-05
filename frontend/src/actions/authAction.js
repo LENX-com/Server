@@ -1,72 +1,82 @@
-import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
-import jwt_decode from "jwt-decode";
-import {API} from '../config'
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
+import { API } from "../config";
 import { toast } from "react-toastify";
 
+import { api} from "../utils/api";
+import { setAlert } from "./alert";
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  USER_LOADED,
+  AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT,
+} from "./types";
 
+// Load User
+export const loadUser = () => async (dispatch) => {
+  try {
+    const res = await api.get(`${API}/auth`);
+
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+    });
+  }
+};
 
 // Register User
-export const registerUser = (userData, history) => dispatch => {
-  axios
-    .post(`${API}/signup`, userData)
-    .then(res => history.push("/login"))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
+export const register = (formData) => async (dispatch) => {
+  try {
+    const res = await api.post(`${API}/signup`, formData);
 
-// Login - get user token
-export const signin = userData => dispatch => {
-  axios
-    .post(`${API}/signin`, userData)
-    .then(res => {
-      // Save to localStorage
-
-      // Set token to localStorage
-      const { token } = res.data;
-
-      localStorage.setItem("jwt", JSON.stringify(res.data) );
-      // Set token to Auth header
-      setAuthToken(token);
-      // Decode token to get user data
-      const decoded = jwt_decode(token);
-      // Set current user
-      dispatch(setCurrentUser(decoded));
-      
     dispatch({
-      type: SET_CURRENT_USER,
-      payload: res.data
+      type: REGISTER_SUCCESS,
+      payload: res.data,
     });
-    })
-    .catch(err => {
-      toast.error(err.response.data.error)
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      })
-    })
+    dispatch(loadUser());
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    }
+
+    dispatch({
+      type: REGISTER_FAIL,
+    });
+  }
 };
 
+// Login User
+export const login = (formdata) => async (dispatch) => {
+  try {
+    const res = await api.post(`${API}/signin`, formdata);
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(loadUser());
+  } catch (err) {
+    const errors = err.response.data.errors;
 
-// Set logged in user
-export const setCurrentUser = decoded => {
-  return {
-    type: SET_CURRENT_USER,
-    payload: decoded
-  };
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    }
+
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
 };
 
-// User loading
-export const setUserLoading = () => {
-  return {
-    type: USER_LOADING
-  };
-};
+// Logout
+export const logout = () => ({ type: LOGOUT });
 
 // // Log user out
 // export const logoutUser = () => dispatch => {
@@ -78,29 +88,13 @@ export const setUserLoading = () => {
 //   dispatch(setCurrentUser({}));
 // };
 
-export const signout = next => {
-     if (typeof window !== 'undefined') {
-        localStorage.removeItem('jwt');
-        next();
-        return fetch(`${API}/signout`, {
-            method: 'GET'
-        })
-            .then(response => dispatch => {
-                console.log('signout', response);
-                setAuthToken(false);
-                dispatch(setCurrentUser({}));
-            })
-            .catch(err => console.log(err));
-    }
-};
-
 export const isAuthenticated = () => {
-    if (typeof window == 'undefined') {
-        return false; 
-    }
-    if (localStorage.getItem('jwt')) {
-        return JSON.parse(localStorage.getItem('jwt'));
-    } else {
-        return false;
-    }
+  if (typeof window == "undefined") {
+    return false;
+  }
+  if (localStorage.getItem("jwt")) {
+    return JSON.parse(localStorage.getItem("jwt"));
+  } else {
+    return false;
+  }
 };

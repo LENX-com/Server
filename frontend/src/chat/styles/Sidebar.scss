@@ -1,10 +1,10 @@
-.sidebar_chat {
+@import "src/variables.scss";
+
+.sidebar-chat {
     display: flex;
     flex-direction: column;
     flex: 0.30;
-    width: 30%;
     position: relative;
-    background-color: white;
 }
 
 .sidebar__header {
@@ -13,7 +13,6 @@
     align-items: center;
     padding: 10px 12px;
     border-right: 1px solid lightgrey;
-    background-color: #ededed;
 }
 
 .sidebar__header--left {
@@ -48,7 +47,6 @@
 .sidebar__search {
     display: flex;
     align-items: center;
-    background-color: #f6f6f6;
     padding: 10px;
     border-right: 1px solid lightgrey;
 }
@@ -56,12 +54,11 @@
 .sidebar__search--container  {
     display: flex;
     align-items: center;
-    background-color: white;
     width: 100%;
     height: 35px;
     box-shadow: 0px 0px 8px 0px #00000016;
     /*border: 1px solid #00000016;*/
-    border-radius: 20px;
+    border-radius: 5px;
     padding-right: 13px;
 }
 
@@ -72,7 +69,6 @@
 }
 
 .sidebar__search--container > input {
-    font-family: Roboto;
     font-size: 14px;
     font-weight: 400;
     border: none;
@@ -88,7 +84,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ededed;
     border-right: 1px solid lightgrey;
 }
 
@@ -114,7 +109,7 @@
     opacity: 0;
     width: 100%;
     height: 3px;
-    background: #0000008a;
+    background: $orange;
     margin-top: 5px;
 }
 
@@ -124,7 +119,6 @@
 
 .sidebar__chat--container {
     flex: 1;
-    background-color: white;
     overflow: scroll;
     position: relative;
 }
@@ -152,6 +146,7 @@
     }
 
     .sidebar__menu {
-        border: none;
+        border: solid 3px #eee;
+        background: white;
     }
 }

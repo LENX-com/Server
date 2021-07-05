@@ -3,7 +3,7 @@ import { MdSend, MdMic, MdCancel, MdCheckCircle } from 'react-icons/md';
 import { CSSTransition } from "react-transition-group";
 import recorder from "./recorder.js";
 import { v4 as uuidv4 } from 'uuid';
-import "./ChatFooter.css";
+import "./styles/ChatFooter.css";
 import { useSelector } from 'react-redux'
 
 const wait = time => new Promise(resolve => setTimeout(resolve, time));
@@ -21,8 +21,7 @@ export default memo(function ChatFooter({input, handleFocus, change, sendMessage
 	    if (!event.currentTarget.contains(event.relatedTarget) && !recording) {
 	    	setFocus(false)
 	    }
-	}
-
+	}  
 
 	async function startRecording(e) {
 		e.preventDefault();

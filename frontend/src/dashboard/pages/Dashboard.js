@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import CardInfo from '../components/Cards/CardInfo'
 import UserCard from '../components/Cards/UserCard'
@@ -10,7 +11,8 @@ import { isAuthenticated } from '../../actions/authAction'
 import { NavLink, useRouteMatch } from 'react-router-dom'
 import { HiChevronRight } from 'react-icons/hi'
 import ChatElement from '../components/chat/ChatElement'
-import OrderItem from '../components/orders/OrderItem'
+import OrderItem from '../components/orders/OrderItem' 
+import { useSelector } from 'react-redux' 
 
 
 // install Swiper modules
@@ -19,9 +21,9 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 const Dashboard = () => {
   const [page, setPage] = useState(1)
   const [data, setData] = useState([])
-  const {user} = isAuthenticated();
   const { path } = useRouteMatch();
   const address = "/user/dashboard"
+  const { user }  = useSelector( state => state.auth);
 
   // pagination setup 
   const resultsPerPage = 10
