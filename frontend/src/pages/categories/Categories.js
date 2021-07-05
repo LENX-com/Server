@@ -14,7 +14,15 @@ const Categories = () => {
             <CategoriesList />
             <CategoryCard />
             <SectionTitle>Browse by Manufacturer</SectionTitle>
-            <ManufactureCard />
+            <Swiper
+                spaceBetween={0}
+                slidesPerView={1}
+            >
+                <SwiperSlide>
+                    <ManufactureCard />
+                </SwiperSlide>
+            </Swiper>
+            <SectionTitle>Shop by Brand</SectionTitle>
             <BrandSlider />
         </Main>
     );

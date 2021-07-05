@@ -19,7 +19,6 @@ const brands = [
 const Slider = () => {
     return (
         <div>
-            <h1 className="text-2xl mb-5">Shop by Brand</h1>
             <Swiper
                 spaceBetween={20}
                 slidesPerView={3}

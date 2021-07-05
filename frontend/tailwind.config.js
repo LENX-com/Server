@@ -531,6 +531,7 @@ const colors = require('tailwindcss/colors')
     maxWidth: (theme, { breakpoints }) => ({
       none: 'none',
       0: '0rem',
+      6: "100px",
       7: "7rem",
       xs: '20rem',
       sm: '24rem',

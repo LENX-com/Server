@@ -10,21 +10,13 @@ const manufacturers = [
     {
         img: 'https://via.placeholder.com/300x200',
         title:"Company Two"
-    },
-    {
-        img: 'https://via.placeholder.com/300x200',
-        title:"Company Three"
-    },
-    {
-        img: 'https://via.placeholder.com/300x200',
-        title:"Company Three"
     }
 ]
 
 
 const ManufactureCard = () => {
     return (
-        <div className="mb-5 mt-5">
+        <div className="mb-5">
             <div className="grid grid-cols-2">
                 {
                     manufacturers.map (manufacturer => 

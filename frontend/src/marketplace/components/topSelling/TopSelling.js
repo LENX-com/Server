@@ -1,12 +1,28 @@
 import React from 'react';
-import SectionTitle from '../../marketplace/components/Typography/SectionTitle';
-import CategoryCard from '../../marketplace/components/categoryCard/CategoryCard';
+import SectionTitle from '../Typography/SectionTitle';
+import CategoryCard from '../categoryCard/CategoryCard';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const TopSelling = () => {
     return (
-        <div>
+        <div className="mt-5">
             <SectionTitle>Top Selling</SectionTitle>
-            <CategoryCard></CategoryCard>
+            <Swiper
+                spaceBetween={30}
+                slidesPerView={1}
+                onSlideChange={() => console.log('slide change')}
+                onSwiper={(swiper) => console.log(swiper)}
+                >
+                <SwiperSlide>
+                    <CategoryCard />
+                </SwiperSlide>
+                <SwiperSlide>
+                    <CategoryCard />
+                </SwiperSlide>
+                <SwiperSlide>
+                    <CategoryCard /> 
+                </SwiperSlide>
+            </Swiper>
         </div>
     );
 };
