@@ -158,7 +158,7 @@
     color: #fff;
 
     .chat__name {
-        color:#eee;
+        color:$orange;
     }
     .chat__timestamp{
         color:#eee;
@@ -423,4 +423,12 @@
 .chat-animate {
     opacity: 1;
     transform: scale(1);
+}
+
+.icon-orange {
+    background: #FFEDD5;
+    fill: #FDBA74;
+    padding : 10px;
+    font-size:44px;
+    border-radius:6px;
 }

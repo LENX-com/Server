@@ -22,13 +22,13 @@
     background: $orange;
 }
 
-.header{
-    display: none;
-}
+// .header{
+//     display: none;
+// }
 
-.footer{
-    display: none;
-}
+// .footer{
+//     display: none;
+// }
 
 
 
@@ -125,4 +125,8 @@ button {
 
     .dashboard-header{
         box-shadow: 0 2px 3px RGB(0 0 0 / 20%);
+}
+
+.Border {
+    border-bottom: solid #eee 1px;
 }

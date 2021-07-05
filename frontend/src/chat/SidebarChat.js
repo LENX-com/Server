@@ -72,27 +72,27 @@ const SidebarChat = ({ dataList, title, fetchList}) => {
                     })}
                 to= {`${path}/room/${data._id}`}>
                             <div 
-                                className={`sidebar__chat`}
+                                className={`sidebar__chat shadow-button bg-white mb-2`}
                             >
                                 <div className="avatar__container">
                                     <Avatar style={{width: 45,height: 45}} src= "https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82" />
                                     {/* {onlineState=== "online" ? <div className="online"></div> : null} */}
                                 </div>
                                 <div className="sidebar__chat--info">
-                                    {/* <h2 
+                                     {/* <h2 
                                         dangerouslySetInnerHTML={{__html: title === "Search Result" ? data._highlightResult.name.value : data.name}}
                                         style={{
-                         onClick={() => setCurrentChat(c)                   width: page.width <= 760 ? page.width - 126 : page.width * 0.315 - 126,
+                                            width: page.width <= 760 ? page.width - 126 : page.width * 0.315 - 126,
                                             marginBottom: lastMessage?.message || lastMessage ? 8 : 0,
                                         }}
                                     ></h2>
                                     <p style={{width: page.width <= 760 ? page.width - 126 : page.width * 0.315 - 126}}>
                                         {lastMessage?.message ? 
-                                            <><MdPhoto style={{width: 19,height: 19}} /> <span style={{width: page.width <= 760 ? page.width - 150 : page.width * 0.315 - 150}}>{lastMessage.message}</span> </>
+                                            <><Photo style={{width: 19,height: 19}} /> <span style={{width: page.width <= 760 ? page.width - 150 : page.width * 0.315 - 150}}>{lastMessage.message}</span> </>
                                             : lastMessage?.audio ?
-                                            <><MdMic style={{width: 19,height: 19}} /><span style={{width: page.width <= 760 ? page.width - 150 : page.width * 0.315 - 150}}>{lastMessage.time}</span></>
+                                            <><MicRounded style={{width: 19,height: 19}} /><span style={{width: page.width <= 760 ? page.width - 150 : page.width * 0.315 - 150}}>{lastMessage.time}</span></>
                                             : lastMessage?.message === "" ?
-                                            <><MdPhoto style={{width: 19,height: 19}} /> <span style={{width: page.width <= 760 ? page.width - 150 : page.width * 0.315 - 150}}>Photo</span> </>
+                                            <><Photo style={{width: 19,height: 19}} /> <span style={{width: page.width <= 760 ? page.width - 150 : page.width * 0.315 - 150}}>Photo</span> </>
                                         :lastMessage}
                                     </p> */}
                                 </div>

@@ -3,9 +3,8 @@ import SidebarChat from './SidebarChat';
 import Avatar from '../components/Avatar/Avatar'
 import { MdMessage, MdPeople, MdHome, MdExitToApp as LogOut, MdSearch, MdPhoto } from 'react-icons/md';
 import { NavLink, Route, Link, useRouteMatch, Switch  } from 'react-router-dom';
-import './styles/Sidebar.css';
+import './styles/Sidebar.scss';
 import { useSelector } from 'react-redux'
-import Myorder from './MyOrder'
 
 const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers, user}) => {
     const [searchList, setSearchList] = useState(null);  
@@ -47,7 +46,7 @@ const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers, user}) => {
                 {/* <Myorder /> */}
             </div>
             <div className="sidebar__search">
-                <form className="sidebar__search--container">
+                <form className="sidebar__search--container border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none">
                     <MdSearch className="ml-3"/>
                     <input
                         value={searchInput}
@@ -66,29 +65,19 @@ const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers, user}) => {
                     click={() => setMenu(1)}
                     activeClassName="sidebar__menu--selected"
                 >
-                    <div className="sidebar__menu--home text-Blue">
+                    <div className="sidebar__menu--home text-orange">
                         <MdHome />
                         <div className="sidebar__menu--line"></div>
                     </div>
                 </Nav>
-                <Nav
-                    classSelected={menu === 2 ? true : false}
-                    to= {`${url}/rooms`}
-                    click={() => setMenu(2)}
-                    activeClassName="sidebar__menu--selected"
-                >
-                    <div className="sidebar__menu--rooms text-Blue">
-                        <MdMessage />
-                        <div className="sidebar__menu--line"></div>
-                    </div>
-                </Nav>
+
                 <Nav
                     classSelected={menu === 3 ? true : false}
                     to= {`${url}/users`}
                     click={() => setMenu(3)}
                     activeClassName="sidebar__menu--selected"
                 >
-                    <div className="sidebar__menu--users text-Blue">
+                    <div className="sidebar__menu--users text-orange">
                         <MdPeople />
                         <div className="sidebar__menu--line"></div>
                     </div>
