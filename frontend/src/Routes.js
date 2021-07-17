@@ -45,7 +45,7 @@ function Routes() {
         <AdminRoute path="/create/category" exact component={AddCategory} />
         <AdminRoute path="/create/product" exact component={AddProduct} />
         <Route path="/product/:productId" exact component={Product} />
-        <Route path="/cart" exact component={Cart} />
+        <Route path="/cart/:productId?" exact component={Cart} />
         <Route path="/categories" exact component={Categories} />
         <Route path="/category" exact component={SingleCategory} />
         <AdminRoute path="/admin/orders" exact component={Orders} />

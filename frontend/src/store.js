@@ -10,15 +10,15 @@ const initialState = {};
 const middleware = [thunk];
 
 const enhancer = composeWithDevTools(
-  applyMiddleware(...middleware),
   reduxSearch({
     resourceIndexes: {
-      products: ["price"],
+      orders: ["status", "address"]
     },
     resourceSelector: (resourceName, state) => {
-      return state[resourceName];
+      return state.order[resourceName];
     },
-  })
+  }),
+  applyMiddleware(...middleware),
 );
 
 const store = createStore(rootReducer, initialState, enhancer);

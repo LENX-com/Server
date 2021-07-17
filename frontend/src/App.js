@@ -11,9 +11,6 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     // check for token in LS
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
-    }
     store.dispatch(loadUser());
     // log user out from all tabs if they log out in one tab
     window.addEventListener("storage", () => {

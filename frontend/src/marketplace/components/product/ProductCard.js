@@ -3,35 +3,36 @@ import { Link, Redirect } from "react-router-dom";
 import ShowImage from "../card/ShowImage";
 import { addItem, updateItem, removeItem } from "../cart/CartHelper";
 import { addWishList } from "../../../actions/wishlistAction";
+import {addToCart} from "../../../actions/cartActions";
 import { useDispatch } from "react-redux";
 
 const ProductCard = ({
   product,
-  showViewProductButton = true,
+  // showViewProductButton = true,
   showAddToCartButton = true,
-  cartUpdate = false,
-  showRemoveProductButton = false,
-  setRun = (f) => f,
-  run = undefined,
+  // cartUpdate = false,
+  // showRemoveProductButton = false,
+  // setRun = (f) => f,
+  // run = undefined,
   // changeCartSize
 }) => {
   const dispatch = useDispatch();
   const [redirect, setRedirect] = useState(false);
-  const [count, setCount] = useState(product.count);
+  // const [count, setCount] = useState(product.count);
 
   const showViewButton = (showViewProductButton) => {
     return (
       showViewProductButton && (
-        <Link to={`/product/${product._id}`}>
+        // <Link to={`/product/${product._id}`}>
           <button className="btn">View Product</button>
-        </Link>
+        // </Link>
       )
     );
   };
 
-  const addToCart = () => {
-    addItem(product, setRedirect(true));
-  };
+  // const addToCart = () => {
+  //   addItem(product, setRedirect(true));
+  // };
 
   const shouldRedirect = (redirect) => {
     if (redirect) {
@@ -53,13 +54,13 @@ const ProductCard = ({
     return quantity > 0 ? <span> In Stock </span> : <span> Out of Stock </span>;
   };
 
-  const handleChange = (productId) => (event) => {
-    setRun(!run); // run useEffect in parent Cart
-    setCount(event.target.value < 1 ? 1 : event.target.value);
-    if (event.target.value >= 1) {
-      updateItem(productId, event.target.value);
-    }
-  };
+  // const handleChange = (productId) => (event) => {
+  //   setRun(!run); // run useEffect in parent Cart
+  //   setCount(event.target.value < 1 ? 1 : event.target.value);
+  //   if (event.target.value >= 1) {
+  //     updateItem(productId, event.target.value);
+  //   }
+  // };
 
   const showCartUpdateOptions = (cartUpdate) => {
     return (
@@ -72,8 +73,8 @@ const ProductCard = ({
             <input
               type="number"
               className="form-control"
-              value={count}
-              onChange={handleChange(product._id)}
+              // value={count}
+              // onChange={handleChange(product._id)}
             />
           </div>
         </div>
@@ -84,10 +85,10 @@ const ProductCard = ({
     return (
       showRemoveProductButton && (
         <button
-          onClick={() => {
-            removeItem(product._id);
-            setRun(!run); // run useEffect in parent Cart
-          }}
+          // onClick={() => {
+          //   removeItem(product._id);
+          //   setRun(!run); // run useEffect in parent Cart
+          // }}
           className="btn"
         >
           Remove Product
@@ -104,8 +105,8 @@ const ProductCard = ({
       <a className="block relative h-48 rounded overflow-hidden" href="#div">
         <ShowImage
           clase="bg-white object-cover object-center w-full h-full block"
-          item={product}
-          url={product.photo}
+          // item={product}
+          // url={product.photo}
         />
       </a>
       <div className="mt-4">
@@ -123,13 +124,13 @@ const ProductCard = ({
         <p className="mt-1">$ {product.price}</p>
       </div>
 
-      {showViewButton(showViewProductButton)}
+      {/* {showViewButton(showViewProductButton)} */}
 
       {showAddToCartBtn(showAddToCartButton)}
-
+{/* 
       {showRemoveButton(showRemoveProductButton)}
 
-      {showCartUpdateOptions(cartUpdate)}
+      {showCartUpdateOptions(cartUpdate)} */}
     </div>
   );
 };

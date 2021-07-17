@@ -20,7 +20,7 @@ export const productReducer = (state = initialState, action) => {
     case "GET_PRODUCT":
       return {
         ...state,
-        product: action.payload,
+        product: action.payload.data,
         loading: false,
       };
     case "PRODUCT_BY_SELL":

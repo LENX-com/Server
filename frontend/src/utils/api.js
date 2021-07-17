@@ -14,23 +14,23 @@ const api = axios.create({
  authenticated.
  logout the user if the token has expired
 **/
-// api.interceptors.request.use(
-//   (config) => {
-//     console.log(config)
-//   },
+api.interceptors.request.use((config) => {
+  if (localStorage.token) {
+    config.headers["Authorization"] = `bearer ${localStorage.token}`;
+    // api.defaults.headers.common["Authorization"] = `bearer ${localStorage.token}`;
+    // localStorage.setItem('token', localStorage.token);
+  }
+  return config;
+});
+
+// api.interceptors.response.use(
+//   (res) => res,
 //   (err) => {
-//     console.log(err);
+//     if (err.response === 401) {
+//       store.dispatch({ type: LOGOUT });
+//     }
+//     return Promise.reject(err);
 //   }
 // );
-
-api.interceptors.response.use(
-  (res) => res,
-  (err) => {
-    if (err.response === 401) {
-      store.dispatch({ type: LOGOUT });
-    }
-    return Promise.reject(err);
-  }
-);
 
 export { api };

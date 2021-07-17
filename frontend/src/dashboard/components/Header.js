@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import {useSelector} from "react-redux"
 import { SidebarContext } from '../context/SidebarContext'
 import {
   SearchIcon,
@@ -14,9 +15,10 @@ import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext } from '@
 import '../assets/css/Header.scss'
 import { NavLink, useRouteMatch, Redirect } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import {signout, isAuthenticated} from '../../actions'
+import {signout} from '../../actions'
 
 function Header ( { history } ) {
+  const auth = useSelector(state => state.auth)
   const { path } = useRouteMatch();
   const dispatch = useDispatch(); 
 
@@ -117,7 +119,7 @@ function Header ( { history } ) {
             >
               <Avatar
                 className="align-middle"
-                src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
+                src={auth.user.avatar}
                 alt=""
                 aria-hidden="true"
               />
@@ -139,7 +141,7 @@ function Header ( { history } ) {
                 <OutlinePersonIcon className="w-4 h-4 mr-3" aria-hidden="true" />
                 <NavLink to={`${path}/faq`}>FAQ</NavLink>
               </DropdownItem>
-              {isAuthenticated() && (
+              {auth.isAuthenticated && (
               <DropdownItem
                onClick={() =>
                             signout(() => {

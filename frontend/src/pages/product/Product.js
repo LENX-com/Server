@@ -8,11 +8,14 @@ import {
   downVote,
 } from "../../marketplace/components/ApiCore";
 import { useDispatch, useSelector } from "react-redux";
+import { getProduct } from "../../actions/productAction";
+import { addToCart } from "../../actions/cartActions";
 import ProductCard from "../../marketplace/components/product/ProductCard";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Stories from "react-insta-stories";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { isAuthenticated } from "../../actions";
+import { addWishList } from "../../actions/wishlistAction";
 
 // Import Swiper styles
 import "swiper/swiper.min.css";
@@ -66,8 +69,8 @@ const dummyProductImage = [
 const Product = (props) => {
   const token = isAuthenticated() && isAuthenticated().token;
   const dispatch = useDispatch();
-
-  const [product, setProduct] = useState({});
+  const product = useSelector((state) => state.product);
+  const [qty, setQty] = useState(1);
   const [relatedProduct, setRelatedProduct] = useState();
   const [allReviews, setAllReviews] = useState();
   const [error, setError] = useState(false);
@@ -80,7 +83,7 @@ const Product = (props) => {
       if (data.error) {
         setError(data.error);
       } else {
-        setProduct(data);
+        // setProduct(data);
         // fetch related products
         listRelated(data.category._id).then((resp) => {
           const { data } = resp;
@@ -102,22 +105,20 @@ const Product = (props) => {
 
   useEffect(() => {
     const productId = props.match.params.productId;
-    loadSingleProduct(productId);
+    dispatch(getProduct(productId));
     loadReviews(productId);
-  }, [props]);
+  }, [props, dispatch]);
 
   const handleUpvote = (reviewId) => {
     addVote(reviewId, token).then((resp) => {
       if (resp.error) return;
       setCurrentStatus([resp]);
-      console.log(resp);
     });
   };
   const handleDownvote = (reviewId) => {
     downVote(reviewId, token).then((resp) => {
       if (resp.error) return;
       setCurrentStatus([resp]);
-      console.log(resp);
     });
   };
   const handleReviewView = (id) => {
@@ -151,6 +152,35 @@ const Product = (props) => {
           <Stories stories={currentStatus} width="100%" />
         )}
       </div>
+    </div>
+  );
+  const handleAddToCart = () => {
+    props.history.push("/cart/" + props.match.params.productId + "?qty=" + qty);
+  };
+
+  const HandleAddToCartUi = () => (
+    <div style={{ background: "gray", border: "1px solid black" }}>
+      <ul>
+        <li>Price: 100</li>
+        <li>Status: null</li>
+        <li>
+          Qty:{" "}
+          <select
+            value={qty}
+            onChange={(e) => {
+              setQty(e.target.value);
+            }}
+          >
+            {[...Array(product.quantity).keys()].map((x) => (
+              <option key={x + 1} value={x + 1}>
+                {" "}
+                {x + 1}
+              </option>
+            ))}
+          </select>
+        </li>
+      </ul>
+      <button onClick={() => handleAddToCart()}>Add to Cart</button>
     </div>
   );
 
@@ -195,6 +225,14 @@ const Product = (props) => {
                 Fluid Ounces (Pack of 12), Ready to Drink
               </p>
               <span className="text-blue-400">Visit Adidas store</span>
+              <button
+                onClick={() =>
+                  dispatch(addWishList(props.match.params.productId))
+                }
+              >
+                Add to wishList
+              </button>
+              <HandleAddToCartUi />
             </div>
 
             <div>

@@ -1,5 +1,17 @@
 const initialState = {
-  orders: [],
+  orders: [
+    {
+    id:1,
+    address:"me you",
+    status:"one",
+  },
+    {
+    id:2,
+    address:"another you",
+    status:"two"
+  },
+],
+  totalOrder: 0,
   statusValues: [],
   errors: {},
   loading: false,
@@ -9,8 +21,16 @@ export const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case "GET_ORDERS":
       return {
+        ...state,                                     
+        orders: action.payload,    
+        loading: false,         
+      };
+    case "GET_ORDERS_BY_USER":
+      return {
         ...state,
-        orders: action.payload.data,
+        orders: state.orders,
+        // orders: action.payload.orders,
+        totalOrder: action.payload.total,
         loading: false,
       };
     case "ORDER_STATUS_VALUES":
@@ -21,9 +41,9 @@ export const orderReducer = (state = initialState, action) => {
       };
     case "UPDATE_ORDER":
       return {
-        ...state,
-        order: action.payload,
-        loading: false,
+        ...state,     
+        order: action.payload,    
+        loading: false,                             
       };
     case "ORDER_ERROR":
       return {
