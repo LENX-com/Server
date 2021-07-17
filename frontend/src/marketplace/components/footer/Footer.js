@@ -1,10 +1,13 @@
 import React from 'react'
 import './Footer.scss'
 import { Link } from 'react-router-dom'
+import { AiOutlineMessage, AiOutlineShop, AiOutlineShoppingCart } from 'react-icons/ai'
 
 const Footer = () => {
+
+  const DesktopFooter = () => {
   return (
-    <footer className= " footer mt-2 text-gray-600">
+    <footer className= " footer mt-2 text-gray-600 desktop-footer">
         <div className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
           <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
             <a href="#div" className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
@@ -85,6 +88,61 @@ const Footer = () => {
         </div>
       </footer>
   );
+  }
+
+  const MobileFooter = () => {
+    return (
+        <footer className="sticky dashboard-footer mobile-footer">
+            <div className="flex">
+                <div className="col">
+                    <Link to= {`/dashboard`}>
+                        <div className="wrapper"> 
+                            <div className="icon-wrapper mt-2 text-xl">
+                                < AiOutlineShop />
+                            </div>
+                            <div className="text-sm">
+                                <p> Home </p>
+                            </div>
+                        </div>
+                    </Link>
+                </div>
+            
+                <div className="col">
+                    <Link to= {`/chat`}>
+                        <div className="wrapper"> 
+                            <div className="icon-wrapper mt-2 text-xl">
+                                <AiOutlineMessage/>
+                            </div>
+                            <div className="text-sm">
+                                <p> Cart </p>
+                            </div>
+                        </div>
+                    </Link>    
+                </div>
+                
+                <div className="col">
+                    <Link to= {`/my-orders`}>
+                        <div className="wrapper"> 
+                            <div className="icon-wrapper mt-2 text-xl">
+                                <AiOutlineShoppingCart />
+                            </div>
+                            <div className="text-sm">
+                                <p> My Account  </p>
+                            </div>
+                        </div>
+                    </Link>
+                </div>
+            </div>
+        </footer>
+    )
+  }
+
+  return (
+    <>
+      <DesktopFooter />
+      <MobileFooter/>
+    </>
+  )
 };
 
 export default Footer

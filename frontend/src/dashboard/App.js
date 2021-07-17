@@ -14,14 +14,14 @@ function App() {
   return (
     <>
       <Router>
-        <AccessibleNavigationAnnouncer />
+        <AccessibleNavigationAnnouncer /> 
         <Switch>
           <Route path= {`${path}/login`} component={Login} /> 
           <Route path= {`${path}`} component={Layout} />
           <Route path="/create-account" component={CreateAccount} />
           <Route path="/forgot-password" component={ForgotPassword} />
         </Switch>
-      </Router>
+      </Router>  
     </>
   )
 }

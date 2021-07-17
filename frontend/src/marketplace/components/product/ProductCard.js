@@ -1,24 +1,31 @@
 import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
-import ShowImage from "../card/ShowImage";
+import { Link, Redirect, useRouteMatch } from "react-router-dom";
 import { addItem, updateItem, removeItem } from "../cart/CartHelper";
 import { addWishList } from "../../../actions/wishlistAction";
 import {addToCart} from "../../../actions/cartActions";
 import { useDispatch } from "react-redux";
+import Rating from 'react-rating'
+import { MdStarBorder, MdStar, MdShoppingCart, MdFavoriteBorder} from 'react-icons/md'
+import { Environment } from '../../assets/icons'
+
+
 
 const ProductCard = ({
   product,
   // showViewProductButton = true,
   showAddToCartButton = true,
-  // cartUpdate = false,
-  // showRemoveProductButton = false,
-  // setRun = (f) => f,
-  // run = undefined,
+  cartUpdate = false,
+  showRemoveProductButton = false,
+  setRun = (f) => f,
+  run = undefined,
+  rating = false
   // changeCartSize
 }) => {
   const dispatch = useDispatch();
   const [redirect, setRedirect] = useState(false);
   // const [count, setCount] = useState(product.count);
+
+  const { path, url } = useRouteMatch();
 
   const showViewButton = (showViewProductButton) => {
     return (
@@ -100,39 +107,44 @@ const ProductCard = ({
   const wishlist = (product) => {
     dispatch(addWishList(product));
   };
+
+
   return (
-    <div className="lg:w-1/4 md:w-1/2 p-4 w-full">
-      <a className="block relative h-48 rounded overflow-hidden" href="#div">
-        <ShowImage
-          clase="bg-white object-cover object-center w-full h-full block"
-          // item={product}
-          // url={product.photo}
-        />
-      </a>
-      <div className="mt-4">
-        {shouldRedirect(redirect)}
-        <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
-          {product.category && product.category.name}
-        </h3>
-        <span>
-          <Link to={`/manufacturer/${product.author}`}>seller profile</Link>
-        </span>
-        <button onClick={() => wishlist(product._id)}>Add wishlist</button>
-        <h2 className="text-gray-900 title-font text-lg font-medium">
-          {product.name}
-        </h2>
-        <p className="mt-1">$ {product.price}</p>
-      </div>
+    <Link to = {`${path}/${product._id}`}>
+    <div className=" bg-white rounded  shadow-button relative my-2">
+        <div className="image rounded-lg overflow-hidden">
+          <div className="p-3 my-6">
+            <img src={product.photo} alt={product.name} />
+          </div>
+          <div className=" absolute top-3 right-1">
+          <button className=" text-orange-light">
+          <MdFavoriteBorder className="h-4 w-4" />
+          </button>
+          </div>
+        </div>
+        <div className="mt-2 text-center border-solid border-t-2 border-Grey py-2">
+            <div>
+              <h3 className="text-Black text-base"> { product.name } </h3>
+            </div>
 
-      {/* {showViewButton(showViewProductButton)} */}
-
-      {showAddToCartBtn(showAddToCartButton)}
-{/* 
-      {showRemoveButton(showRemoveProductButton)}
-
-      {showCartUpdateOptions(cartUpdate)} */}
+            <div>
+            { rating ? <Rating
+                    className="mt-2 text-base"
+                    emptySymbol= { <MdStarBorder/> }
+                    fullSymbol= { <MdStar/> }
+                    readonly
+                    initialRating={4.5}
+                /> : null }
+            </div>
+            <div>
+            <span className="text-gray-500 text-base">£ { product.price}</span>
+            </div>
+        </div>
     </div>
+    </Link>
   );
 };
 
 export default ProductCard;
+
+

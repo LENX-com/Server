@@ -1,7 +1,6 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {Link} from "react-router-dom";
-import CategotyCard from "../categoryCard/CategoryCard"
 
 const promoBanners = [
     {
@@ -25,8 +24,19 @@ const Banner = () => {
                 >
                 {
                     promoBanners.map( promoBanner =>
-                        <SwiperSlide>
-                            <Link to="/"><img src={promoBanner.img} alt="promotion banner" /></Link>
+
+                    <SwiperSlide>    
+                        <div className="bg-cover bg-center  h-auto text-white py-10 px-10 object-fill banner flex">
+                            <div className="flex md:w-1/2">
+                                <div>
+                                    <p className="font-bold text-sm uppercase"> Buy local </p>
+                                    <p className="text-2xl mb-10 leading-none">Support Local businesses</p>
+                                </div>
+                            </div>
+                            <div className=" h-20 w-20">
+                                <img src="https://img.joomcdn.net/c88243e34ca91c74ccdefa13c0538913dcbde29e_352_352.png" alt="banner"/>
+                            </div>  
+                        </div>
                         </SwiperSlide>
                     )
                 }

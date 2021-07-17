@@ -21,6 +21,7 @@ const SingleOrder = lazy(() => import('../pages/SingleOrder'))
 const WriteReview = lazy(() => import('../pages/WriteReview'))
 const SingleBlog = lazy(() => import('../pages/SingleBlog'))
 const FindStatusOrder = lazy(() => import('../pages/FindStatusOrder'))
+const FetchConversation = lazy(() => import('../../chat/FetchConversation'))
 
 
 const routes = 
@@ -100,10 +101,14 @@ const routes =
    {
     path: `${address}/blog/:id`,
     component: SingleBlog,
-  },
+  },  
     {
     path: `${address}/status-order`,
     component: FindStatusOrder,
+  },
+      {
+    path: `${address}/conversation`,
+    component: FetchConversation,
   },
   
 ]

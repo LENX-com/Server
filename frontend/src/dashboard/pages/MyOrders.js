@@ -126,14 +126,14 @@ function MyOrders() {
           freeMode={true}
           className="mySwiper"
         >
-          <SwiperSlide>
-            <TabList className="flex whitespace-nowrap">
-              <Tab>All orders</Tab>
-              <Tab>In progress</Tab>
-              <Tab>Shipped</Tab>
-              <Tab>Received</Tab>
-            </TabList>
-          </SwiperSlide>
+        <SwiperSlide>
+        <TabList className="flex whitespace-nowrap">
+            <Tab>All orders</Tab>  
+            <Tab>In progress</Tab>
+            <Tab>Shipped</Tab>
+            <Tab>Received</Tab>
+        </TabList>
+        </SwiperSlide>
         </Swiper>
 
         <TabPanel>{purchaseHistory()}</TabPanel>

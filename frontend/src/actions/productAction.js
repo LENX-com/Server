@@ -16,10 +16,10 @@ export const createProduct = (product) => async (dispatch) => {
   }
 };
 // all products
-export const getProducts = (sortBy) => async (dispatch) => {
+export  const getProducts = () => async (dispatch) => {
   try {
     const res = await api.get(
-      `${API}/products?sortBy=${sortBy}&order=desc&limit=6`
+      `${API}/products`
     );
     dispatch({
       type: "GET_PRODUCTS",
@@ -31,6 +31,7 @@ export const getProducts = (sortBy) => async (dispatch) => {
     });
   }
 };
+
 // all products
 export const getProductsBySell = (sortBy) => async (dispatch) => {
   try {
@@ -94,6 +95,7 @@ export const relatedProducts = (body) => async (dispatch) => {
     });
   }
 };
+
 export const searchProduct = (params) => async (dispatch) => {
   const query = queryString.stringify(params);
   try {

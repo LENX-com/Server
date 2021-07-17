@@ -2,16 +2,22 @@ import {useEffect,  memo, useRef, useState} from 'react';
 import Avatar from '../components/Avatar/Avatar'
 import { MdCancel, MdSearch, MdPhoto, MdMic } from 'react-icons/md';
 import './styles/SidebarChat.css';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import EcommerceLoader from '../components/Loader/EcommerceLoader'
 import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import { API } from '../config'
+
 
 //window
-const SidebarChat = ({ dataList, title, path, fetchList}) => {
-    const {roomsData, page, pathID} = useSelector( state => state.chat);
+const SidebarChat = ({ dataList, title, fetchList}) => {
+    const {page, pathID, conversations} = useSelector( state => state.chat);
+    const { user } = useSelector( state => state.auth);
     const [scrollFetch, setScrollFetch] = useState(false);
-    const [list, setList] = useState(null);
+    const [messages, setMessages] = useState([]);
     const sidebarChatContainer = useRef();
+
+    const { path } = useRouteMatch();
 
     const dispatch = useDispatch();
 
@@ -37,48 +43,43 @@ const SidebarChat = ({ dataList, title, path, fetchList}) => {
         };
     }, [dataList, fetchList]);
     
-    useEffect(() => {
-        //console.log(dataList);
-        //console.log(list)
-        if (dataList?.length === list?.length) {
-            setTimeout(() => {
-                Array.from(document.querySelectorAll('.animate')).forEach((cur,i) => {
-                    setTimeout(() => {
-                        cur.classList.remove("animate");
-                    }, 50 * i);
-                });
-            }, 10);
-        };
-    }, [dataList, list]);
 
-    useEffect(() => {
-        if (dataList) {
-            const arr = [];
-            dataList.forEach(data => {
-                //console.log("data: ", data);
-                //console.log("rooms data: ", roomsData[data.id]);
-                if (data) {
-                    const onlineState = roomsData[data.id]?.onlineState ? roomsData[data.id].onlineState : data.state;
-                    const lastMessage = title === "Search Result" ? null : roomsData[data.id]?.lastMessage ? roomsData[data.id].lastMessage : data.lastMessage;
-                    if (title === "Rooms" || title === "Search Result" || title === "Chats" && roomsData[data.id].lastMessage || title !== "Chats" && roomsData[data.id]) {
-                        arr.push(<Link className="link" key={data.id} to={{
-                            pathname: path ? `${path}/room/${data.id}` : `/room/${data.id}`,
-                            state: {
-                                photoURL: `${data.photoURL ? data.photoURL : `https://avatars.dicebear.com/api/human/${data.id}.svg`}`,
-                                name: data.name,
-                                userID: data.userID ? data.userID : null,
-                                state: data.state
-                            }
-                        }} >
+     useEffect(() => {
+    const getConversations = async () => {
+      try {
+        const res = await axios.get(`${API}/conversation/` + user._id);
+        dispatch({
+                    type: "CONVERSATION",
+                    payload: res.data,
+                    })
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getConversations();
+  }, []);
+
+
+  const List = () => {
+      return (
+        <>
+            {conversations.map((data, i) => (
+            <Link className="link" 
+                key={i}
+                onClick={() => dispatch({
+                    type: "CURRENT_CHAT",
+                    payload: data,
+                    })}
+                to= {`${path}/room/${data._id}`}>
                             <div 
-                                className={`sidebar__chat animate`}
+                                className={`sidebar__chat shadow-button bg-white mb-2`}
                             >
                                 <div className="avatar__container">
-                                    <Avatar style={{width: 45,height: 45}} src={`${data.photoURL ? data.photoURL : `https://avatars.dicebear.com/api/human/${data.id}.svg`}`} />
-                                    {onlineState=== "online" ? <div className="online"></div> : null}
+                                    <Avatar style={{width: 45,height: 45}} src= "https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82" />
+                                    {/* {onlineState=== "online" ? <div className="online"></div> : null} */}
                                 </div>
                                 <div className="sidebar__chat--info">
-                                    <h2 
+                                     {/* <h2 
                                         dangerouslySetInnerHTML={{__html: title === "Search Result" ? data._highlightResult.name.value : data.name}}
                                         style={{
                                             width: page.width <= 760 ? page.width - 126 : page.width * 0.315 - 126,
@@ -87,13 +88,13 @@ const SidebarChat = ({ dataList, title, path, fetchList}) => {
                                     ></h2>
                                     <p style={{width: page.width <= 760 ? page.width - 126 : page.width * 0.315 - 126}}>
                                         {lastMessage?.message ? 
-                                            <><MdPhoto style={{width: 19,height: 19}} /> <span style={{width: page.width <= 760 ? page.width - 150 : page.width * 0.315 - 150}}>{lastMessage.message}</span> </>
+                                            <><Photo style={{width: 19,height: 19}} /> <span style={{width: page.width <= 760 ? page.width - 150 : page.width * 0.315 - 150}}>{lastMessage.message}</span> </>
                                             : lastMessage?.audio ?
-                                            <><MdMic style={{width: 19,height: 19}} /><span style={{width: page.width <= 760 ? page.width - 150 : page.width * 0.315 - 150}}>{lastMessage.time}</span></>
+                                            <><MicRounded style={{width: 19,height: 19}} /><span style={{width: page.width <= 760 ? page.width - 150 : page.width * 0.315 - 150}}>{lastMessage.time}</span></>
                                             : lastMessage?.message === "" ?
-                                            <><MdPhoto style={{width: 19,height: 19}} /> <span style={{width: page.width <= 760 ? page.width - 150 : page.width * 0.315 - 150}}>Photo</span> </>
+                                            <><Photo style={{width: 19,height: 19}} /> <span style={{width: page.width <= 760 ? page.width - 150 : page.width * 0.315 - 150}}>Photo</span> </>
                                         :lastMessage}
-                                    </p>
+                                    </p> */}
                                 </div>
                                 {data?.unreadMessages && pathID !== data.id ?
                                     <div className="sidebar__chat--unreadMessages">
@@ -103,15 +104,12 @@ const SidebarChat = ({ dataList, title, path, fetchList}) => {
                                     </div>
                                 :null}
                             </div>
-                        </Link>);
-                    }
-                } else {
-                    arr.push(null);
-                }
-            });
-            setList(arr)
-        }
-    }, [dataList, roomsData, page, pathID]);
+                        </Link>
+            ))}
+                </>
+            )}
+
+
 
     useEffect(() => {
         if (page.width <= 760) {
@@ -124,14 +122,10 @@ const SidebarChat = ({ dataList, title, path, fetchList}) => {
     return (
         <div ref={sidebarChatContainer} className="sidebar__chat--container">
             <h2 className="animate">{title} </h2>
-            {dataList?.length > 0 ? list : dataList === null && title !== "Chats" ?
-                <div className="loader__container sidebar__loader">
-                    <EcommerceLoader />
-                </div>
-                :
-                <div className="no-result">
+            { List? <List /> :
+                <div className="no-result">   
                     <div>
-                        <MdSearch />
+                            <MdSearch />
                         <div className="cancel-root">
                             <MdCancel />
                         </div>
@@ -148,3 +142,4 @@ const SidebarChat = ({ dataList, title, path, fetchList}) => {
 }
 
 export default memo(SidebarChat);
+    
