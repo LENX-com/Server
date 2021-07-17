@@ -29,7 +29,7 @@ const colors = require('tailwindcss/colors')
       orange: {
         dark: '#ff480e',
         DEFAULT: '#ff5722',
-        light: '#ffa284',
+        light: '#FE9400',
       },
       Blue:{
         light: '#99dee1',
@@ -37,10 +37,11 @@ const colors = require('tailwindcss/colors')
         dark: '#008a90',
 
       },
-      Grey: 'eee',
+      Grey: '#eee',
       Black:"#222831",
-      lightBlack:"393e46",
-      Hover:"#F7FAFC"
+      lightBlack:"#393e46",
+      Hover:"#F7FAFC",
+      border: "#E3E8EE"
     },
     spacing: {
       px: '1px',
@@ -181,6 +182,7 @@ const colors = require('tailwindcss/colors')
       '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
       inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
       none: 'none',
+      border: 'rgb(0 32 77 / 15%) 0px 3px 8px 0px',
     },
     contrast: {
       0: '0',
@@ -516,7 +518,7 @@ const colors = require('tailwindcss/colors')
     listStyleType: {
       none: 'none',
       disc: 'disc',
-      decimal: 'decimal',
+      decimal: 'decimal',  
     },
     margin: (theme, { negative }) => ({
       auto: 'auto',
@@ -531,7 +533,7 @@ const colors = require('tailwindcss/colors')
     maxWidth: (theme, { breakpoints }) => ({
       none: 'none',
       0: '0rem',
-      6: "100px",
+      6: "120px",
       7: "7rem",
       xs: '20rem',
       sm: '24rem',

@@ -14,7 +14,7 @@ const {
   list,
 } = require("../controller/category.controller");
 const {
-  requireSignin,
+  requireSignin,  
   isAuth,
   isAdmin,
 } = require("../controller/auth.controller");

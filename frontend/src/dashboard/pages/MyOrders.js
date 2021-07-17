@@ -156,7 +156,7 @@ return (
         >
         <SwiperSlide>
         <TabList className="flex whitespace-nowrap">
-            <Tab>All orders</Tab>
+            <Tab>All orders</Tab>  
             <Tab>In progress</Tab>
             <Tab>Shipped</Tab>
             <Tab>Received</Tab>

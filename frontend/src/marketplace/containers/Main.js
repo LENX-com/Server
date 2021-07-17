@@ -2,11 +2,10 @@ import React from 'react'
 
 function Main({ children }) {
   return (
-    <main className="h-full overflow-y-auto">
-      <div className="container grid mx-auto">{children}</div>
+    <main className="">
+      <div className="mx-auto px-3">{children}</div>
     </main>
   )   
 }
 
 export default Main
- 

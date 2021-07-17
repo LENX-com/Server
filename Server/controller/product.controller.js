@@ -12,6 +12,7 @@ const { errorHandler } = require("../helpers/dbErrorHandler");
 
 //create a product route accessible by only manufacturer(role 1) and add category from req.body.category
 exports.createProduct = async (req, res) => {
+  console.log(req.body)
   const file = req.file;
   console.log(req.file);
   try {
@@ -30,7 +31,7 @@ exports.createProduct = async (req, res) => {
     console.log(error);
     return res
       .status(500)
-      .json({ error: "oops somethib went wrong try again" });
+      .json({ error: "oops something went wrong try again" });
   }
 };
 

@@ -5,7 +5,7 @@ import { addWishList } from "../../../actions/wishlistAction";
 import { useDispatch } from "react-redux";
 import Rating from 'react-rating'
 import { MdStarBorder, MdStar, MdShoppingCart, MdFavoriteBorder} from 'react-icons/md'
-import { Environment } from '../../assets/icons'
+
 
 
 
@@ -49,7 +49,7 @@ const ProductCard = ({
   const showAddToCartBtn = (showAddToCartButton) => {
     return (
       showAddToCartButton && (
-        <button onClick={addToCart} className="btn">
+        <button onClick={addToCart} className="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-200 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">
           Add to cart
         </button>
       )
@@ -109,39 +109,19 @@ const ProductCard = ({
 
 
   return (
-    <Link to = {`${path}/${product._id}`}>
-    <div className=" bg-white rounded  shadow-button relative my-2">
-        <div className="image rounded-lg overflow-hidden">
-          <div className="p-3 my-6">
-            <img src={product.photo} alt={product.name} />
-          </div>
-          <div className=" absolute top-3 right-1">
-          <button className=" text-orange-light">
-          <MdFavoriteBorder className="h-4 w-4" />
-          </button>
+    <Link to = {`products/${product._id}`}>
+      <div className="flex max-w-md mx-auto overflow-hidden bg-white rounded-lg shadow-button h-32 md:h-44  p-2 ">
+        <div className="w-3/5 bg-cover" style={{backgroundImage: `url("${product.photo}")`}} />
+        <div className="w-2/5 p-4 md:p-4">
+          <h1 className="text-base font-bold text-Black whitespace-nowrap overflow-ellipsis overflow-hidden "> { product.name }</h1>
+          <div className="justify-between mt-3 item-center">
+            <h1 className="text-lg font-bold text-gray-700 dark:text-gray-200 md:text-xl">£ { product.price }</h1>
           </div>
         </div>
-        <div className="mt-2 text-center border-solid border-t-2 border-Grey py-2">
-            <div>
-              <h3 className="text-Black text-base"> { product.name } </h3>
-            </div>
-
-            <div>
-            { rating ? <Rating
-                    className="mt-2 text-base"
-                    emptySymbol= { <MdStarBorder/> }
-                    fullSymbol= { <MdStar/> }
-                    readonly
-                    initialRating={4.5}
-                /> : null }
-            </div>
-            <div>
-            <span className="text-gray-500 text-base">£ { product.price}</span>
-            </div>
-        </div>
-    </div>
+      </div>
     </Link>
   );
+
 };
 
 export default ProductCard;
