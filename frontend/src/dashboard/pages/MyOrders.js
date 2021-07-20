@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getPurchaseHistory } from "../components/user/apiUser";
 import PageTitle from "../components/Typography/PageTitle";
+import { useSelector, useDispatch, connect } from "react-redux";
+import { createSelector } from "reselect";
 import SectionTitle from "../components/Typography/SectionTitle";
 import {
   Table,
@@ -25,12 +27,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { orderByUser } from "../../actions/orderAction";
 import {} from "query-string";
 import SearchBar from "../components/elements/SearchBar";
-import { useSelector, useDispatch } from "react-redux";
+import {
+  filterdIdlist,
+  filteredIdArray,
+  dataSearchText,
+} from "../../dashboard/components/elements/selectors";
 
-// make a copy of the data, for the second table
-// const response2 = response.concat([]);
-
-function MyOrders() {
+function MyOrders({
+  filterdIdlist,
+  resources,
+  filteredIdArray,
+  dataSearchText,
+  searchBooks,
+}) {
   const [history, setHistory] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const resultsPerPage = useSelector((state) => state.order.totalOrder);
@@ -39,7 +48,9 @@ function MyOrders() {
     dispatch(orderByUser(pageNumber));
   }, [pageNumber, dispatch]);
   const pages = new Array(resultsPerPage).fill(null).map((v, i) => i);
-  // const orders = useSelector((state) => state.order.orders);
+  const orders = useSelector((state) => state.order.orders);
+  const searchResult = useSelector((state) => state.search.orders.result);
+  let selection = filterdIdlist.filter((num) => searchResult.includes(num.id));
 
   const previousBtn = () => {
     setPageNumber(Math.max(0, pageNumber - 1));
@@ -47,6 +58,91 @@ function MyOrders() {
   const nextBtn = () => {
     setPageNumber(Math.min(resultsPerPage - 1, pageNumber + 1));
   };
+
+  const FirstFilter = () => (
+    <TableBody>
+      {selection ? (
+        selection.map((h, i) => (
+          <TableRow key={i} className="hover:bg-Hover">
+            <TableCell>
+              <div className="flex items-center text-sm">
+                <Avatar
+                  className="hidden mr-3 md:block"
+                  src="https://images.unsplash.com/photo-1515041219749-89347f83291a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyJTIwY2FydG9vbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60"
+                  alt="User avatar"
+                />
+                <div>
+                  <p className="font-semibold"> {h.name}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">
+                    {" "}
+                    NewTech{" "}
+                  </p>
+                </div>
+              </div>
+            </TableCell>
+            <TableCell>
+              <span className="text-sm">${h.price}</span>
+            </TableCell>
+            <TableCell>
+              <Badge type="success"> {h.status} </Badge>
+            </TableCell>
+            <TableCell className="mobile:hidden">
+              <span className="text-sm"> 11/02/2088</span>
+            </TableCell>
+            <div className="table-cell align-middle cursor-pointer">
+              <Link to="/user/dashboard/order">
+                <HiChevronRight className="text-2xl" />
+              </Link>
+            </div>
+          </TableRow>
+        ))
+      ) : (
+        <h1>No orders yet</h1>
+      )}
+    </TableBody>
+  );
+  const SecondFilter = () => (
+    <TableBody>
+      {filterdIdlist ? (
+        filterdIdlist.map((h, i) => (
+          <TableRow key={i} className="hover:bg-Hover">
+            <TableCell>
+              <div className="flex items-center text-sm">
+                <Avatar
+                  className="hidden mr-3 md:block"
+                  src="https://images.unsplash.com/photo-1515041219749-89347f83291a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyJTIwY2FydG9vbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60"
+                  alt="User avatar"
+                />
+                <div>
+                  <p className="font-semibold"> {h.name}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">
+                    {" "}
+                    NewTech{" "}
+                  </p>
+                </div>
+              </div>
+            </TableCell>
+            <TableCell>
+              <span className="text-sm">${h.price}</span>
+            </TableCell>
+            <TableCell>
+              <Badge type="success"> {h.status} </Badge>
+            </TableCell>
+            <TableCell className="mobile:hidden">
+              <span className="text-sm"> 11/02/2088</span>
+            </TableCell>
+            <div className="table-cell align-middle cursor-pointer">
+              <Link to="/user/dashboard/order">
+                <HiChevronRight className="text-2xl" />
+              </Link>
+            </div>
+          </TableRow>
+        ))
+      ) : (
+        <h1>No orders yet</h1>
+      )}
+    </TableBody>
+  );
 
   const purchaseHistory = () => {
     return (
@@ -61,45 +157,10 @@ function MyOrders() {
                 <TableCell className="mobile:hidden"> Purchase Date</TableCell>
               </tr>
             </TableHeader>
-            <TableBody>
-              {Data.map((h, i) => (
-                <TableRow key={i} className="hover:bg-Hover">
-                  <TableCell>
-                    <div className="flex items-center text-sm">
-                      <Avatar
-                        className="hidden mr-3 md:block"
-                        src="https://images.unsplash.com/photo-1515041219749-89347f83291a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyJTIwY2FydG9vbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60"
-                        alt="User avatar"
-                      />
-                      <div>
-                        <p className="font-semibold"> 3D Printer resin </p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400">
-                          {" "}
-                          NewTech{" "}
-                        </p>
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm">$ 55</span>
-                  </TableCell>
-                  <TableCell>
-                    <Badge type="success"> Sucess </Badge>
-                  </TableCell>
-                  <TableCell className="mobile:hidden">
-                    <span className="text-sm"> 11/02/2088</span>
-                  </TableCell>
-                  <div className="table-cell align-middle cursor-pointer">
-                    <Link to="/user/dashboard/order">
-                      <HiChevronRight className="text-2xl" />
-                    </Link>
-                  </div>
-                </TableRow>
-              ))}
-            </TableBody>
+            {/* {selection.length > 0 ? <FirstFilter /> : <SecondFilter />} */}
+            {/* <FirstFilter/> */}
           </Table>
           <TableFooter>
-          
             <h3>Page of {pageNumber + 1}</h3>
             <button onClick={previousBtn}>Previous</button>
             {pages.map((pageIndex) => (
@@ -126,14 +187,14 @@ function MyOrders() {
           freeMode={true}
           className="mySwiper"
         >
-        <SwiperSlide>
-        <TabList className="flex whitespace-nowrap">
-            <Tab>All orders</Tab>  
-            <Tab>In progress</Tab>
-            <Tab>Shipped</Tab>
-            <Tab>Received</Tab>
-        </TabList>
-        </SwiperSlide>
+          <SwiperSlide>
+            <TabList className="flex whitespace-nowrap">
+              <Tab>All orders</Tab>
+              <Tab>In progress</Tab>
+              <Tab>Shipped</Tab>
+              <Tab>Received</Tab>
+            </TabList>
+          </SwiperSlide>
         </Swiper>
 
         <TabPanel>{purchaseHistory()}</TabPanel>
@@ -147,5 +208,13 @@ function MyOrders() {
     </>
   );
 }
+const selectors = createSelector(
+  [dataSearchText, filteredIdArray, filterdIdlist],
+  (dataSearchText, filteredIdArray, filterdIdlist) => ({
+    dataSearchText,
+    filteredIdArray,
+    filterdIdlist,
+  })
+);
 
-export default MyOrders;
+export default connect(selectors)(MyOrders);

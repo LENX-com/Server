@@ -14,7 +14,8 @@ import UpdateProduct from "./admin/UpdateProduct";
 import MarketPlace from './marketplace/MarketPlace'
 import ForgotPassword from "./pages/password/ForgotPassword";
 import ResetPassword from "./pages/password/ResetPassword";
-import Home from './pages/home/Home'
+import Home from './pages/home/Home';
+import SignUp from "./dashboard/components/user/Signin"
 
 function Routes() {
   
@@ -22,6 +23,7 @@ function Routes() {
     <>
       <Switch>
         <Route path="/"  exact component={Home} />
+        <Route path="/signin"  exact component={SignUp} />
         <Route path="/marketplace" component={MarketPlace} />    
         <PrivateRoutes path="/user/dashboard" component={Dashboard} />
         <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
