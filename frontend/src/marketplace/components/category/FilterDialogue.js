@@ -4,9 +4,12 @@ import { Filter as FilterIcon } from '../../assets/icons'
 import RadioBox from "../shop/RadioBox";
 import { AiOutlineClose } from 'react-icons/ai'
 import SortByTag from '../category/SortByTag'
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const FilterDialogue =({prices, handleFilters}) => {
   let [isOpen, setIsOpen] = useState(false)
+  const [ currentStore, setCurrentStore ] = useState(false)
+  const [ currentFilter, setCurrentFilter ] = useState(false)
 
   function closeModal() {
     setIsOpen(false)
@@ -15,6 +18,75 @@ const FilterDialogue =({prices, handleFilters}) => {
   function openModal() {
     setIsOpen(true)
   }
+  const Stores = () => {
+    const stores = [
+        {
+            name: "Cool Store",
+            logo: ""
+        },
+        {
+            name: "Boring Store",
+            logo: ""
+        },
+        {
+            name: "Exciting Store",
+            logo: ""
+        },
+        {
+            name: "Big Store",
+            logo: ""
+        },
+    ];
+    return (
+    <Swiper
+    spaceBetween={20}
+    slidesPerView={3}
+    freeMode = { true }
+    className="search"
+    >
+    {
+        stores?.map( (store, i) => (
+            <SwiperSlide
+            className= {`${currentStore === i  ? "bg-Black text-white" : null } px-2 py-1 shadow-button m-2`} 
+            onClick= {(() => setCurrentStore(i))}
+            >
+                { store.name }
+            </SwiperSlide> 
+        ))
+    }
+    </Swiper>
+    )}
+
+    const SortBy = () => {
+        const Filters = [
+            {
+                name: "Price: Low to High",
+            },
+            {
+                name:" Price: High to Low"
+            },
+            {
+                name: "Avg. Customer Review",
+            },
+            {
+                name: "Newest Arrivals"
+            }
+        ];
+
+        return (
+            <>
+            { Filters?.map( (data) => (
+                <div
+                    className= {`${currentFilter === data.name  ? "bg-Black text-white" : "" } px-2 py-1 shadow-button m-2 rounded-md bg-Grey-sd text-sm` } 
+                    onClick= {(() => setCurrentFilter(data.name))
+                    }>
+                    { data.name }
+                </div>
+            ))}
+            </>
+        )
+    }
+
 
   return (
     <>
@@ -31,11 +103,12 @@ const FilterDialogue =({prices, handleFilters}) => {
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
+          className="fixed inset-0 overflow-y-auto"
+          style={{zIndex: '999'}} 
           onClose= { () => setIsOpen(false) }
           open= { isOpen }
         >
-          <div className="min-h-screen px-4 text-center">
+          <div className="min-h-screen text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -93,9 +166,21 @@ const FilterDialogue =({prices, handleFilters}) => {
                     </div>
                 </div>
 
-                    <div className="mt-4">
-
+                <div className="my-4 border-t-2 border-Grey border-solid">
+                  <div> Stores </div>
+                    <div>
+                        <Stores />
                     </div>
+                </div>
+
+                
+                <div className="my-4 border-t-2 border-Grey border-solid">
+                  <div> Sort by </div>
+                    <div className="grid grid-cols-2 gap-4">
+                        <SortBy />
+                    </div>
+                </div>
+
                 </div>
               </div>
             </Transition.Child>

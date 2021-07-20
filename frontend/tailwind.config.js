@@ -37,7 +37,11 @@ const colors = require('tailwindcss/colors')
         dark: '#008a90',
 
       },
-      Grey: '#eee',
+      Grey: {
+        DEFAULT: '#eee',
+        sd: '#ECECEC',
+        light: '#7F7F7F'
+      },
       Black:"#222831",
       lightBlack:"#393e46",
       Hover:"#F7FAFC",
@@ -818,6 +822,7 @@ const colors = require('tailwindcss/colors')
       30: '30',
       40: '40',
       50: '50',
+      999: '999',
     },
   },
   variantOrder: [
@@ -981,4 +986,5 @@ const colors = require('tailwindcss/colors')
     zIndex: ['responsive', 'focus-within', 'focus'],
   },
   plugins: [],
+  important: true,
 }

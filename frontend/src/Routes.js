@@ -15,6 +15,7 @@ import MarketPlace from './marketplace/MarketPlace'
 import ForgotPassword from "./pages/password/ForgotPassword";
 import ResetPassword from "./pages/password/ResetPassword";
 import Home from './pages/home/Home'
+import Signin from './dashboard/components/user/Signin'
 
 function Routes() {
   
@@ -35,6 +36,7 @@ function Routes() {
           exact
           component={ManageProducts}
         />
+        <Route path="/signin" exact component= { Signin }/>
         <AdminRoute
           path="/admin/product/update/:productId"
           exact

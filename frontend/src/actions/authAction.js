@@ -59,7 +59,7 @@ export const login = (formdata) => async (dispatch) => {
     const res = await api.post(`${API}/signin`, formdata);
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data,
+      payload: res.data,  
     });
     dispatch(loadUser());
   } catch (err) {

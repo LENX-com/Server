@@ -48,7 +48,7 @@ const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers, user}) => {
             <div className="sidebar__search">
                 <form className="sidebar__search--container border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none">
                     <MdSearch className="ml-3"/>
-                    <input
+                    <input  
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
                         placeholder="Search for users or rooms"
