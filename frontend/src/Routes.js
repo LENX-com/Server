@@ -11,20 +11,20 @@ import Orders from "./admin/Orders";
 import Profile from "./dashboard/components/user/Profile";
 import ManageProducts from "./admin/ManageProducts";
 import UpdateProduct from "./admin/UpdateProduct";
-import MarketPlace from './marketplace/MarketPlace'
+import MarketPlace from "./marketplace/MarketPlace";
 import ForgotPassword from "./pages/password/ForgotPassword";
 import ResetPassword from "./pages/password/ResetPassword";
-import Home from './pages/home/Home';
-import SignUp from "./dashboard/components/user/Signin"
+import Home from "./pages/home/Home";
+import Signin from "./dashboard/components/user/Signin";
+import Cart from "./marketplace/components/cart/Cart";
 
 function Routes() {
-  
   return (
     <>
       <Switch>
-        <Route path="/"  exact component={Home} />
-        <Route path="/signin"  exact component={SignUp} />
-        <Route path="/marketplace" component={MarketPlace} />    
+        <Route path="/" exact component={Home} />
+        <Route path="/marketplace" component={MarketPlace} />
+        <Route path="/cart" exact component={Cart} />
         <PrivateRoutes path="/user/dashboard" component={Dashboard} />
         <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
         <AdminRoute path="/create/category" exact component={AddCategory} />
@@ -37,6 +37,7 @@ function Routes() {
           exact
           component={ManageProducts}
         />
+        <Route path="/signin" exact component={Signin} />
         <AdminRoute
           path="/admin/product/update/:productId"
           exact

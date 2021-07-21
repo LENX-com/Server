@@ -9,7 +9,7 @@ const CategoriesList = ({categories}) => {
     return (
         <div class="grid grid-cols-2 gap-3 my-4">
             {categories?.map(data => (
-                <NavLink to= {`/marketplace/${data.name}`} key={data.name}>
+                <NavLink to= {`/marketplace/category/${data.name}`} key={data.name}>
                     <div className=" bg-white rounded p-2 shadow-button relative">
                     <div className="flex ml-2 justify-between hover:bg-Hover">
                         <div>

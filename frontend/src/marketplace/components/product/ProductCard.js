@@ -110,7 +110,7 @@ const ProductCard = ({
 
 
   return (
-    <Link to = {`${path}/${product._id}`}>
+    <Link to = {`/marketplace/category/products/${product._id}`}>
     <div className=" bg-white rounded  shadow-button relative my-2">
         <div className="image rounded-lg overflow-hidden">
           <div className="p-3 my-6">

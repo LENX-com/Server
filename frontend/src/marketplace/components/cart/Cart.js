@@ -65,30 +65,64 @@
 
 // export default Cart;
 
-import React, { useEffect } from "react";
+import React from "react";
 import { addToCart, removeCart } from "../../../actions/cartActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Cart(props) {
   const dispatch = useDispatch();
-  const productId = props.match.params.productId;
+  const cartItems = useSelector((state) => state.cart.cartItems);
   const qty = props.location.search
     ? Number(props.location.search.split("=")[1])
     : 1;
 
-  useEffect(() => {
-    if (productId) {
-      dispatch(addToCart(productId, qty));
-    }
-  }, []);
-
-  const handleRemoveCart = () => {
-    dispatch(removeCart());
+  const checkoutHandler = () => {
+    props.history.push("/signin?redirect=shipping");
   };
-
   return (
     <div>
-      <h1>My cart</h1>
+      <h1>Shopping cart</h1>
+      <div>
+        {cartItems.length === 0 ? (
+          <div>Empty cart</div>
+        ) : (
+          cartItems.map((item) => (
+            <div>
+              <p>{item.name}</p>
+              <p>{item.description}</p>
+              <span>{item.price}</span>
+              <div>
+                <select
+                  value={item.qty}
+                  onChange={(e) =>
+                    dispatch(addToCart(item.product, e.target.value))
+                  }
+                >
+                  {[...Array(item.quantity).keys()].map((x) => (
+                    <option key={x + 1} value={x + 1}>
+                      {x + 1}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button onClick={() => dispatch(removeCart(item.product))}>
+                Delete cart
+              </button>
+            </div>
+          ))
+        )}
+        <div className="cart_action">
+          <h3>
+            SubTotal({" "}
+            {(cartItems.length > 0 && cartItems.reduce((a, c) => a + c.qty), 0)}{" "}
+            items)
+          </h3>
+          : ${" "}
+          {cartItems.length > 0 &&
+            cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
+          <button onClick={checkoutHandler}>Proceed checkout</button>
+        </div>
+      </div>
     </div>
   );
 }

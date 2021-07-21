@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Button = ({children, color}) => {
+const Button = ({children, className}) => {
     return (
-        <button className= {`shadow-button rounded cursor-pointer hover:shadow-hover text-sm ${color === "orange" ? "bg-orange-light text-white" : "bg-white text-Black"}`} >
+        <button className= {`shadow-button rounded cursor-pointer hover:shadow-hover text-base ${className}`} >
             {children}
         </button>
     )

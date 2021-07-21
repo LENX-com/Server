@@ -48,9 +48,12 @@ function MyOrders({
     dispatch(orderByUser(pageNumber));
   }, [pageNumber, dispatch]);
   const pages = new Array(resultsPerPage).fill(null).map((v, i) => i);
-  const orders = useSelector((state) => state.order.orders);
   const searchResult = useSelector((state) => state.search.orders.result);
-  let selection = filterdIdlist.filter((num) => searchResult.includes(num.id));
+  const textValue = useSelector((state) => state.search.orders.text);
+  const searching = useSelector((state) => state.search.orders.isSearching);
+  let orders = filterdIdlist.filter((num) =>
+    textValue === "" ? filterdIdlist : searchResult.includes(num.id)
+  );
 
   const previousBtn = () => {
     setPageNumber(Math.max(0, pageNumber - 1));
@@ -61,56 +64,17 @@ function MyOrders({
 
   const FirstFilter = () => (
     <TableBody>
-      {selection ? (
-        selection.map((h, i) => (
+      {!searchResult.length ? (
+        "no result"
+      ) : orders ? (
+        orders.map((h, i) => (
           <TableRow key={i} className="hover:bg-Hover">
             <TableCell>
               <div className="flex items-center text-sm">
                 <Avatar
                   className="hidden mr-3 md:block"
-                  src="https://images.unsplash.com/photo-1515041219749-89347f83291a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyJTIwY2FydG9vbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60"
-                  alt="User avatar"
-                />
-                <div>
-                  <p className="font-semibold"> {h.name}</p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">
-                    {" "}
-                    NewTech{" "}
-                  </p>
-                </div>
-              </div>
-            </TableCell>
-            <TableCell>
-              <span className="text-sm">${h.price}</span>
-            </TableCell>
-            <TableCell>
-              <Badge type="success"> {h.status} </Badge>
-            </TableCell>
-            <TableCell className="mobile:hidden">
-              <span className="text-sm"> 11/02/2088</span>
-            </TableCell>
-            <div className="table-cell align-middle cursor-pointer">
-              <Link to="/user/dashboard/order">
-                <HiChevronRight className="text-2xl" />
-              </Link>
-            </div>
-          </TableRow>
-        ))
-      ) : (
-        <h1>No orders yet</h1>
-      )}
-    </TableBody>
-  );
-  const SecondFilter = () => (
-    <TableBody>
-      {filterdIdlist ? (
-        filterdIdlist.map((h, i) => (
-          <TableRow key={i} className="hover:bg-Hover">
-            <TableCell>
-              <div className="flex items-center text-sm">
-                <Avatar
-                  className="hidden mr-3 md:block"
-                  src="https://images.unsplash.com/photo-1515041219749-89347f83291a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyJTIwY2FydG9vbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60"
+                  src=""
+                  // src="https://images.unsplash.com/photo-1515041219749-89347f83291a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyJTIwY2FydG9vbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60"
                   alt="User avatar"
                 />
                 <div>
@@ -157,14 +121,13 @@ function MyOrders({
                 <TableCell className="mobile:hidden"> Purchase Date</TableCell>
               </tr>
             </TableHeader>
-            {/* {selection.length > 0 ? <FirstFilter /> : <SecondFilter />} */}
-            {/* <FirstFilter/> */}
+            <FirstFilter />
           </Table>
           <TableFooter>
             <h3>Page of {pageNumber + 1}</h3>
             <button onClick={previousBtn}>Previous</button>
-            {pages.map((pageIndex) => (
-              <button onClick={() => setPageNumber(pageIndex)}>
+            {pages.map((pageIndex, i) => (
+              <button key={i} onClick={() => setPageNumber(pageIndex)}>
                 {pageIndex + 1}
               </button>
             ))}

@@ -4,28 +4,22 @@ import PageTitle from '../../components/Typography/PageTitle'
 import PopularStores from '../components/home/PopularStores'
 import PopularProduct from '../components/product/PopularProduct'
 import PopularSearches from '../components/Categories/PopularSearches'
-import { getCategories,  getProducts } from '../../actions/marketplace'
+import {getCategories} from "../../actions/categoryAction";
+import {getProductsByArrival} from "../../actions/productAction"
+import {useDispatch, useSelector} from "react-redux"
 import Banner from '../components/banner/Banner'
 
 
 const Categories = () => {
+    const dispatch = useDispatch();
+    const categories = useSelector(state => state.category.categories)
+    const productList = useSelector(state => state.product.productsByArrival)
 
-    const [ categories, setCategories ] = useState();
-    const [ productList, setProductList] = useState()
-
+    //changed the api to dispatch actions to redux
     useEffect(() => {
-        getCategories().then( data => {
-           setCategories(data) })
+        dispatch(getCategories())
+        dispatch(getProductsByArrival("createdAt"))
     }, [])
-
-        useEffect(() => {
-        getProducts('createdAt').then(data => {
-            setProductList(data);
-        })
-    }, [])
-
-    console.log(productList)
-
 
     return (
         <>  

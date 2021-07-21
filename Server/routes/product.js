@@ -45,7 +45,7 @@ router.delete("/delete:/productId", auth, protected(1));
 router.post("/related", getProductByCategory);
 router.get("/brands/:brandId", getProductByBrand);
 router.get("/product/:productId", getProductById);  
-router.post("/tags", getProductByTags);
+router.post("/tags", getProductByTags);  
 //*********************************** */
 
 router.get("/products", list);

@@ -16,13 +16,12 @@ export const resourceSelector = (resourceName, state) => {
 };
 
 
-
 const selectors = getSearchSelectors({
   resourceName: "orders",
   resourceSelector: resourceSelector,
 });
 
 export const dataSearchText = selectors.text;
-export const filteredIdArray = selectors.result;
-
+export const filteredIdArrays = selectors.result;
+export const filteredIdArray = selectors.unfilteredResult;
 // export const datasearch = selectors.text;

@@ -15,7 +15,7 @@ import FilterDialogue from '../components/category/FilterDialogue'
 
 const Shop = () => {
   const dispatch = useDispatch();
-  const categoryy = useSelector((state) => state.category.categories);
+  const category = useSelector((state) => state.category.categories);
   const [myFilters, setMyFilters] = useState({
     filters: { category: [], price: [] },
   });
@@ -103,7 +103,7 @@ const Shop = () => {
               <div className="mt-2 flex flex-col space-y-4>">
                 <ul>
                   <Checkbox
-                    categories={categoryy}
+                    categories={category}
                     handleFilters={(filters) =>
                       handleFilters(filters, "category")
                     }
@@ -143,7 +143,8 @@ const Shop = () => {
 
           <div className="my-4 flex">
             <div>
-              <CategoryPop />
+              <CategoryPop 
+              categories= {category} />
             </div>
             <div className="ml-auto">
               <FilterDialogue 
@@ -169,3 +170,6 @@ const Shop = () => {
 };
 
 export default Shop;
+
+
+

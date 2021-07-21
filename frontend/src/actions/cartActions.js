@@ -8,13 +8,14 @@ export const addToCart = (productId, qty) => async (dispatch) => {
     dispatch({
       type: "ADD_CART",
       payload: {
-          _id:res.data._id,
-          name:res.data.name,
-          photo:res.data.photo,
-          description:res.data.description,
-          price:res.data.price,
-          qty
-      }
+        product: res.data.data._id,
+        quantity: res.data.data.quantity,
+        name: res.data.data.name,
+        description: res.data.data.description,
+        price: res.data.data.price,
+        photo: res.data.data.photo,
+        qty: qty,
+      },
     });
   } catch (err) {
     dispatch({
@@ -22,7 +23,7 @@ export const addToCart = (productId, qty) => async (dispatch) => {
     });
   }
 };
-export const removeCart = (productId, qty) => (dispatch) => {
+export const removeCart = (productId) => (dispatch) => {
   try {
     dispatch({
       type: "REMOVE_CART",

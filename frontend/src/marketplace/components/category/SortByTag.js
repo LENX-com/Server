@@ -32,7 +32,7 @@ const SortByTag = ({ prices, handleFilters }) => {
         <div>
             <div>
                 <div>
-                    <AiFillAlipayCircle className="w-5 h-5 text white rounded-md p-3 bg-orange-light"/>
+                    <AiFillAlipayCircle className="m-auto text-2xl" />
                 </div>
                 <div>
                     {tag.name}

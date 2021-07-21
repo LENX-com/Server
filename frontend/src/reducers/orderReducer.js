@@ -3,35 +3,35 @@
 const initialState = {
   orders: [
     {
-    id:1,
+    _id:1,
     name:"printers",
     address:"cadbury london",
     status:"shipped",
     price:200,
   },
     {
-    id:2,
+    _id:2,
     name:"electronics",
     address:"mainland hedge fury",
     status:"processing",
     price:800,
   },
     {
-    id:3,
+    _id:3,
     name:"beverages",
     address:"lake highland",
     status:"shipped",
     price:300,
   },
     {
-    id:6,
+    _id:6,
     name:"beverages",
     address:"lake highland",
     status:"shipped",
     price:300,
   },
     {
-    id:4,
+    _id:4,
     name:"coffee",
     address:"nicks office",
     status:"processed",
