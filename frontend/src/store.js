@@ -1,8 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { reduxSearch, SearchApi, INDEX_MODES } from 'redux-search'
-
-
+import { reduxSearch} from 'redux-search'
+import SearchApi from "./utils/searchApi"
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
 import setAuthToken from "./utils/setAuthToken";
@@ -10,29 +9,16 @@ import setAuthToken from "./utils/setAuthToken";
 const initialState = {};
 
 const middleware = [thunk];
-// all-substrings match by default; same as current
-// eg "c", "ca", "a", "at", "cat" match "cat"
-const allSubstringsSearchApi = new SearchApi()
-
-// prefix matching (eg "c", "ca", "cat" match "cat")
-const prefixSearchApi = new SearchApi({
-  indexMode: INDEX_MODES.PREFIXES
-})
-
-// exact words matching (eg only "cat" matches "cat")
-const exactWordsSearchApi = new SearchApi({
-  indexMode: INDEX_MODES.EXACT_WORDS
-})
 
 const enhancer = composeWithDevTools(
   reduxSearch({
     resourceIndexes: {
-      orders: ["name", "address"]
+      orders: ["status", "address"]
     },
     resourceSelector: (resourceName, state) => {
       return state.order[resourceName];
     },
-    searchApi: prefixSearchApi
+    searchApi : new SearchApi()
   }),
   applyMiddleware(...middleware),
 );
@@ -58,3 +44,4 @@ store.subscribe(() => {
 });
 
 export default store;
+

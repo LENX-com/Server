@@ -52,9 +52,8 @@ function MyOrders({
   const textValue = useSelector((state) => state.search.orders.text);
   const searching = useSelector((state) => state.search.orders.isSearching);
   let orders = filterdIdlist.filter((num) =>
-    textValue === "" ? filterdIdlist : searchResult.includes(num.id)
+    textValue === "" ? filterdIdlist : searchResult.includes(num._id)
   );
-
   const previousBtn = () => {
     setPageNumber(Math.max(0, pageNumber - 1));
   };

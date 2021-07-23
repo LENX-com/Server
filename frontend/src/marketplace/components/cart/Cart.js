@@ -65,7 +65,7 @@
 
 // export default Cart;
 
-import React from "react";
+import React, {useEffect} from "react";
 import { addToCart, removeCart } from "../../../actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -79,6 +79,8 @@ export default function Cart(props) {
   const checkoutHandler = () => {
     props.history.push("/signin?redirect=shipping");
   };
+
+  
   return (
     <div>
       <h1>Shopping cart</h1>
@@ -90,7 +92,7 @@ export default function Cart(props) {
             <div>
               <p>{item.name}</p>
               <p>{item.description}</p>
-              <span>{item.price}</span>
+              <span>Price : ${item.price}</span>
               <div>
                 <select
                   value={item.qty}
@@ -114,13 +116,13 @@ export default function Cart(props) {
         <div className="cart_action">
           <h3>
             SubTotal({" "}
-            {(cartItems.length > 0 && cartItems.reduce((a, c) => a + c.qty), 0)}{" "}
+            {cartItems.reduce((a, c) => a + parseInt(c.qty), 0)}{" "}
             items)
           </h3>
           : ${" "}
-          {cartItems.length > 0 &&
-            cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
-          <button onClick={checkoutHandler}>Proceed checkout</button>
+          {
+            cartItems.reduce((a, c) => a + parseInt(c.qty) * parseInt(c.qty), 0)}
+          <button style={{background:"blue", margin:"5px"}} onClick={checkoutHandler}>Proceed checkout</button>
         </div>
       </div>
     </div>

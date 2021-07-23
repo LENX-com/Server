@@ -55,8 +55,8 @@ export const orderReducer = (state = initialState, action) => {
     case "GET_ORDERS_BY_USER":
       return {
         ...state,
-        orders: state.orders,
-        // orders: action.payload.orders,
+        // orders: state.orders,
+        orders: action.payload.orders,
         totalOrder: action.payload.total,
         loading: false,
       };
