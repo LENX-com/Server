@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { Link, Redirect, useRouteMatch } from "react-router-dom";
 import { addItem, updateItem, removeItem } from "../cart/CartHelper";
 import { addWishList } from "../../../actions/wishlistAction";
+import {addToCart} from "../../../actions/cartActions";
 import { useDispatch } from "react-redux";
 import Rating from 'react-rating'
 import { MdStarBorder, MdStar, MdShoppingCart, MdFavoriteBorder} from 'react-icons/md'
 
 const ProductCard = ({
   product,
-  showViewProductButton = true,
+  // showViewProductButton = true,
   showAddToCartButton = true,
   cartUpdate = false,
   showRemoveProductButton = false,
@@ -19,23 +20,23 @@ const ProductCard = ({
 }) => {
   const dispatch = useDispatch();
   const [redirect, setRedirect] = useState(false);
-  const [count, setCount] = useState(product.count);
+  // const [count, setCount] = useState(product.count);
 
   const { path, url } = useRouteMatch();
 
   const showViewButton = (showViewProductButton) => {
     return (
       showViewProductButton && (
-        <Link to={`/product/${product._id}`}>
+        // <Link to={`/product/${product._id}`}>
           <button className="btn">View Product</button>
-        </Link>
+        // </Link>
       )
     );
   };
 
-  const addToCart = () => {
-    addItem(product, setRedirect(true));
-  };
+  // const addToCart = () => {
+  //   addItem(product, setRedirect(true));
+  // };
 
   const shouldRedirect = (redirect) => {
     if (redirect) {
@@ -57,13 +58,13 @@ const ProductCard = ({
     return quantity > 0 ? <span> In Stock </span> : <span> Out of Stock </span>;
   };
 
-  const handleChange = (productId) => (event) => {
-    setRun(!run); // run useEffect in parent Cart
-    setCount(event.target.value < 1 ? 1 : event.target.value);
-    if (event.target.value >= 1) {
-      updateItem(productId, event.target.value);
-    }
-  };
+  // const handleChange = (productId) => (event) => {
+  //   setRun(!run); // run useEffect in parent Cart
+  //   setCount(event.target.value < 1 ? 1 : event.target.value);
+  //   if (event.target.value >= 1) {
+  //     updateItem(productId, event.target.value);
+  //   }
+  // };
 
   const showCartUpdateOptions = (cartUpdate) => {
     return (
@@ -76,8 +77,8 @@ const ProductCard = ({
             <input
               type="number"
               className="form-control"
-              value={count}
-              onChange={handleChange(product._id)}
+              // value={count}
+              // onChange={handleChange(product._id)}
             />
           </div>
         </div>
@@ -88,10 +89,10 @@ const ProductCard = ({
     return (
       showRemoveProductButton && (
         <button
-          onClick={() => {
-            removeItem(product._id);
-            setRun(!run); // run useEffect in parent Cart
-          }}
+          // onClick={() => {
+          //   removeItem(product._id);
+          //   setRun(!run); // run useEffect in parent Cart
+          // }}
           className="btn"
         >
           Remove Product
@@ -106,7 +107,7 @@ const ProductCard = ({
 
 
   return (
-    <Link to = {`${path}/${product._id}`}>
+    <Link to = {`/marketplace/category/products/${product._id}`}>
     <div className=" bg-white rounded  shadow-button relative my-2">
         <div className="image rounded-lg overflow-hidden">
           <div className="p-3 my-2">

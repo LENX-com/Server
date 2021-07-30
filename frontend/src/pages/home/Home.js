@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import {getSearchSelectors} from "redux-search";
 import Banner from '../../marketplace/components/banner/Banner';
 import NameSlider from '../../marketplace/components/home/NameSlider';
 import LinkFeatures from '../../marketplace/components/home/LinkFeatures';

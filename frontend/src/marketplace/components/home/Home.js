@@ -10,7 +10,7 @@ import {getSearchSelectors} from "redux-search"
 import Search from "../search/Search";
 
 function Home() {
-  const {text, result} = getSearchSelectors("books");
+  const {text, result} = getSearchSelectors("products");
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product);
 

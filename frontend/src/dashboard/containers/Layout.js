@@ -26,7 +26,6 @@ function Layout() {
       className={` dashboard flex h-screen  dark:bg-gray-900 ${isSidebarOpen && 'overflow-hidden'}`}
     >
       <Sidebar />
-
       <div className="flex flex-col flex-1 w-full">
         <Header />
          <Main>
