@@ -1,13 +1,14 @@
 import React from 'react'
-import { AiOutlineAppstore } from "react-icons/ai";
-import { Company, Shipping, Chat } from '../../assets/icons'
+import { Company, Shipping, Chat, StartUp } from '../../assets/icons'
+import Card from '../../../components/Cards/Card'
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const LinkFeatures = () => {
 
 
     const Feature = [
         {
-            name: "Buy directly from manufacturers",
+            name: "Buy directly from brands",
             icon: <Company />
         },
         {
@@ -17,23 +18,34 @@ const LinkFeatures = () => {
         {
             name: " Easy chat",
             icon: <Chat />  
+        },
+        {
+            name: " Made by startups ",
+            icon: <StartUp />  
         }
     ]
  
     const LinkFeature = () => {
         return (
-            <div className= "grid grid-cols-3 gap-3">
+            <Card>
+            <Swiper
+                    spaceBetween={5}
+                    slidesPerView={3}>
+
                     {Feature.map((data, i) => (
-                    <div className="wrapper">
-                         <div className="font-xl p-2 h-16 w-16 text-center">
-                            {data.icon}
+                    <SwiperSlide>
+                        <div className="wrapper">
+                            <div className="font-xl p-2 h-16 w-16 text-center mx-auto">
+                                {data.icon}
+                            </div>
+                            <div className="icon-wrapper text-center text-sm">
+                                {data.name} 
+                            </div>
                         </div>
-                        <div className="icon-wrapper text-center">
-                            {data.name} 
-                        </div>
-                    </div>
+                    </SwiperSlide>
                     ))}
-            </div>
+            </Swiper>
+            </Card>
         )
     }
 

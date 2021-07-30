@@ -14,9 +14,7 @@ const Home = () => {
                 <NameSlider />
             </Section>
             
-            <Section>
                 <Banner />
-            </Section>
             
             <Section>
                 <LinkFeatures />  

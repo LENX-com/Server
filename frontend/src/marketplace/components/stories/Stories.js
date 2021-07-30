@@ -25,8 +25,8 @@ const ProductImage = [{
 const Stories = () => {
     return (
       <>
-        <Swiper slidesPerView={3}
-                        spaceBetween={20}
+        <Swiper slidesPerView={4}
+                        spaceBetween={5}
                         pagination={{"clickable": true}}
                         className="mySwiper">
           <ul className="md:flex items-center justify-center md:space-x-8">
@@ -34,9 +34,9 @@ const Stories = () => {
       <SwiperSlide key={i}>
         
             <li key={i} className="flex flex-col items-center space-y-2">
-            <div className="bg-gradient-to-tr from-yellow-500 to-pink-600 rounded-full p-1">
+            <div className="rounded-full p-1" style ={{background:"linear-gradient(to right, #4cb8c4, #3cd3ad)"}}>
               <a className="block bg-white p-1 rounded-full transform transition hover:-rotate-12 duration-300" href="#">
-                <img className="h-16 w-16 rounded-full" src="https://i.ibb.co/yhh0Ljy/profile.jpg" alt="image" />
+                <img className="h-10 w-10 rounded-full" src="https://i.ibb.co/yhh0Ljy/profile.jpg" alt="image" />
               </a>
             </div>
           </li>

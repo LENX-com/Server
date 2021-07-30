@@ -16,6 +16,8 @@ import ForgotPassword from "./pages/password/ForgotPassword";
 import ResetPassword from "./pages/password/ResetPassword";
 import Home from './pages/home/Home'
 import Signin from './dashboard/components/user/Signin'
+import Blog from './components/Blog/Blog'
+import Blogs from './components/Blogs/Blogs'
 
 function Routes() {
   
@@ -48,6 +50,8 @@ function Routes() {
           exact
           render={(props) => <ResetPassword {...props} />}
         />
+        <Route exact path="/blogs" component={Blogs} />
+        <Route exact path="/blog/:id" component={Blog} />
       </Switch>
     </>
   );

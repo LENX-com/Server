@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { read, listRelated } from '../components/ApiCore';
-import Stories from '../components/stories/Stories'
 import SingleProduct from '../components/product/SingleProduct'
 import ChatBox from '../components/product/ChatBox'
+import Review from '../components/product/Review'
+import CustomerQuestions from '../components/product/CustomerQuestions'
+import RelatedProducts from '../components/product/RelatedProducts'
+import ProductDescription from '../components/product/ProductDescription'
 
 const Product = (props) => {
     const [product, setProduct] = useState({});
@@ -25,7 +28,7 @@ const Product = (props) => {
                 });
             }
         });
-    };   
+    };     
 
     useEffect(() => {
         const productId = props.match.params.productId;
@@ -35,15 +38,21 @@ const Product = (props) => {
     
     return (
         <>
-            <div className="mt-3 mb-6">
-                <Stories />
-            </div>
 
             <SingleProduct
                 product = { product.data }
             />
  
+            <ProductDescription product= { product.data }/>
+
             <ChatBox />
+
+            <Review/>
+
+            <CustomerQuestions />
+
+            <RelatedProducts  relatedProduct= {relatedProduct}/>
+
         </>
     )
 }

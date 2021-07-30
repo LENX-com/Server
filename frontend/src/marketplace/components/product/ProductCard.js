@@ -5,9 +5,6 @@ import { addWishList } from "../../../actions/wishlistAction";
 import { useDispatch } from "react-redux";
 import Rating from 'react-rating'
 import { MdStarBorder, MdStar, MdShoppingCart, MdFavoriteBorder} from 'react-icons/md'
-import { Environment } from '../../assets/icons'
-
-
 
 const ProductCard = ({
   product,
@@ -112,7 +109,7 @@ const ProductCard = ({
     <Link to = {`${path}/${product._id}`}>
     <div className=" bg-white rounded  shadow-button relative my-2">
         <div className="image rounded-lg overflow-hidden">
-          <div className="p-3 my-6">
+          <div className="p-3 my-2">
             <img src={product.photo} alt={product.name} />
           </div>
           <div className=" absolute top-3 right-1">

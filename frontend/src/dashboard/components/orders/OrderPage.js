@@ -17,10 +17,14 @@ const OrderPage = () => {
                  <h2 class="text-gray-900 title-font text-lg font-medium"> Desktop </h2>
                   <p class="mt-1">$21.15</p>
                   <div className="shadow-button p-5 rounded bg-white flex border-t border-gray-200 py-2 max-w-xs">
+                    <span className="text-gray-500"> Track Order</span>
+                    <span className="ml-auto text-gray-900"> {<HiChevronRight className="text-2xl" />} </span>
+                  </div>
+                  <div className="shadow-button p-5 rounded bg-white flex border-t border-gray-200 py-2 max-w-xs">
                     <span className="text-gray-500">Buy it again</span>
                     <span className="ml-auto text-gray-900"> {<HiChevronRight className="text-2xl" />} </span>
                   </div>
-                </div>
+                  </div>
               </div>
               <div className="mt-3 bg-white rounded p-3 border-solid border-2 border-Grey ">
               <h2 class="text-gray-900 title-font text-lg font-medium"> Order info </h2>

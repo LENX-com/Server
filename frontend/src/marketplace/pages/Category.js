@@ -11,7 +11,7 @@ import "../components/shop/Shop.scss";
 import CategoryPop from '../components/category/CategoryPop'
 import PopularSearch from "../components/category/PopularSearch";
 import FilterDialogue from '../components/category/FilterDialogue'
-
+import Card from '../../components/Cards/Card'
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -89,10 +89,7 @@ const Shop = () => {
   };
 
   return (
-    <div className="mx-auto max-w-[1920px]  md:px-8 2xl:px-16">
-             <div className="my-1 bg-white popular-search">
-            <PopularSearch />
-          </div>  
+    <div className="mx-auto max-w-[1920px]  md:px-8 2xl:px-16"> 
       <div className="pb-16 lg:pb-20">
         <div className="flex-shrink-0 pe-24 hidden lg:block w-96">
           <div className="position: sticky; top: 50px;">
@@ -140,8 +137,7 @@ const Shop = () => {
               </div>  
             </div>
           </div>       
-
-          <div className="my-4 flex">
+          <div className="my-2 flex">
             <div>
               <CategoryPop 
               categories= {category} />
@@ -152,15 +148,21 @@ const Shop = () => {
                   handleFilters={(filters) => handleFilters(filters, "price")} />
             </div>
           </div>
+          <div>
+             <PopularSearch />
+             <div className="text-lg my-2 px-2">
+                Category Name
+             </div>
+          </div>
 
 
-          <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-x-3 lg:gap-x-5 xl:gap-x-7 gap-y-3 xl:gap-y-5 2xl:gap-y-8">
+          <Card className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-x-3 lg:gap-x-5 xl:gap-x-7 gap-y-3 xl:gap-y-5 2xl:gap-y-8">
             {filteredResults.map((product, i) => (
               <div key={i}>
                 <CategoryProduct product={product} />
               </div>
-            ))}
-          </div>
+            ))}  
+          </Card>
           <hr />
           {loadMoreButton()}
         </div>

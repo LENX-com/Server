@@ -25,7 +25,7 @@ const ProductCard = ({
   const [count, setCount] = useState(product.count);
 
   const { path, url } = useRouteMatch();
-
+   
   const showViewButton = (showViewProductButton) => {
     return (
       showViewProductButton && (
@@ -107,17 +107,23 @@ const ProductCard = ({
     dispatch(addWishList(product));
   };
 
+    const Like = () => (
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style={{display: 'block', fill: 'RGBA(0, 0, 0, 0.5)', height: '24px', width: '24px', stroke: 'RGB(255, 255, 255)', strokeWidth: 2, overflow: 'visible'}}><path d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z" /></svg>
+    )
+
 
   return (
     <Link to = {`products/${product._id}`}>
-      <div className="flex max-w-md mx-auto overflow-hidden bg-white rounded-lg shadow-button h-32 md:h-44  p-2 ">
-        <div className="w-3/5 bg-cover" style={{backgroundImage: `url("${product.photo}")`}} />
-        <div className="w-2/5 p-4 md:p-4">
-          <h1 className="text-base font-bold text-Black whitespace-nowrap overflow-ellipsis overflow-hidden "> { product.name }</h1>
-          <div className="justify-between mt-3 item-center">
-            <h1 className="text-lg font-bold text-gray-700 dark:text-gray-200 md:text-xl">£ { product.price }</h1>
+      <div>
+          <div className="relative rounded-md bg-cover bg-center h-36" style= {{background: `url("https://i.etsystatic.com/9524040/c/1257/999/360/1779/il/7a575e/2221507815/il_340x270.2221507815_hzle.jpg")`}}>
+            <div className="absolute top-2 right-2">
+                <Like className="text-2xl text-white" />
+            </div>
           </div>
-        </div>
+          <div>
+            <h1 className="truncate"> {product.name} </h1>
+            <h3> £ {product.price} </h3>
+          </div>
       </div>
     </Link>
   );

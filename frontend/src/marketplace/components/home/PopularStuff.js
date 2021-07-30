@@ -21,7 +21,7 @@ const popularStuff = [
 const PopularStuff = () => {
 
     return (
-        <>
+        <Card>
         <Swiper 
             freeMode={true}
              spaceBetween={50}
@@ -42,7 +42,7 @@ const PopularStuff = () => {
              </SwiperSlide>
             ))}
         </Swiper>
-        </>
+        </Card>
     )
 }
 

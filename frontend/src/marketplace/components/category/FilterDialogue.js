@@ -25,7 +25,7 @@ const FilterDialogue =({prices, handleFilters}) => {
             logo: ""
         },
         {
-            name: "Boring Store",
+            name: "Boring Store",  
             logo: ""
         },
         {

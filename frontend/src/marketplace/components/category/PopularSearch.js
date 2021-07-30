@@ -35,7 +35,7 @@ const PopularSearch = () => {
                 freeMode = { true }
                 >
             {popular?.map((data) => (
-            <SwiperSlide className=" bg-Grey-sd px-2 py-1 shadow-button m-2 ">
+            <SwiperSlide className=" bg-white px-2 py-1 m-2 ">
                 <div>
                     <div className="text-sm mx-1 whitespace-nowrap">
                         <h2>

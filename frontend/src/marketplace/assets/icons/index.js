@@ -3,11 +3,13 @@ import { ReactComponent as Shipping } from './Shipping.svg'
 import { ReactComponent as Chat } from './Chat.svg'
 import { ReactComponent as Environment } from './Environment.svg'
 import { ReactComponent as Filter } from './Filter.svg'
+import { ReactComponent as StartUp } from './StartUp.svg'
 
 export {
   Company,
   Shipping,
   Chat,
   Environment,
-  Filter
+  Filter,
+  StartUp
 }

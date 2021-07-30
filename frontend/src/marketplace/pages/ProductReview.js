@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import Product from '../components/review/Product'
-import PageTitle from '../../components/Typography/PageTitle'
 import ReviewSearch from '../components/review/ReviewSearch'
-import { read, listRelated } from '../components/ApiCore';
-import { MdStar} from 'react-icons/md'
+import Comment from '../components/review/Comment'
+import { read  } from '../components/ApiCore';
+import { useHistory } from 'react-router-dom'
+import {  MdArrowBack } from 'react-icons/md'
+
 
 const ProductReview = (props) => {
 
     const [product, setProduct] = useState({});
     const [error, setError] = useState(false);
+    
+     const history = useHistory();
 
     const loadSingleProduct = productId => {
         read(productId).then(data => {
@@ -29,14 +33,19 @@ const ProductReview = (props) => {
 
     return (
         <div>
+            <div className="my-3">
+               <button
+               className="rounded-full w-8 h-8 bg-Grey-light p-0 border-0 inline-flex items-center justify-center text-white ml-4"
+              onClick={() => setTimeout(() => history.goBack(), 150)}>
+                 <MdArrowBack className="w-5 h-5"/>
+                </button>
+            </div>
+           <ReviewSearch />
+           
            <Product product= { product.data }/>
 
-           <ReviewSearch />
+           <Comment />
 
-           <PageTitle> 
-                    <MdStar className="text-orange"/>
-                    240 reviews
-            </PageTitle>
         </div>
     )
 }
