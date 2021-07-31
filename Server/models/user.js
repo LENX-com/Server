@@ -40,6 +40,34 @@ const wishlistSchema = new mongoose.Schema(
   }
 );
 
+const ShippingInfo = new mongoose.Schema({
+  firstname: {
+    type: String,
+  },
+  userId: {
+    type: ObjectId,
+    ref: "User",
+  },
+  lastname: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
+  street: {
+    type: String,
+  },
+  city: {
+    type: String,
+  },
+  state: {
+    type: String,
+  },
+  zip: {
+    type: Number,
+  },
+});
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -216,4 +244,4 @@ userSchema.methods = {
 const User = mongoose.model("User", userSchema);
 const Wishlist = mongoose.model("WishList", wishlistSchema);
 const Story = mongoose.model("Story", StorySchema);
-module.exports = { User, Wishlist, Story };
+module.exports = { User, Wishlist, Story, ShippingInfo };

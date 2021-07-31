@@ -93,6 +93,7 @@ io.on("connection", (socket) => {
 
   //take userId and socketId from user
   socket.on("addUser", (userId) => {
+    console.log("user is been added")
     addUser(userId, socket.id);
     io.emit("getUsers", users);
   });
@@ -100,6 +101,7 @@ io.on("connection", (socket) => {
   //send and get message
   socket.on("sendMessage", ({ senderId, receiverId, text }) => {
     const user = getUser(receiverId);
+    console.log(user, senderId, receiverId, text)
     io.emit("getMessage", {
       senderId,
       text,

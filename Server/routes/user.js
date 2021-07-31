@@ -14,6 +14,8 @@ const {
   getUserById,
   update,
   purchaseHistory,
+  addShippingInfo,
+  updateShippingInfo,
 } = require("../controller/user.controller");
 
 const {
@@ -36,6 +38,11 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+
+//*************************Shipping info**************************************** */
+router.post("/shipping_details/create", auth, addShippingInfo);
+router.post("/shipping_details/update", auth, updateShippingInfo);
+//*************************Shipping info**************************************** */
 
 //************************************************************stories***************************************************************** *
 const { createStory, getStory } = require("../controller/user.controller");

@@ -1,5 +1,5 @@
 const { Order } = require("../models/order");
-const { Wishlist, Story, User } = require("../models/user");
+const { Wishlist, Story, User, ShippingInfo } = require("../models/user");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const { validationResult } = require("express-validator/check");
 const Product = require("../models/product");
@@ -265,3 +265,37 @@ exports.getStory = async (req, res) => {
 };
 
 //*************************************************************manufacturers sotries*****************************************
+
+//*************************************Shipping info************************************ */
+
+exports.addShippingInfo = async (req, res) => {
+  try {
+    const { ...args } = req.body;
+    args.userId = req.user._id;
+    const shipping = await ShippingInfo.create(args);
+    return res.json(shipping);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+};
+
+exports.updateShippingInfo = async (req, res) => {
+  try {
+    const { ...args } = req.body;
+
+    const shipping = await ShippingInfo.findOneAndUpdate(
+      { _id: req.body.shippingInfoId },
+      args,
+      {
+        new: true,
+        upsert: true,
+        setDefaultsOninsert: true,
+      }
+    );
+    return res.json(shipping);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
