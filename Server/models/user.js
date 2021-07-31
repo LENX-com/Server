@@ -40,7 +40,7 @@ const wishlistSchema = new mongoose.Schema(
   }
 );
 
-const ShippingInfo = new mongoose.Schema({
+const Shipping = new mongoose.Schema({
   firstname: {
     type: String,
   },
@@ -119,6 +119,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       default:
         "https://res.cloudinary.com/lenx/image/upload/v1619714832/avatar_g2cc3h.png",
+    },
+    avatarId: {
+      type: String,
     },
     date: {
       type: Date,
@@ -244,4 +247,5 @@ userSchema.methods = {
 const User = mongoose.model("User", userSchema);
 const Wishlist = mongoose.model("WishList", wishlistSchema);
 const Story = mongoose.model("Story", StorySchema);
+const ShippingInfo = mongoose.model("Shipping_details", Shipping);
 module.exports = { User, Wishlist, Story, ShippingInfo };

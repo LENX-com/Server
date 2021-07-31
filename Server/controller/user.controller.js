@@ -31,6 +31,24 @@ exports.getUserById = async (req, res) => {
   }
 };
 
+exports.updateUser = async (req, res) => {
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      resource_type: "auto",
+      invalidate: true,
+    });
+    const { ...args } = req.body;
+    // args.avatar = result.secure_url;
+    // args.avatarId = result.public_id;
+    const user = await User.findOneAndUpdate({ _id: req.user._id }, args, {
+      new: true,
+    });
+    return res.json(user);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 exports.userById = (req, res, next, id) => {
   User.findById(id)
     .populate("session")
@@ -285,12 +303,10 @@ exports.updateShippingInfo = async (req, res) => {
     const { ...args } = req.body;
 
     const shipping = await ShippingInfo.findOneAndUpdate(
-      { _id: req.body.shippingInfoId },
+      req.body.shippingId,
       args,
       {
         new: true,
-        upsert: true,
-        setDefaultsOninsert: true,
       }
     );
     return res.json(shipping);
@@ -298,4 +314,3 @@ exports.updateShippingInfo = async (req, res) => {
     console.log(error);
   }
 };
-
