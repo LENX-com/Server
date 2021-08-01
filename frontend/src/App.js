@@ -1,11 +1,9 @@
 import "./App.scss";
-import React,{useEffect} from "react";
-import setAuthToken from "./utils/setAuthToken";
+import React, { useEffect } from "react";
 import store from "./store";
 import { loadUser } from "./actions/authAction";
 import { LOGOUT } from "./actions/types";
 import { useDispatch } from "react-redux";
-
 
 import Routes from "./Routes";
 function App() {
@@ -17,8 +15,8 @@ function App() {
     window.addEventListener("storage", () => {
       if (!localStorage.token) dispatch({ type: LOGOUT });
     });
-  },[] );
- 
+  }, []);
+
   return (
     <div>
       <Routes />

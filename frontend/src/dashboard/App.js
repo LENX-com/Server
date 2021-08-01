@@ -1,5 +1,5 @@
 import React, { lazy } from 'react'
-import { BrowserRouter as Router, Switch, Route, Redirect, useRouteMatch} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route,  useRouteMatch} from 'react-router-dom'
 import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnnouncer'
 
 const Layout = lazy(() => import('./containers/Layout'))

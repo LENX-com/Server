@@ -13,7 +13,7 @@ const middleware = [thunk];
 const enhancer = composeWithDevTools(
   reduxSearch({
     resourceIndexes: {
-      orders: ["status", "address"]
+      orders: ["name", "address"]
     },
     resourceSelector: (resourceName, state) => {
       return state.order[resourceName];

@@ -32,9 +32,9 @@ export const removeCart = (productId) => (dispatch, getState) => {
   try {
     dispatch({
       type: "REMOVE_CART",
-      payload:productId
+      payload: productId,
     });
-     const {
+    const {
       cart: { cartItems },
     } = getState();
 
@@ -44,4 +44,17 @@ export const removeCart = (productId) => (dispatch, getState) => {
       type: "CART_ERROR",
     });
   }
+};
+
+export const saveShipping = (data) => (dispatch) => {
+  dispatch({
+    type: "CART_SAVE_SHIPPING",
+    payload: data,
+  });
+};
+export const savePayment = (data) => (dispatch) => {
+  dispatch({
+    type: "CART_SAVE_PAYMENT",
+    payload: data,
+  });
 };

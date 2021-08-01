@@ -1,4 +1,5 @@
 import { lazy } from 'react'
+
 const address = "/marketplace"
 
 const Categories = lazy(() => import('../pages/Categories'))
@@ -24,7 +25,7 @@ const routes =
   {
     path: `${address}/category/products/reviews/:productId`, // the url
     component: ProductReview, // view rendered
-  }
+  },
 ]
 
 export default routes

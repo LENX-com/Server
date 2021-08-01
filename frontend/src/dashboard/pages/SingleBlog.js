@@ -23,7 +23,7 @@ const SingleBlog = () => {
                 </div>
               </div>
               <div className="border-b border-gray-100" /> 
-              <div className="text-gray-400 font-medium text-sm mb-7 mt-6 mx-3 px-2"><img className="rounded" src="https://picsum.photos/536/354" /></div>
+              <div className="text-gray-400 font-medium text-sm mb-7 mt-6 mx-3 px-2"><img className="rounded" src="https://picsum.photos/536/354" alt="digh" /></div>
               <div className="text-gray-600 font-semibold text-lg mb-2 mx-3 px-2">Dummy text of the printing and typesetting industry</div>
               <div className="text-gray-500 font-thin text-sm mb-6 mx-3 px-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500</div>
               <div className="flex justify-start mb-4 border-t border-gray-100">

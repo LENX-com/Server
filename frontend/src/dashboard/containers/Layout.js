@@ -19,6 +19,8 @@ function Layout() {
 
   useEffect(() => {
     closeSidebar()
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location])
 
   return (

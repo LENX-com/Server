@@ -1,5 +1,5 @@
 import React, { lazy } from 'react'
-import { BrowserRouter as Router, Switch, Route, Redirect, useRouteMatch} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, useRouteMatch} from 'react-router-dom'
 // import Posts from "./components/posts/Posts";
 // import Post from "./components/post/Post";
 // import Category from "./pages/categories/Category";

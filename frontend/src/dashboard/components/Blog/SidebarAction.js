@@ -14,7 +14,7 @@ const SidebarAction = ({ title }) => (
           <span className=" flex mb-2">
             <MdFlag />
             <strong className="mr-1">Status:</strong> Draft{" "}
-            <a className="ml-auto" href="#">
+            <a className="ml-auto" href="#div">
               Edit
             </a>
           </span>
@@ -22,14 +22,14 @@ const SidebarAction = ({ title }) => (
             < MdVisibility />
             <strong className="mr-1">Visibility:</strong>{" "}
             <strong className="text-success">Public</strong>{" "}
-            <a className="ml-auto" href="#">
+            <a className="ml-auto" href="#div">
               Edit
             </a>
           </span>
           <span className="flex mb-2">
             <MdPermContactCalendar />
             <strong className="mr-1">Schedule:</strong> Now{" "}
-            <a className="ml-auto" href="#">
+            <a className="ml-auto" href="#div">
               Edit
             </a>
           </span>

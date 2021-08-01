@@ -10,7 +10,7 @@ const Comments = () => {
       <div class="flex-shrink-0">
         <div class="inline-block relative">
           <div class="relative w-16 h-16 rounded-full overflow-hidden">
-            <img class="absolute top-0 left-0 w-full h-full bg-cover object-fit object-cover" src="https://picsum.photos/id/646/200/200" alt="Profile picture" />
+            <img class="absolute top-0 left-0 w-full h-full bg-cover object-fit object-cover" src="https://picsum.photos/id/646/200/200" alt="Profil" />
           <div class="absolute top-0 left-0 w-full h-full rounded-full shadow-inner"></div>
         </div>
           <svg class="fill-current text-white bg-green-600 rounded-full p-1 absolute bottom-0 right-0 w-6 h-6 -mx-1 -my-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

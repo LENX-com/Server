@@ -12,8 +12,9 @@ import {
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: false,
-  user: {},  
-  loading: false
+  user: {},
+  shippingDetails: [],
+  loading: true,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -34,7 +35,7 @@ export const authReducer = (state = initialState, action) => {
         loading: false,
       };
     case LOGIN_SUCCESS:
-      localStorage.setItem("token", action.payload.token)
+      localStorage.setItem("token", action.payload.token);
       return {
         ...state,
         ...action.payload,
@@ -49,6 +50,24 @@ export const authReducer = (state = initialState, action) => {
         isAuthenticated: false,
         loading: false,
         user: null,
+      };
+    case "UPDATE_USER_PROFILE":
+      return {
+        ...state,
+        user: action.payload,
+        loading:false
+      };
+    case "ADD_SHIPPING_INFO":
+      return {
+        ...state,
+        shippingDetails: action.payload,
+        loading: false,
+      };
+    case "EDIT_SHIPPING_INFO":
+      return {
+        ...state,
+        shippingDetails: action.payload,
+        loading: false,
       };
     case AUTH_ERROR:
     case LOGOUT:

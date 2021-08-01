@@ -13,13 +13,13 @@ const Header = () => {
           </a>
         </li>
         <li className="navSection primary">
-          <a className="rootLink item-products hasDropdown colorize" data-dropdown="products">
+          <a className="rootLink item-products hasDropdown colorize" data-dropdown="products" href="#div">
             Products
           </a>
-          <a className="rootLink item-developers hasDropdown colorize" data-dropdown="developers">
+          <a className="rootLink item-developers hasDropdown colorize" data-dropdown="developers" href="#div">
             Developers
           </a>
-          <a className="rootLink item-company hasDropdown colorize" data-dropdown="company">
+          <a className="rootLink item-company hasDropdown colorize" data-dropdown="company" href="#div">
             Company
           </a>
         </li>
@@ -32,10 +32,10 @@ const Header = () => {
           </a>
         </li>
         <li className="navSection mobile">
-          <a className="rootLink item-mobileMenu colorize"><h2>Menu</h2></a>
+          <a className="rootLink item-mobileMenu colorize" href="#div"><h2>Menu</h2></a>
           <div className="popup">
             <div className="popupContainer">
-              <a className="popupCloseButton">Close</a>
+              <a className="popupCloseButton" href="#div">Close</a>
               <div className="mobileProducts">
                 <h4>Products</h4>
                 <div className="mobileProductsList">

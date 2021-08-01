@@ -120,4 +120,6 @@ const Sidebar = ({ chats, pwa, rooms, fetchRooms, users, fetchUsers, user}) => {
 };
 
 export default memo(Sidebar);
+
+
           

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import React from "react";
+import { Switch, Route } from "react-router-dom";
 import PrivateRoutes from "../src/auth/PrivateRoutes";
 import Dashboard from "./dashboard/Dashboard";
 import AdminRoute from "../src/auth/AdminRoute";
@@ -17,6 +17,9 @@ import ResetPassword from "./pages/password/ResetPassword";
 import Home from "./pages/home/Home";
 import Signin from "./dashboard/components/user/Signin";
 import Cart from "./marketplace/components/cart/Cart";
+import Shipping from "./pages/Shipping";
+import Payment from "./pages/Payment";
+import Placeorder from "./pages/Placeorder";
 
 function Routes() {
   return (
@@ -25,6 +28,9 @@ function Routes() {
         <Route path="/" exact component={Home} />
         <Route path="/marketplace" component={MarketPlace} />
         <Route path="/cart" exact component={Cart} />
+        <Route path="/shipping" exact component={Shipping} />
+        <Route path="/payment" exact component={Payment} />
+        <Route path="/placeorder" exact component={Placeorder} />
         <PrivateRoutes path="/user/dashboard" component={Dashboard} />
         <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
         <AdminRoute path="/create/category" exact component={AddCategory} />

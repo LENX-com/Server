@@ -11,9 +11,9 @@ const FilterDialogue =({prices, handleFilters}) => {
   const [ currentStore, setCurrentStore ] = useState(false)
   const [ currentFilter, setCurrentFilter ] = useState(false)
 
-  function closeModal() {
-    setIsOpen(false)
-  }
+  // function closeModal() {
+  //   setIsOpen(false)
+  // }
 
   function openModal() {
     setIsOpen(true)

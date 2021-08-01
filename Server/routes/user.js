@@ -41,7 +41,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 //******************************User Crud.********************** */
-router.post("/user/update", auth, updateUser);
+router.post("/user/update",upload.single("file"), auth, updateUser);
 //******************************User Crud.********************** */
 
 //*************************Shipping info**************************************** */

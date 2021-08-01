@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-import { Link, Redirect, useRouteMatch } from "react-router-dom";
-import { addItem, updateItem, removeItem } from "../cart/CartHelper";
-import { addWishList } from "../../../actions/wishlistAction";
-import { useDispatch } from "react-redux";
-import Rating from 'react-rating'
-import { MdStarBorder, MdStar, MdShoppingCart, MdFavoriteBorder} from 'react-icons/md'
+import React from "react";
+import { Link,} from "react-router-dom";
+
+
 
 
 
@@ -20,92 +17,92 @@ const ProductCard = ({
   rating = false
   // changeCartSize
 }) => {
-  const dispatch = useDispatch();
-  const [redirect, setRedirect] = useState(false);
-  const [count, setCount] = useState(product.count);
 
-  const { path, url } = useRouteMatch();
+  // const [redirect, setRedirect] = useState(false);
+  // const [count, setCount] = useState(product.count);
 
-  const showViewButton = (showViewProductButton) => {
-    return (
-      showViewProductButton && (
-        <Link to={`/product/${product._id}`}>
-          <button className="btn">View Product</button>
-        </Link>
-      )
-    );
-  };
+  // const { path, url } = useRouteMatch();
 
-  const addToCart = () => {
-    addItem(product, setRedirect(true));
-  };
+  // const showViewButton = (showViewProductButton) => {
+  //   return (
+  //     showViewProductButton && (
+  //       <Link to={`/product/${product._id}`}>
+  //         <button className="btn">View Product</button>
+  //       </Link>
+  //     )
+  //   );
+  // };
 
-  const shouldRedirect = (redirect) => {
-    if (redirect) {
-      return <Redirect to="/cart" />;
-    }
-  };
+  // const addToCart = () => {
+  //   addItem(product, setRedirect(true));
+  // };
 
-  const showAddToCartBtn = (showAddToCartButton) => {
-    return (
-      showAddToCartButton && (
-        <button onClick={addToCart} className="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-200 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">
-          Add to cart
-        </button>
-      )
-    );
-  };
+  // const shouldRedirect = (redirect) => {
+  //   if (redirect) {
+  //     return <Redirect to="/cart" />;
+  //   }
+  // };
 
-  const showStock = (quantity) => {
-    return quantity > 0 ? <span> In Stock </span> : <span> Out of Stock </span>;
-  };
+  // const showAddToCartBtn = (showAddToCartButton) => {
+  //   return (
+  //     showAddToCartButton && (
+  //       <button onClick={addToCart} className="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-200 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">
+  //         Add to cart
+  //       </button>
+  //     )
+  //   );
+  // };
 
-  const handleChange = (productId) => (event) => {
-    setRun(!run); // run useEffect in parent Cart
-    setCount(event.target.value < 1 ? 1 : event.target.value);
-    if (event.target.value >= 1) {
-      updateItem(productId, event.target.value);
-    }
-  };
+  // const showStock = (quantity) => {
+  //   return quantity > 0 ? <span> In Stock </span> : <span> Out of Stock </span>;
+  // };
 
-  const showCartUpdateOptions = (cartUpdate) => {
-    return (
-      cartUpdate && (
-        <div>
-          <div className="input-group">
-            <div className="input-group-prepend">
-              <span className="input-group-text">Adjust Quantity</span>
-            </div>
-            <input
-              type="number"
-              className="form-control"
-              value={count}
-              onChange={handleChange(product._id)}
-            />
-          </div>
-        </div>
-      )
-    );
-  };
-  const showRemoveButton = (showRemoveProductButton) => {
-    return (
-      showRemoveProductButton && (
-        <button
-          onClick={() => {
-            removeItem(product._id);
-            setRun(!run); // run useEffect in parent Cart
-          }}
-          className="btn"
-        >
-          Remove Product
-        </button>
-      )
-    );
-  };
+  // const handleChange = (productId) => (event) => {
+  //   setRun(!run); // run useEffect in parent Cart
+  //   setCount(event.target.value < 1 ? 1 : event.target.value);
+  //   if (event.target.value >= 1) {
+  //     updateItem(productId, event.target.value);
+  //   }
+  // };
 
-  const wishlist = (product) => {
-    dispatch(addWishList(product));
-  };
+  // const showCartUpdateOptions = (cartUpdate) => {
+  //   return (
+  //     cartUpdate && (
+  //       <div>
+  //         <div className="input-group">
+  //           <div className="input-group-prepend">
+  //             <span className="input-group-text">Adjust Quantity</span>
+  //           </div>
+  //           <input
+  //             type="number"
+  //             className="form-control"
+  //             value={count}
+  //             onChange={handleChange(product._id)}
+  //           />
+  //         </div>
+  //       </div>
+  //     )
+  //   );
+  // };
+  // const showRemoveButton = (showRemoveProductButton) => {
+  //   return (
+  //     showRemoveProductButton && (
+  //       <button
+  //         onClick={() => {
+  //           removeItem(product._id);
+  //           setRun(!run); // run useEffect in parent Cart
+  //         }}
+  //         className="btn"
+  //       >
+  //         Remove Product
+  //       </button>
+  //     )
+  //   );
+  // };
+
+  // const wishlist = (product) => {
+  //   dispatch(addWishList(product));
+  // };
 
 
   return (

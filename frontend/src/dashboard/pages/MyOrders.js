@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import { getPurchaseHistory } from "../components/user/apiUser";
+import React, { useState, useEffect } from "react";
 import PageTitle from "../components/Typography/PageTitle";
 import { useSelector, useDispatch, connect } from "react-redux";
 import { createSelector } from "reselect";
@@ -14,7 +13,6 @@ import {
   TableContainer,
   Badge,
   Avatar,
-  Button,
   Pagination,
 } from "@windmill/react-ui";
 import { HiChevronRight } from "react-icons/hi";
@@ -52,7 +50,6 @@ function MyOrders({ filterdIdlist }) {
 
   const searchResult = useSelector((state) => state.search.orders.result);
   const textValue = useSelector((state) => state.search.orders.text);
-  const searching = useSelector((state) => state.search.orders.isSearching);
   let orders = filterdIdlist.filter((num) =>
     textValue === "" ? filterdIdlist : searchResult.includes(num._id)
   );

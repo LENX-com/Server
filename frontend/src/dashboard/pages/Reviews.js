@@ -1,6 +1,5 @@
 import React from 'react'
 import PageTitle from '../components/Typography/PageTitle'
-import SectionTitle from '../components/Typography/SectionTitle'
 import { Data } from '../components/stories/Data'
 import Review from '../components/reviews/Review'
 

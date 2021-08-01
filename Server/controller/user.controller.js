@@ -32,14 +32,15 @@ exports.getUserById = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
+  console.log(req.file)
   try {
     const result = await cloudinary.uploader.upload(req.file.path, {
       resource_type: "auto",
       invalidate: true,
     });
     const { ...args } = req.body;
-    // args.avatar = result.secure_url;
-    // args.avatarId = result.public_id;
+    args.avatar = result.secure_url;
+    args.avatarId = result.public_id;
     const user = await User.findOneAndUpdate({ _id: req.user._id }, args, {
       new: true,
     });

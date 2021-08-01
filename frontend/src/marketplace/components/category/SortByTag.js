@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { AiFillAlipayCircle } from 'react-icons/ai'
             
 const SortByTag = ({ prices, handleFilters }) => {
@@ -21,12 +21,12 @@ const SortByTag = ({ prices, handleFilters }) => {
         },
     ]
 
-    const [value, setValue] = useState(0);
+    // const [value, setValue] = useState(0);
 
-    const handleChange = event => {
-        handleFilters(event.target.value);
-        setValue(event.target.value);
-    };
+    // const handleChange = event => {
+    //     handleFilters(event.target.value);
+    //     setValue(event.target.value);
+    // };
 
     return Tag && Tag.map((tag, i) => (
         <div>

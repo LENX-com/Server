@@ -1,5 +1,5 @@
-import React, { useContext, Suspense, useEffect, lazy } from 'react'
-import { Switch, Route, Redirect, useLocation, useRouteMatch } from 'react-router-dom'
+import React, { Suspense,lazy } from 'react'
+import { Switch, Route, useLocation} from 'react-router-dom'
 import Header from '../../components/header/Header'
 import Main from '../Main'
 import Footer from '../../components/footer/Footer'
@@ -11,7 +11,6 @@ const Page404 = lazy(() => import('../../../pages/404'))
 
 function Layout() {
   let location = useLocation()
-  const { path } = useRouteMatch();
   console.log(location)
 
 

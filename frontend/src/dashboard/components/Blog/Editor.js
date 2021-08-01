@@ -1,6 +1,6 @@
 import React from "react";
 import ReactQuill from "react-quill";
-import { Card, CardBody, Input, Form } from '@windmill/react-ui'
+import { Card, CardBody, Input, } from '@windmill/react-ui'
 
 import "react-quill/dist/quill.snow.css";
 import "../../assets/css/quill.scss";

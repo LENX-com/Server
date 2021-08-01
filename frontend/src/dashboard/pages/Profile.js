@@ -1,7 +1,71 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addShippingInfo, userProfileUpdate } from "../../actions/authAction";
 
+const countryData = ["Nigeria", "Ghana", "Mexico", "Russia"];
 
 export default function Profile() {
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.auth.loading);
+  const [load, setload] = useState(false);
+  const [userProfile, setUserProfile] = useState({
+    about: "",
+    formdata: new FormData(),
+  });
+
+  const [formdata, setFormdata] = useState({
+    firstname: "",
+    lastname: "",
+    country: countryData[0],
+    street: "",
+    city: "",
+    email: "",
+    state: "",
+    zip: "",
+  });
+
+  const handleProfileChange = (name) => (event) => {
+    const value = name === "file" ? event.target.files[0] : event.target.value;
+    userProfile.formdata.set(name, value);
+    setUserProfile({ ...userProfile, [name]: value });
+  };
+  const handleProfileSubmit = (e) => {
+    e.preventDefault();
+    setload(loading ? true : false);
+    dispatch(userProfileUpdate(userProfile.formdata));
+    setUserProfile({
+      about: "",
+      avatar: "",
+    });
+  };
+
+  const handleChange = (e) => {
+    setFormdata({ ...formdata, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formvalues = {
+      firstname: formdata.firstname,
+      lastname: formdata.lastname,
+      country: formdata.country,
+      street: formdata.street,
+      email: formdata.email,
+      city: formdata.city,
+      state: formdata.state,
+      zip: formdata.zip,
+    };
+    dispatch(addShippingInfo(formvalues));
+    setFormdata({
+      firstname: "",
+      lastname: "",
+      country: "",
+      street: "",
+      city: "",
+      email: "",
+      state: "",
+      zip: "",
+    });
+  };
 
   return (
     <>
@@ -9,31 +73,36 @@ export default function Profile() {
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">Profile</h3>
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Profile
+              </h3>
               <p className="mt-1 text-sm text-gray-600">
-                This information will be displayed publicly so be careful what you share.
+                This information will be displayed publicly so be careful what
+                you share.
               </p>
             </div>
           </div>
           <div className="mt-5 md:mt-0 md:col-span-2">
-            <form action="#" method="POST">
+            <form onSubmit={handleProfileSubmit}>
               <div className="shadow sm:rounded-md sm:overflow-hidden">
                 <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
-                  <div className="grid grid-cols-3 gap-6">
-                  </div>
+                  <div className="grid grid-cols-3 gap-6"></div>
 
                   <div>
-                    <label htmlFor="about" className="block text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="about"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       About
                     </label>
                     <div className="mt-1">
                       <textarea
                         id="about"
-                        name="about"
+                        onChange={handleProfileChange("about")}
+                        value={userProfile.about}
                         rows={3}
                         className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
                         placeholder="you@example.com"
-                        defaultValue={''}
                       />
                     </div>
                     <p className="mt-2 text-sm text-gray-500">
@@ -42,10 +111,16 @@ export default function Profile() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Photo</label>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Photo
+                    </label>
                     <div className="mt-1 flex items-center">
                       <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                        <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                        <svg
+                          className="h-full w-full text-gray-300"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
                           <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
                       </span>
@@ -59,7 +134,9 @@ export default function Profile() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Cover photo</label>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Cover photo
+                    </label>
                     <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                       <div className="space-y-1 text-center">
                         <svg
@@ -82,11 +159,19 @@ export default function Profile() {
                             className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                           >
                             <span>Upload a file</span>
-                            <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                            <input
+                              id="file-upload"
+                              name="file"
+                              onChange={handleProfileChange("file")}
+                              type="file"
+                              className="sr-only"
+                            />
                           </label>
                           <p className="pl-1">or drag and drop</p>
                         </div>
-                        <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                        <p className="text-xs text-gray-500">
+                          PNG, JPG, GIF up to 10MB
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -96,7 +181,7 @@ export default function Profile() {
                     type="submit"
                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
-                    Save
+                   `Save`
                   </button>
                 </div>
               </div>
@@ -115,22 +200,31 @@ export default function Profile() {
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
-              <p className="mt-1 text-sm text-gray-600">Use a permanent address where you can receive mail.</p>
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Personal Information
+              </h3>
+              <p className="mt-1 text-sm text-gray-600">
+                Use a permanent address where you can receive mail.
+              </p>
             </div>
           </div>
           <div className="mt-5 md:mt-0 md:col-span-2">
-            <form action="#" method="POST">
+            <form onSubmit={handleSubmit}>
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
-                      <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="first_name"
+                        className="block text-sm font-medium text-gray-700"
+                      >
                         First name
                       </label>
                       <input
                         type="text"
-                        name="first_name"
+                        name="firstname"
+                        onChange={(e) => handleChange(e)}
+                        value={formdata.firstname}
                         id="first_name"
                         autoComplete="given-name"
                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -138,12 +232,17 @@ export default function Profile() {
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">
-                      <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="last_name"
+                        className="block text-sm font-medium text-gray-700"
+                      >
                         Last name
                       </label>
                       <input
                         type="text"
-                        name="last_name"
+                        name="lastname"
+                        value={formdata.lastname}
+                        onChange={(e) => handleChange(e)}
                         id="last_name"
                         autoComplete="family-name"
                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -151,12 +250,17 @@ export default function Profile() {
                     </div>
 
                     <div className="col-span-6 sm:col-span-4">
-                      <label htmlFor="email_address" className="block text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="email_address"
+                        className="block text-sm font-medium text-gray-700"
+                      >
                         Email address
                       </label>
                       <input
                         type="text"
-                        name="email_address"
+                        name="email"
+                        value={formdata.email}
+                        onChange={(e) => handleChange(e)}
                         id="email_address"
                         autoComplete="email"
                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -164,65 +268,93 @@ export default function Profile() {
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">
-                      <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="country"
+                        className="block text-sm font-medium text-gray-700"
+                      >
                         Country / Region
                       </label>
                       <select
                         id="country"
+                        value={formdata.country}
+                        onChange={(e) => handleChange(e)}
+                        required
                         name="country"
                         autoComplete="country"
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
-                        <option>United States</option>
-                        <option>Canada</option>
-                        <option>Mexico</option>
+                        {countryData.map((item, index) => (
+                          <option value={item} key={index}>
+                            {item}
+                          </option>
+                        ))}
                       </select>
                     </div>
 
                     <div className="col-span-6">
-                      <label htmlFor="street_address" className="block text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="street_address"
+                        className="block text-sm font-medium text-gray-700"
+                      >
                         Street address
                       </label>
                       <input
                         type="text"
-                        name="street_address"
+                        name="street"
                         id="street_address"
+                        value={formdata.street}
+                        onChange={(e) => handleChange(e)}
                         autoComplete="street-address"
                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
 
                     <div className="col-span-6 sm:col-span-6 lg:col-span-2">
-                      <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="city"
+                        className="block text-sm font-medium text-gray-700"
+                      >
                         City
                       </label>
                       <input
                         type="text"
                         name="city"
+                        value={formdata.city}
+                        onChange={(e) => handleChange(e)}
                         id="city"
                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
 
                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                      <label htmlFor="state" className="block text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="state"
+                        className="block text-sm font-medium text-gray-700"
+                      >
                         State / Province
                       </label>
                       <input
                         type="text"
                         name="state"
+                        value={formdata.state}
+                        onChange={(e) => handleChange(e)}
                         id="state"
                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
 
                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                      <label htmlFor="postal_code" className="block text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="postal_code"
+                        className="block text-sm font-medium text-gray-700"
+                      >
                         ZIP / Postal
                       </label>
                       <input
                         type="text"
-                        name="postal_code"
+                        name="zip"
+                        value={formdata.zip}
+                        onChange={(e) => handleChange(e)}
                         id="postal_code"
                         autoComplete="postal-code"
                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -371,5 +503,5 @@ export default function Profile() {
         </div> */}
       {/* </div> */}
     </>
-  )
+  );
 }

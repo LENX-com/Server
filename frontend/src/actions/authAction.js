@@ -1,8 +1,5 @@
-import setAuthToken from "../utils/setAuthToken";
 import { API } from "../config";
-import { toast } from "react-toastify";
-
-import { api} from "../utils/api";
+import { api } from "../utils/api";
 import { setAlert } from "./alert";
 import {
   REGISTER_SUCCESS,
@@ -59,7 +56,7 @@ export const login = (formdata) => async (dispatch) => {
     const res = await api.post(`${API}/signin`, formdata);
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data,  
+      payload: res.data,
     });
     dispatch(loadUser());
   } catch (err) {
@@ -96,5 +93,53 @@ export const isAuthenticated = () => {
     return JSON.parse(localStorage.getItem("jwt"));
   } else {
     return false;
+  }
+};
+
+//************************User crud profile update************************ */
+export const userProfileUpdate = (formdata) => async (dispatch) => {
+  try {
+    const res = await api.post(`${API}/user/update`, formdata);
+    dispatch({
+      type: "UPDATE_USER_PROFILE",
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: "UPDATE_USER_PROFILE_ERROR",
+    });
+  }
+};
+
+//******************************shipping details******************************
+
+//add order shipping info
+
+export const addShippingInfo = (formdata) => async (dispatch) => {
+  try {
+    const res = await api.post(`${API}/shipping_details/create`, formdata);
+    dispatch({
+      type: "ADD_SHIPPING_DETAILS",
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: "SHIPPING_DETAILS_ERROR",
+    });
+  }
+};
+//update order shipping info
+
+export const updateShippingInfo = (formdata) => async (dispatch) => {
+  try {
+    const res = await api.post(`${API}/shipping_details/update`, formdata);
+    dispatch({
+      type: "EDIT_SHIPPING_DETAILS",
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: "SHIPPING_DETAILS_ERROR",
+    });
   }
 };

@@ -1,12 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { HiChevronRight } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import { Data } from "../stories/Data";
 import { Badge } from "@windmill/react-ui";
 
 const OrderItem = () => {
-  const myorders = useSelector((state) => state.order.orders);
   return (
     <>
       {Data.map((data, i) => (

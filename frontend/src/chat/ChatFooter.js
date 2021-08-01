@@ -193,3 +193,4 @@ export default memo(function ChatFooter({input, handleFocus, change, sendMessage
 	    </div>
 	)
 })
+

@@ -1,5 +1,4 @@
 import React from 'react'
-import { AiOutlineAppstore } from "react-icons/ai";
 import { Company, Shipping, Chat } from '../../assets/icons'
 
 const LinkFeatures = () => {

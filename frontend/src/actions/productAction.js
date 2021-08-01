@@ -1,4 +1,4 @@
-import {api, publicApi} from "../utils/api";
+import {api} from "../utils/api";
 import { API } from "../config";
 import queryString from "query-string";
 // create product

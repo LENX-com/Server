@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import {
-  MdStarBorder,
   MdStar,
-  MdShoppingCart,
   MdFavoriteBorder,
   MdArrowBack,
 } from "react-icons/md";
@@ -10,7 +8,7 @@ import Card from "../../../components/Cards/Card";
 import Button from "../../../components/Buttons/Button";
 import { addToCart} from "../../../actions/cartActions";
 import { useDispatch } from "react-redux";
-import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { Link, useHistory} from "react-router-dom";
 
 const SingleProduct = ({ product }) => {
   const [count, setCount] = useState(0);
@@ -18,7 +16,6 @@ const SingleProduct = ({ product }) => {
   const history = useHistory();
   const options = Array.from(Array(15).keys());
 
-  const { url } = useRouteMatch();
 
   return (
     <Card className="py-8 mx-auto">

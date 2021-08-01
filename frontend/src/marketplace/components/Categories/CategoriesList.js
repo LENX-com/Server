@@ -1,7 +1,6 @@
 import React  from 'react'
 import { NavLink} from 'react-router-dom'
 import { HiChevronRight } from 'react-icons/hi'
-import Card from '../../../components/Cards/Card'
 
 const CategoriesList = ({categories}) => {
 

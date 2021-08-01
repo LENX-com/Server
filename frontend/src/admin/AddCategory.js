@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Layout from "../marketplace/components/layout/Layout";
-import { isAuthenticated } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addCategory } from "../actions/categoryAction";
@@ -23,14 +22,6 @@ const AddCategory = () => {
     e.preventDefault();
     setError("");
     setSuccess(false);
-    // createCategory(token, { name }).then(data => {
-    //     if (data.error) {
-    //         setError(data.error);
-    //     } else {
-    //         setError("");
-    //         setSuccess(true);
-    //     }
-    // });
     const formdata = {
       name,
     };

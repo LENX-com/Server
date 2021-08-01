@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Product from '../components/review/Product'
 import PageTitle from '../../components/Typography/PageTitle'
 import ReviewSearch from '../components/review/ReviewSearch'
-import { read, listRelated } from '../components/ApiCore';
+import { read, } from '../components/ApiCore';
 import { MdStar} from 'react-icons/md'
 
 const ProductReview = (props) => {
