@@ -2,7 +2,7 @@
 .search {
     .swiper-slide{
         width: auto!important;
-        background: #ECECEC;
+        // background: #ECECEC;
         border-radius: 5px;
     }
 }
@@ -17,4 +17,12 @@
 
 input:checked+svg {
     display: block;
+}
+
+.Center {
+     position: absolute;
+     left: 50%;
+     top: 50%;
+     -webkit-transform: translate(-50%, -50%);
+     transform: translate(-50%, -50%);
 }

@@ -40,7 +40,8 @@ const colors = require('tailwindcss/colors')
       Grey: {
         DEFAULT: '#eee',
         sd: '#ECECEC',
-        light: '#7F7F7F'
+        light: '#7F7F7F',
+        border:'#dddddd'
       },
       Black:"#222831",
       lightBlack:"#393e46",

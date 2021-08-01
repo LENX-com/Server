@@ -1,14 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { read, listRelated } from "../components/ApiCore";
+import SingleProduct from "../components/product/SingleProduct";
+import Review from "../components/product/Review";
+import CustomerQuestions from "../components/product/CustomerQuestions";
+import RelatedProducts from "../components/product/RelatedProducts";
+import ProductDescription from "../components/product/ProductDescription";
+import Stories from "../components/stories/Stories";
 import { getProduct } from "../../actions/productAction";
 import { useDispatch, useSelector } from "react-redux";
-import Stories from "../components/stories/Stories";
-import SingleProduct from "../components/product/SingleProduct";
 import ChatBox from "../components/product/ChatBox";
 
 const Product = (props) => {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product.product);
-  
 
   // const loadSingleProduct = (productId) => {
   //   read(productId).then((data) => {

@@ -11,6 +11,16 @@ export const getProducts = (sortBy) => {
     .catch((err) => console.log(err));
 };
 
+export const getAllProducts = (sortBy) => {
+  return fetch(`${API}/products`, {
+    method: "GET",
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
 export const getCategories = () => {
   return fetch("http://localhost:5000/api/categories", {
     method: "GET",

@@ -10,9 +10,8 @@ const PopularProduct = ({categories, productList}) => {
     const {  url } = useRouteMatch();
 
     return (
-
         
-        <div className="my-3">
+        <Card className="my-3">
             <SectionTitle> Popular products </SectionTitle>
 
             <Swiper
@@ -31,7 +30,8 @@ const PopularProduct = ({categories, productList}) => {
                          >
                         <div className="bg-white rounded-lg p-2 text-center text-sm whitespace-nowrap inline-block">
                                 { brand.name }
-                            <div className="sidebar__menu--line"></div>
+                            <div 
+                            className="sidebar__menu--line"></div>
                         </div>
                       </NavLink>
                     </SwiperSlide>
@@ -48,7 +48,7 @@ const PopularProduct = ({categories, productList}) => {
                     <ProductCard product= {product} /> 
                   )}
                   </div>
-            </div>
+            </Card>
     )
 }
 

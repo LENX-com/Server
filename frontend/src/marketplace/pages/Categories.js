@@ -24,10 +24,6 @@ const Categories = () => {
         <>  
             <Banner />
             <CategoriesList categories= {categories} />
-            <PopularSearches />
-            <PopularProduct categories= { categories } productList= { productList}/>
-            <PopularStores/>
-
         </>
     )
 }

@@ -29,6 +29,13 @@ const OrderPage = () => {
             </h2>
             <p class="mt-1">$21.15</p>
             <div className="shadow-button p-5 rounded bg-white flex border-t border-gray-200 py-2 max-w-xs">
+              <span className="text-gray-500"> Track Order</span>
+              <span className="ml-auto text-gray-900">
+                {" "}
+                {<HiChevronRight className="text-2xl" />}{" "}
+              </span>
+            </div>
+            <div className="shadow-button p-5 rounded bg-white flex border-t border-gray-200 py-2 max-w-xs">
               <span className="text-gray-500">Buy it again</span>
               <span className="ml-auto text-gray-900">
                 {" "}
@@ -43,9 +50,7 @@ const OrderPage = () => {
             Order info{" "}
           </h2>
           <div className="shadow-button p-5 rounded bg-white flex border-t border-gray-200 py-2 max-w-xs">
-            <span className="text-gray-500">
-              <Link to="/user/dashboard/chat">Request a refund</Link> {" "}
-            </span>
+            <span className="text-gray-500"> Request a refund </span>
             <span className="ml-auto text-gray-900">
               {" "}
               {<HiChevronRight className="text-2xl" />}{" "}

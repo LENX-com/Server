@@ -53,6 +53,8 @@ App.use("/api", require("./routes/review"));
 App.use("/api", require("./routes/marketplace"));
 App.use("/api", require("./routes/message"));
 App.use("/api", require("./routes/conversation"));
+App.use("/api", require("./routes/blog"));
+
 
 // Initialise passport middleware
 App.use(passport.initialize());

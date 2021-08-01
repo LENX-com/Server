@@ -6,6 +6,8 @@ const Categories = lazy(() => import('../pages/Categories'))
 const Category = lazy(() => import('../pages/Category'))
 const Product = lazy(() => import('../pages/Product'))
 const ProductReview = lazy(() => import('../pages/ProductReview'))
+const Manufacturer = lazy(() => import('../pages/Manufacturer'))
+const Blog = lazy(() => import('../../components/Blog/Blog'))
 
 
 const routes = 
@@ -15,17 +17,25 @@ const routes =
     component: Categories, // view rendered
   },
   {
-    path: `${address}/category/:categoryId`, // the url
-    component: Category, // view rendered
+    path: `${address}/category/:categoryId`, 
+    component: Category, 
   },
   {
-    path: `${address}/category/products/:productId`, // the url
-    component: Product, // view rendered
+    path: `${address}/category/products/:productId`, 
+    component: Product, 
   },
   {
-    path: `${address}/category/products/reviews/:productId`, // the url
-    component: ProductReview, // view rendered
+    path: `${address}/category/products/reviews/:productId`, 
+    component: ProductReview, 
   },
+  {
+    path: `${address}/manufacturer/:manufacturerId`, 
+    component: Manufacturer, 
+  },
+  {
+    path: `${address}/manufacturer/:BlogId`, 
+    component: Blog, 
+  }
 ]
 
 export default routes

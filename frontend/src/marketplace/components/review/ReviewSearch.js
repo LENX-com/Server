@@ -1,22 +1,21 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
-import {MdArrowBack} from 'react-icons/md'
+import {  MdStar} from 'react-icons/md'
+import SearchBar from '../../../components/searchbar/SearchBar'
 
 
 const ReviewSearch = () => {
-    const history = useHistory();
-
-    return (
-        <div className="relative">
-            <div className=" absolute top-2 left-0">
-                <div className="flex">
-                   <button
-                      className="rounded-full w-8 h-8 bg-Grey-light p-0 border-0 inline-flex items-center justify-center text-white ml-4"
-                      onClick={() => setTimeout(() => history.goBack(), 150)}>
-                        <MdArrowBack className="w-5 h-5"/>
-                    </button>
-                    </div>
-                </div>
+  
+    return ( 
+        <div className="relative p-2 my-2">
+            <div className="flex">
+                <h1 className="text-2xl font-semibold text-gray-700 dark:text-gray-200 flex"> 
+                   <MdStar className="text-orange"/>
+                    240 reviews
+                </h1>
+            </div>
+            <div className="sidebar__search my-2">
+              <SearchBar placeholder = "Search Reviews" />
+            </div>
         </div>
     )
 }

@@ -17,7 +17,7 @@ import axios from 'axios'
 // Get posts
 export const getPosts = () => async dispatch => {
   try {
-    const res = await api.get(`${API}/post`);
+    const res = await api.get(`${API}/blog`);
 
     dispatch({
       type: GET_POSTS,
@@ -35,7 +35,7 @@ export const getPosts = () => async dispatch => {
 export const addLike = (id, token) => async dispatch => {
   try {
     const res = await axios
-    .put(`${API}/post/like/${id}`, "", {
+    .put(`${API}/blog/like/${id}`, "", {
      headers: {
     'Authorization': `Bearer ${token}`
     }}
@@ -57,7 +57,7 @@ export const addLike = (id, token) => async dispatch => {
 export const removeLike = (id, token) => async dispatch => {
   try {
     const res = await axios
-    .put(`${API}/post/unlike/${id}`, "", {
+    .put(`${API}/blog/unlike/${id}`, "", {
      headers: {
     'Authorization': `Bearer ${token}`
       }}
@@ -77,11 +77,13 @@ export const removeLike = (id, token) => async dispatch => {
 
 
 // Delete post
-export const deletePost = id => async dispatch => {
+export const deletePost = (id, token) => async dispatch => {
   try {
     await axios
-    .delete(`${API}/post/${id}`);
-
+    .delete(`${API}/blog/${id}`, {
+     headers: {
+    'Authorization': `Bearer ${token}`
+      }});
     dispatch({
       type: DELETE_POST,
       payload: id
@@ -97,11 +99,11 @@ export const deletePost = id => async dispatch => {
 };
 
 // Add post
-export const addPost = (userId, formData, token) => async dispatch => {
+export const addPost = (formData, token) => async dispatch => {
   try {
     const res = await 
       axios
-    .post(`${API}/post/${userId}`, formData, {
+    .post(`${API}/blog/`, formData, {
      headers: {
     'Authorization': `Bearer ${token}`
     }
@@ -115,7 +117,6 @@ export const addPost = (userId, formData, token) => async dispatch => {
     dispatch(setAlert('Post Created', 'success'));
   } catch (err) {
     console.log(err.response)
-    console.log(userId)
   }
 };
 
@@ -125,7 +126,7 @@ export const addPost = (userId, formData, token) => async dispatch => {
 export const getPost = id => async dispatch => {
   try {
     const res = await axios
-    .get(`${API}/post/${id}`);
+    .get(`${API}/blog/${id}`);
     dispatch({
       type: GET_POST,
       payload: res.data
@@ -140,10 +141,10 @@ export const getPost = id => async dispatch => {
 };
 
 // Add comment
-export const addComment = (userId, postId, formData, token) => async dispatch => {
+export const addComment = (postId, formData, token) => async dispatch => {
   try {
     const res = await axios
-    .post(`${API}/post/comment/${userId}/${postId}`, formData, {
+    .post(`${API}/blog/comment/${postId}`, formData, {
      headers: {
     'Authorization': `Bearer ${token}`
     }});
@@ -162,10 +163,14 @@ export const addComment = (userId, postId, formData, token) => async dispatch =>
 };
 
 // Delete comment
-export const deleteComment = (postId, commentId) => async dispatch => {
+export const deleteComment = (postId, commentId, token) => async dispatch => {
   try {
     await axios
-    .delete(`${API}/post/comment/${postId}/${commentId}`);
+    .delete(`${API}/blog/comment/${postId}/${commentId}` ,
+    {
+     headers: {
+    'Authorization': `Bearer ${token}`
+    }});
 
     dispatch({
       type: REMOVE_COMMENT,

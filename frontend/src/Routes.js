@@ -14,12 +14,12 @@ import UpdateProduct from "./admin/UpdateProduct";
 import MarketPlace from "./marketplace/MarketPlace";
 import ForgotPassword from "./pages/password/ForgotPassword";
 import ResetPassword from "./pages/password/ResetPassword";
-import Home from "./pages/home/Home";
-import Signin from "./dashboard/components/user/Signin";
+import Home from './pages/home/Home'
+import Signin from './dashboard/components/user/Signin'
+import Blog from './components/Blog/Blog'
+import Blogs from './components/Blogs/Blogs'
 import Cart from "./marketplace/components/cart/Cart";
-import Shipping from "./pages/Shipping";
-import Payment from "./pages/Payment";
-import Placeorder from "./pages/Placeorder";
+
 
 function Routes() {
   return (
@@ -28,9 +28,6 @@ function Routes() {
         <Route path="/" exact component={Home} />
         <Route path="/marketplace" component={MarketPlace} />
         <Route path="/cart" exact component={Cart} />
-        <Route path="/shipping" exact component={Shipping} />
-        <Route path="/payment" exact component={Payment} />
-        <Route path="/placeorder" exact component={Placeorder} />
         <PrivateRoutes path="/user/dashboard" component={Dashboard} />
         <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
         <AdminRoute path="/create/category" exact component={AddCategory} />
@@ -55,6 +52,8 @@ function Routes() {
           exact
           render={(props) => <ResetPassword {...props} />}
         />
+        <Route exact path="/blogs" component={Blogs} />
+        <Route exact path="/blog/:id" component={Blog} />
       </Switch>
     </>
   );
