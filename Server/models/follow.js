@@ -5,6 +5,9 @@ const followingSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
     },
+    manufacturerId: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
   },
   {
     timestamps: true,
@@ -12,6 +15,9 @@ const followingSchema = new mongoose.Schema(
 );
 const followerSchema = new mongoose.Schema({
   userId: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
+  manufacturerId: {
     type: mongoose.Schema.Types.ObjectId,
   },
 });

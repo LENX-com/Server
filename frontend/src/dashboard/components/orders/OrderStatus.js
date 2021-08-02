@@ -36,56 +36,65 @@ const OrderStatus = () => {
 
   return (
     <>
-      <Card>
-        <div>
-          <div className="flex">
-            <SectionTitle>Order status</SectionTitle>
-            <div className="table-cell align-middle cursor-pointer absolute right-4">
-              <Link to="/user/dashboard/order">
-                <HiArrowRight className="text-orange text text-lg" />
-              </Link>
+      {upcomingOrders.length !== 0 ? (
+        <Card>
+          <div>
+            <div className="flex">
+              <SectionTitle>Order status</SectionTitle>
+              <div className="table-cell align-middle cursor-pointer absolute right-4">
+                <Link to="/user/dashboard/order">
+                  <HiArrowRight className="text-orange text text-lg" />
+                </Link>
+              </div>
             </div>
+            <h2> Due date on 11/22/2022 </h2>
+            <Badge type="success" className="py-2 px-4 text-base mt-1 mb-3">
+              success
+            </Badge>
           </div>
-          <h2> Due date on 11/22/2022 </h2>
-          <Badge type="success" className="py-2 px-4 text-base mt-1 mb-3">
-            success
-          </Badge>
-        </div>
-        <Swiper
-          slidesPerView={2}
-          spaceBetween={20}
-          pagination={{ clickable: true }}
-          className="mySwiper"
-        >
-          {upcomingOrders ? upcomingOrders.map((data, i) => (
-            <SwiperSlide key={i}>
-
-              <section
-                className="content bg-cover bg-center h-32 rounded"
-                style={{ backgroundImage: `url(${data.url})` }}
-              >
-                <div className="flex items-end w-full h-full bg-black bg-opacity-20 text-white text-sm font-bold  p-4 rounded"><Link to="/user/dashboard/order">Order</Link></div>
-              </section>
-            </SwiperSlide>
-          )) : <div>No orders for now continue shopping</div>}
-        </Swiper>
-        <div className="my-4">
-          <Button className="flex">
-            <Link to="" className="flex text-Black font-bold">
-              Track Order
-              <HiArrowRight className="ml-3 mt-1" />
-            </Link>
-          </Button>
-        </div>
-        <div className="mb-2">
-          <Button className="flex">
-            <Link to="" className="flex text-Black font-bold">
-              Requst Refund
-              <HiArrowRight className="ml-3 mt-1" />
-            </Link>
-          </Button>
-        </div>
-      </Card>
+          <Swiper
+            slidesPerView={2}
+            spaceBetween={20}
+            pagination={{ clickable: true }}
+            className="mySwiper"
+          >
+            {upcomingOrders.length !== 0 ? (
+              upcomingOrders.map((data, i) => (
+                <SwiperSlide key={i}>
+                  <section
+                    className="content bg-cover bg-center h-32 rounded"
+                    style={{ backgroundImage: `url(${data.url})` }}
+                  >
+                    <div className="flex items-end w-full h-full bg-black bg-opacity-20 text-white text-sm font-bold  p-4 rounded">
+                      <Link to="/user/dashboard/order">Order</Link>
+                    </div>
+                  </section>
+                </SwiperSlide>
+              ))
+            ) : (
+              <div>No orders for now continue shopping</div>
+            )}
+          </Swiper>
+          <div className="my-4">
+            <Button className="flex">
+              <Link to="" className="flex text-Black font-bold">
+                Track Order
+                <HiArrowRight className="ml-3 mt-1" />
+              </Link>
+            </Button>
+          </div>
+          <div className="mb-2">
+            <Button className="flex">
+              <Link to="" className="flex text-Black font-bold">
+                Requst Refund
+                <HiArrowRight className="ml-3 mt-1" />
+              </Link>
+            </Button>
+          </div>
+        </Card>
+      ) : (
+        "No Upcoming orders"
+      )}
     </>
   );
 };

@@ -397,28 +397,37 @@ function MyOrders({ filterdIdlist }) {
       <PageTitle> My orders </PageTitle>
       <SectionTitle>Purchase History</SectionTitle>
       <SearchBar />
-      <Tabs>
-        <Swiper
-          slidesPerView={5}
-          spaceBetween={2}
-          freeMode={true}
-          className="mySwiper"
-        >
-          <SwiperSlide>
-            <TabList className="flex whitespace-nowrap">
-              <Tab>All orders</Tab>
-              <Tab>In progress</Tab>
-              <Tab>Shipped</Tab>
-              <Tab>Received</Tab>
-            </TabList>
-          </SwiperSlide>
-        </Swiper>
+      {!meorders.length ? (
+        <div>
+          <h1>You have not made ny orders yet</h1>
+          <button>
+            <Link to="/marketplace">Keep Exploring</Link>
+          </button>
+        </div>
+      ) : (
+        <Tabs>
+          <Swiper
+            slidesPerView={5}
+            spaceBetween={2}
+            freeMode={true}
+            className="mySwiper"
+          >
+            <SwiperSlide>
+              <TabList className="flex whitespace-nowrap">
+                <Tab>All orders</Tab>
+                <Tab>In progress</Tab>
+                <Tab>Shipped</Tab>
+                <Tab>Received</Tab>
+              </TabList>
+            </SwiperSlide>
+          </Swiper>
 
-        <TabPanel>{allOrderTab()}</TabPanel>
-        <TabPanel>{purchaseInProgressTab()}</TabPanel>
-        <TabPanel>{purchaseShippedTab()}</TabPanel>
-        <TabPanel>{purchaseReceivedTab()}</TabPanel>
-      </Tabs>
+          <TabPanel>{allOrderTab()}</TabPanel>
+          <TabPanel>{purchaseInProgressTab()}</TabPanel>
+          <TabPanel>{purchaseShippedTab()}</TabPanel>
+          <TabPanel>{purchaseReceivedTab()}</TabPanel>
+        </Tabs>
+      )}
 
       <SectionTitle> Upcoming orders</SectionTitle>
       <OrderStatus />

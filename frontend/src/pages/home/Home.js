@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 
 import Banner from '../../marketplace/components/banner/Banner';
 import NameSlider from '../../marketplace/components/home/NameSlider';

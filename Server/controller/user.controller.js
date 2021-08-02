@@ -1,5 +1,6 @@
 const { Order } = require("../models/order");
 const { Wishlist, Story, User, ShippingInfo } = require("../models/user");
+const { follower, following } = require("../models/follow");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const { validationResult } = require("express-validator/check");
 const Product = require("../models/product");
@@ -32,7 +33,7 @@ exports.getUserById = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-  console.log(req.file)
+  console.log(req.file);
   try {
     const result = await cloudinary.uploader.upload(req.file.path, {
       resource_type: "auto",
@@ -283,7 +284,7 @@ exports.getStory = async (req, res) => {
   }
 };
 
-//*************************************************************manufacturers sotries*****************************************
+//*************************************************************manufacturers stories*****************************************
 
 //*************************************Shipping info************************************ */
 
@@ -315,3 +316,16 @@ exports.updateShippingInfo = async (req, res) => {
     console.log(error);
   }
 };
+
+//************************************Follow manufacturer************************************** */
+exports.followManufacturer = async (req, res) => {
+  try {
+    const { ...args } = req.body;
+    args.userId = req.user._id;
+    const newfollow = await following.create(args);
+    return res.json(newfollow);
+  } catch (error) {
+    console.log(error);
+  }
+};
+//************************************Follow manufacturer************************************** */
