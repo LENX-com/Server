@@ -32,7 +32,7 @@ export const getWishList = () => async (dispatch) => {
 };
 export const removeWishList = (wishId) => async (dispatch) => {
   try {
-    const resp = await api.delete(`${API}/wishlist/remove/${wishId}`);
+     await api.delete(`${API}/wishlist/remove/${wishId}`);
     dispatch({
       type: "DELETE_WISHLIST",
       payload: wishId,

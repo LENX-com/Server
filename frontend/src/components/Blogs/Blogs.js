@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import BlogItem from './BlogItem';
-// import BlogForm from './BlogForm';
+import BlogForm from './BlogForm';
 import { getPosts } from '../../actions/postAction';
 
 const Blogs = ({ getPosts, post: { posts } }) => {
@@ -12,7 +12,7 @@ const Blogs = ({ getPosts, post: { posts } }) => {
 
   return (
     <Fragment>
-      {/* <BlogForm /> */}
+      <BlogForm />
         {posts.map((post) => (
           <BlogItem key={post._id} post={post} />
         ))}

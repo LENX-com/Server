@@ -1,6 +1,5 @@
 
 import {API} from '../config'
-import axios from 'axios'
 import cookie from 'js-cookie';
 
 export const signup = user => {

@@ -65,16 +65,16 @@
 
 // export default Cart;
 
-import React, {useEffect} from "react";
+import React from "react";
 import { addToCart, removeCart } from "../../../actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Cart(props) {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const qty = props.location.search
-    ? Number(props.location.search.split("=")[1])
-    : 1;
+  // const qty = props.location.search
+  //   ? Number(props.location.search.split("=")[1])
+  //   : 1;
 
   const checkoutHandler = () => {  
     props.history.push("/signin?redirect=shipping");
@@ -122,7 +122,9 @@ export default function Cart(props) {
           : ${" "}
           {
             cartItems.reduce((a, c) => a + parseInt(c.qty) * parseInt(c.qty), 0)}
-          <button style={{background:"blue", margin:"5px"}} onClick={checkoutHandler}>Proceed checkout</button>
+          <button disabled={cartItems.length === 0 ? true : false} 
+          style={{background:"blue", margin:"5px"}}
+           onClick={checkoutHandler}>{cartItems.length === 0 ? "Continue shopping": "Proceed to Checkout" }</button>
         </div>
       </div>
     </div>

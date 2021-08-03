@@ -2,16 +2,13 @@ import React, { useContext, useState } from 'react'
 import {useSelector} from "react-redux"
 import { SidebarContext } from '../context/SidebarContext'
 import {
-  SearchIcon,
-  MoonIcon,
-  SunIcon,
   BellIcon,
   MenuIcon,
   OutlinePersonIcon,
   OutlineCogIcon,
   OutlineLogoutIcon,
 } from '../icons'
-import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext } from '@windmill/react-ui'
+import { Avatar, Badge,Dropdown, DropdownItem, } from '@windmill/react-ui'
 import '../assets/css/Header.scss'
 import { NavLink, useRouteMatch, Redirect } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -22,7 +19,8 @@ function Header ( { history } ) {
   const { path } = useRouteMatch();
   const dispatch = useDispatch(); 
 
-  const { mode, toggleMode } = useContext(WindmillContext)
+  // const { mode, toggleMode } = useContext(WindmillContext)
+
   const { toggleSidebar } = useContext(SidebarContext)
 
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false)

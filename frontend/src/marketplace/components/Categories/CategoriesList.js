@@ -1,10 +1,8 @@
-import React  from 'react'
-import { NavLink} from 'react-router-dom'
-import { HiChevronRight } from 'react-icons/hi'
-import Button from '../../../components/Buttons/Button'
+import React from "react";
+import { NavLink } from "react-router-dom";
+import Button from '../../../components/Buttons/Button.component';
 
-const CategoriesList = ({categories}) => {
-
+const CategoriesList = ({ categories }) => {
 
     return (
         <div className="p-3">
@@ -24,12 +22,13 @@ const CategoriesList = ({categories}) => {
                                 </div>
                                 </div>
                             </div>
-                        </NavLink> 
-                    </div>
-            ))}
-        </div>
-        </div>
-    )
-}
+                        </NavLink>
+                      </div>
+            ))} 
 
-export default CategoriesList
+      </div>
+    </div>
+  );
+};
+
+export default CategoriesList;

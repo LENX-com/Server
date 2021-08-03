@@ -1,6 +1,5 @@
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import Card from '../../../components/Cards/Card'
 
 
 const popularStuff = [

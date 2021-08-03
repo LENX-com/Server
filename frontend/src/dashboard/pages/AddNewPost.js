@@ -1,5 +1,4 @@
 import React from "react";
-import { Container } from '@windmill/react-ui'
 import PageTitle from '../components/Typography/PageTitle'
 import Editor from "../components/Blog/Editor";
 import SidebarAction from "../components/Blog/SidebarAction";

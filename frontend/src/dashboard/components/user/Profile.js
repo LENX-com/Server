@@ -31,6 +31,7 @@ const Profile = ({ match }) => {
 
     useEffect(() => {
         init(match.params.userId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleChange = name => e => {

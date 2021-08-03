@@ -1,6 +1,5 @@
-import React, {useState, useEffect } from 'react'
+import React, {useEffect } from 'react'
 import CategoriesList from '../components/Categories/CategoriesList'
-import PageTitle from '../../components/Typography/PageTitle'
 import PopularStores from '../components/home/PopularStores'
 import PopularProduct from '../components/product/PopularProduct'
 import PopularSearches from '../components/Categories/PopularSearches'
@@ -19,7 +18,7 @@ const Categories = () => {
     useEffect(() => {
         dispatch(getCategories())
         dispatch(getProductsByArrival("createdAt"))
-    }, [])
+    }, [dispatch])
 
     return (
         <>  

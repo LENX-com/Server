@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Layout from '../../marketplace/components/layout/Layout'
 import { isAuthenticated}from "../../actions"
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify';
 import { Redirect, Link } from 'react-router-dom'
 

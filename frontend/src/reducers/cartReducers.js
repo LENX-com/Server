@@ -1,8 +1,9 @@
 const obj = JSON.parse(localStorage.getItem("cart")) || [];
 
-
 const initialState = {
   cartItems: obj,
+  shipping: null,
+  payment:null,
   loading: false,
 };
 export const cartReducer = (state = initialState, action) => {
@@ -26,6 +27,16 @@ export const cartReducer = (state = initialState, action) => {
         cartItems: state.cartItems.filter(
           (item) => item.product !== action.payload
         ),
+      };
+    case "CART_SAVE_SHIPPING":
+      return {
+        ...state,
+        shipping: action.payload,
+      };
+    case "CART_SAVE_PAYMENT":
+      return {
+        ...state,
+        payment: action.payload,
       };
     default:
       return state;

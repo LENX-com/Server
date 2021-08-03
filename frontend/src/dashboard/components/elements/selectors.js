@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import { getSearchSelectors, createSearchAction } from "redux-search";
-import Immutable from "immutable";
-import { useSelector, connect } from "react-redux";
+
+import { getSearchSelectors} from "redux-search";
 import { createSelector } from "reselect";
 
 export const resources = (state) => state.order;

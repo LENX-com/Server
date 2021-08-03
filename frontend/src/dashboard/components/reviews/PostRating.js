@@ -1,9 +1,7 @@
 import React from 'react'
-import { MdStar, MdStarBorder, MdRemoveRedEye, MdFavoriteBorder } from "react-icons/md";
+import { MdStar, MdStarBorder, MdFavoriteBorder } from "react-icons/md";
 import Card from '../Cards/Card'
 import Rating from 'react-rating'
-import Button from '../elements/Button'
-import SectionTitle from '../Typography/SectionTitle'
 
 const PostRating = () => {
     return (

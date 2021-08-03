@@ -1,4 +1,5 @@
 import { lazy } from 'react'
+
 const address = "/marketplace"
 
 const Categories = lazy(() => import('../pages/Categories'))

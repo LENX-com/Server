@@ -1,0 +1,19 @@
+.search .swiper-slide {
+  width: auto !important;
+  background: #ECECEC;
+  border-radius: 5px;
+}
+
+.popular-search {
+  -webkit-box-shadow: 0 1px 2px 0 RGB(17 17 17/15%);
+          box-shadow: 0 1px 2px 0 RGB(17 17 17/15%);
+  width: 100vw;
+  position: relative;
+  margin-left: -50vw;
+  left: 50%;
+}
+
+input:checked + svg {
+  display: block;
+}
+/*# sourceMappingURL=Marketplace.css.map */

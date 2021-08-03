@@ -9,7 +9,7 @@ import MediaPreview from "./MediaPreview";
 import ImagePreview from "./ImagePreview";
 import ChatFooter from "./ChatFooter";
 import anime from 'animejs/lib/anime.es.js';
-import AudioPlayer from "./AudioPlayer.js"
+import AudioPlayer from "./AudioPlayer.js";
 import './styles/Chat.scss';
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
@@ -106,6 +106,7 @@ function Chat({ animState, unreadMessages, b }) {
             useEffect(() => {
             socket.current = io("http://localhost:5000");
             socket.current.on("getMessage", (data) => {
+                console.log(data)
             setArrivalMessage({
                 sender: data.senderId,
                 text: data.text,
@@ -167,7 +168,7 @@ function Chat({ animState, unreadMessages, b }) {
                     complete: function() {
                         setSendAnim(false);
                     }
-                });
+                });   
             }
 
         } else {
@@ -461,3 +462,5 @@ function Chat({ animState, unreadMessages, b }) {
 }
 
 export default memo(Chat);
+
+

@@ -5,9 +5,9 @@ import UserCard from '../components/Cards/UserCard'
 import PageTitle from '../components/Typography/PageTitle'
 import { conversation, order, Information} from '../icons'
 import RoundIcon from '../components/RoundIcon'
-import response from '../utils/demo/tableData'
+import {data}from '../utils/demo/tableData'
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-import { isAuthenticated } from '../../actions/authAction'
+
 import { NavLink, useRouteMatch } from 'react-router-dom'
 import { HiChevronRight } from 'react-icons/hi'
 import ChatElement from '../components/chat/ChatElement'
@@ -27,7 +27,7 @@ const Dashboard = () => {
 
   // pagination setup 
   const resultsPerPage = 10
-  const totalResults = response.length
+  const totalResults = data.length
 
   // pagination change control
   function onPageChange(p) {
@@ -37,7 +37,7 @@ const Dashboard = () => {
   // on page change, load new sliced data
   // here you would make another server request for new data
   useEffect(() => {
-    setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage))
+    setData(data.slice((page - 1) * resultsPerPage, page * resultsPerPage))
   }, [page])
 
   return (

@@ -1,14 +1,13 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import React, { useState, Fragment } from 'react'
+import React, { useState } from 'react'
 import SectionTitle from '../../../components/Typography/SectionTitle'
-import { Link, NavLink, useRouteMatch } from 'react-router-dom'
-import Card from '../../../components/Cards/Card'
+import { NavLink, useRouteMatch } from 'react-router-dom'
 import ProductCard from './ProductCard'
 
 const PopularProduct = ({categories, productList}) => {
 
     const [ menu, setMenu ] = useState();  
-    const { path, url } = useRouteMatch();
+    const {  url } = useRouteMatch();
 
     return (
         

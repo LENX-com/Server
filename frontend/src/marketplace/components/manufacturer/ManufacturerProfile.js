@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import Button from '../../../components/Buttons/Button'
 import { AiOutlineHeart, AiTwotoneStar } from 'react-icons/ai'
+import {followManufacturer} from "../../../actions/userActions"
+import {useDispatch} from "react-redux"
 import { Link } from 'react-router-dom'
 import ChatPop from '../chat/ChatPop'
 
-const ManufacturerProfile = () => {
+const ManufacturerProfile = ({match}) => {
+    const dispatch = useDispatch();
+    
     return (
         <div className="relative my-2 min-w-sm border border-gray-100 mb-2 h-60 bg-white shadow-button">
         {/**/}
@@ -27,7 +31,7 @@ const ManufacturerProfile = () => {
           <div>
             <div className="grid grid-cols-2">
                 <div className="ml-auto my-auto">
-                    <Button className="border-2 border-Blue text-Blue rounded shadow-none mr-1"> Follow </Button>
+                    <Button className="border-2 border-Blue text-Blue rounded shadow-none mr-1" onClick={()=> dispatch(followManufacturer(match.params.manufacturerId))}> Follow </Button>
                 </div>
                 <div className="mr-auto">
                     <ChatPop />

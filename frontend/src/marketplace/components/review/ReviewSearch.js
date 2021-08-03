@@ -1,5 +1,5 @@
 import React from 'react'
-import { MdSearch, MdStar} from 'react-icons/md'
+import {  MdStar} from 'react-icons/md'
 import SearchBar from '../../../components/searchbar/SearchBar'
 
 

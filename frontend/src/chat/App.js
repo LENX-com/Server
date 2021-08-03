@@ -19,7 +19,6 @@ const App = () => {
   const { path } = useRouteMatch();
   const { page, pathID  }  = useSelector(state => state.chat);
   const { user }  = useSelector(state => state.auth);
-  const [loader, setLoader] = useState(true);
   const [pwaEvent, setPwaEvent] = useState(undefined);
   const [chats, setChats] = useState(null);
   const [chatsFetched, setChatsFetched] = useState();
@@ -171,3 +170,4 @@ const App = () => {
 }
 
 export default memo(App);
+
