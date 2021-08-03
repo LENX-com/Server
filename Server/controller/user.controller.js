@@ -320,10 +320,30 @@ exports.updateShippingInfo = async (req, res) => {
 //************************************Follow manufacturer************************************** */
 exports.followManufacturer = async (req, res) => {
   try {
+    const resp = await following.find({
+      $and: [
+        { userId: req.user.id },
+        { manufacturerId: req.body.manufacturerId },
+      ],
+    });
+    if (resp.length > 0) {
+      return res.json("Already following");
+    }
     const { ...args } = req.body;
-    args.userId = req.user._id;
+    args.userId = req.user.id;
     const newfollow = await following.create(args);
     return res.json(newfollow);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.getFollowing = async (req, res) => {
+  try {
+    const resp = await following
+      .find({ userId: req.user.id })
+      .populate("manufacturerId");
+    return res.json(resp);
   } catch (error) {
     console.log(error);
   }

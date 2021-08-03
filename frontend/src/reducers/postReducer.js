@@ -6,14 +6,16 @@ import {
   ADD_POST,
   GET_POST,
   ADD_COMMENT,
-  REMOVE_COMMENT
-} from '../actions/types';
-   
+  GET_ALL_BLOG_BY_FOLLOWING,
+  GET_ALL_BLOG_BY_SINGLE_FOLLOWING_MANUFACTURER,
+  REMOVE_COMMENT,
+} from "../actions/types";
+
 const initialState = {
   posts: [],
   post: null,
   loading: true,
-  error: {}
+  error: {},
 };
 
 export const postReducer = (state = initialState, action) => {
@@ -24,31 +26,41 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: payload,
-        loading: false
+        loading: false,
       };
     case GET_POST:
       return {
         ...state,
         post: payload,
-        loading: false
+        loading: false,
+      };
+    case GET_ALL_BLOG_BY_FOLLOWING:
+      return {
+        ...state,
+        posts: action.payload,
+      };
+    case GET_ALL_BLOG_BY_SINGLE_FOLLOWING_MANUFACTURER:
+      return {
+        ...state,
+        posts: action.payload,
       };
     case ADD_POST:
       return {
         ...state,
         posts: [payload, ...state.posts],
-        loading: false
+        loading: false,
       };
     case DELETE_POST:
       return {
         ...state,
         posts: state.posts.filter((post) => post._id !== payload),
-        loading: false
+        loading: false,
       };
     case POST_ERROR:
       return {
         ...state,
         error: payload,
-        loading: false
+        loading: false,
       };
     case UPDATE_LIKES:
       return {
@@ -56,13 +68,13 @@ export const postReducer = (state = initialState, action) => {
         posts: state.posts.map((post) =>
           post._id === payload.id ? { ...post, likes: payload.likes } : post
         ),
-        loading: false
+        loading: false,
       };
     case ADD_COMMENT:
       return {
         ...state,
         post: { ...state.post, comments: payload },
-        loading: false
+        loading: false,
       };
     case REMOVE_COMMENT:
       return {
@@ -71,11 +83,11 @@ export const postReducer = (state = initialState, action) => {
           ...state.post,
           comments: state.post.comments.filter(
             (comment) => comment._id !== payload
-          )
+          ),
         },
-        loading: false
+        loading: false,
       };
     default:
       return state;
   }
-}
+};

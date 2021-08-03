@@ -4,6 +4,8 @@ import {
   GET_POSTS,
   POST_ERROR,
   UPDATE_LIKES,
+  GET_ALL_BLOG_BY_FOLLOWING,
+  GET_ALL_BLOG_BY_SINGLE_FOLLOWING_MANUFACTURER,
   DELETE_POST,
   ADD_POST,
   GET_POST,
@@ -164,6 +166,40 @@ export const deleteComment = (postId, commentId, token) => async (dispatch) => {
     dispatch({
       type: POST_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+//get all the blogs of all the manufacturer you are following
+export const allBlogsByfollowing = () => async (dispatch) => {
+  try {
+    const res = await api.get(`${API}/blog/following`);
+    dispatch({
+      type: GET_ALL_BLOG_BY_FOLLOWING,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: error,
+    });
+  }
+};
+
+
+//get all blogs for a single manufacturer you are following.
+
+export const allBlogsBySingleFollowing = (formdata) => async (dispatch) => {
+  try {
+    const res = await api.post(`${API}/blog/following/single`, formdata)
+    dispatch({
+      type:GET_ALL_BLOG_BY_SINGLE_FOLLOWING_MANUFACTURER,
+      payload:res.data
+    })
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: error,
     });
   }
 };

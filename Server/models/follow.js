@@ -7,6 +7,7 @@ const followingSchema = new mongoose.Schema(
     },
     manufacturerId: {
       type: mongoose.Schema.Types.ObjectId,
+      ref:"User"
     },
   },
   {

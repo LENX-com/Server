@@ -6,14 +6,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { BsChat, BsHeart } from "react-icons/bs";
 import { Link, useRouteMatch } from "react-router-dom";
-import { getPosts } from "../../actions/postAction";
+import {
+  allBlogsByfollowing,
+  allBlogsBySingleFollowing,
+} from "../../actions/postAction";
+import { getFollowing } from "../../actions/userActions";
 
 const Blog = () => {
   const dispatch = useDispatch();
   const blogs = useSelector((state) => state.post.posts);
+  const following = useSelector((state) => state.user.following);
   useEffect(() => {
-    dispatch(getPosts());
+    // dispatch(allBlogsByfollowing());
+
+    dispatch(getFollowing());
   }, [dispatch]);
+
   const match = useRouteMatch();
 
   const Blogs = () => {
@@ -31,23 +39,26 @@ const Blog = () => {
                       alt="content"
                     />
                     <h3 className="tracking-widest text-orange text-xs font-medium title-font">
-                      SUBTITLE
+                      {data.title}
                     </h3>
                     <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
-                      Chichen Itza
+                      {data.name}
                     </h2>
-                    <p className="leading-relaxed text-base">
-                      Fingerstache flexitarian street art 8-bit waistcoat.
-                      Distillery hexagon disrupt edison bulbche.
-                    </p>
+                    <p className="leading-relaxed text-base">{data.text}</p>
                     <div className="flex text-xl">
                       <div className="mr-4 flex">
                         <BsHeart className="mt-0.5" />
-                        <span className="text-base ml-1"> 22 </span>
+                        <span className="text-base ml-1">
+                          {" "}
+                          {data.comments.length}
+                        </span>
                       </div>
                       <div className="flex">
                         <BsChat className="mt-0.5" />
-                        <span className="text-base ml-1"> 3 </span>
+                        <span className="text-base ml-1">
+                          {" "}
+                          {data.likes.length}{" "}
+                        </span>
                       </div>
                     </div>
                   </Card>
@@ -60,16 +71,24 @@ const Blog = () => {
 
   const Manufacturers = () => (
     <>
-      {Data.map((data, i) => (
-        <Tab>
-          <div className="relative rounded flex justify-center items-center w-14">
-            <img
-              src="https://d33wubrfki0l68.cloudfront.net/fbcc8e7b98a6e0d1d16afc4eafceeb427a380273/95c82/assets/img/unlicensed/watch-1.png"
-              alt="random"
-            />
-          </div>
-        </Tab>
-      ))}
+      {!following.length
+        ? "You are not following anyone yet follow manufacturer to see their blog posts"
+        : following.map((data, i) => (
+            <Tab
+              onClick={() =>
+                dispatch(allBlogsBySingleFollowing({
+                  manufacturerId: data.manufacturerId._id,
+                }))
+              }
+            >
+              <div className="relative rounded flex justify-center items-center w-14">
+                <img
+                  src="https://d33wubrfki0l68.cloudfront.net/fbcc8e7b98a6e0d1d16afc4eafceeb427a380273/95c82/assets/img/unlicensed/watch-1.png"
+                  alt={`${data.manufacturerId.name} shop`}
+                />
+              </div>
+            </Tab>
+          ))}
     </>
   );
 
@@ -88,11 +107,14 @@ const Blog = () => {
             </TabList>
           </SwiperSlide>
         </Swiper>
+        {following.map(data => (
+          <TabPanel>{Blogs()}</TabPanel>
+        ))}
+      
 
-        <TabPanel>{Blogs()}</TabPanel>
-        <TabPanel>
+        {/* <TabPanel>
           <h2>Any content 2</h2>
-        </TabPanel>
+        </TabPanel> */}
       </Tabs>
     </div>
   );
