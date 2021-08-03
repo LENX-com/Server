@@ -17,8 +17,7 @@ const Blog = () => {
   const blogs = useSelector((state) => state.post.posts);
   const following = useSelector((state) => state.user.following);
   useEffect(() => {
-    // dispatch(allBlogsByfollowing());
-
+    dispatch(allBlogsByfollowing());
     dispatch(getFollowing());
   }, [dispatch]);
 
@@ -110,11 +109,6 @@ const Blog = () => {
         {following.map(data => (
           <TabPanel>{Blogs()}</TabPanel>
         ))}
-      
-
-        {/* <TabPanel>
-          <h2>Any content 2</h2>
-        </TabPanel> */}
       </Tabs>
     </div>
   );
