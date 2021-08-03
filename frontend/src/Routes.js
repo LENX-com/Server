@@ -1,5 +1,5 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import PrivateRoutes from "../src/auth/PrivateRoutes";
 import Dashboard from "./dashboard/Dashboard";
 import AdminRoute from "../src/auth/AdminRoute";
@@ -19,7 +19,6 @@ import Signin from './dashboard/components/user/Signin'
 import Blog from './components/Blog/Blog'
 import Blogs from './components/Blogs/Blogs'
 import Cart from "./marketplace/components/cart/Cart";
-
 
 function Routes() {
   return (
