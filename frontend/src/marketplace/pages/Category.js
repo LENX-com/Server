@@ -11,7 +11,9 @@ import "../components/shop/Shop.scss";
 import CategoryPop from '../components/category/CategoryPop'
 import PopularSearch from "../components/category/PopularSearch";
 import FilterDialogue from '../components/category/FilterDialogue'
+import CategoryBanner from '../components/banner/CategoryBanner'
 import Card from '../../components/Cards/Card'
+import PopularStores from '../../marketplace/components/home/PopularStores';
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -90,10 +92,10 @@ const Shop = () => {
 
   return (
     <div className="mx-auto max-w-[1920px]  md:px-8 2xl:px-16"> 
-      <div className="pb-16 lg:pb-20">
+      <div className="lg:pb-20">
         <div className="flex-shrink-0 pe-24 hidden lg:block w-96">
           <div className="position: sticky; top: 50px;">
-            <div className="bg-white m-5 block p-3.5 border-b border-gray-300 pb-7 mb-7">
+            <div className="bg-white m-5 block p-3.5  pb-7 mb-7">
               <h3 className="text-heading text-sm md:text-base font-semibold mb-7">
                 Filter by categories
               </h3>
@@ -136,13 +138,16 @@ const Shop = () => {
                 <ListBox />
               </div>  
             </div>
+          </div>
+          <div>
+            <CategoryBanner />
           </div>       
           <div className="my-2 flex">
             <div>
               <CategoryPop 
               categories= {category} />
             </div>
-            <div className="ml-auto">
+            <div className="ml-auto mr-2">
               <FilterDialogue 
                   prices={prices}
                   handleFilters={(filters) => handleFilters(filters, "price")} />
@@ -150,24 +155,23 @@ const Shop = () => {
           </div>
           <div>
              <PopularSearch />
-             <div className="text-lg my-2 px-2">
-                Category Name
-             </div>
           </div>
 
 
-          <Card className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-x-3 lg:gap-x-5 xl:gap-x-7 gap-y-3 xl:gap-y-5 2xl:gap-y-8">
+          <Card title="Category Name">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-x-3 lg:gap-x-5 xl:gap-x-7 gap-y-3 xl:gap-y-5 2xl:gap-y-8">
             {filteredResults.map((product, i) => (
               <div key={i}>
                 <CategoryProduct product={product} />
               </div>
             ))}  
+            </div>
           </Card>
-          <hr />
-          {loadMoreButton()}
         </div>
       </div>
+      <PopularStores />
     </div>
+     
   );
 };
 

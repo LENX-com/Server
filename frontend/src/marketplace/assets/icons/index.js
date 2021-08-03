@@ -4,6 +4,7 @@ import { ReactComponent as Chat } from './Chat.svg'
 import { ReactComponent as Environment } from './Environment.svg'
 import { ReactComponent as Filter } from './Filter.svg'
 import { ReactComponent as StartUp } from './StartUp.svg'
+import { ReactComponent as Cat } from './Cat.svg'
 
 export {
   Company,
@@ -11,5 +12,6 @@ export {
   Chat,
   Environment,
   Filter,
-  StartUp
+  StartUp,
+  Cat
 }

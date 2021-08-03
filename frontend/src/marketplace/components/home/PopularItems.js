@@ -28,24 +28,25 @@ const PopularItems = () => {
     return (
         <Card title="Popular Products">  
             { PopularProducts.map((data)=> (
-                <div className="my-3 flex items-center lg:w-3/5 mx-auto sm:flex-row shadow-button rounded-md p-1 bg-white">
-                    <div className=" bg-contain bg-center h-36 w-36 bg-no-repeat " style= {{background: `url("${data.photo}")`}}>
-                    </div>
-                    <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0 mb-3">
-                        <h2 className="text-gray-900 text-lg title-font font-medium mb-2"> { data.name } </h2>
-                            <Link to="">
-                                <Button className= "bg-Blue text-white">
-                                    Source now
-                                </Button>
-                            </Link>
-                    </div>
-                </div>
-            ))}
-            <div className="flex">
                 <Link to="">
+                    <div className="my-3 flex items-center lg:w-3/5 mx-auto sm:flex-row shadow-separator p-1 bg-white">
+                        <div className=" bg-contain bg-center h-24 w-24 bg-no-repeat " style= {{background: `url("${data.photo}")`}}>
+                        </div>
+                        <div className="flex-grow sm:text-left text-center my-auto">
+                            <h2 className="text-gray-900 text-base title-font font-medium mb-2"> { data.name } </h2>
+                            <h2 className="text-gray-900 text-lg title-font font-medium mb-2"> £ 99 </h2>
+                            <div className="free-delivery">
+                                Free delivery
+                            </div>
+                        </div>
+                    </div>
+                </Link>
+            ))}
+            <div className="flex justify-between">
+                <Link to="" className=" text-Blue ">
                     Source More 
                 </Link>
-                <AiOutlineRight className="ml-2 my-auto"/>            
+                <AiOutlineRight className="ml-2 my-auto text-Blue"/>            
             </div>
         </Card>
     )

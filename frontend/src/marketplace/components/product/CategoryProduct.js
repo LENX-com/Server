@@ -3,8 +3,7 @@ import { Link, Redirect, useRouteMatch } from "react-router-dom";
 import { addItem, updateItem, removeItem } from "../cart/CartHelper";
 import { addWishList } from "../../../actions/wishlistAction";
 import { useDispatch } from "react-redux";
-import Rating from 'react-rating'
-import { MdStarBorder, MdStar, MdShoppingCart, MdFavoriteBorder} from 'react-icons/md'
+import { AiFillStar } from 'react-icons/ai'
 
 
 
@@ -113,16 +112,25 @@ const ProductCard = ({
 
 
   return (
-    <Link to = {`products/${product._id}`}>
-      <div>
+    <Link to = {`/marketplace/products/${product._id}`}>
+      <div className="shadow-product rounded-md ">
           <div className="relative rounded-md bg-cover bg-center h-36" style= {{background: `url("https://i.etsystatic.com/9524040/c/1257/999/360/1779/il/7a575e/2221507815/il_340x270.2221507815_hzle.jpg")`}}>
             <div className="absolute top-2 right-2">
                 <Like className="text-2xl text-white" />
             </div>
           </div>
-          <div>
+          <div className="p-2">
             <h1 className="truncate"> {product.name} </h1>
             <h3> £ {product.price} </h3>
+            <div className="free-delivery">
+                Free delivery
+            </div>
+            <div className="flex">
+              <AiFillStar className="text-orange text-sm mr-1" />
+              <div className="text-xs">
+                4.9
+              </div>
+            </div>
           </div>
       </div>
     </Link>

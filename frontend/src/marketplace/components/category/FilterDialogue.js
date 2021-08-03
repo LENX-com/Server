@@ -3,7 +3,6 @@ import { useState, Fragment } from 'react'
 import { Filter as FilterIcon } from '../../assets/icons'
 import RadioBox from "../shop/RadioBox";
 import { AiOutlineClose } from 'react-icons/ai'
-import SortByTag from '../category/SortByTag'
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 const FilterDialogue =({prices, handleFilters}) => {
@@ -94,7 +93,7 @@ const FilterDialogue =({prices, handleFilters}) => {
         <button
           type="button"
           onClick={openModal}
-          className="px-4 py-2 text-sm font-medium text-white bg-lightBlack shadow-button rounded-md  hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+          className="px-4 py-2 text-sm font-medium text-white bg-lightBlack rounded-md hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         >
           <FilterIcon />
         </button>
@@ -137,7 +136,7 @@ const FilterDialogue =({prices, handleFilters}) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-md overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-t-xl">
+              <div className="inline-block w-full max-w-md overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl ">
                 <Dialog.Title
                   as="div"
                   className="border-b-2 border-Grey border-solid"
@@ -156,14 +155,6 @@ const FilterDialogue =({prices, handleFilters}) => {
                         prices={prices}
                         handleFilters={handleFilters}
                     />
-                </div>
-
-
-                <div className="my-4 border-t-2 border-Grey border-solid">
-                  <div> Sort by tag </div>
-                    <div className="grid grid-cols-2 gap-4 mt-2 text-center">
-                        <SortByTag />
-                    </div>
                 </div>
 
                 <div className="my-4 border-t-2 border-Grey border-solid">

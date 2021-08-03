@@ -1,9 +1,9 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SectionTitle from '../../../components/Typography/SectionTitle'
 import { Link } from 'react-router-dom'
 import Card from '../../../components/Cards/Card'
 import { AiOutlineRight } from 'react-icons/ai'
+import Button from '../../../components/Buttons/Button'
 
 const brands = [
     {
@@ -25,18 +25,16 @@ const PopularStores = () => {
         <Card className="my-3">
             <div className="flex justify-between">
                 <div>
-                    <SectionTitle> Popular stores </SectionTitle>
+                    <h2 className="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"> Popular Stores</h2>
                 </div>
-               <div className="flex mt-2">
-                    <Link to="/marketplace/stores" className="text-base text-center ml-2">
-                        See all
+                <div>
+                    <Link to="/marketplace/stores" className="text-base text-Blue">
+                        See All
                     </Link>
-                    <AiOutlineRight className="my-auto ml-1" />
-            </div>
-
+                </div>
             </div>
             <Swiper
-                spaceBetween={20}
+                spaceBetween={0}
                 slidesPerView={1}
                 freeMode= { true }
             >
@@ -51,8 +49,13 @@ const PopularStores = () => {
                                 <div className="mt-3 px-2 text-center">
                                 <h2 className="mt-2 text-base font-bold"> { brand.name } </h2>
                                 </div>
+                                <div className="mx-auto grid mt-2 text-center w-2/5">
+                                    <Link to = "marketplace/manufacturer/60f86fa8fe531bd3007e0c6b">
+                                        <Button className="bg-Black text-white rounded-full text-xs"> Shop now </Button>
+                                    </Link>
+                                </div>
                                 <div className="Center w-full">
-                                    <div className="bg-cover bg-center h-16 w-16 rounded-sm bg-white m-auto" style= {{backgroundImage: "url(https://http2.mlstatic.com/D_Q_NP_871989-MLA25801430807_072017-T.webp)"}}/>
+                                    <div className="bg-cover bg-center h-16 w-16 rounded-sm bg-white m-auto shadow-product" style= {{backgroundImage: "url(https://http2.mlstatic.com/D_Q_NP_871989-MLA25801430807_072017-T.webp)"}}/>
                                 </div>
                         </article>
                     </SwiperSlide>

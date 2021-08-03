@@ -10,15 +10,21 @@ import LinkToProducts from '../../marketplace/components/home/LinkToProducts';
 import BannerBotom from '../../marketplace/components/home/BannerBottom'
 import Header from '../../marketplace/components/header/Header'
 import Footer from '../../marketplace/components/footer/Footer'
-import { getCategories } from '../../actions/marketplace'
+import { getCategories, getProducts } from '../../actions/marketplace'
 
 const Home = () => {
     
     const [ categories, setCategories ] = useState();
+    const [ products, setProducts ] = useState();
 
     useEffect(() => {
+        
         getCategories().then( data => {
            setCategories(data) })
+        
+         getProducts().then( data => {
+           setProducts(data) })
+        
     }, [])
 
     return ( 
@@ -27,15 +33,15 @@ const Home = () => {
 
                     <Banner />
 
-                    <NameSlider categories = { categories } />
+                    <PopularItems />  
 
                     <LinkFeatures />  
 
-                    <PopularItems />  
+                    <NameSlider categories = { categories } />
                 
                     <PopularStores />  
 
-                    <LinkToProducts categories = {categories} />
+                    <LinkToProducts categories = {categories} products = {products} />
 
                     <BannerBotom /> 
 

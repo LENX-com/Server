@@ -76,7 +76,7 @@ export default function Cart(props) {
     ? Number(props.location.search.split("=")[1])
     : 1;
 
-  const checkoutHandler = () => {
+  const checkoutHandler = () => {  
     props.history.push("/signin?redirect=shipping");
   };
 

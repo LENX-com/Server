@@ -14,19 +14,11 @@ import UpdateProduct from "./admin/UpdateProduct";
 import MarketPlace from "./marketplace/MarketPlace";
 import ForgotPassword from "./pages/password/ForgotPassword";
 import ResetPassword from "./pages/password/ResetPassword";
-<<<<<<< HEAD
 import Home from './pages/home/Home'
 import Signin from './dashboard/components/user/Signin'
 import Blog from './components/Blog/Blog'
 import Blogs from './components/Blogs/Blogs'
-||||||| 942a279
-import Home from './pages/home/Home'
-import Signin from './dashboard/components/user/Signin'
-=======
-import Home from "./pages/home/Home";
-import Signin from "./dashboard/components/user/Signin";
 import Cart from "./marketplace/components/cart/Cart";
->>>>>>> e4917cbb9d552960a905005267df8ca00a8c8612
 
 function Routes() {
   return (

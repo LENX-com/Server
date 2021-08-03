@@ -3,6 +3,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 const PopularSearch = () => {
 
+  const [ menu, setMenu ] = useState();
+
     const popular = [
         { name: 'Flowers',
           link: ""
@@ -34,9 +36,9 @@ const PopularSearch = () => {
                 className="search "
                 freeMode = { true }
                 >
-            {popular?.map((data) => (
-            <SwiperSlide className=" bg-white px-2 py-1 m-2 ">
-                <div>
+            {popular?.map((data, i) => (
+            <SwiperSlide className= {` ${ menu === i ? "bg-orange shadow-none text-white" : ""} bg-white px-2 py-1 m-2 shadow-product`}>
+                <div onClick = {(() => setMenu(i))}>
                     <div className="text-sm mx-1 whitespace-nowrap">
                         <h2>
                             { data.name }

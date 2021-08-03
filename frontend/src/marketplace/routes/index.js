@@ -5,8 +5,10 @@ const Categories = lazy(() => import('../pages/Categories'))
 const Category = lazy(() => import('../pages/Category'))
 const Product = lazy(() => import('../pages/Product'))
 const ProductReview = lazy(() => import('../pages/ProductReview'))
+const Stores = lazy(() => import('../pages/Stores'))
 const Manufacturer = lazy(() => import('../pages/Manufacturer'))
 const Blog = lazy(() => import('../../components/Blog/Blog'))
+
 
 
 const routes = 
@@ -20,7 +22,7 @@ const routes =
     component: Category, 
   },
   {
-    path: `${address}/category/products/:productId`, 
+    path: `${address}/products/:productId`, 
     component: Product, 
   },
   {
@@ -34,6 +36,10 @@ const routes =
   {
     path: `${address}/manufacturer/:BlogId`, 
     component: Blog, 
+  },
+  {
+    path: `${address}/stores`, 
+    component: Stores, 
   }
 ]
 
