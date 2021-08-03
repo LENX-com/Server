@@ -49,14 +49,14 @@ const Blog = () => {
                         <BsHeart className="mt-0.5" />
                         <span className="text-base ml-1">
                           {" "}
-                          {data.comments.length}
+                          {data.likes.length}
                         </span>
                       </div>
                       <div className="flex">
                         <BsChat className="mt-0.5" />
                         <span className="text-base ml-1">
                           {" "}
-                          {data.likes.length}{" "}
+                          {data.comments.length}{" "}
                         </span>
                       </div>
                     </div>

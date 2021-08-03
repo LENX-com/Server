@@ -21,7 +21,7 @@ const OrderItem = () => {
       {!order.length
         ? "No orders"
         : order.map((data, i) => (
-            <NavLink to="/user/dashboard/faq">
+            <NavLink to="/user/dashboard/faq" key={i}>
               <div className="flex ml-2 justify-between hover:bg-Hover">
                 <div className="h-20 rounded flex items-center justify-center">
                   <div className="w-16 h-16">
@@ -34,7 +34,7 @@ const OrderItem = () => {
                 </div>
                 <div className="my-auto">Order Name</div>
                 <div className="my-auto">
-                  <Badge type="success">success</Badge>
+                  <Badge type="success">{data.status}</Badge>
                 </div>
                 <div className="my-auto">
                   <HiChevronRight className="w-4 h-4 mr-3" aria-hidden="true" />

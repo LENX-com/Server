@@ -126,13 +126,9 @@ export const getPost = (id) => async (dispatch) => {
 };
 
 // Add comment
-export const addComment = (postId, formData, token) => async (dispatch) => {
+export const addComment = (postId, formData) => async (dispatch) => {
   try {
-    const res = await axios.post(`${API}/blog/comment/${postId}`, formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await api.post(`${API}/blog/comment/${postId}`, formData);
     dispatch({
       type: ADD_COMMENT,
       payload: res.data,
