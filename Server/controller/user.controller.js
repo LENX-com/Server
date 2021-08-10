@@ -16,7 +16,7 @@ exports.getUserById = async (req, res) => {
   const user = await User.findById(req.params.userId)
     .populate({ path: "wishlists", populate: { path: "productId" } })
     .populate("order")
-    .populate("profile")
+    .populate("manufacturer")
     .populate("story")
     .populate("blogs")
     .populate("reviews")

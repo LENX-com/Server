@@ -1,4 +1,6 @@
-const Product = require("../models/profile");
+const { check, validationResult } = require("express-validator/check");
+
+
 const Market = require("../models/marketplace");
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
@@ -81,7 +83,7 @@ exports.read = async (req, res) => {
   try {
     if (!market.length) {
       return res.status(400).json({
-        error: "no market place created yet create one anan try again",
+        error: "no market place created yet create one and try again",
       });
     }
     return res.status(200).json({ data: market });

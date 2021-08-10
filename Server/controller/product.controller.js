@@ -2,6 +2,7 @@ const formidable = require("formidable");
 const _ = require("lodash");
 const fs = require("fs");
 const Product = require("../models/product");
+const { User } = require("../models/user");
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -9,6 +10,8 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 const { errorHandler } = require("../helpers/dbErrorHandler");
+const slugify = require("slugify");
+const { check, validationResult } = require("express-validator/check");
 
 //create a product route accessible by only manufacturer(role 1) and add category from req.body.category
 exports.createProduct = async (req, res) => {
@@ -17,11 +20,12 @@ exports.createProduct = async (req, res) => {
   console.log(req.file);
   try {
     if (!file) throw new Error("Enter a valid file");
-    const result = await cloudinary.uploader.upload(req.file.path, {
+    const result = await cloudinary.uploader.upload(req.file.path, {  
       resource_type: "auto",
     });
 
     const { ...args } = req.body;
+    args.slug = slugify(req.body.name);
     args.author = req.user._id;
     args.photo = result.secure_url;
     args.photoId = result.public_id;
@@ -38,7 +42,7 @@ exports.createProduct = async (req, res) => {
 //edit a product
 exports.editProduct = async (req, res) => {
   const file = req.file;
-  console.log(req.file);
+  console.log(req.file);   
   try {
     const product = await Product.findById(req.params.productId);
     if (!product) {
@@ -90,11 +94,11 @@ exports.getProductById = async (req, res) => {
 //get product by its category
 exports.getProductByCategory = async (req, res) => {
   try {
-    console.log(req.body);
-    const product = await Product.find({
-      category: req.body.categoryId,
+    console.log(req.body);  
+    const product = await Product.find({  
+      category: req.params.categoryId,
     }).populate("category", "_id name");
-    return res.status(200).json({ data: product });
+    return res.status(200).json(product );
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error });
@@ -122,6 +126,36 @@ exports.getProductByBrand = async (req, res) => {
     return res.status(500).json({ error: error });
   }
 };
+
+//write review for product
+exports.productReview =  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }  
+
+    try {
+      const user = await User.findById(req.user._id).select("-password");
+      const product = await Product.findById(req.params.id);
+
+      const newComment = {
+        title: req.body.title,
+        text: req.body.text,
+        name: user.name,
+        avatar: user.avatar,
+        user: req.user.id,
+      };
+
+      product.comments.unshift(newComment);
+
+      await product.save();
+
+      res.json(product.comments);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+  }
 
 //****************************************old implementation **************************************************** */
 exports.productById = (req, res, next, id) => {
@@ -209,7 +243,7 @@ exports.list = (req, res) => {
     .exec((err, products) => {
       if (err) {
         return res.status(400).json({
-          error: "Products not found",
+          error: "Products not found",  
         });
       }
       res.json(products);
@@ -348,4 +382,181 @@ exports.decreaseQuantity = (req, res, next) => {
     }
     next();
   });
+};
+
+// SERACH / FILTER
+
+const handleQuery = async (req, res, query) => {
+  const products = await Product.find({ $text: { $search: query } })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+
+const handlePrice = async (req, res, price, category) => {
+  try {
+    let products = await Product.find({
+      price: {
+        $gte: price[0],
+        $lte: price[1],
+      }
+    }, {category})
+      .populate("category", "_id name")
+      .populate("subs", "_id name")
+      .populate("postedBy", "_id name")
+      .exec();
+
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const handleCategory = async (req, res, category) => {
+  try {
+    let products = await Product.find({ category })
+      .populate("category", "_id name")
+      .populate("subs", "_id name")
+      .populate("postedBy", "_id name")
+      .exec();
+
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const handleStar = (req, res, stars) => {
+  Product.aggregate([
+    {
+      $project: {
+        document: "$$ROOT",
+        // title: "$title",
+        floorAverage: {
+          $floor: { $avg: "$ratings.star" }, // floor value of 3.33 will be 3
+        },
+      },
+    },
+    { $match: { floorAverage: stars } },
+  ])
+    .limit(12)
+    .exec((err, aggregates) => {
+      if (err) console.log("AGGREGATE ERROR", err);
+      Product.find({ _id: aggregates })
+        .populate("category", "_id name")
+        .populate("subs", "_id name")
+        .populate("postedBy", "_id name")
+        .exec((err, products) => {
+          if (err) console.log("PRODUCT AGGREGATE ERROR", err);
+          res.json(products);
+        });
+    });
+};
+
+const handleSub = async (req, res, sub) => {
+  const products = await Product.find({ subs: sub })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+
+const handleShipping = async (req, res, shipping) => {
+  const products = await Product.find({ shipping })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+
+const handleColor = async (req, res, color) => {
+  const products = await Product.find({ color })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+
+const handleBrand = async (req, res, brand) => {
+  const products = await Product.find({ brand })
+    .populate("category", "_id name")
+    .populate("subs", "_id name")
+    .populate("postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+
+exports.searchFilters = async (req, res) => {
+  const {
+    query,
+    price,
+    category,
+    stars,
+    sub,
+    shipping,
+    color,
+    brand,
+  } = req.body;
+
+  if (query) {
+    console.log("query --->", query);
+    await handleQuery(req, res, query);
+  }
+
+  // price [20, 200]
+  if (price !== undefined) {
+    console.log("price ---> ", price);
+    await handlePrice(req, res, price);
+  }
+
+  if (category) {
+    console.log("category ---> ", category);
+    await handleCategory(req, res, category);
+  }
+
+  if (stars) {
+    console.log("stars ---> ", stars);
+    await handleStar(req, res, stars);
+  }
+
+  if (sub) {
+    console.log("sub ---> ", sub);
+    await handleSub(req, res, sub);
+  }
+
+  if (shipping) {
+    console.log("shipping ---> ", shipping);
+    await handleShipping(req, res, shipping);
+  }
+
+  if (color) {
+    console.log("color ---> ", color);
+    await handleColor(req, res, color);
+  }
+
+  if (brand) {
+    console.log("brand ---> ", brand);
+    await handleBrand(req, res, brand);
+  }
+};
+
+
+exports.listAll = async (req, res) => {
+  let products = await Product.find({})
+    .limit(parseInt(req.params.count))
+    .populate("category")
+    .populate("subs")
+    .sort([["createdAt", "desc"]])
+    .exec();
+  res.json(products);
 };

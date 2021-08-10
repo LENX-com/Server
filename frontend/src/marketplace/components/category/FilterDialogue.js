@@ -1,11 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { useState, Fragment } from 'react'
 import { Filter as FilterIcon } from '../../assets/icons'
-import RadioBox from "../shop/RadioBox";
 import { AiOutlineClose } from 'react-icons/ai'
 import { Swiper, SwiperSlide } from 'swiper/react';
+import ReactSlider from "react-slider"
 
-const FilterDialogue =({prices, handleFilters}) => {
+const FilterDialogue =({price, handleSlider}) => {
   let [isOpen, setIsOpen] = useState(false)
   const [ currentStore, setCurrentStore ] = useState(false)
   const [ currentFilter, setCurrentFilter ] = useState(false)
@@ -151,10 +151,16 @@ const FilterDialogue =({prices, handleFilters}) => {
                 <div className="p-6">
                 <div className="mt-2">
                   <div> Sort by price </div>
-                    <RadioBox
-                        prices={prices}
-                        handleFilters={handleFilters}
-                    />
+                    	<ReactSlider
+                      step={1}
+                      min={1}
+                      max={200}
+                      className="w-full h-3 pr-2 my-4 bg-gray-200 rounded-md cursor-grab"
+                      thumbClassName="absolute w-5 h-5 cursor-grab bg-orange rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:orange -top-2px"
+                      value={price}
+                      onChange={handleSlider}
+                      />
+                      <span> £ {` ${price[0]} ${"to"} ${price[1]}`}</span>
                 </div>
 
                 <div className="my-4 border-t-2 border-Grey border-solid">

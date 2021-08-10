@@ -8,7 +8,7 @@ const RadioBox = ({ prices, handleFilters }) => {
         setValue(event.target.value);
     };
 
-    return prices.map((p, i) => (
+    return prices?.map((p, i) => (
     <label className="flex justify-start items-start">
         <div className="bg-white border-2 rounded border-gray-400 w-6 h-6 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-blue-500">
           <input 

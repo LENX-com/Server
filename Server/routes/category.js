@@ -12,6 +12,7 @@ const {
   update,
   remove,
   list,
+  getSubs
 } = require("../controller/category.controller");
 const {
   requireSignin,  
@@ -20,7 +21,7 @@ const {
 } = require("../controller/auth.controller");
 const { userById } = require("../controller/user.controller");
 
-router.get("categor/:categoryId", read);
+router.get("category/:categoryId", read);
 router.post("/create/:userId", requireSignin, isAuth, isAdmin, create);
 router.put("/:categoryId/:userId", requireSignin, isAuth, isAdmin, update);
 router.delete(
@@ -39,6 +40,7 @@ router.param("userId", userById);
 router.post("/category/create", auth, protected(1), createCategory);
 router.get("/categories", allCategories);
 router.get("/category/:categoryId", getCategoryById);
+router.get("/category/subs/:_id", getSubs);
 //routes for brand
 router.post("/brands/create", auth, createBrand);
 

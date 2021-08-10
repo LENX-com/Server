@@ -1,34 +1,11 @@
-import React from 'react'
+import React,{ useState} from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-const PopularSearch = () => {
+const PopularSearch = ({subCategory}) => {
 
   const [ menu, setMenu ] = useState();
 
-    const popular = [
-        { name: 'Flowers',
-          link: ""
-        },
-        { name: ' Water ',
-          link: ""
-        },
-        { name: ' Lemons ',
-          link: ""
-        },
-        { name: ' Coffee ',
-          link: ""
-        },
-        { name: ' Water ',
-          link: ""
-        },
-        { name: ' Juices ',
-          link: ""
-        }
-    ]
-
-
-    
-    return (
+     return (
         <div>
             <Swiper
                 spaceBetween={20}
@@ -36,7 +13,7 @@ const PopularSearch = () => {
                 className="search "
                 freeMode = { true }
                 >
-            {popular?.map((data, i) => (
+            {subCategory?.map((data, i) => (
             <SwiperSlide className= {` ${ menu === i ? "bg-orange shadow-none text-white" : ""} bg-white px-2 py-1 m-2 shadow-product`}>
                 <div onClick = {(() => setMenu(i))}>
                     <div className="text-sm mx-1 whitespace-nowrap">

@@ -15,7 +15,7 @@ export const followManufacturer = (formdata) => async (dispatch) => {
         type: FOLLOW_ERROR,
       });
     }
-  };
+  };  
   //get all people you are following
   export const getFollowing = () => async (dispatch) => {
     try {

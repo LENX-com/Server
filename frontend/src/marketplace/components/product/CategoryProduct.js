@@ -114,7 +114,7 @@ const ProductCard = ({
   return (
     <Link to = {`/marketplace/products/${product._id}`}>
       <div className="shadow-product rounded-md ">
-          <div className="relative rounded-md bg-cover bg-center h-36" style= {{background: `url("https://i.etsystatic.com/9524040/c/1257/999/360/1779/il/7a575e/2221507815/il_340x270.2221507815_hzle.jpg")`}}>
+          <div className="relative rounded-md bg-cover bg-center h-36" style= {{background: `url("${product.photo}")`}}>
             <div className="absolute top-2 right-2">
                 <Like className="text-2xl text-white" />
             </div>

@@ -193,7 +193,7 @@ router.post(
       const user = await User.findById(req.user._id).select("-password");
       const blog = await Blog.findById(req.params.id);
 
-      const newComment = {
+      const newComment = {  
         text: req.body.text,
         name: user.name,
         avatar: user.avatar,

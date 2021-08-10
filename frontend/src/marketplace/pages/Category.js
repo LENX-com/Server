@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import CategoryProduct from '../components/product/CategoryProduct'
 import { getFilteredProducts } from "../components/ApiCore";
-import { getCategories } from "../../actions/categoryAction";
+import { getCategories} from "../../actions/categoryAction";
+import {  fetchProductsByFilter, getProductsByCount, getProductByCategory } from "../../actions/productAction";
+import { getSubs, getSubByCategory } from "../../actions/subCategoryAction";
 import { useDispatch, useSelector } from "react-redux";
-import Checkbox from "../components/checkbox/Checkbox";
-import RadioBox from "../components/shop/RadioBox";
-import { prices } from "../components/shop/FixedPrices";
-import ListBox from "../components/shop/ListBox";
 import "../components/shop/Shop.scss";
 import CategoryPop from '../components/category/CategoryPop'
 import PopularSearch from "../components/category/PopularSearch";
@@ -14,168 +12,297 @@ import FilterDialogue from '../components/category/FilterDialogue'
 import CategoryBanner from '../components/banner/CategoryBanner'
 import Card from '../../components/Cards/Card'
 import PopularStores from '../../marketplace/components/home/PopularStores';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { NoProduct } from '../assets/icons'
 
-const Shop = () => {
+
+  function shuffleArray(array) {
+  let i = array?.length - 1;
+  for (; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+}
+
+const Shop = (props) => {
   const dispatch = useDispatch();
-  const category = useSelector((state) => state.category.categories);
+  const categories = useSelector((state) => state.category.categories);
+  const {productsByCategory} = useSelector((state) => state.product);
+
   const [myFilters, setMyFilters] = useState({
     filters: { category: [], price: [] },
   });
-  const [error, setError] = useState(false);
-  const [limit, setLimit] = useState(6);
-  const [skip, setSkip] = useState(0);
-  const [size, setSize] = useState(0);
-  const [filteredResults, setFilteredResults] = useState([]);
+  const [ menu, setMenu ] = useState("")
+   const [products, setProducts] = useState(productsByCategory);
+  const [loading, setLoading] = useState(false);
+  const [price, setPrice] = useState([1, 200]);
+  const [ok, setOk] = useState(false);
+  const [star, setStar] = useState("");
+  const [subs, setSubs] = useState([]);
+  const [sub, setSub] = useState("");
+  const [brands, setBrands] = useState([
+    "Apple",
+    "Samsung",
+    "Microsoft",
+    "Lenovo",
+    "ASUS",
+  ]);
+  const [brand, setBrand] = useState("");
+  const [colors, setColors] = useState([
+    "Black",
+    "Brown",
+    "Silver",
+    "White",
+    "Blue",
+  ]);
+  const [ category, setCategory ] = useState(false);
+  const [ categoryName, setCategoryName ] = useState("")
+  const [color, setColor] = useState("");
+  const [shipping, setShipping] = useState("");
 
-  const loadFilteredResults = (newFilters) => {
-    // console.log(newFilters);
-    getFilteredProducts(skip, limit, newFilters).then((data) => {
-      if (data.error) {
-        setError(data.error);
-      } else {
-        setFilteredResults(data.data);
-        setSize(data.size);
-        setSkip(0);
-      }
-    });
-  };
-
-  const loadMore = () => {
-    let toSkip = skip + limit;
-    // console.log(newFilters);
-    getFilteredProducts(toSkip, limit, myFilters.filters).then((data) => {
-      if (data.error) {
-        setError(data.error);
-      } else {
-        setFilteredResults([...filteredResults, ...data.data]);
-        setSize(data.size);
-        setSkip(toSkip);
-      }
-    });
-  };
-
-  const loadMoreButton = () => {
-    return (
-      size > 0 && size >= limit && <button onClick={loadMore}>Load more</button>
-    );
-  };
+ let { search } = useSelector((state) => ({ ...state }));
+  const { text } = search;
 
   useEffect(() => {
-    dispatch(getCategories());
-    loadFilteredResults(skip, limit, myFilters.filters);
-  }, []);
+    // fetch categories
+    dispatch(getProductByCategory(props.match.params.categoryId));
+     dispatch(getCategories());
+     setCategory(props.match.params.categoryId)
+     // fetch subcategories
+    }, []);
+    
+    
+  useEffect(() => {
+    // fetch categories
+     setProducts(productsByCategory);
+     // fetch subcategories
+    }, [productsByCategory]);
+    
 
-  const handleFilters = (filters, filterBy) => {
-    // console.log("SHOP", filters, filterBy);
-    const newFilters = { ...myFilters };
-    newFilters.filters[filterBy] = filters;
-
-    if (filterBy === "price") {
-      let priceValues = handlePrice(filters);
-      newFilters.filters[filterBy] = priceValues;
-    }
-    loadFilteredResults(myFilters.filters);
-    setMyFilters(newFilters);
-  };
-
-  const handlePrice = (value) => {
-    const data = prices;
-    let array = [];
-
-    for (let key in data) {
-      if (data[key]._id === parseInt(value)) {
-        array = data[key].array;
+    useEffect(() => {
+      if(category) {
+    getSubByCategory(category).then((res) => setSubs(res.data));
+    fetchProducts({ category });
       }
-    }
-    return array;
+  }, [category]);
+
+  const fetchProducts = (arg) => {
+    fetchProductsByFilter(arg).then((res) => {
+      setProducts(res.data);
+    });
   };
+
+  console.log(categories)
+
+  // 3. load products based on price range
+  useEffect(() => {
+    console.log("ok to request");
+    fetchProducts({ price });
+  }, [ok]);
+
+  // this filters by price
+    const handleSlider = (value) => {
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+
+    // reset
+    setPrice(value);
+    setStar("");
+    setSub("");
+    setBrand("");
+    setColor("");
+    setShipping("");
+    setTimeout(() => {
+      setOk(!ok);
+    }, 300);
+  };
+
+
+  // handle check for categories
+  const handleCheck = (e) => {
+    // reset
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([1, 200]);
+    setStar("");
+    setSub("");
+    setBrand("");
+    setColor("");
+    setShipping("");
+    // console.log(e.target.value);
+    // console.log(inTheState);
+  };
+
+  console.log(price)
+
+  // 5. show products by star rating
+  const handleStarClick = (num) => {
+    // console.log(num);
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setStar(num);
+    setSub("");
+    setBrand("");
+    setColor("");
+    setShipping("");
+    fetchProducts({ stars: num });
+  };
+
+    const ShowSubs = () => (
+          <div>
+              <Swiper
+              spaceBetween={20}
+                  slidesPerView={4}
+                  className="search "
+                  freeMode = { true }
+                  >
+              {subs && subs.map((data, i) => (
+              <SwiperSlide key={data._id}>
+                  <div onClick={() => handleSub(data, i)} className= {`${ menu === data.name ? "bg-orange text-white " : "bg-white text-Black"} text-sm mx-1 whitespace-nowrap px-2 py-1 m-2 shadow-product rounded-md`}>
+                    { data.name }
+                  </div>
+              </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+    );
+
+  const handleSub = (sub, i) => {
+    // console.log("SUB", sub);
+    setSub(sub);
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setMenu(sub.name)
+    setStar("");
+    setBrand("");
+    setColor("");
+    setShipping("");
+    fetchProducts({ sub });
+  };
+
+  // 7. show products based on brand name
+  const showBrands = () =>
+    brands.map((b) => (
+      <input
+        type ="radio"
+        key={b}
+        value={b}
+        name={b}
+        checked={b === brand}
+        onChange={handleBrand}
+        className="pb-1 pl-4 pr-4"
+      />
+    ));
+
+  const handleBrand = (e) => {
+    setSub("");
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setStar("");
+    setColor("");
+    setBrand(e.target.value);
+    setShipping("");
+    fetchProducts({ brand: e.target.value });
+  };
+
+
+  const CategoryMap = () => (
+      <>
+        {categories?.map((item) => (
+           <div
+             key={item.name}
+             onClick = { () => handleCategory(item)}
+             className="rounded-md items-center shadow-button p-2 -m-3 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+            >
+              <input type="hidden"
+              onChange={handleCheck}
+              className="pb-2 pl-4 pr-4"  
+              value={item._id}
+              name="category"
+              />
+              <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 text-orange-light sm:h-12 sm:w-12 text-2xl text-center m-auto">
+              </div>
+              <div className="text-center">
+                  <p className="text-sm font-medium text-gray-900">
+                    {item.name}
+                  </p>
+              </div>
+            </div>
+            ))}
+      </>
+  )
+
+  const handleCategory = (item) => {
+    setCategory(item._id);
+    setCategoryName(item.name);
+  }
+
+  const noProductsFound = () => (
+    <div className="my-2">
+      <div className="mx-auto text-center">
+        <NoProduct className="mx-auto"/>
+      </div>
+      <div className="my-3 text-lg text-center">
+        No Products Found
+      </div>
+    </div>
+  )
+
 
   return (
-    <div className="mx-auto max-w-[1920px]  md:px-8 2xl:px-16"> 
-      <div className="lg:pb-20">
-        <div className="flex-shrink-0 pe-24 hidden lg:block w-96">
-          <div className="position: sticky; top: 50px;">
-            <div className="bg-white m-5 block p-3.5  pb-7 mb-7">
-              <h3 className="text-heading text-sm md:text-base font-semibold mb-7">
-                Filter by categories
-              </h3>
-              <div className="mt-2 flex flex-col space-y-4>">
-                <ul>
-                  <Checkbox
-                    categories={category}
-                    handleFilters={(filters) =>
-                      handleFilters(filters, "category")
-                    }
-                  />
-                </ul>
-              </div>
-            </div>
 
-            <div className="bg-white m-5 p-3.5 block border-b border-gray-300 pb-7 mb-7">
-              <h3 className="text-heading text-sm md:text-base font-semibold mb-7">
-                Filter by price range
-              </h3>
-              <div className="mt-2 flex flex-col space-y-4>">
-                <RadioBox
-                  prices={prices}
-                  handleFilters={(filters) => handleFilters(filters, "price")}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-full lg:-ms-9">
-          <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold text-heading hidden lg:inline-flex pb-1">
-              Products
-            </h2>
-            <div className="flex items-center justify-end">
-              <div className="flex-shrink-0 text-body text-xs md:text-sm leading-4 pe-4 md:me-6 ps-2 hidden lg:block">
-                75 items
-              </div>
-              <div className="flex-shrink-0 text-body text-xs md:text-sm leading-4 pe-4 md:me-6 ps-2 hidden lg:block">
-                <ListBox />
-              </div>  
-            </div>
-          </div>
-          <div>
+      <div>
+        <div>
             <CategoryBanner />
-          </div>       
-          <div className="my-2 flex">
-            <div>
-              <CategoryPop 
-              categories= {category} />
-            </div>
-            <div className="ml-auto mr-2">
-              <FilterDialogue 
-                  prices={prices}
-                  handleFilters={(filters) => handleFilters(filters, "price")} />
-            </div>
-          </div>
+        </div>       
+        <div className="my-2 flex">
           <div>
-             <PopularSearch />
+            <CategoryPop>
+              <CategoryMap /> 
+            </CategoryPop>
+          </div>
+          <div className="ml-auto mr-2">
+            <FilterDialogue 
+                price ={price}
+                handleSlider={handleSlider } />
+          </div>
+        </div>
+          <div>
+             <ShowSubs />
           </div>
 
-
-          <Card title="Category Name">
+          <Card title= {categoryName } >
+            { products && products.length < 1 ? noProductsFound() : 
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-x-3 lg:gap-x-5 xl:gap-x-7 gap-y-3 xl:gap-y-5 2xl:gap-y-8">
-            {filteredResults.map((product, i) => (
-              <div key={i}>
-                <CategoryProduct product={product} />
+            {shuffleArray(products)?.map((p, i) => (
+              <div key={p._id}>
+                <CategoryProduct product={p} />
               </div>
-            ))}  
+            ))}
             </div>
+            }  
           </Card>
-        </div>
-      </div>
       <PopularStores />
     </div>
-     
+
   );
 };
 
 export default Shop;
-
-
 

@@ -5,6 +5,7 @@ import { ReactComponent as Environment } from './Environment.svg'
 import { ReactComponent as Filter } from './Filter.svg'
 import { ReactComponent as StartUp } from './StartUp.svg'
 import { ReactComponent as Cat } from './Cat.svg'
+import { ReactComponent as NoProduct } from './NoProduct.svg'
 
 export {
   Company,
@@ -13,5 +14,6 @@ export {
   Environment,
   Filter,
   StartUp,
-  Cat
+  Cat,
+  NoProduct
 }

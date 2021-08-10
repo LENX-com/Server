@@ -26,7 +26,7 @@ const SingleProduct = ({ product}) => {
           {product &&
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <div className="relative lg:w-1/2 w-full lg:h-auto rounded">
-                <img alt="ecommerce" className="object-cover object-center " src= { product.photo } />
+                <img alt="ecommerce" className="object-cover object-center rounded p-2 bg-Grey" src= { product.photo } />
                     <div className=" absolute top-2 left-0">
                         <div className="flex">
                             <button
@@ -52,7 +52,7 @@ const SingleProduct = ({ product}) => {
               <div className="flex mb-4">
                 <span className="flex items-center">
                     <MdStar className="text-orange"/>
-                    <Link to={`/marketplace/category/products/reviews/${product._id}`} className="underline"> 240 reviews</Link>
+                    <Link to={`/marketplace/category/products/reviews/${product._id}`} className="underline"> { product.comments.length === 1 ? `${product.comments.length} review` : `${product.comments.length} reviews` }</Link>
                 </span>
               </div>
               <p className="leading-relaxed"> { product.description } </p>

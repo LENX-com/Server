@@ -87,7 +87,7 @@ router.get("/secret", requireSignin, (req, res) => {
   });
 });
 
-router.get("user/:userId", getUserById);
+router.get("/user/by/:userId", getUserById);
 router.get("user/:userId", requireSignin, read);
 router.put("user/:userId", requireSignin, isAuth, update);
 router.get("/orders/by/user/:userId", requireSignin, isAuth, purchaseHistory);

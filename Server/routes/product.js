@@ -25,10 +25,17 @@ const {
   listBySearch,
   photo,
   listSearch,
+  searchFilters,
+  listAll,
+  productReview,
 } = require("../controller/product.controller");
 const { auth, protected } = require("../middlewares/verify");
 const { userById } = require("../controller/user.controller");
 const { uploadImage } = require("../middlewares/cloudinary");
+const checkObjectId = require("../middlewares/checkObjectId");
+const { check, validationResult } = require("express-validator/check");
+const _ = require("lodash");
+
 
 //new implementation route
 router.post(
@@ -37,15 +44,22 @@ router.post(
   auth,
   protected(1),
   createProduct
-);
+);  
 router.get("/products", list);
 router.post("/products/by/search", listBySearch);
 router.put("/edit/product/:productId", upload.single("file"), auth, protected(1), editProduct);
 router.delete("/delete:/productId", auth, protected(1));
-router.post("/related", getProductByCategory);
+router.get("/products/by/category/:categoryId", getProductByCategory);
 router.get("/brands/:brandId", getProductByBrand);
 router.get("/product/:productId", getProductById);  
-router.post("/tags", getProductByTags);  
+router.post("/tags", getProductByTags);
+router.post("/search/filters", searchFilters);
+router.get("/products/:count", listAll);
+
+router.post(
+  "/product/comment/:id", checkObjectId("id"),
+  check("text", "Text is required").not().isEmpty(),
+  auth, productReview)
 //*********************************** */
 
 router.get("/products", list);

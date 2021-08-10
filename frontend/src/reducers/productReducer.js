@@ -47,6 +47,12 @@ export const productReducer = (state = initialState, action) => {
         relatedProducts: action.payload,
         loading: false,
       };
+      case "PRODUCTS_BY_CATEGORY":
+        return {
+          ...state,
+          productsByCategory: action.payload,
+          loading: false,
+        };
     case "SEARCHED_PRODUCTS":
       return {
         ...state,

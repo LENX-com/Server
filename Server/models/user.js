@@ -158,18 +158,19 @@ userSchema.virtual("order", {
   foreignField: "user",
   justOne: false,
 });
-//virtual fields
-userSchema.virtual("profile", {
-  localField: "_id",
-  ref: "Profile",
-  foreignField: "userId",
-  justOne: false,
-});
+
 //virtual fields
 userSchema.virtual("blogs", {
   localField: "_id",
   ref: "Blog",
   foreignField: "userId",
+  justOne: false,
+});
+//virtual fields
+userSchema.virtual("manufacturer", {
+  localField: "_id",
+  ref: "Manufacturer",
+  foreignField: "manufacturerId",
   justOne: false,
 });
 //virtual fields

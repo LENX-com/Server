@@ -7,19 +7,7 @@ import { Link } from 'react-router-dom'
 import Button from '../../../components/Buttons/Button'
 
 
-    const dummyComment = [
-        {
-            comment: "I liked this product"
-        },
-        {
-            comment: "I liked this product"
-        },
-        {
-            comment: "I liked this product"
-        }
-    ] 
-
-const Review = () => {
+const Review = ({comments}) => {
 
     const [ tab, setTab ] = useState(0)
 
@@ -28,7 +16,7 @@ const Review = () => {
             <div className="flex">
                 <h1 className="text-2xl font-semibold text-gray-700 dark:text-gray-200 flex"> 
                <MdStar className="text-orange"/>
-                240 reviews
+                { comments.length === 1 ? `${comments.length} review` : `${comments.length} reviews`}
                 </h1>
             </div>
             <div> 
@@ -51,9 +39,9 @@ const Review = () => {
                 slidesPerView={1}
                 freeMode= { true }
             >
-            {dummyComment.map(data => (
+            {comments?.map(data => (
                 <SwiperSlide className="my-3 w-9/12">    
-                    <ReviewCard />
+                    <ReviewCard comment = {data}/>
                 </SwiperSlide>
                 ))}
 

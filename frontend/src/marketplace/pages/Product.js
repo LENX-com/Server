@@ -13,7 +13,7 @@ const Product = (props) => {
   const product = useSelector((state) => state.product.product);
   const [relatedProduct, setRelatedProduct] = useState([]);
   const [error, setError] = useState(false);
-
+  
 
 
   //changed api endpoint to redux
@@ -33,12 +33,13 @@ const Product = (props) => {
             />
  
             <ProductDescription product= { product }/>
+            <ChatBox/>
+
+            {product.comments.length < 1 ? null : < Review comments = {product.comments } / >}
+
             </>  
             }
-
-            <ChatBox />
-
-            <Review/>
+            
 
             <CustomerQuestions />
 
