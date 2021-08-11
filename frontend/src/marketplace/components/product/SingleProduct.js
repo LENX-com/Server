@@ -9,16 +9,24 @@ import {
 import Card from "../../../components/Cards/Card";
 import Button from "../../../components/Buttons/Button";
 import { addToCart} from "../../../actions/cartActions";
-import { useDispatch } from "react-redux";
+import { addWishList } from "../../../actions/wishlistAction";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import SignInPop from '../auth/SignInPop'
 
 const SingleProduct = ({ product}) => {
     const [ count, setCount ] = useState(1)
+    const [ isOpen, setIsOpen ] = useState(false)
     const history = useHistory();
-    const options =  Array.from(Array(15).keys())
+    const { isAuthenticated } = useSelector((state) => state.auth);
+    console.log(isAuthenticated)
     const dispatch = useDispatch();
 
   const { url } = useRouteMatch();
+
+  const handleWishlist = () => (
+    !isAuthenticated ? setIsOpen(true)  : dispatch(addWishList(product._id))
+  )
 
     return (
              
@@ -38,7 +46,8 @@ const SingleProduct = ({ product}) => {
                     </div>
                     <div className=" absolute top-2 right-1">
                         <div className="flex">
-                            <button className="rounded-full w-8 h-8 bg-Grey-light p-0 border-0 inline-flex items-center justify-center text-white ml-4">
+                            <button className="rounded-full w-8 h-8 bg-Grey-light p-0 border-0 inline-flex items-center justify-center text-white ml-4"
+                            onClick = {handleWishlist} >
                                 <MdFavoriteBorder className="w-5 h-5"/>
                             </button>
                         </div>
@@ -86,6 +95,7 @@ const SingleProduct = ({ product}) => {
           Add to Cart
         </button>
       </div>
+      {!isAuthenticated && <SignInPop isOpen={isOpen} setIsOpen ={setIsOpen} />}
     </Card>
   );
 };
