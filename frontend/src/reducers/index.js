@@ -12,6 +12,7 @@ import { ChatReducer } from "./ChatReducer";
 import { cartReducer } from "./cartReducers";
 import { userReducer } from "./userReducer";
 import { searchProductReducer } from './searchProductReducer'
+import { questionReducer } from './questionReducer'
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   wishlist: wishListReducer,
   chat: ChatReducer,
   searchProduct: searchProductReducer,
+  questions : questionReducer,
 });
 
 export default rootReducer;

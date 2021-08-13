@@ -7,6 +7,7 @@ import RelatedProducts from '../components/product/RelatedProducts'
 import ProductDescription from '../components/product/ProductDescription'
 import { getProduct } from "../../actions/productAction";
 import { useDispatch, useSelector } from "react-redux";
+import '../styles/product.scss'
 
 const Product = (props) => {
   const dispatch = useDispatch();
@@ -35,15 +36,18 @@ const Product = (props) => {
             <ProductDescription product= { product }/>
             <ChatBox/>
 
-            {product.comments.length < 1 ? null : < Review comments = {product.comments } / >}
+            {/* If comment is less than 1, do not show comments */}
+            {product.comments.length < 1 ? null :
+              < Review comments = {product.comments} id = { product._id} / >
+            }
+            
+            <CustomerQuestions />
+            
+            <RelatedProducts  relatedProduct= {relatedProduct}/>
 
             </>  
             }
             
-
-            <CustomerQuestions />
-
-            <RelatedProducts  relatedProduct= {relatedProduct}/>
 
         </>
     )

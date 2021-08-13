@@ -3,32 +3,42 @@ const _ = require("lodash");
 const fs = require("fs");
 const Product = require("../models/product");
 const { User } = require("../models/user");
-const cloudinary = require("cloudinary").v2;
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.env.API_SECRET,
-});
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const slugify = require("slugify");
 const { check, validationResult } = require("express-validator/check");
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+})
+
+
 
 //create a product route accessible by only manufacturer(role 1) and add category from req.body.category
 exports.createProduct = async (req, res) => {
-  console.log(req.body)
-  const file = req.file;
-  console.log(req.file);
+  const file = req.files;  
+  
   try {
+  
     if (!file) throw new Error("Enter a valid file");
-    const result = await cloudinary.uploader.upload(req.file.path, {  
-      resource_type: "auto",
-    });
+
+    var imageList = []
+    
+    for(var i=0;i<req.files.length;i++){
+      var locaFilePath = req.files[i].path
+      var result = await cloudinary.uploader.upload( locaFilePath )
+      console.log(result)
+      imageList.push({
+        url : result.url,
+        public_id : result.public_id
+      })
+    }  
 
     const { ...args } = req.body;
     args.slug = slugify(req.body.name);
     args.author = req.user._id;
-    args.photo = result.secure_url;
-    args.photoId = result.public_id;
+    args.photo = imageList;
     const newProduct = await Product.create(args);
     return res.status(200).json(newProduct);
   } catch (error) {

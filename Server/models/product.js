@@ -95,12 +95,16 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    photo: {
-      type: String,
-    },
-    photoId: {
-      type: String,
-    },
+    photo: [
+      {
+      url :{
+        type: String
+      },
+      public_id: {
+        type:String
+      },
+      },
+    ],
     shipping: {
       required: false,
       type: Boolean,

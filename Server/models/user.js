@@ -30,7 +30,7 @@ const wishlistSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "User",
     },
-    productId: {
+    product: {
       type: ObjectId,
       ref: "Product",
     },

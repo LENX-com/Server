@@ -4,6 +4,8 @@ import { AiOutlineClose, AiOutlineRight } from 'react-icons/ai'
 import Button from '../../../components/Buttons/Button'
 import SectionTitle from '../../../components/Typography/SectionTitle'
 import { MdDescription, MdLocalShipping, MdVerifiedUser } from 'react-icons/md'
+import { addToCart} from "../../../actions/cartActions";
+import { useDispatch } from 'react-redux'
 
 const ProductDescription = ({product}) => {
 
@@ -14,7 +16,9 @@ const ProductDescription = ({product}) => {
     })
     const { content, state } = isOpen;
 
-    const completeButtonRef = useRef(null)
+    const completeButtonRef = useRef(null);
+
+    const dispatch = useDispatch();
 
     const warranty = () => (
         <div>
@@ -44,12 +48,13 @@ const ProductDescription = ({product}) => {
 
     return (
         <div className="bg-white rounded shadow-button relative my-2 overflow-x-hidden">
-            
+            { product &&
+            <>
             <div className="flex justify-between border-b-2 border-Grey-border p-2"
                 onClick = {(() => setIsOpen({
                                 state:true,
                                 title: "Description",
-                                content: product?.description
+                                content: product.description
                             }))}
                 ref= { completeButtonRef} >
 
@@ -153,16 +158,20 @@ const ProductDescription = ({product}) => {
                       style={{width:'100vw'}}>
                     <div className="flex justify-between">
                         <div className="font-bold text-2xl ml-3">
-                            £ {product?.price}
+                            £ {product.price}
                         </div>
                         <div className="grid">
-                            <Button className="bg-Blue text-white"> Add to cart </Button>
+                            <Button 
+                            onClick={() => dispatch(addToCart(product._id , 1 ))}
+                            className="bg-Blue text-white"> Add to cart </Button>
                         </div>
                     </div>
                 </div>
             </div>
         </Dialog>
       </Transition>
+      </>
+        }
         </div>
     )
 }

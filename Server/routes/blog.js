@@ -30,7 +30,7 @@ router.post("/blog/following/single", auth, async (req, res) => {
     return res.json(resp);
   } catch (error) {
     console.log(error);
-  }
+  } 
 });
 
 // @route    Blog api/Blogs

@@ -26,8 +26,8 @@ const CustomerQuestions = () => {
                         <div className="font-bold text-base my-2">
                             Q: Does the product work?
                         </div>
-                        <div className="flex">
-                        <span className="font-bold">A:</span> {`${"Hi there, the product works just fine thanks".substring(0, MAX_LENGTH)}...`}
+                        <div className="flex italic">
+                        <span className="font-bold italic">A: </span> {`${"Hi there, the product works just fine thanks".substring(0, MAX_LENGTH)}...`}
                         </div>
                     </div>
                         ))}

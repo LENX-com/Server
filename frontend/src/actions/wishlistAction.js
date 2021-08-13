@@ -6,7 +6,7 @@ export const addWishList = (productId) => async (dispatch) => {
     const resp = await api.post(`${API}/wishlist/create/${productId}`);
     dispatch({
       type: "ADD_WISHLIST",
-      payload: resp,
+      payload: resp.data,
     });
   } catch (error) {
     dispatch({
