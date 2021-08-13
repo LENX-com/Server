@@ -4,21 +4,27 @@ import PopularCategory from '../../marketplace/components/popularCategory/Popula
 import TopSelling from '../../marketplace/components/topSelling/TopSelling';
 import TopManufacturer from '../../marketplace/components/topManufactuerer/TopManufacturer';
 import MobileFooter from '../../marketplace/components/mobileFooter/MobileFooter';
+import Blog from '../../components/Cards/Blog';
+import Manufacture from '../../components/Cards/Manufacture';
+import Signup from '../../components/Form/Signup';
+import Bloglist from '../../components/Cards/Bloglist';
+import Checkout from '../../components/Form/Checkout';
 
 const Home = () => {
     return ( 
         <main>
-            <Banner />
+            {/* <Banner />
             <PopularCategory />
             <TopSelling />
             <TopManufacturer />
-            <MobileFooter />
+            <MobileFooter /> */}
+            <Blog />
+            <Manufacture />
+            <Signup />
+            <Bloglist />
+            <Checkout />
         </main>
     )
 };
 
 export default Home;
-<<<<<<< HEAD
-
-=======
->>>>>>> 167753521104153367a460f9ffc59e0e71a8c07d

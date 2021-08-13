@@ -5,6 +5,8 @@ import ManufactureCard from '../../marketplace/components/manufactureCard/Manufa
 import BrandSlider from '../../marketplace/components/brandSlider/BrandSlider';
 import SectionTitle from '../../marketplace/components/Typography/SectionTitle';
 import Main from '../../marketplace/containers/Layout'
+import { Swiper, SwiperSlide } from 'swiper/react';
+
 
 const Categories = () => {
     return (
