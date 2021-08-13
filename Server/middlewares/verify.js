@@ -20,7 +20,7 @@ const auth = async (req, res, next) => {
     console.log(err + " token is not valid || something wrong with token");
     res.status(500).json({ msg: "Server Error" });
   }
-};
+};  
 
 // grant access to specific roles
 

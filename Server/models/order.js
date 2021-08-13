@@ -23,6 +23,9 @@ const OrderSchema = new mongoose.Schema(
         ref: "Product",
       },
     ],
+    description: {
+      type: String,
+    },
     transaction_id: {},
     amount: { type: Number },
     address: String,

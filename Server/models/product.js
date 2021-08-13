@@ -18,7 +18,44 @@ const productSchema = new mongoose.Schema(
       enum: ["tag1", "tag2", "tag3", "tag4"],
       default: "tag1",
     },
-
+     slug: {
+      type: String,
+      unique: true,
+      lowercase: true,
+      index: true,
+    },
+      comments: [
+    {
+      user: {
+        type: ObjectId
+      },
+      title: {
+        type: String,
+        required: true
+      },
+      text: {
+        type: String,
+        required: true
+      },
+      name: {  
+        type: String
+      },
+      avatar: {
+        type: String
+      },
+      date: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
+    subs: [
+      {
+        type: ObjectId,
+        ref: "Sub",
+        required: true,
+      },
+    ],
     description: {
       type: String,
       required: true,

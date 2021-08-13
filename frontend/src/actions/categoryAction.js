@@ -1,4 +1,4 @@
-import {api, publicApi} from "../utils/api";
+import {api} from "../utils/api";
 import { API } from "../config";
 // create category
 export const addCategory = (category) => async (dispatch) => {
@@ -18,6 +18,7 @@ export const addCategory = (category) => async (dispatch) => {
 export const getCategories = () => async (dispatch) => {
   try {
     const res = await api.get(`${API}/categories`);
+    console.log(res)
     dispatch({
       type: "GET_CATEGORIES",
       payload: res.data,

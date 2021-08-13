@@ -180,6 +180,7 @@
 // AiOutlineCheck
 import React, { useState } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
+import Layout from "../layout/Layout"
 
 export default function Checkout({
   products,

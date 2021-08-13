@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { reduxSearch } from "redux-search";
+import { reduxSearch} from 'redux-search'
+import SearchApi from "./utils/searchApi"
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
 import setAuthToken from "./utils/setAuthToken";
@@ -10,15 +11,16 @@ const initialState = {};
 const middleware = [thunk];
 
 const enhancer = composeWithDevTools(
-  applyMiddleware(...middleware),
   reduxSearch({
     resourceIndexes: {
-      products: ["price"],
+      orders: ["name", "address"]
     },
     resourceSelector: (resourceName, state) => {
-      return state[resourceName];
+      return state.order[resourceName];
     },
-  })
+    searchApi : new SearchApi()
+  }),
+  applyMiddleware(...middleware),
 );
 
 const store = createStore(rootReducer, initialState, enhancer);
@@ -42,3 +44,4 @@ store.subscribe(() => {
 });
 
 export default store;
+

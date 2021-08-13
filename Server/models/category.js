@@ -29,6 +29,17 @@ const categorySchema = new mongoose.Schema(
     userId: {
       type: ObjectId,
     },
+    slug: {
+      type: String,
+      unique: true,
+      lowercase: true,
+      index: true,
+    },
+      bg: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/lenx/image/upload/v1619714832/avatar_g2cc3h.png",
+    },
   },
   opts,
   { timestamps: true }

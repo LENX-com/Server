@@ -1,0 +1,103 @@
+import React, { useState } from "react";
+import {
+  MdStarBorder,
+  MdStar,
+  MdShoppingCart,
+  MdFavoriteBorder,
+  MdArrowBack,
+} from "react-icons/md";
+import Card from "../../../components/Cards/Card";
+import Button from "../../../components/Buttons/Button";
+import { addToCart} from "../../../actions/cartActions";
+import { addWishList } from "../../../actions/wishlistAction";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import SignInPop from '../auth/SignInPop'
+
+const SingleProduct = ({ product}) => {
+    const [ count, setCount ] = useState(1)
+    const [ isOpen, setIsOpen ] = useState(false)
+    const history = useHistory();
+    const { isAuthenticated } = useSelector((state) => state.auth);
+    console.log(isAuthenticated)
+    const dispatch = useDispatch();
+
+  const { url } = useRouteMatch();
+
+  const handleWishlist = () => (
+    !isAuthenticated ? setIsOpen(true)  : dispatch(addWishList(product._id))
+  )
+
+    return (
+             
+          <Card className="py-8 mx-auto">  
+          {product &&
+          <div className="lg:w-4/5 mx-auto flex flex-wrap">
+            <div className="relative lg:w-1/2 w-full lg:h-auto rounded">
+                <img alt="ecommerce" className="object-cover object-center rounded p-2 bg-Grey" src= { product.photo } />
+                    <div className=" absolute top-2 left-0">
+                        <div className="flex">
+                            <button
+                            className="rounded-full w-8 h-8 bg-Grey-light p-0 border-0 inline-flex items-center justify-center text-white ml-4"
+                            onClick={() => setTimeout(() => history.goBack(), 150)}>
+                                <MdArrowBack className="w-5 h-5"/>
+                            </button>
+                        </div>
+                    </div>
+                    <div className=" absolute top-2 right-1">
+                        <div className="flex">
+                            <button className="rounded-full w-8 h-8 bg-Grey-light p-0 border-0 inline-flex items-center justify-center text-white ml-4"
+                            onClick = {handleWishlist} >
+                                <MdFavoriteBorder className="w-5 h-5"/>
+                            </button>
+                        </div>
+                    </div>
+            </div>
+            <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                <div>
+                  <span className="title-font font-medium text-2xl text-gray-900">£ { product.price } </span>
+                </div>
+              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1"> { product.name } </h1>
+              <div className="flex mb-4">
+                <span className="flex items-center">
+                    <MdStar className="text-orange"/>
+                    <Link to={`/marketplace/category/products/reviews/${product._id}`} className="underline"> { product.comments.length === 1 ? `${product.comments.length} review` : `${product.comments.length} reviews` }</Link>
+                </span>
+              </div>
+              <p className="leading-relaxed"> { product.description } </p>
+              <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
+              </div>
+            </div>
+          </div>
+            }
+            <div className="rounded-full shadow-button inline-block">
+                <div className="flex text-2xl">
+                <button
+                    className="border-r-2 border-Grey-border focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent rounded-l-full"
+                    onClick= {() => setCount(Math.max(1, count - 1))}>
+                    -
+                </button>
+                <h2 className="my-auto px-3 text-lg"> { count } </h2>
+                <button
+                  className="border-l-2 border-Grey-border focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent rounded-r-full"
+                  onClick= {() => setCount(Math.min(20, count + 1))}>
+                    +
+                </button>
+                </div>
+              </div>
+
+      <div className="grid gap-30">
+        <Button className="bg-Blue text-Grey my-2">Buy now</Button>
+        <button
+          onClick={() => dispatch(addToCart(product._id , count ))}
+          className="bg-Blue bg-opacity-20 text-Blue mb-2"
+        >
+          Add to Cart
+        </button>
+      </div>
+      {!isAuthenticated && <SignInPop isOpen={isOpen} setIsOpen ={setIsOpen} />}
+    </Card>
+  );
+};
+
+export default SingleProduct;

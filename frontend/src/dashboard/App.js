@@ -1,5 +1,5 @@
 import React, { lazy } from 'react'
-import { BrowserRouter as Router, Switch, Route, Redirect, useRouteMatch} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route,  useRouteMatch} from 'react-router-dom'
 import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnnouncer'
 
 const Layout = lazy(() => import('./containers/Layout'))
@@ -14,14 +14,14 @@ function App() {
   return (
     <>
       <Router>
-        <AccessibleNavigationAnnouncer />
+        <AccessibleNavigationAnnouncer /> 
         <Switch>
           <Route path= {`${path}/login`} component={Login} /> 
           <Route path= {`${path}`} component={Layout} />
           <Route path="/create-account" component={CreateAccount} />
           <Route path="/forgot-password" component={ForgotPassword} />
         </Switch>
-      </Router>
+      </Router>  
     </>
   )
 }

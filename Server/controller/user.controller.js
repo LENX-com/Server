@@ -1,5 +1,6 @@
 const { Order } = require("../models/order");
-const { Wishlist, Story, User } = require("../models/user");
+const { Wishlist, Story, User, ShippingInfo } = require("../models/user");
+const { follower, following } = require("../models/follow");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const { validationResult } = require("express-validator/check");
 const Product = require("../models/product");
@@ -15,7 +16,7 @@ exports.getUserById = async (req, res) => {
   const user = await User.findById(req.params.userId)
     .populate({ path: "wishlists", populate: { path: "productId" } })
     .populate("order")
-    .populate("profile")
+    .populate("manufacturer")
     .populate("story")
     .populate("blogs")
     .populate("reviews")
@@ -28,6 +29,25 @@ exports.getUserById = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error });
+  }
+};
+
+exports.updateUser = async (req, res) => {
+  console.log(req.file);
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      resource_type: "auto",
+      invalidate: true,
+    });
+    const { ...args } = req.body;
+    args.avatar = result.secure_url;
+    args.avatarId = result.public_id;
+    const user = await User.findOneAndUpdate({ _id: req.user._id }, args, {
+      new: true,
+    });
+    return res.json(user);
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -202,7 +222,7 @@ exports.addWishlist = async (req, res) => {
   const product = await Product.findById(req.params.productId);
   const wish = await Wishlist.find({ productId: req.params.productId });
   try {
-    if (wish.length > 1) {
+    if (wish.length > 0) {
       return res.status(400).json({ error: "wishlist already added" });
     }
     const data = {
@@ -211,8 +231,8 @@ exports.addWishlist = async (req, res) => {
     };
     const resp = await Wishlist.create(data);
     return res.status(200).json({ data: resp });
-  } catch (error) {
-    console.log(error);
+  } catch (error) { 
+    console.log(error);  
     return res.status(500).json({ error: error });
   }
 };
@@ -264,4 +284,68 @@ exports.getStory = async (req, res) => {
   }
 };
 
-//*************************************************************manufacturers sotries*****************************************
+//*************************************************************manufacturers stories*****************************************
+
+//*************************************Shipping info************************************ */
+
+exports.addShippingInfo = async (req, res) => {
+  try {
+    const { ...args } = req.body;
+    args.userId = req.user._id;
+    const shipping = await ShippingInfo.create(args);
+    return res.json(shipping);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+};
+
+exports.updateShippingInfo = async (req, res) => {
+  try {
+    const { ...args } = req.body;
+
+    const shipping = await ShippingInfo.findOneAndUpdate(
+      req.body.shippingId,
+      args,
+      {
+        new: true,
+      }
+    );
+    return res.json(shipping);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//************************************Follow manufacturer************************************** */
+exports.followManufacturer = async (req, res) => {
+  try {
+    const resp = await following.find({
+      $and: [
+        { userId: req.user.id },
+        { manufacturerId: req.body.manufacturerId },
+      ],
+    });
+    if (resp.length > 0) {
+      return res.json("Already following");
+    }
+    const { ...args } = req.body;
+    args.userId = req.user.id;
+    const newfollow = await following.create(args);
+    return res.json(newfollow);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.getFollowing = async (req, res) => {
+  try {
+    const resp = await following
+      .find({ userId: req.user.id })
+      .populate("manufacturerId");
+    return res.json(resp);
+  } catch (error) {
+    console.log(error);
+  }
+};
+//************************************Follow manufacturer************************************** */

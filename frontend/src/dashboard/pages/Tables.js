@@ -18,9 +18,9 @@ import {
 } from '@windmill/react-ui'
 import { EditIcon, TrashIcon } from '../icons'
 
-import response from '../utils/demo/tableData'
+import {data} from '../utils/demo/tableData'
 // make a copy of the data, for the second table
-const response2 = response.concat([])
+const response2 = data.concat([])
 
 function Tables() {
   /**
@@ -41,7 +41,7 @@ function Tables() {
 
   // pagination setup
   const resultsPerPage = 10
-  const totalResults = response.length
+  const totalResults = data.length
 
   // pagination change control
   function onPageChangeTable1(p) {
@@ -56,7 +56,7 @@ function Tables() {
   // on page change, load new sliced data
   // here you would make another server request for new data
   useEffect(() => {
-    setDataTable1(response.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
+    setDataTable1(data.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
   }, [pageTable1])
 
   // on page change, load new sliced data

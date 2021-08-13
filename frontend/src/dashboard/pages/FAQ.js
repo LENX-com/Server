@@ -2,8 +2,6 @@ import React from 'react'
 import InfoCard from '../components/Cards/InfoCard'
 import { Disclosure } from '@headlessui/react'
 import { HiChevronUp } from 'react-icons/hi'
-import RoundIcon from '../components/RoundIcon'
-import { ChatIcon } from '../icons'
 
 const FAQ = () => {
     return (

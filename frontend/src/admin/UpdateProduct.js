@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../marketplace/components/layout/Layout";
-import {  Redirect } from "react-router-dom";
-import {updateProduct, getProduct,} from "../actions/productAction"
-import {getCategories} from "../actions/categoryAction"
+import { Redirect } from "react-router-dom";
+import { updateProduct, getProduct } from "../actions/productAction";
+import { getCategories } from "../actions/categoryAction";
 import { useSelector, useDispatch } from "react-redux";
 
 const UpdateProduct = ({ match }) => {
@@ -29,9 +29,6 @@ const UpdateProduct = ({ match }) => {
     name,
     description,
     price,
-    // categories,
-    category,
-    shipping,
     quantity,
     loading,
     error,
@@ -40,46 +37,10 @@ const UpdateProduct = ({ match }) => {
     formData,
   } = values;
 
-  // const init = (productId) => {
-  //   getProduct(productId).then((resp) => {
-  //     const { data } = resp;
-  //     if (data.error) {
-  //       setValues({ ...values, error: data.error });
-  //     } else {
-  //       // populate the state
-  //       setValues({
-  //         ...values,
-  //         name: data.name,
-  //         description: data.description,
-  //         price: data.price,
-  //         category: data.category._id,
-  //         shipping: data.shipping,
-  //         quantity: data.quantity,
-  //         formData: new FormData(),
-  //       });
-  //       // load categories
-  //       initCategories();
-  //     }
-  //   });
-  // };
-
-  // // load categories and set form data
-  // const initCategories = () => {
-  //   getCategories().then((resp) => {
-  //     const { data } = resp;
-  //     if (data.error) {
-  //       setValues({ ...values, error: data.error });
-  //     } else {
-  //       setCategories(data);
-  //     }
-  //   });
-  // };
-
   useEffect(() => {
-    // init(match.params.productId);
     dispatch(getProduct(match.params.productId));
     dispatch(getCategories());
-  }, []);
+  }, [dispatch, match.params.productId]);
 
   const handleChange = (name) => (event) => {
     const value = name === "file" ? event.target.files[0] : event.target.value;
@@ -91,25 +52,6 @@ const UpdateProduct = ({ match }) => {
     event.preventDefault();
     setValues({ ...values, error: "", loading: true });
     dispatch(updateProduct(match.params.productId, formData));
-
-    // updateProduct(match.params.productId, token, formData).then((data) => {
-    //   if (data.error) {
-    //     setValues({ ...values, error: data.error });
-    //   } else {
-    //     setValues({
-    //       ...values,
-    //       name: "",
-    //       description: "",
-    //       file: "",
-    //       price: "",
-    //       quantity: "",
-    //       loading: false,
-    //       error: false,
-    //       redirectToProfile: true,
-    //       createdProduct: data.name,
-    //     });
-    //   }
-    // });
   };
 
   const newPostForm = () => (

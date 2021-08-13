@@ -1,12 +1,12 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect, Link } from "react-router-dom";
-import { isAuth, authenticateHelper} from "../../../actions";
+import { isAuth, authenticateHelper } from "../../../actions";
 import { login } from "../../../actions/authAction";
 import Google from "../../../marketplace/containers/social-login/Google";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 
-const Signin = ({ history }) => {
+const Signin = ({ history, location }) => {
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -17,8 +17,16 @@ const Signin = ({ history }) => {
 
   const { email, password, loading, redirectToReferrer } = values;
   const auth = useSelector((state) => state.auth);
-  const errors = useSelector((state) => state.errors);
   const dispatch = useDispatch();
+
+  const refferer = location.search ? location.search.split("=")[1] : "/";
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      history.push(refferer);
+    }
+    return () => {};
+  }, [refferer, history, auth.isAuthenticated]);
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
@@ -54,6 +62,7 @@ const Signin = ({ history }) => {
       <Link to="/forgot-password">
         <button>Forgot password</button>
       </Link>
+      
     </form>
   );
 
@@ -107,6 +116,10 @@ const Signin = ({ history }) => {
       {showError()}
       {signUpForm()}
       <Google informParent={informParent} />
+      <ul>
+        <li>New to lenx</li>
+        <li><Link to={refferer === "/" ? "register" : "register?redirect=" + refferer}>Register</Link></li>
+      </ul>
       {redirectUser()}
     </>
   );

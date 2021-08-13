@@ -19,6 +19,8 @@ function Layout() {
 
   useEffect(() => {
     closeSidebar()
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location])
 
   return (
@@ -26,12 +28,11 @@ function Layout() {
       className={` dashboard flex h-screen  dark:bg-gray-900 ${isSidebarOpen && 'overflow-hidden'}`}
     >
       <Sidebar />
-
       <div className="flex flex-col flex-1 w-full">
         <Header />
          <Main>
           <Suspense f-allback={<ThemedSuspense />}>
-            <Switch>
+            <Switch>  
               {routes.map((route, i) => {
                 return route.component ? (
                   <Route

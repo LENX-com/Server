@@ -72,19 +72,31 @@ exports.createOrders = async (req, res) => {
 };
 
 //get all orders by authenticated user
+// exports.OrderByUser = async (req, res) => {
+//   const PAGE_SIZE = 2;
+//   console.log(req.query);
+//   const page = parseInt(req.query.page || "0");
+//   console.log(PAGE_SIZE * page);
+//   const total = await Order.countDocuments({});
+//   const orders = await Order.find({ userId: req.user._id }).populate("product")
+//     .limit(PAGE_SIZE)
+//     .skip(PAGE_SIZE * page);
+//   try {
+//     return res
+//       .status(200)
+//       .json({ orders, total: Math.ceil(total / PAGE_SIZE) });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({ error: error });
+//   }
+// };
+//get all orders by authenticated user
 exports.OrderByUser = async (req, res) => {
-  const PAGE_SIZE = 2;
-  console.log(req.query);
-  const page = parseInt(req.query.page || "0");
-  console.log(PAGE_SIZE * page);
-  const total = await Order.countDocuments({});
   const orders = await Order.find({ userId: req.user._id }).populate("product")
-    .limit(PAGE_SIZE)
-    .skip(PAGE_SIZE * page);
   try {
     return res
       .status(200)
-      .json({ orders, total: Math.ceil(total / PAGE_SIZE) });
+      .json({orders});
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error });

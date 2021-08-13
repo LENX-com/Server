@@ -1,8 +1,10 @@
 import React from 'react'
 
-const Button = ({children}, className) => {
+const Button = ({children, className, ...buttonProps}) => {
+
     return (
-        <button className="shadow-button bg-white rounded cursor-pointer text-Black hover:shadow-hover text-sm">
+        <button className= {`shadow-button rounded cursor-pointer hover:shadow-hover  ${className}`} {...buttonProps} >
+
             {children}
         </button>
     )

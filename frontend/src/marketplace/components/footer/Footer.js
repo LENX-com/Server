@@ -2,6 +2,8 @@ import React from 'react'
 import './Footer.scss'
 import { Link } from 'react-router-dom'
 import { AiOutlineMessage, AiOutlineShop, AiOutlineShoppingCart } from 'react-icons/ai'
+ import {BsPerson } from "react-icons/bs";
+import CartPop from '../cart/CartPop'
 
 const Footer = () => {
 
@@ -101,36 +103,27 @@ const Footer = () => {
                                 < AiOutlineShop />
                             </div>
                             <div className="text-sm">
-                                <p> Home </p>
+                                <p> Products </p>
                             </div>
                         </div>
                     </Link>
                 </div>
             
                 <div className="col">
-                    <Link to= {`/chat`}>
+                    <a href= "user/dashboard/">
                         <div className="wrapper"> 
                             <div className="icon-wrapper mt-2 text-xl">
-                                <AiOutlineMessage/>
-                            </div>
-                            <div className="text-sm">
-                                <p> Cart </p>
-                            </div>
-                        </div>
-                    </Link>    
-                </div>
-                
-                <div className="col">
-                    <Link to= {`/my-orders`}>
-                        <div className="wrapper"> 
-                            <div className="icon-wrapper mt-2 text-xl">
-                                <AiOutlineShoppingCart />
+                                <BsPerson />
                             </div>
                             <div className="text-sm">
                                 <p> My Account  </p>
                             </div>
                         </div>
-                    </Link>
+                    </a>
+                </div>
+                
+                <div className="col">
+                      <CartPop />    
                 </div>
             </div>
         </footer>

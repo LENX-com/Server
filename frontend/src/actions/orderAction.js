@@ -1,4 +1,4 @@
-import {api} from "../utils/api";
+import { api } from "../utils/api";
 import { API } from "../config";
 
 //create order
@@ -18,12 +18,27 @@ export const createOrder = (userId, createOrderData) => async (dispatch) => {
   }
 };
 
+
 // all orders
 export const listOrders = () => async (dispatch) => {
   try {
     const res = await api.get(`${API}/orders`);
     dispatch({
       type: "GET_ORDERS",
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ORDER_ERROR",
+    });
+  }
+};
+// all orders
+export const orderByUser = (page) => async (dispatch) => {
+  try {
+    const res = await api.get(`${API}/order/purchaseHistory`);
+    dispatch({
+      type: "GET_ORDERS_BY_USER",
       payload: res.data,
     });
   } catch (err) {

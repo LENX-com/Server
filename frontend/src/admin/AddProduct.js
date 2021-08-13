@@ -29,19 +29,16 @@ const AddProduct = () => {
     name,
     description,
     price,
-    category,
-    shipping,
     quantity,
     loading,
     error,
     createdProduct,
-    redirectToProfile,
     formData,
   } = values;
 
   useEffect(() => {
     dispatch(getCategories());
-  }, []);
+  }, [dispatch]);
 
   const handleChange = (name) => (event) => {
     const value = name === "file" ? event.target.files[0] : event.target.value;

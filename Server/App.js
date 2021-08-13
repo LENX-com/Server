@@ -48,11 +48,14 @@ App.use("/api", require("./routes/product"));
 App.use("/api", require("./routes/braintree"));
 App.use("/api", require("./routes/order"));
 App.use("/api", require("./routes/chat"));
-App.use("/api", require("./routes/profile"));
+App.use("/api", require("./routes/manufacturer"));
 App.use("/api", require("./routes/review"));
 App.use("/api", require("./routes/marketplace"));
 App.use("/api", require("./routes/message"));
 App.use("/api", require("./routes/conversation"));
+App.use("/api", require("./routes/blog"));
+App.use("/api", require("./routes/subCategory"));
+
 
 // Initialise passport middleware
 App.use(passport.initialize());

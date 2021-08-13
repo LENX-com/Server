@@ -1,26 +1,32 @@
 import { combineReducers } from "redux";
-import {reducer as searchReducer, } from "redux-search"
+import { reducer as searchReducer } from "redux-search";
 import { authReducer } from "./authReducer";
 import { errorReducer } from "./errorReducer.js";
-import { postReducer } from './postReducer'
-import { alertReducer } from './alertReducer'
+import { postReducer } from "./postReducer";
+import { alertReducer } from "./alertReducer";
 import { wishListReducer } from "./wishlistReducer";
 import { categoryReducer } from "./categoryReducers";
-import { orderReducer } from "./orderReducer";
+import { orderReducer as order } from "./orderReducer";
 import { productReducer } from "./productReducer";
-import { ChatReducer } from './ChatReducer'
+import { ChatReducer } from "./ChatReducer";
+import { cartReducer } from "./cartReducers";
+import { userReducer } from "./userReducer";
+import { searchProductReducer } from './searchProductReducer'
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  search:searchReducer,
+  user: userReducer,
+  search: searchReducer,
+  order,
+  cart: cartReducer,
   product: productReducer,
   errors: errorReducer,
   category: categoryReducer,
-  order: orderReducer,
   post: postReducer,
   alert: alertReducer,
   wishlist: wishListReducer,
-  chat: ChatReducer
+  chat: ChatReducer,
+  searchProduct: searchProductReducer,
 });
 
 export default rootReducer;

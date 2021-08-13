@@ -1,6 +1,5 @@
 import "./App.scss";
-import React,{useEffect} from "react";
-import setAuthToken from "./utils/setAuthToken";
+import React, { useEffect } from "react";
 import store from "./store";
 import { loadUser } from "./actions/authAction";
 import { LOGOUT } from "./actions/types";
@@ -11,16 +10,13 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     // check for token in LS
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
-    }
     store.dispatch(loadUser());
     // log user out from all tabs if they log out in one tab
     window.addEventListener("storage", () => {
       if (!localStorage.token) dispatch({ type: LOGOUT });
     });
-  },[] );
- 
+  }, []);
+
   return (
     <div>
       <Routes />

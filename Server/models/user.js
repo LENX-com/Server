@@ -40,6 +40,34 @@ const wishlistSchema = new mongoose.Schema(
   }
 );
 
+const Shipping = new mongoose.Schema({
+  firstname: {
+    type: String,
+  },
+  userId: {
+    type: ObjectId,
+    ref: "User",
+  },
+  lastname: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
+  street: {
+    type: String,
+  },
+  city: {
+    type: String,
+  },
+  state: {
+    type: String,
+  },
+  zip: {
+    type: Number,
+  },
+});
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -92,6 +120,9 @@ const userSchema = new mongoose.Schema(
       default:
         "https://res.cloudinary.com/lenx/image/upload/v1619714832/avatar_g2cc3h.png",
     },
+    avatarId: {
+      type: String,
+    },
     date: {
       type: Date,
       default: Date.now,
@@ -127,18 +158,19 @@ userSchema.virtual("order", {
   foreignField: "user",
   justOne: false,
 });
-//virtual fields
-userSchema.virtual("profile", {
-  localField: "_id",
-  ref: "Profile",
-  foreignField: "userId",
-  justOne: false,
-});
+
 //virtual fields
 userSchema.virtual("blogs", {
   localField: "_id",
   ref: "Blog",
   foreignField: "userId",
+  justOne: false,
+});
+//virtual fields
+userSchema.virtual("manufacturer", {
+  localField: "_id",
+  ref: "Manufacturer",
+  foreignField: "manufacturerId",
   justOne: false,
 });
 //virtual fields
@@ -216,4 +248,5 @@ userSchema.methods = {
 const User = mongoose.model("User", userSchema);
 const Wishlist = mongoose.model("WishList", wishlistSchema);
 const Story = mongoose.model("Story", StorySchema);
-module.exports = { User, Wishlist, Story };
+const ShippingInfo = mongoose.model("Shipping_details", Shipping);
+module.exports = { User, Wishlist, Story, ShippingInfo };

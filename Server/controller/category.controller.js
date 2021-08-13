@@ -1,17 +1,19 @@
 const { Brand, Category } = require("../models/category");
 const { errorHandler } = require("../helpers/dbErrorHandler");
+const Product = require("../models/product");
+const Sub = require("../models/subCategory");
+const slugify = require("slugify");
 
 //create a category
 exports.createCategory = async (req, res) => {
   try {
-    const { ...args } = req.body;
-    console.log(args);
-    args.userId = req.user._id;
-    const newCategory = await Category.create(args);
-    return res.status(200).json(newCategory);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error);
+    const { name } = req.body;
+    // const category = await new Category({ name, slug: slugify(name) }).save();
+    // res.json(category);
+    res.json(await new Category({ name, slug: slugify(name) }).save());
+  } catch (err) {
+    // console.log(err);
+    res.status(400).send("Create category failed");
   }
 };
 
@@ -115,3 +117,12 @@ exports.createBrand = async (req, res) => {
     return res.status(500).json(error);
   }
 };
+
+// Get subcategories
+exports.getSubs = (req, res) => {
+  Sub.find({ parent: req.params._id }).exec((err, subs) => {
+    if (err) console.log(err);
+    res.json(subs);
+  });
+};
+  

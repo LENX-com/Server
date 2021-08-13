@@ -1,6 +1,7 @@
 import {api, publicApi} from "../utils/api";
 import { API } from "../config";
 import queryString from "query-string";
+import axios from 'axios'
 // create product
 export const createProduct = (product) => async (dispatch) => {
   try {
@@ -16,10 +17,10 @@ export const createProduct = (product) => async (dispatch) => {
   }
 };
 // all products
-export const getProducts = (sortBy) => async (dispatch) => {
+export  const getProducts = () => async (dispatch) => {
   try {
     const res = await api.get(
-      `${API}/products?sortBy=${sortBy}&order=desc&limit=6`
+      `${API}/products`
     );
     dispatch({
       type: "GET_PRODUCTS",
@@ -31,6 +32,7 @@ export const getProducts = (sortBy) => async (dispatch) => {
     });
   }
 };
+
 // all products
 export const getProductsBySell = (sortBy) => async (dispatch) => {
   try {
@@ -76,24 +78,26 @@ export const getFilteredProducts = (skip, limit, filters = {}) => async (
     });
   } catch (err) {
     dispatch({
+      type: "PRODUCT_ERROR",  
+    });
+  }
+};
+
+export const getProductByCategory = (categoryId) => async (dispatch) => {
+  try {
+    const res = await api.get(`${API}/products/by/category/${categoryId}`);
+    dispatch({
+      type: "PRODUCTS_BY_CATEGORY",  
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err)
+    dispatch({
       type: "PRODUCT_ERROR",
     });
   }
 };
 
-export const relatedProducts = (body) => async (dispatch) => {
-  try {
-    const res = await api.post(`${API}/related`, { categoryId: body });
-    dispatch({
-      type: "GET_RELATED_PRODUCT",
-      payload: res.data,
-    });
-  } catch (err) {
-    dispatch({
-      type: "PRODUCT_ERROR",
-    });
-  }
-};
 export const searchProduct = (params) => async (dispatch) => {
   const query = queryString.stringify(params);
   try {
@@ -151,3 +155,10 @@ export const updateProduct = (productId, product) => async (dispatch) => {
     });
   }
 };
+
+
+export const fetchProductsByFilter = async (arg) =>
+  await axios.post(`${API}/search/filters`, arg);
+  
+  export const getProductsByCount = async (count) =>
+  await axios.get(`${API}/products/${count}`);

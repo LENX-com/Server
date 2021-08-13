@@ -17,9 +17,39 @@ export const addWishList = (productId) => async (dispatch) => {
 };
 export const getWishList = () => async (dispatch) => {
   try {
-    const resp = await api.get(`${API}/wishlist`);
+    const resp = await api.get(`${API}/wishlist/read`);
     dispatch({
       type: "GET_WISHLIST",
+      payload: resp.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: "WISHLIST_ERROR",
+      payload: error,
+    });
+    console.log(error);
+  }
+};
+export const removeWishList = (wishId) => async (dispatch) => {
+  try {
+     await api.delete(`${API}/wishlist/remove/${wishId}`);
+    dispatch({
+      type: "DELETE_WISHLIST",
+      payload: wishId,
+    });
+  } catch (error) {
+    dispatch({
+      type: "WISHLIST_ERROR",
+      payload: error,
+    });
+    console.log(error);
+  }
+};
+export const addToCart = (productId) => async (dispatch) => {
+  try {
+    const resp = await api.get(`${API}/wishlist/remove/${productId}`);
+    dispatch({
+      type: "ADD_TO_CART",
       payload: resp,
     });
   } catch (error) {
