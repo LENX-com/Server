@@ -1,90 +1,40 @@
 import {
-  GET_POSTS,
-  POST_ERROR,
-  UPDATE_LIKES,
-  DELETE_POST,
-  ADD_POST,
-  GET_POST,
-  ADD_COMMENT,
-  GET_ALL_BLOG_BY_FOLLOWING,
-  GET_ALL_BLOG_BY_SINGLE_FOLLOWING_MANUFACTURER,
-  REMOVE_COMMENT,
+  QUESTION_ADDED_SUCCESFULLY,
+  ANSWER_ADDED_SUCCESFULLY,  
+  QUESTION_ERROR,
+  GET_QUESTIONS,
 } from "../actions/types";
 
 const initialState = {
-  posts: [],
-  post: null,
+  questions: [],
   loading: true,
   error: {},
 };
 
-export const postReducer = (state = initialState, action) => {
+export const questionReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_POSTS:
+    case GET_QUESTIONS:
       return {
         ...state,
-        posts: payload,
+        questions: payload,
         loading: false,
       };
-    case GET_POST:
+    case ANSWER_ADDED_SUCCESFULLY:
       return {
         ...state,
-        post: payload,
         loading: false,
       };
-    case GET_ALL_BLOG_BY_FOLLOWING:
+    case QUESTION_ADDED_SUCCESFULLY:
       return {
         ...state,
-        posts: action.payload,
-      };
-    case GET_ALL_BLOG_BY_SINGLE_FOLLOWING_MANUFACTURER:
-      return {
-        ...state,
-        posts: action.payload,
-      };
-    case ADD_POST:
-      return {
-        ...state,
-        posts: [payload, ...state.posts],
         loading: false,
       };
-    case DELETE_POST:
-      return {
-        ...state,
-        posts: state.posts.filter((post) => post._id !== payload),
-        loading: false,
-      };
-    case POST_ERROR:
+     case QUESTION_ERROR:
       return {
         ...state,
         error: payload,
-        loading: false,
-      };
-    case UPDATE_LIKES:
-      return {
-        ...state,
-        posts: state.posts.map((post) =>
-          post._id === payload.id ? { ...post, likes: payload.likes } : post
-        ),
-        loading: false,
-      };
-    case ADD_COMMENT:
-      return {
-        ...state,
-        post: { ...state.post, comments: payload },
-        loading: false,
-      };
-    case REMOVE_COMMENT:
-      return {
-        ...state,
-        post: {
-          ...state.post,
-          comments: state.post.comments.filter(
-            (comment) => comment._id !== payload
-          ),
-        },
         loading: false,
       };
     default:

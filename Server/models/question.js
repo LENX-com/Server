@@ -9,9 +9,18 @@ const QuestionSchema = new mongoose.Schema(
         required : true 
      },
      author: {
-      type: ObjectId,
-      ref: "User",
-      required: true
+         id: {
+            type: ObjectId,
+            ref: "User",
+            required: true
+         },
+         name: {
+            type: String,
+            required: true 
+         },
+         avatar: {
+             type: String
+         },
     },
     question: {
       type: String,

@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Card from '../../../components/Cards/Card'
 import { MdSearch} from 'react-icons/md'
+import { useDispatch, useSelector } from 'react-redux'
 import { MdChevronRight } from 'react-icons/md'
+import { getQuestionsByProduct  } from '../../../actions/questionAction'
+import { Link } from 'react-router-dom'
 
-const CustomerQuestions = () => {
+const CustomerQuestions = ({product}) => {
     const MAX_LENGTH = 80;
-    const fakeComments =  Array.from(Array(15).keys())
+    const questions = useSelector((state) => state.questions.questions);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+      dispatch(getQuestionsByProduct(product?._id))
+    }, [])
 
     return (
         <Card title="Customer Questions">
@@ -21,21 +30,23 @@ const CustomerQuestions = () => {
                 </div>
                 <div className="p-2 border-Grey-border border solid rounded-md bg-white">
 
-                    {fakeComments.slice(0, 5).map( data => (
+                    {questions.slice(0, 5).map( ({question, answers}) => (
                 <div className="my-2">
                         <div className="font-bold text-base my-2">
-                            Q: Does the product work?
+                            Q: {question}
                         </div>
                         <div className="flex italic">
-                        <span className="font-bold italic">A: </span> {`${"Hi there, the product works just fine thanks".substring(0, MAX_LENGTH)}...`}
+                        <span className="font-bold italic">A: </span> {`${answers[0] !== undefined ? answers[0]?.answer.substring(0, MAX_LENGTH) : "" }...`}
                         </div>
                     </div>
                         ))}
             </div>
-            <div className="flex space-between my-3">
-                 <h1 className="ml-2">  See All {"22"} answered questions </h1>
-                <MdChevronRight className="text-2xl"/>
-            </div>
+            <Link to = {`/marketplace/questions/${product._id}`} >
+                <div className="flex space-between my-3">
+                    <h1 className="ml-2">  See All {questions.length} answered questions </h1>
+                    <MdChevronRight className="text-2xl"/>
+                </div>
+            </Link>
         </Card>
     )
 }

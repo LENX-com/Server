@@ -5,13 +5,27 @@ const { User } = require("../models/user");
 exports.postQuestion = async (req, res, next) => {
   try {
     const author = req.user._id;
+
+    if(!author) {
+        throw new Error ("User not found")
+    }
+
     const question = await Question.create({
       question: req.body.question,
       productId: req.params.productId,
-      author: author,
-      is_anonymous: false
-    });
-    res.status(201).json(question);
+      author: {
+        id: req.user._id,
+        name: req.user.name,
+        avatar: req.user.avatar
+      },
+      is_anonymous: false,
+    })
+
+     if (!question) {
+      return res.status(400).json({ error: "Question failed" });
+    }
+
+    res.status(201).json({data: question, msg: "Question posted succesfully"});
   } catch (err) {
     next(err);
   }

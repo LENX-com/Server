@@ -44,7 +44,10 @@ const colors = require('tailwindcss/colors')
         border:'#dddddd'
       },
       background: '#f2f2f7',
-      Black:"#222831",
+      Black:{
+        DEFAULT:"#222831",
+        medium: '#787c7e'
+      },
       lightBlack:"#393e46",
       Hover:"#F7FAFC",
       border: "#E3E8EE"

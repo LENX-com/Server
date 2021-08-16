@@ -44,7 +44,7 @@ const routes =
     component: Stores, 
   },
   {
-    path: `${address}/questions`, 
+    path: `${address}/questions/:productId`, 
     component: Questions, 
   }
 ]

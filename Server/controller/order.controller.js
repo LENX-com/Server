@@ -15,7 +15,7 @@ exports.allOrder = async (req, res) => {
 
 //create order
 exports.createOrder = async (req, res) => {
-  const carts = await CartItem.find({ userId: req.user._id });
+  const carts = await CartItem.find({ userId: req.user._id });  
   try {
     const { ...args } = req.body;
     args.userId = req.user._id;

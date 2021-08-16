@@ -18,10 +18,11 @@ const Product = (props) => {
 
 
   //changed api endpoint to redux
-  useEffect(() => {
+  useEffect(() => {  
     const productId = props.match.params.productId;
     dispatch(getProduct(productId));
   }, [props, dispatch]);
+  
 
     
     return (
@@ -41,7 +42,7 @@ const Product = (props) => {
               < Review comments = {product.comments} id = { product._id} / >
             }
             
-            <CustomerQuestions />
+            <CustomerQuestions product = { product}/>
             
             <RelatedProducts  relatedProduct= {relatedProduct}/>
 
