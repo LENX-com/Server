@@ -13,6 +13,21 @@ const { errorHandler } = require("../helpers/dbErrorHandler");
 const slugify = require("slugify");
 const { check, validationResult } = require("express-validator/check");
 
+
+//search system powerd by mongodb text search with indexes
+
+exports.searchCatalogue = async (req, res) => {
+  try {
+    const catalogue = await Product.find({
+      $text: { $search: req.query.value },
+    });
+    return res.json(catalogue);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
 //create a product route accessible by only manufacturer(role 1) and add category from req.body.category
 exports.createProduct = async (req, res) => {
   console.log(req.body)

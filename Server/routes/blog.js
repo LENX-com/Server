@@ -10,6 +10,17 @@ const Blog = require("../models/blog");
 const { User } = require("../models/user");
 const checkObjectId = require("../middlewares/checkObjectId");
 
+//get all users for demo purpose
+router.get("/all", auth, async (req, res) => {
+  try {
+    const user = await User.find({ _id: { $ne: req.user._id } });
+    return res.json(user);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
 //get all the blogs of all the manufacturer you are following
 router.get("/blog/following", auth, async (req, res) => {
   try {
@@ -25,8 +36,8 @@ router.get("/blog/following", auth, async (req, res) => {
 router.post("/blog/following/single", auth, async (req, res) => {
   try {
     const user = await following.find({ userId: req.user.id });
-    
-    const resp = await Blog.find({ user:req.body.manufacturerId });
+
+    const resp = await Blog.find({ user: req.body.manufacturerId });
     return res.json(resp);
   } catch (error) {
     console.log(error);

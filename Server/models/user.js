@@ -123,6 +123,12 @@ const userSchema = new mongoose.Schema(
     avatarId: {
       type: String,
     },
+    bgImage: {
+      type: String,
+    },
+    bgId: {
+      type: String,
+    },
     date: {
       type: Date,
       default: Date.now,
@@ -145,6 +151,12 @@ userSchema.virtual("wishlists", {
   foreignField: "userId",
   justOne: false,
 });
+userSchema.virtual("categories", {
+  localField: "_id",
+  ref: "Category",
+  foreignField: "userId",
+  justOne: false,
+});
 userSchema.virtual("products", {
   localField: "_id",
   ref: "Product",
@@ -162,8 +174,8 @@ userSchema.virtual("order", {
 //virtual fields
 userSchema.virtual("blogs", {
   localField: "_id",
-  ref: "Blog",
-  foreignField: "userId",
+  ref: "blog",
+  foreignField: "user",
   justOne: false,
 });
 //virtual fields
