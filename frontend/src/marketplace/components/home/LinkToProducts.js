@@ -7,7 +7,8 @@ import Button from '../../../components/Buttons/Button'
 const LinkToProducts = ({categories, products}) => {
     const [menu , setMenu ] = useState({
         state: 0,
-        title: <> {categories && categories[0].name} </>
+        // title: <> {categories && categories[0].name} </>
+         title: <> {categories && "name"} </>
     })
 
     return (
