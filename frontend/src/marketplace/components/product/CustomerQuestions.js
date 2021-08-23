@@ -14,7 +14,7 @@ const CustomerQuestions = ({product}) => {
 
     useEffect(() => {
       dispatch(getQuestionsByProduct(product?._id))
-    }, [])
+    }, [product])
 
     return (
         <Card title="Customer Questions">

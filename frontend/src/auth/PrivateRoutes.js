@@ -1,21 +1,19 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import { useSelector } from 'react-redux'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const token = localStorage.getItem("token");
+  const { user } = useSelector((state) => state.auth);
+  
   return (
     <Route
       {...rest}
       render={(props) =>
-        token ? (
+        user ? (
           <Component {...props} />
         ) : (
           <Redirect
-            to={{
-              pathname: "signin",
-              state: { from: props.location },
-            }}
-          />
+            to= {"/signin"}/>
         )
       }
     />

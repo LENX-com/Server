@@ -52,10 +52,11 @@ exports.answer =  async (req, res) => {
       };
 
       question.answers.unshift(newComment);
+      question.is_answered = true
 
       await question.save();
 
-      res.json(question.answers);
+      res.json(question);
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");
@@ -77,4 +78,31 @@ exports.answer =  async (req, res) => {
       console.log(err.message);
       res.status(500).send("Questions not found")
   }
+};
+
+exports.load = async (req, res, next, id) => {
+  try {
+    req.question = await Question.findById(id);
+    if (!req.question) return res.status(404).json({ message: 'Question not found' });
+  } catch (err) {
+    if (err.name === 'CastError')
+      return res.status(400).json({ message: 'invalid question id' });
+    return next(err);
+  }
+  next();
+};
+
+exports.upvote = async (req, res) => {
+  const question = await req.question.vote(req.user._id, 1);
+  res.json(question);
+};
+
+exports.downvote = async (req, res) => {
+  const question = await req.question.vote(req.user._id, -1);
+  res.json(question);
+};
+
+exports.unvote = async (req, res) => {
+  const question = await req.question.vote(req.user._id, 0);
+  res.json(question);
 };

@@ -21,7 +21,7 @@ const BlogSchema = new Schema({
   },
   likes: [
     {
-      user: {
+      user: { 
         type: Schema.Types.ObjectId
       }
     }

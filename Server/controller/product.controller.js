@@ -196,7 +196,7 @@ exports.remove = (req, res) => {
   });
 };
 
-exports.update = (req, res) => {
+exports.update = (req, res) => { 
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
   form.parse(req, (err, fields, files) => {

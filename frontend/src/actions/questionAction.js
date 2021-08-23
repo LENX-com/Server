@@ -16,9 +16,9 @@ export const createQuestion = (productId, question) => async (dispatch) => {
   }
 };
 
-export const createAnswer = (productId, question) => async (dispatch) => {
+export const createAnswer = (questionId, answer) => async (dispatch) => {
   try {
-    const res = await api.post(`${API}/question/$${productId}`, question);
+    const res = await api.post(`${API}/answer/${questionId}`, answer);
     dispatch({
       type: "ANSWER_ADDED_SUCCESFULLY",
       payload: res.data,
