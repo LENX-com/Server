@@ -9,7 +9,11 @@ export default function SearchResult(props) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products);
   useEffect(() => {
-    dispatch(getProductsByQuery(value));
+    if(value){
+
+      dispatch(getProductsByQuery(value));
+    }
+ 
   }, [dispatch, value]);
 
   return (
