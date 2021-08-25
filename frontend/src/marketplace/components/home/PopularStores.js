@@ -50,7 +50,7 @@ const PopularStores = () => {
                                 <h2 className="mt-2 text-base font-bold"> { brand.name } </h2>
                                 </div>
                                 <div className="mx-auto grid mt-2 text-center w-2/5">
-                                    <Link to = "marketplace/manufacturer/60f86fa8fe531bd3007e0c6b">
+                                    <Link to = "marketplace/manufacturer/60f86fa8fe5310">
                                         <Button className="bg-Black text-white rounded-full text-xs"> Shop now </Button>
                                     </Link>
                                 </div>

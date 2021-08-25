@@ -8,4 +8,4 @@ function ThemedSuspense() {
   )
 }
 
-export default ThemedSuspense
+export default ThemedSuspense   

@@ -4,7 +4,6 @@ const Button = ({children, className, ...buttonProps}) => {
 
     return (
         <button className= {`shadow-button rounded cursor-pointer hover:shadow-hover  ${className}`} {...buttonProps} >
-
             {children}
         </button>
     )

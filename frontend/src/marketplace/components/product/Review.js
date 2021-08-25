@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import Button from '../../../components/Buttons/Button'
 
 
-const Review = ({comments}) => {
+const Review = ({comments, id}) => {
 
     const [ tab, setTab ] = useState(0)
 
@@ -48,7 +48,7 @@ const Review = ({comments}) => {
             </Swiper>
             
             <div className="my-3">
-                <Link className="grid">
+                <Link className="grid" to={`/marketplace/products/reviews/${id}`}>
                     <Button className="bg-Blue text-white inline-block"> See All </Button>
                 </Link>
             </div>

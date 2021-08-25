@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage })
 
 const {
   createProduct,
@@ -25,7 +25,8 @@ const {
   listBySearch,
   photo,
   listSearch,
-  searchFilters,
+  searchFilters, 
+  searchCatalogue,
   listAll,
   productReview,
 } = require("../controller/product.controller");
@@ -40,14 +41,15 @@ const _ = require("lodash");
 //new implementation route
 router.post(
   "/product/create",
-  upload.single("file"),
+  upload.array("file"),
   auth,
   protected(1),
   createProduct
 );  
+router.get("/query", searchCatalogue);
 router.get("/products", list);
 router.post("/products/by/search", listBySearch);
-router.put("/edit/product/:productId", upload.single("file"), auth, protected(1), editProduct);
+router.put("/edit/product/:productId", upload.array('photo', 12), auth, protected(1), editProduct);
 router.delete("/delete:/productId", auth, protected(1));
 router.get("/products/by/category/:categoryId", getProductByCategory);
 router.get("/brands/:brandId", getProductByBrand);

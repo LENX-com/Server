@@ -91,18 +91,20 @@ const SignInPop = ({isOpen = false, setIsOpen }) => {
           </div>
           <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <div className="w-full">
-              <h1 className="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200"> Support and empower small businesses</h1>
-              <Label className="p-2 border-2 border-border rounded-md">
-                <Input className="mt-1" type="email" placeholder="Email or Username" value={email} onChange={handleChange("email")} />
-              </Label>
+              <h1 className="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200"> Support and empower small businesses</h1> 
+              <form>
+                <Label className="p-2 border-2 border-border rounded-md"> 
+                  <Input className="mt-1" type="email" placeholder="Email or Username" value={email} onChange={handleChange("email")} />
+                </Label>
 
-              <Label className="mt-4 border-2 border-border rounded-md p-2">
-                <Input className="mt-1" value ={password} type="password" placeholder="Password"  onChange={handleChange("password")}/>
-              </Label>
+                <Label className="mt-4 border-2 border-border rounded-md p-2">
+                  <Input className="mt-1" value ={password} type="password" placeholder="Password"  onChange={handleChange("password")}/>
+                </Label>
 
-              <Button onClick={clickSubmit} className="mt-4 bg-Blue focus:outline-none focus:ring-2 focus:ring-Blue focus:ring-opacity-30 " block >
-                Log in
-              </Button>
+                <Button onClick={clickSubmit} className="mt-4 bg-Blue focus:outline-none focus:ring-2 focus:ring-Blue focus:ring-opacity-30 " block >
+                  Log in
+                </Button>
+              </form>
 
              <p className="mt-4">
                 <Link

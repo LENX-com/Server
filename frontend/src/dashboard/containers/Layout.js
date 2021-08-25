@@ -11,7 +11,7 @@ import Footer from '../components/footer/Footer'
 
 const Page404 = lazy(() => import('../pages/404'))
 
-function Layout() {
+function Layout() { 
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext)
   let location = useLocation()
   const { path } = useRouteMatch();

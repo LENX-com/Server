@@ -107,7 +107,7 @@ const FilterDialogue = () => {
                         </div>
                         }
                         <div>
-                            <input class="shadow appearance-none border rounded py-2 h-28 text-Black w-full focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent p-2" />
+                            <input className="shadow appearance-none border rounded py-2 h-28 text-Black w-full focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent p-2" />
                         </div>
                     </div>
                 </div>   

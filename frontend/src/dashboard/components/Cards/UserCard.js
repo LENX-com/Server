@@ -2,7 +2,7 @@ import React from 'react'
 import Card from './Card'
 
 const UserCard = ({title, user, seen, image, role, email, description}) => {
-  return(
+  return( 
         <div className="mt-20">
         <div className="flex items-center justify-center mb-10">
           <Card className="flex flex-col items-center w-full max-w-xs  md:flex-row">

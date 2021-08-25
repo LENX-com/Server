@@ -24,29 +24,35 @@ const ProductReview = (props) => {
             }
         });
     };   
-
+  
     useEffect(() => {
         const productId = props.match.params.productId;
         loadSingleProduct(productId);
     }, [props]);
 
+    console.log(product.data)
+
 
     return (
-        <div>
-            <div className="my-3">
-               <button
-               className="rounded-full w-8 h-8 bg-Grey-light p-0 border-0 inline-flex items-center justify-center text-white ml-4"
-              onClick={() => setTimeout(() => history.goBack(), 150)}>
-                 <MdArrowBack className="w-5 h-5"/>
-                </button>
-            </div>
-           <ReviewSearch />
+        <>
+            { product &&
+                <div>
+                    <div className="my-3">
+                        <button
+                            className="rounded-full w-8 h-8 bg-Grey-light p-0 border-0 inline-flex items-center justify-center text-white ml-4"
+                            onClick={() => setTimeout(() => history.goBack(), 150)}>
+                            <MdArrowBack className="w-5 h-5"/>
+                        </button>
+                    </div>
+                    <ReviewSearch product = { product.data }/>
            
-           <Product product= { product.data }/>
+                    <Product product= { product.data }/>
 
-           <Comment />
+                    <Comment comments = { product.data } />
 
-        </div>
+                </div>
+            }
+        </>
     )
 }
 

@@ -55,6 +55,7 @@ App.use("/api", require("./routes/message"));
 App.use("/api", require("./routes/conversation"));
 App.use("/api", require("./routes/blog"));
 App.use("/api", require("./routes/subCategory"));
+App.use("/api", require("./routes/question"));
 
 
 // Initialise passport middleware

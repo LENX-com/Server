@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import PrivateRoutes from "../src/auth/PrivateRoutes";
 import Dashboard from "./dashboard/Dashboard";
+import Manufacturer from './manufacturer/Manufacturer'
 import AdminRoute from "../src/auth/AdminRoute";
 import AdminDashboard from "./pages/dashboard/AdminDashboard";
 import AddCategory from "./admin/AddCategory";
@@ -21,15 +22,18 @@ import Blog from './components/Blog/Blog'
 import Blogs from './components/Blogs/Blogs'
 import Cart from "./marketplace/components/cart/Cart";
 
+
 function Routes() {
+
   return (
-    <>
+    <>  
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/marketplace" component={MarketPlace} />
         <Route path="/cart" exact component={Cart} />
         <PrivateRoutes path="/user/dashboard" component={Dashboard} />
-        <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
+        <PrivateRoutes path="/admin/dashboard" component={Manufacturer} />
+        {/* <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} /> */}
         <AdminRoute path="/create/category" exact component={AddCategory} />
         <AdminRoute path="/create/product" exact component={AddProduct} />
         <Route path="/product/:productId" exact component={Product} />

@@ -2,9 +2,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import React, { useState } from 'react'
 import SectionTitle from '../../../components/Typography/SectionTitle'
 import { NavLink, useRouteMatch } from 'react-router-dom'
-import ProductCard from './ProductCard';
-import Card from '../../../components/Cards/Card';
-
+import ProductCard from './ProductCard'
+import Card from '../../../components/Cards/Card'
 
 const PopularProduct = ({categories, productList}) => {
 
