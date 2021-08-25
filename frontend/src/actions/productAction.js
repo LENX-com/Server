@@ -32,6 +32,23 @@ export  const getProducts = () => async (dispatch) => {
     });
   }
 };
+// all products
+export  const getProductsByQuery = (params) => async (dispatch) => {
+   const query = queryString.parse(params);
+  try {
+    const res = await api.get(
+      `${API}/query${params}`
+    );
+    dispatch({
+      type: "GET_PRODUCT_SEARCH",
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: "PRODUCT_ERROR",
+    });
+  }
+};
 
 // all products
 export const getProductsBySell = (sortBy) => async (dispatch) => {

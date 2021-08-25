@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import logo from "../../assets/logo.gif";
 import { Dialog, Transition } from "@headlessui/react";
+import { Link} from "react-router-dom";
 import {useSelector} from "react-redux"
 import {AiOutlineShoppingCart, AiOutlineHeart,AiOutlineUser} from "react-icons/ai"
 import "./Header.scss"
@@ -26,6 +27,71 @@ export default function Header() {
     <div onClick={()=> setSearchModal(false)} style={{position:"fixed", top:0, left:0, bottom:0, right:0, width:"100vw", height:"100vh", background:"#00000090", zIndex:2}}>
     </div>
   )
+
+
+  const AuthLinks = () => (
+    <>
+    <a
+    href="div#"
+    className="block px-4 py-2 text-sm text-gray-700"
+    role="menuitem"
+    tabindex="-1"
+    id="user-menu-item-0"
+  >
+    Your Profile
+  </a>
+  <a
+    href="div#"
+    className="block px-4 py-2 text-sm text-gray-700"
+    role="menuitem"
+    tabindex="-1"
+    id="user-menu-item-1"
+  >
+    Settings
+  </a>
+  <a
+    href="div#"
+    className="block px-4 py-2 text-sm text-gray-700"
+    role="menuitem"
+    tabindex="-1"
+    id="user-menu-item-2"
+  >
+    Sign out
+  </a>
+  </>
+  )
+
+  const UnauthLinks = () => (
+  <>
+  <a
+    className="block px-4 py-2 text-sm text-gray-700"
+    role="menuitem"
+    tabindex="-1"
+    id="user-menu-item-1"
+  >
+    Settings
+  </a>
+  <a
+    className="block px-4 py-2 text-sm text-gray-700"
+    role="menuitem"
+    tabindex="-1"
+    id="user-menu-item-1"
+  >
+About
+  </a>
+  <a
+  
+    className="block px-4 py-2 text-sm text-gray-700"
+    role="menuitem"
+    tabindex="-1"
+    id="user-menu-item-2"
+  >
+    <Link to="/signin">
+    Sign in
+    </Link>
+  </a>
+  </>
+    )
   return (
     <nav className="bg-gray-800 w-full "  style={{position:"fixed", zIndex:2, width:"100%"}}>
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -101,15 +167,20 @@ export default function Header() {
                   href="div#"
                   className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
-                  Team
+                  Team 
                 </a>
-              </div>  
+              </div>
             </div>
+            
+            
             <div className="w-full flex flex-col" style={{position:"relative", zIndex:3}} >
                   <input  onClick={()=> setSearchModal(true)} className="w-full p-2 rounded-full text-sm focus:outline-none focus:ring focus:border-blue-300 " type="search" placeholder="Search Brands and Products"/>
-                  <div className={`pt-6 px-2 `}style={{position:"absolute", top:20, background:"red", width:"100%", height:"200px", zIndex:-2,}}>
-                    <h1>Search results</h1>
-                  </div>
+                  {showSearchModal && 
+                   <div className={"pt-6 px-2 "}style={{position:"absolute", top:20, background:"gray", width:"100%", height:"200px", zIndex:-2}}>
+                   <h1>Search results</h1>
+                 </div>
+                  }
+                 
                 </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -159,33 +230,7 @@ export default function Header() {
                   aria-labelledby="user-menu-button"
                   tabindex="-1"
                 >
-                  <a
-                    href="div#"
-                    className="block px-4 py-2 text-sm text-gray-700"
-                    role="menuitem"
-                    tabindex="-1"
-                    id="user-menu-item-0"
-                  >
-                    Your Profile
-                  </a>
-                  <a
-                    href="div#"
-                    className="block px-4 py-2 text-sm text-gray-700"
-                    role="menuitem"
-                    tabindex="-1"
-                    id="user-menu-item-1"
-                  >
-                    Settings
-                  </a>
-                  <a
-                    href="div#"
-                    className="block px-4 py-2 text-sm text-gray-700"
-                    role="menuitem"
-                    tabindex="-1"
-                    id="user-menu-item-2"
-                  >
-                    Sign out
-                  </a>
+                  {isAuth ? <AuthLinks/> : <UnauthLinks/>}
                 </div>
               </Transition>
             </div>

@@ -16,6 +16,7 @@ import ForgotPassword from "./pages/password/ForgotPassword";
 import ResetPassword from "./pages/password/ResetPassword";
 import Home from './pages/home/Home'
 import Signin from './dashboard/components/user/Signin'
+import Signup from './dashboard/components/user/Signup'
 import Blog from './components/Blog/Blog'
 import Blogs from './components/Blogs/Blogs'
 import Cart from "./marketplace/components/cart/Cart";
@@ -40,6 +41,7 @@ function Routes() {
           component={ManageProducts}
         />
         <Route path="/signin" exact component={Signin} />
+        <Route path="/register" exact component={Signup} />
         <AdminRoute
           path="/admin/product/update/:productId"
           exact
