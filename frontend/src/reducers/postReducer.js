@@ -13,6 +13,7 @@ import {
 
 const initialState = {
   posts: [],
+  users:[],
   post: null,
   loading: true,
   error: {},
@@ -26,6 +27,18 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: payload,
+        loading: false,
+      };
+    case "MY_USERS":
+      return {
+        ...state,
+        users: payload,
+        loading: false,
+      };
+    case "MY_USER_ERROR":
+      return {
+        ...state,
+        error: payload,
         loading: false,
       };
     case GET_POST:

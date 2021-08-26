@@ -256,6 +256,7 @@ userSchema.methods = {
     this.resetPasswordExpires = Date.now() + 3600000; //expires in an hour
   },
 };
+userSchema.index({ name: "text",});
 
 const User = mongoose.model("User", userSchema);
 const Wishlist = mongoose.model("WishList", wishlistSchema);

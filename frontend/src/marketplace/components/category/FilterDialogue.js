@@ -1,97 +1,101 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { useState, Fragment } from 'react'
-import { Filter as FilterIcon } from '../../assets/icons'
-import { AiOutlineClose } from 'react-icons/ai'
-import { Swiper, SwiperSlide } from 'swiper/react';
-import ReactSlider from "react-slider"
+import { Dialog, Transition } from "@headlessui/react";
+import { useState, Fragment, useRef } from "react";
+import { Filter as FilterIcon } from "../../assets/icons";
+import { AiOutlineClose } from "react-icons/ai";
+import { Swiper, SwiperSlide } from "swiper/react";
+import ReactSlider from "react-slider";
 
-const FilterDialogue =({price, handleSlider}) => {
-  let [isOpen, setIsOpen] = useState(false)
-  const [ currentStore, setCurrentStore ] = useState(false)
-  const [ currentFilter, setCurrentFilter ] = useState(false)
+const FilterDialogue = ({ price, handleSlider }) => {
+  let [isOpen, setIsOpen] = useState(false);
+  const [currentStore, setCurrentStore] = useState(false);
+  const [currentFilter, setCurrentFilter] = useState(false);
+  const completeButtonref = useRef(null);
 
   // function closeModal() {
   //   setIsOpen(false)
   // }
 
   function openModal() {
-    setIsOpen(true)
+    setIsOpen(true);
   }
   const Stores = () => {
     const stores = [
-        {
-            name: "Cool Store",
-            logo: ""
-        },
-        {
-            name: "Boring Store",  
-            logo: ""
-        },
-        {
-            name: "Exciting Store",
-            logo: ""
-        },
-        {
-            name: "Big Store",
-            logo: ""
-        },
+      {
+        name: "Cool Store",
+        logo: "",
+      },
+      {
+        name: "Boring Store",
+        logo: "",
+      },
+      {
+        name: "Exciting Store",
+        logo: "",
+      },
+      {
+        name: "Big Store",
+        logo: "",
+      },
     ];
     return (
-    <Swiper
-    spaceBetween={20}
-    slidesPerView={3}
-    freeMode = { true }
-    className="search"
-    >
-    {
-        stores?.map( (store, i) => (
-            <SwiperSlide
-            className= {`${currentStore === i  ? "bg-Black text-white" : null } px-2 py-1 shadow-button m-2`} 
-            onClick= {(() => setCurrentStore(i))}
-            >
-                { store.name }
-            </SwiperSlide> 
-        ))
-    }
-    </Swiper>
-    )}
+      <Swiper
+        spaceBetween={20}
+        slidesPerView={3}
+        freeMode={true}
+        className="search"
+      >
+        {stores?.map((store, i) => (
+          <SwiperSlide
+            className={`${
+              currentStore === i ? "bg-Black text-white" : null
+            } px-2 py-1 shadow-button m-2`}
+            onClick={() => setCurrentStore(i)}
+          >
+            {store.name}
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    );
+  };
 
-    const SortBy = () => {
-        const Filters = [
-            {
-                name: "Price: Low to High",
-            },
-            {
-                name:" Price: High to Low"
-            },
-            {
-                name: "Avg. Customer Review",
-            },
-            {
-                name: "Newest Arrivals"
-            }
-        ];
+  const SortBy = () => {
+    const Filters = [
+      {
+        name: "Price: Low to High",
+      },
+      {
+        name: " Price: High to Low",
+      },
+      {
+        name: "Avg. Customer Review",
+      },
+      {
+        name: "Newest Arrivals",
+      },
+    ];
 
-        return (
-            <>
-            { Filters?.map( (data) => (
-                <div
-                    className= {`${currentFilter === data.name  ? "bg-Black text-white" : "" } px-2 py-1 shadow-button m-2 rounded-md bg-Grey-sd text-sm` } 
-                    onClick= {(() => setCurrentFilter(data.name))
-                    }>
-                    { data.name }
-                </div>
-            ))}
-            </>
-        )
-    }
-
+    return (
+      <>
+        {Filters?.map((data) => (
+          <div
+            className={`${
+              currentFilter === data.name ? "bg-Black text-white" : ""
+            } px-2 py-1 shadow-button m-2 rounded-md bg-Grey-sd text-sm`}
+            onClick={() => setCurrentFilter(data.name)}
+          >
+            {data.name}
+          </div>
+        ))}
+      </>
+    );
+  };
 
   return (
     <>
       <div>
         <button
           type="button"
+          ref={completeButtonref}
           onClick={openModal}
           className="px-4 py-2 text-sm font-medium text-white bg-lightBlack rounded-md hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         >
@@ -102,10 +106,11 @@ const FilterDialogue =({price, handleSlider}) => {
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
+          initialFocus={completeButtonref}
           className="fixed inset-0 overflow-y-auto"
-          style={{zIndex: '999'}} 
-          onClose= { () => setIsOpen(false) }
-          open= { isOpen }
+          style={{ zIndex: "999" }}
+          onClose={() => setIsOpen(false)}
+          open={isOpen}
         >
           <div className="min-h-screen text-center">
             <Transition.Child
@@ -141,17 +146,23 @@ const FilterDialogue =({price, handleSlider}) => {
                   as="div"
                   className="border-b-2 border-Grey border-solid"
                 >
-                  <div className="p-5 flex"> 
-                  <h2 className="text-lg font-medium leading-6 text-gray-900"> Filter </h2>
-                  <div onClick={ () => setIsOpen(false) } className="ml-auto text-xl text-white rounded-full p-2 bg-Black">
-                      <AiOutlineClose  />
+                  <div className="p-5 flex">
+                    <h2 className="text-lg font-medium leading-6 text-gray-900">
+                      {" "}
+                      Filter{" "}
+                    </h2>
+                    <div
+                      onClick={() => setIsOpen(false)}
+                      className="ml-auto text-xl text-white rounded-full p-2 bg-Black"
+                    >
+                      <AiOutlineClose />
+                    </div>
                   </div>
-                  </div> 
                 </Dialog.Title>
                 <div className="p-6">
-                <div className="mt-2">
-                  <div> Sort by price </div>
-                    	<ReactSlider
+                  <div className="mt-2">
+                    <div> Sort by price </div>
+                    <ReactSlider
                       step={1}
                       min={1}
                       max={200}
@@ -159,25 +170,23 @@ const FilterDialogue =({price, handleSlider}) => {
                       thumbClassName="absolute w-5 h-5 cursor-grab bg-orange rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:orange -top-2px"
                       value={price}
                       onChange={handleSlider}
-                      />
-                      <span> £ {` ${price[0]} ${"to"} ${price[1]}`}</span>
-                </div>
+                    />
+                    <span> £ {` ${price[0]} ${"to"} ${price[1]}`}</span>
+                  </div>
 
-                <div className="my-4 border-t-2 border-Grey border-solid">
-                  <div> Stores </div>
+                  <div className="my-4 border-t-2 border-Grey border-solid">
+                    <div> Stores </div>
                     <div>
-                        <Stores />
+                      <Stores />
                     </div>
-                </div>
+                  </div>
 
-                
-                <div className="my-4 border-t-2 border-Grey border-solid">
-                  <div> Sort by </div>
+                  <div className="my-4 border-t-2 border-Grey border-solid">
+                    <div> Sort by </div>
                     <div className="grid grid-cols-2 gap-4">
-                        <SortBy />
+                      <SortBy />
                     </div>
-                </div>
-
+                  </div>
                 </div>
               </div>
             </Transition.Child>
@@ -185,7 +194,7 @@ const FilterDialogue =({price, handleSlider}) => {
         </Dialog>
       </Transition>
     </>
-  )
-}
+  );
+};
 
-export default FilterDialogue
+export default FilterDialogue;

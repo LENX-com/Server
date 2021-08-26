@@ -23,6 +23,31 @@ exports.searchCatalogue = async (req, res) => {
     const catalogue = await Product.find({
       $text: { $search: req.query.value },
     });
+    const store = await User.find({
+      $text: { $search: req.query.value },
+    });
+
+    const newArr = catalogue.concat(store);
+    return res.json(newArr);
+  } catch (err) {
+    console.log(err);
+  }
+};
+exports.searchStoresCatalogue = async (req, res) => {
+  try {
+    const store = await User.find({
+      $text: { $search: req.query.value },
+    });
+    return res.json(store);
+  } catch (err) {
+    console.log(err);
+  }
+};
+exports.searchProductsCatalogue = async (req, res) => {
+  try {
+    const catalogue = await Product.find({
+      $text: { $search: req.query.value },
+    });
     return res.json(catalogue);
   } catch (err) {
     console.log(err);
@@ -33,7 +58,6 @@ exports.searchCatalogue = async (req, res) => {
 //create a product route accessible by only manufacturer(role 1) and add category from req.body.category
 exports.createProduct = async (req, res) => {
   const file = req.files;  
-  
   try {
   
     if (!file) throw new Error("Enter a valid file");
@@ -49,7 +73,6 @@ exports.createProduct = async (req, res) => {
         public_id : result.public_id
       })
     }  
-
     const { ...args } = req.body;
     args.slug = slugify(req.body.name);
     args.author = req.user._id;

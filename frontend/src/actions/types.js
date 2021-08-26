@@ -31,10 +31,13 @@ export const ADD_POST = "ADD_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const REMOVE_COMMENT = "REMOVE_COMMENT";
 
-//user types
+//user/manufacturer types
 export const FOLLOW_MANUFACTURER = "FOLLOW_MANUFACTURER";
 export const GET_FOLLOWING = "GET_FOLLOWING";
 export const FOLLOW_ERROR = "FOLLOW_ERROR";
+export const GET_ALL_MANUFACTURER ="GET_ALL_MANUFACTURER"
+export const GET_SINGLE_MANUFACTURER = "GET_SINGLE_MANUFACTURER"
+export const MANUFACTURER_ERROR = "MANUFACTURER_ERROR"
 //user types
 
 export const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";

@@ -182,20 +182,33 @@ export const allBlogsByfollowing = () => async (dispatch) => {
   }
 };
 
-
 //get all blogs for a single manufacturer you are following.
 
 export const allBlogsBySingleFollowing = (formdata) => async (dispatch) => {
   try {
-    const res = await api.post(`${API}/blog/following/single`, formdata)
+    const res = await api.post(`${API}/blog/following/single`, formdata);
     dispatch({
-      type:GET_ALL_BLOG_BY_SINGLE_FOLLOWING_MANUFACTURER,
-      payload:res.data
-    })
+      type: GET_ALL_BLOG_BY_SINGLE_FOLLOWING_MANUFACTURER,
+      payload: res.data,
+    });
   } catch (error) {
     dispatch({
       type: POST_ERROR,
       payload: error,
+    });
+  }
+};
+
+export const myUsers = () => async (dispatch) => {
+  try {
+    const res = await api.get(`${API}/all`);
+    dispatch({
+      type: "MY_USERS",
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: "MY_USER_ERROR",
     });
   }
 };

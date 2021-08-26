@@ -1,48 +1,94 @@
-import { Popover, Transition } from '@headlessui/react'
-import { AiOutlineDown } from 'react-icons/ai'
-import { AiFillBank } from "react-icons/ai";
+import { Dialog, Transition } from "@headlessui/react";
+import { useState, Fragment, useRef } from "react";
+import { Filter as FilterIcon } from "../../assets/icons";
+import { AiOutlineClose } from "react-icons/ai";
 
+const CategoryPop = ({ children }) => {
+  let [isOpen, setIsOpen] = useState(false);
 
-const CategoryPop = ({children}) => {
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  const completeButtonref = useRef(null);
+
   return (
-    <div className="w-full max-w-sm px-4">
-      <Popover>
-        {({ open }) => (
-          <>
-            <Popover.Button
-              className={`
-                ${open ? '' : 'text-opacity-90'}
-                text-white group bg-orange-700 px-3 py-2 inline-flex items-center text-base font-medium rounded-md bg-lightBlack`}
-            >
-              <span className="text-white text-sm"> Categories </span>
-              <AiOutlineDown
-                className={`${open ? '' : 'text-opacity-70 text-white'}
-                   h-4 w-4 transition ease-in-out duration-150 text-sm ml-1 `}
-                aria-hidden="true"
-              />
-            </Popover.Button>
-            <Transition
-              enter="transition ease-out duration-200"
-              enterFrom="opacity-0 translate-y-1"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition ease-in duration-150"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 translate-y-1"
-              show= {true}
-            >
-              <Popover.Panel className="absolute bottom-0 z-10 w-screen max-w-sm mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl">
-                <div className="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
-                  <div className="relative grid gap-8 grid-cols-2 bg-white p-7 lg:grid-cols-2">
-                 {children}
-                  </div>
-                </div>
-              </Popover.Panel>
-            </Transition>
-          </>
-        )}
-      </Popover>
-    </div>
-  )
-}
+    <>
+      <div>
+        <button
+          type="button"
+          ref={completeButtonref}
+          onClick={openModal}
+          className="px-4 py-2 text-sm font-medium text-white bg-lightBlack rounded-md hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+        >
+          <FilterIcon />
+        </button>
+      </div>
 
-export default CategoryPop
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          initialFocus={completeButtonref}
+          className="fixed inset-0 overflow-y-auto"
+          style={{ zIndex: "999" }}
+          onClose={() => setIsOpen(false)}
+          open={isOpen}
+        >
+          <div className="min-h-screen text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Dialog.Overlay className="fixed inset-0" />
+            </Transition.Child>
+
+            {/* This element is to trick the browser into centering the modal contents. */}
+            <span
+              className="inline-block h-screen align-bottom"
+              aria-hidden="true"
+            >
+              &#8203;
+            </span>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <div className="inline-block w-full max-w-md overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl ">
+                <Dialog.Title
+                  as="div"
+                  className="border-b-2 border-Grey border-solid"
+                >
+                  <div className="p-5 flex">
+                    <h2 className="text-lg font-medium leading-6 text-gray-900">
+                      {" "}
+                      Filter{" "}
+                    </h2>
+                    <div
+                      onClick={() => setIsOpen(false)}
+                      className="ml-auto text-xl text-white rounded-full p-2 bg-Black"
+                    >
+                      <AiOutlineClose />
+                    </div>
+                  </div>
+                </Dialog.Title>
+                <div className="p-6">{children}</div>
+              </div>
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition>
+    </>
+  );
+};
+
+export default CategoryPop;

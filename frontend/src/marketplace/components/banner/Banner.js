@@ -22,7 +22,7 @@ const promoBanners = [
 const Banner = () => {
     return (
         <div>      
-            <div className="banner-slider">
+            <div className="banner-slider pt-14">
                 <Swiper
                     spaceBetween={20}
                     slidesPerView={1}

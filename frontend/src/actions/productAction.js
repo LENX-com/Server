@@ -32,6 +32,62 @@ export  const getProducts = () => async (dispatch) => {
     });
   }
 };
+// all products
+export  const getAllSearchQuery = (params) => async (dispatch) => {
+  console.log(params)
+
+  try {
+    const res = await api.get(
+      `${API}/query-catalogues${params}`
+    );
+    dispatch({
+      type: "GET_ALL_SEARCH_QUERY",
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: "PRODUCT_ERROR",
+    });
+  }
+};
+
+// all products
+export  const getSearchQueryByStore = (params) => async (dispatch) => {
+
+  try {
+    const res = await api.get(
+      `${API}/query-stores${params}`
+    );
+    dispatch({
+      type: "GET_SEARCH_QUERY_BY_STORES",
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: "PRODUCT_ERROR",
+    });
+  }
+};
+// all products
+export  const getSearchQueryByProducts = (params) => async (dispatch) => {
+
+  try {
+    const res = await api.get(
+      `${API}/query-products${params}`
+    );
+    dispatch({
+      type: "GET_SEARCH_QUERY_BY_PRODUCTS",
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: "PRODUCT_ERROR",
+    });
+  }
+};
+
+
+
 
 // all products
 export const getProductsBySell = (sortBy) => async (dispatch) => {

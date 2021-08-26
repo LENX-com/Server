@@ -26,8 +26,11 @@ const {
   photo,
   listSearch,
   searchFilters, 
+  searchCatalogue,
   listAll,
   productReview,
+  searchProductsCatalogue,
+  searchStoresCatalogue
 } = require("../controller/product.controller");
 const { auth, protected } = require("../middlewares/verify");
 const { userById } = require("../controller/user.controller");
@@ -45,6 +48,9 @@ router.post(
   protected(1),
   createProduct
 );  
+router.get("/query-catalogues", searchCatalogue);
+router.get("/query-products", searchProductsCatalogue);
+router.get("/query-stores", searchStoresCatalogue);
 router.get("/products", list);
 router.post("/products/by/search", listBySearch);
 router.put("/edit/product/:productId", upload.array('photo', 12), auth, protected(1), editProduct);
