@@ -167,3 +167,16 @@ body {
   border: 1px solid #dddddd !important;
   border-radius: 12px !important;
 }
+
+//Select Field Style 
+.Selection:after {
+  content: "";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 viewBox%3D%220 0 24 24%22%3E%3Cpolygon fill%3D%22%23222222%22 points%3D%2216.5 10 12 16 7.5 10 16.5 10%22%2F%3E%3C%2Fsvg%3E");
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}

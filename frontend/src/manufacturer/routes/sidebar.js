@@ -21,9 +21,9 @@ const routes = [
     name: 'Reviews',
   },
   {
-    path: `${address}/store`,
+    path: `${address}/products`,
     icon: 'FormsIcon',
-    name: 'Store',
+    name: 'Products',
   },
 ]
 

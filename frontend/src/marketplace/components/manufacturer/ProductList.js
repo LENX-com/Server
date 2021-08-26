@@ -98,7 +98,7 @@ const ProductList = () => {
             </div>
 
             <div>
-                    <CategoriesTag />
+                <CategoriesTag />
             </div>
 
             <div className="grid grid-cols-2 gap-4">

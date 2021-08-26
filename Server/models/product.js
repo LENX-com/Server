@@ -12,11 +12,21 @@ const productSchema = new mongoose.Schema(
       trim: true,
       required: true,
       //maxlength: 32
-    },
+    },   
     tags: {
       type: String,
       enum: ["tag1", "tag2", "tag3", "tag4"],
       default: "tag1",
+    },
+    ShippingPrice: {
+      type: Number,
+      required: true
+    },
+    status: {
+      type: String,
+      enum: ["active", "draft", "inactive"],
+      default: "active",
+      required: true
     },
      slug: {
       type: String,

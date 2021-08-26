@@ -21,7 +21,8 @@ const WriteReview = lazy(() => import('../pages/WriteReview'))
 const SingleBlog = lazy(() => import('../pages/SingleBlog'))
 const FindStatusOrder = lazy(() => import('../pages/FindStatusOrder'))
 const FetchConversation = lazy(() => import('../../chat/FetchConversation'))
-const Store = lazy(() => import('../pages/Store'))
+const Products = lazy(() => import('../pages/Products'))
+const AddProduct = lazy(() => import('../pages/AddProduct'))
 
 
 const routes = 
@@ -103,8 +104,12 @@ const routes =
     component: FetchConversation,
   },
   {
-    path: `${address}/store`,
-    component: Store,
+    path: `${address}/products`,
+    component: Products,
+  },
+  {
+    path: `${address}/products/add-product`,
+    component: AddProduct,
   },
   
 ]

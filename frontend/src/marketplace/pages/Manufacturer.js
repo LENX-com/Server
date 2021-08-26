@@ -50,7 +50,7 @@ const Manufacturer = (props) => {
                 <ManufacturerProfile />
 
                 <Profile />
-                {content}
+                    {content}
             </div>
             
         </div>

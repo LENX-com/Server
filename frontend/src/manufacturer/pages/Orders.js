@@ -87,7 +87,7 @@ const Orders = () => {
           </div>
           ))}
         </dv>
-        
+          
           <div className="mb-3 px-2">
             <Label className="p-2 border-2 border-border rounded-md mt-b bg-white"> 
               <Input className="mt-1" type="text" placeholder="Search for orders"/>
