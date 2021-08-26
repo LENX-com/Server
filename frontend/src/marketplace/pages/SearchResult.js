@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsByQuery } from "../../actions/productAction";
+import { getAllSearchQuery} from "../../actions/productAction";
 import { FaCat } from "react-icons/fa";
 import CategoryProduct from "../components/product/CategoryProduct";
 
 export default function SearchResult(props) {
   const value = props.location.search;
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.product.products);
+  const products = useSelector((state) => state.product.productsSearched);
   useEffect(() => {
     if(value){
 
-      dispatch(getProductsByQuery(value));
+      dispatch(getAllSearchQuery(value));
     }
  
   }, [dispatch, value]);

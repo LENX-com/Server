@@ -53,12 +53,24 @@ export const productReducer = (state = initialState, action) => {
           productsByCategory: action.payload,
           loading: false,
         };
-    case "SEARCHED_PRODUCTS":
+    case "GET_ALL_SEARCH_QUERY":
       return {
         ...state,
         productsSearched: action.payload,
         loading: false,
       };
+      case "GET_SEARCH_QUERY_BY_STORES":
+        return {
+          ...state,
+          productsSearched: action.payload,
+          loading: false,
+        };
+        case "GET_SEARCH_QUERY_BY_PRODUCTS":
+        return {
+          ...state,
+          productsSearched: action.payload,
+          loading: false,
+        };
     case "ADD_PRODUCT":
       return {
         ...state,

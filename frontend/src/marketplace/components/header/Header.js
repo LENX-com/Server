@@ -1,17 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
+import queryString from "query-string"
 import logo from "../../assets/logo.gif";
 import { Dialog, Transition } from "@headlessui/react";
-import { Link} from "react-router-dom";
-import {useSelector} from "react-redux"
-import {AiOutlineShoppingCart, AiOutlineHeart,AiOutlineUser} from "react-icons/ai"
+import { useDispatch, useSelector } from "react-redux";
+import {getAllSearchQuery} from "../../../actions/productAction"
+import { Link,useHistory} from "react-router-dom";
+import {AiOutlineShoppingCart, AiOutlineHeart,AiOutlineUser, AiOutlineSearch, AiOutlineClose} from "react-icons/ai"
 import "./Header.scss"
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const isAuth = useSelector(state => state.auth.isAuthenticated)
+  const searchResults = useSelector(state => state.product.productsSearched)
   const [showSearchModal, setSearchModal] = useState(false)
+  const [searchResultDropDown, setSearchResultDropDown] = useState(false)
   const [navOpen, setNavOpen] = useState(false)
+const inputRef = useRef("")
+const history = useHistory()
   const buttonRef = useRef(null);
-
+const dispatch = useDispatch()
   useEffect(()=>{
     const body = document.querySelector("body")
     if(showSearchModal){
@@ -21,12 +27,58 @@ export default function Header() {
     }
   },[showSearchModal])
 
+const handleSearchModalClose = ()=>{
+  setSearchModal(false);
+  setSearchResultDropDown(false)
+  
+}
 
   const SearchModal = ()=>(
     showSearchModal &&
-    <div onClick={()=> setSearchModal(false)} style={{position:"fixed", top:0, left:0, bottom:0, right:0, width:"100vw", height:"100vh", background:"#00000090", zIndex:2}}>
+    <div onClick={handleSearchModalClose} style={{position:"fixed", top:0, left:0, bottom:0, right:0, width:"100vw", height:"100vh", background:"#00000090", zIndex:2}}>
     </div>
   )
+
+
+  const handleOnSearch = ()=>{
+  console.log(inputRef.current.value)
+   const test = queryString.stringify({value:inputRef.current.value})
+   dispatch(getAllSearchQuery("?" + test))
+   if(searchResults.length !== 0){
+     setSearchResultDropDown(true)
+   }
+    
+  }
+
+  const handleQuerySubmit = ()=>{
+    history.push("/marketplace/search/?value=" + inputRef.current.value);
+  }
+
+  const handleClearInput = ()=>{
+    setSearchResultDropDown(false)
+    inputRef.current.value = ""
+  }
+
+  const SearchBarActionIcon = ()=>(
+    inputRef.current.value !== "" ?  
+    <>   
+    
+    <button onClick ={handleQuerySubmit}className="absolute inset-y-0 right-0 bg-blue-600 p-2 rounded-full text-sm focus:outline-none focus:ring  ">
+    <AiOutlineSearch color="white" size={20}/>
+    </button>
+
+  
+    
+    <button className="absolute inset-y-0 right-10" onClick={handleClearInput}>
+    <AiOutlineClose size={20}/>
+    </button>
+    </>:
+    <button className="absolute inset-y-0 right-0 ">
+    <AiOutlineSearch size={20}/>
+    </button>
+
+  )
+  
 
 
   const AuthLinks = () => (
@@ -174,10 +226,20 @@ About
             
             
             <div className="w-full flex flex-col" style={{position:"relative", zIndex:3}} >
-                  <input  onClick={()=> setSearchModal(true)} className="w-full p-2 rounded-full text-sm focus:outline-none focus:ring focus:border-blue-300 " type="search" placeholder="Search Brands and Products"/>
-                  {showSearchModal && 
-                   <div className={"pt-6 px-2 "}style={{position:"absolute", top:20, background:"gray", width:"100%", height:"200px", zIndex:-2}}>
+              <div className="relative flex">
+              <input ref={inputRef} onClick={()=> setSearchModal(true)} onChange={handleOnSearch} className="w-full p-2 rounded-full text-sm focus:outline-none focus:border-blue-300 " name="searchValue" placeholder="Search Brands and Products"/>
+            < SearchBarActionIcon />
+              </div>
+            
+                  {searchResults && searchResultDropDown && searchResults.length !== 0 && inputRef.current.value !== "" &&
+                   <div className={"pt-6 px-2 "}style={{position:"absolute", top:20, background:"rgb(232, 232, 232)", width:"100%", height:"200px", zIndex:-2}}>
                    <h1>Search results</h1>
+                   <ul>
+                     {searchResults.map(data =>(
+                       <li>{data.name}</li>
+                     ))}
+                     
+                   </ul>
                  </div>
                   }
                  
