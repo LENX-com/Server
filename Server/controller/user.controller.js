@@ -32,6 +32,7 @@ exports.getUserById = async (req, res) => {
   }
 };
 
+
 exports.updateUser = async (req, res) => {
   console.log(req.file);
   try {
@@ -207,32 +208,32 @@ exports.validate = (req, res, next) => {
 //get wish list by authenticated user
 exports.getWishlist = async (req, res) => {
   const wish = await Wishlist.find({ userId: req.user._id }).populate(
-    "product"
+    "productId"
   );
   try {
     return res.json(wish);
-  } catch (error) {  
+  } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error });
   }
 };
-   
+
 //add wish list
 exports.addWishlist = async (req, res) => {
   const product = await Product.findById(req.params.productId);
-  const wish = await Wishlist.find({ product: req.params.productId });
+  const wish = await Wishlist.find({ productId: req.params.productId });
   try {
     if (wish.length > 0) {
       return res.status(400).json({ error: "wishlist already added" });
     }
     const data = {
       userId: req.user._id,
-      product: product,
+      productId: product._id,
     };
     const resp = await Wishlist.create(data);
-    return res.status(200).json({ data: resp });
-  } catch (error) { 
-    console.log(error);  
+    return res.status(200).json(resp);
+  } catch (error) {
+    console.log(error);
     return res.status(500).json({ error: error });
   }
 };
