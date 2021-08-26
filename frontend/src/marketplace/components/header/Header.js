@@ -63,17 +63,17 @@ const handleSearchModalClose = ()=>{
     inputRef.current.value !== "" ?  
     <>   
     
-    <button onClick ={handleQuerySubmit}className="absolute inset-y-0 right-0 bg-blue-600 p-2 rounded-full text-sm focus:outline-none focus:ring  ">
+    <button onClick ={handleQuerySubmit}className="hidden lg:block lg:absolute lg:inset-y-0 lg:right-0 lg:bg-blue-600 lg:p-2 lg:rounded-full lg:text-sm lg:focus:outline-none lg:focus:ring  ">
     <AiOutlineSearch color="white" size={20}/>
     </button>
 
   
     
-    <button className="absolute inset-y-0 right-10" onClick={handleClearInput}>
+    <button className="hidden lg:block lg:absolute lg:inset-y-0 lg:block lg:right-10" onClick={handleClearInput}>
     <AiOutlineClose size={20}/>
     </button>
     </>:
-    <button className="absolute inset-y-0 right-0 ">
+    <button className="hidden lg:block lg:absolute lg:inset-y-0 lg:right-0 ">
     <AiOutlineSearch size={20}/>
     </button>
 
@@ -195,7 +195,7 @@ About
           <div className="flex-1 flex items-center justify-center ">
             <div className="flex-shrink-0 flex items-center">
               <img
-                className="block lg:hidden h-8 w-auto"
+                className="hidden lg:hidden h-8 w-auto"
                 src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                 alt="Workflow"
               />
@@ -227,7 +227,7 @@ About
             
             <div className="w-full flex flex-col" style={{position:"relative", zIndex:3}} >
               <div className="relative flex">
-              <input ref={inputRef} onClick={()=> setSearchModal(true)} onChange={handleOnSearch} className="w-full p-2 rounded-full text-sm focus:outline-none focus:border-blue-300 " name="searchValue" placeholder="Search Brands and Products"/>
+              <input ref={inputRef} onClick={()=> setSearchModal(true)} onChange={handleOnSearch} className="hidden lg:block w-full p-2 rounded-full text-sm focus:outline-none focus:border-blue-300 " name="searchValue" placeholder="Search Brands and Products"/>
             < SearchBarActionIcon />
               </div>
             
@@ -246,8 +246,11 @@ About
                 </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <AiOutlineSearch size={23} color="white" className="mr-6 lg:hidden"/>
             <AiOutlineHeart size={23} color="white" className="mr-6"/>
             <AiOutlineShoppingCart size={23} color="white"/>
+  
+            
 
             <div className="ml-3 relative">
               <div>
