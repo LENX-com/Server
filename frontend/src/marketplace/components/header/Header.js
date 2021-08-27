@@ -13,8 +13,13 @@ export default function Header() {
   const searchResults = useSelector(state => state.product.productsSearched)
   const [showSearchModal, setSearchModal] = useState(false)
   const [searchResultDropDown, setSearchResultDropDown] = useState(false)
-  const [navOpen, setNavOpen] = useState(false)
-const inputRef = useRef("")
+  const [form, setFormValue]= useState({
+    text:""
+
+  })
+
+
+const [navOpen, setNavOpen] = useState(false)
 const history = useHistory()
   const buttonRef = useRef(null);
 const dispatch = useDispatch()
@@ -30,7 +35,9 @@ const dispatch = useDispatch()
 const handleSearchModalClose = ()=>{
   setSearchModal(false);
   setSearchResultDropDown(false)
-  
+  setFormValue({
+    text:""
+  })
 }
 
   const SearchModal = ()=>(
@@ -39,28 +46,31 @@ const handleSearchModalClose = ()=>{
     </div>
   )
 
+  const handleChange = (e)=>{
+    setFormValue({...form, [e.target.name]:e.target.value})
+   const test = queryString.stringify({value:e.target.value})
 
-  const handleOnSearch = ()=>{
-  console.log(inputRef.current.value)
-   const test = queryString.stringify({value:inputRef.current.value})
    dispatch(getAllSearchQuery("?" + test))
    if(searchResults.length !== 0){
      setSearchResultDropDown(true)
    }
-    
   }
 
   const handleQuerySubmit = ()=>{
-    history.push("/marketplace/search/?value=" + inputRef.current.value);
+    history.push("/marketplace/search/?value=" + form.text);
+ setSearchModal(false)
   }
 
   const handleClearInput = ()=>{
     setSearchResultDropDown(false)
-    inputRef.current.value = ""
+    setFormValue({
+      text:""
+    })
   }
 
+
   const SearchBarActionIcon = ()=>(
-    inputRef.current.value !== "" ?  
+    form.text !== "" ?  
     <>   
     
     <button onClick ={handleQuerySubmit}className="hidden lg:block lg:absolute lg:inset-y-0 lg:right-0 lg:bg-blue-600 lg:p-2 lg:rounded-full lg:text-sm lg:focus:outline-none lg:focus:ring  ">
@@ -228,11 +238,11 @@ About
             
             <div className="w-full flex flex-col" style={{position:"relative", zIndex:3}} >
               <div className="relative flex">
-              <input ref={inputRef} onClick={()=> setSearchModal(true)} onChange={handleOnSearch} className="hidden lg:block w-full p-2 rounded-full text-sm focus:outline-none focus:border-blue-300 " name="searchValue" placeholder="Search Brands and Products"/>
+              <input value={form.text} name="text" type="text" onChange={(e)=>handleChange(e)} onClick={()=> setSearchModal(true)} className="hidden lg:block w-full p-2 rounded-full text-sm focus:outline-none focus:border-blue-300 "placeholder="Search Brands and Products"/>
             < SearchBarActionIcon />
               </div>
             
-                  {searchResults && searchResultDropDown && searchResults.length !== 0 && inputRef.current.value !== "" &&
+                  {searchResults && searchResultDropDown && searchResults.length !== 0 && form.text !== "" &&
                    <div className={"pt-6 px-2 "}style={{position:"absolute", top:20, background:"rgb(232, 232, 232)", width:"100%", height:"200px", zIndex:-2}}>
                    <h1>Search results</h1>
                    <ul>

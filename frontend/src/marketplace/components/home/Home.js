@@ -50,14 +50,12 @@ function Home() {
           <Card product={product} key={i} className="col" />
         ))}
       </div>
-
       <div className="row">
         <h2 className="title">Best sellers</h2>
         {product.productsBySell.map((product, i) => (
           <Card key={i} product={product} />
         ))}
       </div>
-
       <div className="row">
         <h2 className="title"> By arrival</h2>
         {product.productsByArrival.map((product, i) => (

@@ -26,6 +26,12 @@ export const wishListReducer = (state = initialState, action) => {
         ),
         loading: false,
       };
+      case "CLEAR_WISHLIST_ERROR":
+      return {
+        ...state,
+        error:{},
+        loading: false,
+      };
     case "WISHLIST_ERROR":
       return {
         ...state,
