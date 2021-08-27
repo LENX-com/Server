@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Redirect, useRouteMatch, useHistory } from "react-router-dom";
 import { addItem, updateItem, removeItem } from "../cart/CartHelper";
 import { addWishList } from "../../../actions/wishlistAction";
@@ -144,9 +144,6 @@ const ProductCard = ({
 
   return (
     <>
-      {/* {error.status === 401 && (
-        <SignInPop isOpen={true} setIsOpen={setIsOpen} />
-      )}  */}
       <div className="shadow-product rounded-md ">
         <div
           className="relative rounded-md bg-cover bg-center h-36"

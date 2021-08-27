@@ -5,16 +5,23 @@ import Main from '../Main'
 import Footer from '../../components/footer/Footer'
 import ThemedSuspense from '../ThemesSuspense'
 import routes from '../../routes'
+import { useSelector } from 'react-redux'
+import SignInPop from '../../components/auth/SignInPop'
 
 
 const Page404 = lazy(() => import('../../../pages/404'))
 
 function Layout() {
   let location = useLocation()
+  const error = useSelector((state) => state.wishlist.error);
   console.log(location)
-
+  
 
   return (
+    <>
+    {error.status === 401 && (
+      <SignInPop />
+    )} 
     <div
       className={`flex h-screen`}
     >
@@ -40,6 +47,7 @@ function Layout() {
        <Footer />
       </div>
     </div>
+    </>
   )
 }
 

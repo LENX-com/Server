@@ -23,7 +23,7 @@ import {
   AiFillGoogleCircle as GoogleCircle,
 } from "react-icons/ai";
 
-const SignInPop = ({ isOpen = false, setIsOpen }) => {
+const SignInPop = ({ isOpen = true, setIsOpen }) => {
   let completeButtonRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -169,9 +169,9 @@ const SignInPop = ({ isOpen = false, setIsOpen }) => {
 
   return (
     <div>
-      <div>overlay</div>
-      {/* <div ref={completeButtonRef}></div> */}
-{/* 
+
+      <div ref={completeButtonRef}></div> 
+
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -241,7 +241,7 @@ const SignInPop = ({ isOpen = false, setIsOpen }) => {
             ></div>
           </div>
         </Dialog>
-      </Transition> */}
+      </Transition> 
     </div>
   );
 };
