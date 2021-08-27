@@ -16,6 +16,7 @@ cloudinary.config({
 
 
 
+
 //search system powerd by mongodb text search with indexes
 
 exports.searchCatalogue = async (req, res) => {
@@ -55,9 +56,13 @@ exports.searchProductsCatalogue = async (req, res) => {
 };
 
 
+
 //create a product route accessible by only manufacturer(role 1) and add category from req.body.category
 exports.createProduct = async (req, res) => {
-  const file = req.files;  
+  const file = req.files;
+  
+  console.log(req.files)
+  
   try {
   
     if (!file) throw new Error("Enter a valid file");
@@ -73,6 +78,7 @@ exports.createProduct = async (req, res) => {
         public_id : result.public_id
       })
     }  
+
     const { ...args } = req.body;
     args.slug = slugify(req.body.name);
     args.author = req.user._id;

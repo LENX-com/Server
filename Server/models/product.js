@@ -28,6 +28,11 @@ const productSchema = new mongoose.Schema(
       default: "active",
       required: true
     },
+    shippingTime: {
+      type: String,
+      enum: ["1 Business Day"," 1-3 Business Days","3-5 Business Days", "5+ Business Days"],
+      required: true
+    },
      slug: {
       type: String,
       unique: true,
