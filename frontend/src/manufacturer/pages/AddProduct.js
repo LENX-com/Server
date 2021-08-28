@@ -3,12 +3,13 @@ import { Formik, Field } from "formik";
 import Dropzone from "react-dropzone";
 import { AiFillFileImage } from "react-icons/ai";
 import { MdArrowBack } from "react-icons/md";
+import * as Yup from "yup";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import SectionTitle from "../components/Typography/SectionTitle";
 import ReactQuill from 'react-quill';
 import { useDispatch, useSelector } from 'react-redux'
 import { getSubs, getSubByCategory } from "../../actions/subCategoryAction";
-// import { createProduct } from "../ApiAdmin";
+import { createProduct } from "../ApiAdmin";
 import { Input, Label, Select } from '@windmill/react-ui'
 import { getCategories} from "../../actions/categoryAction";
 import Card from '../../components/Cards/Card';
@@ -21,9 +22,18 @@ import 'react-quill/dist/quill.snow.css';
 const AddProduct = () => {
     const history = useHistory();
     const categories = useSelector((state) => state.category.categories);
-    const { user, isAuthenticated, token } = useSelector((state) => state.auth);
+    const { token } = useSelector((state) => state.auth);
     const [ category, setCategory ] = useState('')
     const [ subs, setSubs ] = useState('')
+    const [ isSubmitting, setIsSubmitting ] = useState(false)
+    
+    const FILE_SIZE = 160 * 1024;
+    const SUPPORTED_FORMATS = [
+      "image/jpg",
+      "image/jpeg",
+      "image/gif",
+      "image/png"
+    ];
 
      const dispatch = useDispatch();
 
@@ -31,13 +41,60 @@ const AddProduct = () => {
         dispatch(getCategories())
     }, [])
 
-    useEffect(() => {
+        useEffect(() => {
       if(category) {
     getSubByCategory(category).then((res) => setSubs(res.data));
       }
   }, [category]);
 
-  const shippingOptions = ["1 Business Day"," 1-3 Business Days","3-5 Business Days", "5+ Business Days"]
+  const handleReset = (resetForm) => {
+  if (window.confirm('Reset?')) {
+    resetForm();
+  }
+};
+
+const validatorForm = Yup.object().shape({
+                 name: 
+                    Yup.string()
+                    .required("Required"),
+
+                price:
+                    Yup.number()
+                    .required("Required")
+                    .integer()
+                    .min(1),
+
+                subs:
+                    Yup.string()
+                    .required("Required"),
+
+                status:
+                    Yup.string()
+                    .required("Required"),
+                
+                file: 
+                    Yup.mixed()
+                    .required("A file is required"),
+                
+                description:
+                    Yup.string()
+                    .required("Required"),
+
+                shippingPrice: 
+                    Yup.number()
+                    .required("Required")
+                    .integer(),
+
+                shippingTime:
+                    Yup.string()
+                    .required("Required"),
+
+                quantity:
+                    Yup.number()
+                    .required("Required"),
+              
+            })
+
 
     return (
     <>
@@ -55,23 +112,27 @@ const AddProduct = () => {
         <div className="px-2 mt-2">
             <SectionTitle> Add product </SectionTitle>
         </div>
-      <div className="container">
+      <div className="container relative">
         <Formik
           initialValues={{
             name: '',
-            price: '',
+            price: 1,
             subs: "",
             status:"",
             category: '',
-            shippingPrice: '',
+            shippingPrice: 0,
+            shippingTime:'',
             quantity: 1 ,
-            shippingTime:"",
-            loading: false,
-            error: '',
-            attachments: [],
+            description: '',
+            file: [],
           }}
 
-          onSubmit= { async (values) => {
+          validationSchema={validatorForm}
+          validateOnChange={isSubmitting}
+          validateOnBlur={isSubmitting}
+
+          onSubmit= { async (values, {resetForm, validate}) => {
+
             let formData = new FormData();
 
             formData.append("name", values.name);
@@ -81,17 +142,19 @@ const AddProduct = () => {
             formData.append("category", values.category);
             formData.append("shippingPrice", values.shippingPrice);
             formData.append("quantity", values.quantity);
-            formData.append("shippingTime", values.ShippingTime);
             formData.append("description", values.description);
-            // formData.append("description", description);
-            
-            for (let i = 0; i <= values.attachments.length; i++) {
-              formData.append(`attachments[${i}]`, values.attachments[i]);
+            formData.append("shippingTime", values.shippingTime);
+     
+            for (let i = 0; i <= values.file.length; i++) {
+              formData.append(`file`, values.file[i] );
             }
-            console.log(formData)
+
+            createProduct(token, formData)
+            resetForm({values: ''})
 
           }}>
 
+              
         {(formik) => {
         const {
           values,
@@ -103,32 +166,40 @@ const AddProduct = () => {
           handleBlur,
           isValid,
           dirty
-        } = formik; 
-
+        } = formik;
+        
+        const handleCategory = (e) => {
+            setFieldValue("category", e.target.value)
+            setCategory(e.target.value)
+        }
+        
          return (
             <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label for="name">Name</label>
-                <input id="name" name="name" type="text" className="form-control"
-                  value={values.name} onChange={handleChange} />
-                {errors.name && touched.name && (
-                  <p>{errors.name}</p>
-                )}
-              </div>
-
             <Card>
                 <div className="mb-4">
                     <Label>
                         <span className="text-base font-medium"> Add Title </span>
-                        <Input className="mt-1 p-2 rounded-md shadow-button "  id="name" name="name" type="text"
-                               value={values.name} onChange={handleChange} />
+                        <Input 
+                            valid
+                            className={`mt-1 p-2 rounded-md shadow-button`}
+                            id="name"
+                            name="name" 
+                            type="text"
+                            value={values.name}
+                           onChange={handleChange} />
                     </Label>
+                    {errors.name && (
+                    <div className="input-feedback">{errors.name}</div>
+                    )}
                 </div>
                 <div className="my-2">
                     <span className="text-base font-medium p-2"> Add Description </span>
-                    {/* <Field name="designation">
-                    {({ field }) => <ReactQuill value={field.description} onChange={field.onChange(field.description)} />}
-                </Field> */}
+                    <Field name="description">
+                        {({ field }) => <ReactQuill value={field.value} onChange={field.onChange(field.name)} />}
+                    </Field>
+                    {errors.description && (
+                        <div className="input-feedback">{errors.description}</div>
+                    )}
                 </div>
             </Card>
 
@@ -139,18 +210,17 @@ const AddProduct = () => {
                     maxSize={3072000}
                     onDrop={(acceptedFiles) => {
                   // do nothing if no files
-                  if (acceptedFiles.length === 0) { return; }
 
                   // on drop we add to the existing files
-                  setFieldValue("attachments", values.attachments.concat(acceptedFiles));
+                  setFieldValue("file", values.file.concat(acceptedFiles));
                 }}>
                           {({ getRootProps, getInputProps }) => (
                 <section className="container p-2 border-box">
                     <div {...getRootProps({ className: "dropzone text-center" })}>
-                        <input {...getInputProps()} />
+                        <input name="file" {...getInputProps()} />
                         <div clasName="p-2 mx-auto">
                             <AiFillFileImage className="my-auto h-12 w-12 m-auto"/>
-                            <Button className="my-3"> Add Files </Button>
+                            <div className="my-3 shadow-button rounded cursor-pointer hover:shadow-hover w-1/2 text-center m-auto p-1 "> Add Files </div>
                         </div>
                         <em className="text-xs text-Black-medium">(Only *.jpeg and *.png images will be accepted)</em>
                     </div>
@@ -160,25 +230,42 @@ const AddProduct = () => {
                     <div className="px-4 my-2">
                     <strong>Files:</strong>
                     <ul className="list-disc my-2">
-                    {values.attachements && values.attachements.map(({name}, i) => (
-                        <li key={i}>{name}</li>
-                    ))}
+                    {values.file?.map((data, i) => {
+                        return (
+                        <li key={i}>{data.name}</li>
+                        )
+                })}
                     </ul>
+                    {errors.file && (
+                    <div className="input-feedback">{errors.file}</div>
+                    )}
                 </div>
             </Card>
 
             <Card title="Pricing">
                 <div className="mb-4">
-                    <Label>
+                    <Label valid={errors.price}>
                         <span className="text-base font-medium"> Pricing </span>
-                        <Input className="mt-1 p-2 rounded-md shadow-button" type="number" id="price" name="price" 
+                        <div className="relative">
+                            <span className="input-symbol"> £ </span>
+                            <Input className="mt-1 p-2 rounded-md shadow-button pl-6" type="number" id="price" name="price" min="1" 
                                value={values.price} onChange={handleChange} />
+                        </div>
                     </Label>
+                   {errors.price && (
+                    <div className="input-feedback">{errors.price}</div>
+                    )}
                     <Label className="mt-2">
                         <span className="text-base font-medium"> Shipping Price  </span>
-                        <Input className="mt-1 p-2 rounded-md shadow-button" type="number" id="shippingPrice" name="shippingPrice"
+                        <div className="relative">
+                            <span className="input-symbol"> £ </span>
+                        <Input className="mt-1 p-2 rounded-md shadow-button pl-6" type="number" id="shippingPrice" name="shippingPrice" min="0"
                                value={values.shippingPrice} onChange={handleChange} />
+                        </div>
                     </Label>
+                      {errors.shippingPrice && (
+                    <div className="input-feedback">{errors.shippingPrice}</div>
+                    )}
                 </div>
             </Card>
 
@@ -197,6 +284,9 @@ const AddProduct = () => {
                                 <option value="inactive" label="inactive" />
                         </Select>
                     </Label>
+                      {errors.status && (
+                    <div className="input-feedback">{errors.status}</div>
+                    )}
                 </div>
 
                 <div className="shadow-separator">
@@ -204,66 +294,94 @@ const AddProduct = () => {
                     <div className="rounded-md shadow-button inline-block mt-2 mb-4">
                         <div className="flex text-base">
                             <button
+                                type="button"
                                 className="border-r-2 border-Grey-border focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent rounded-l-md"
                                 onClick= {() => setFieldValue( "quantity", Math.max(1, values.quantity - 1))}>
                                 -
                             </button>
                             <h2 className="my-auto px-3 text-base"> { values.quantity } </h2>
                             <button
+                            type="button"
                             className="border-l-2 border-Grey-border focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent rounded-r-md"
                             onClick= {() => setFieldValue( "quantity", Math.min(20, values.quantity + 1))}>
                                 +
                             </button>
                         </div>
                     </div>
+                    {errors.quantity && (
+                    <div className="input-feedback">{errors.quantity}</div>
+                    )}
                 </div>
                 <Label className="my-2">
                      <span> Category </span>
                     <Select className="Selection mt-1 p-2 rounded-md shadow-button" name="category" id="category"
                                 value={values.category}
-                                onChange={handleChange}>
-                        {categories &&
+                                onChange={handleCategory}>
+
+                         <option value="" label="Select a Category " />           
+                        { categories &&
                             categories.map((c, i) => (
                             <option className="px-2" key={i} value={c._id}>
                                 {c.name}
                             </option>
-                        ))}
+                            ))}
                     </Select>
+                    {errors.category && (
+                    <div className="input-feedback">{errors.category}</div>
+                    )}
                 </Label>
+                  {errors.category && (
+                    <div className="input-feedback">{errors.category}</div>
+                    )}
                 <Label className="my-2">
                      <span> Subcategory </span>
                     <Select className="Selection mt-1 p-2 rounded-md shadow-button" name="subs" id="subs"
                             value={values.subs}
                             onChange={handleChange}>
-                        { category ? 
-                            subs && subs.map( (sub, i ) => (
+
+                            <option value="" label="Select Subacategory"/> 
+                             { subs && subs.map( (sub, i ) => (
                             <option className="px-2" key={i} value={sub._id}>
                                 {sub.name}
                             </option>
-                            )) : 
-                            <option> Please choose a category </option>}
+                             ))}
                     </Select>
                 </Label>
+                  {errors.subs && (
+                    <div className="input-feedback">{errors.subs}</div>
+                    )}
             </Card>
 
             <Card title="Shipping Time" className="mb-12">
-                <div className="mb-4">
-                 <Select className="Selection mt-1 p-2 rounded-md shadow-button" name="shippingOptions" id="shippingOptions" 
-                        onChange= {handleChange}
-                        value= { values.shippingOptions }>
-                            <option value="" label="Select shipping time " />
-                          <option value= "1 Business Day" label="1 Business Day"/>
-                          <option value= "1-3 Business Days" label="1-3 Business Days"/>
-                          <option value= "3-5 Business Days" label="3-5 Business Days"/>
-                          <option value= "5+ Business Days" label="5+ Business Days"/>
-                    </Select>
-                </div>
+                <Select className="Selection mt-1 p-2 rounded-md shadow-button"
+                        name="shippingTime"
+                        id="shippingTime"
+                        value={values.shippingTime}
+                        onChange={handleChange}
+                       onBlur={handleBlur}>
+                            <option value="" label="Select Shipping Time " />
+                            <option value="1 Business Day" label="1 Business Day" />
+                            <option value="1-3 Business Days" label="1-3 Business Days" />
+                            <option value="3-5 Business Days" label="3-5 Business Days" />
+                            <option value="5+ Business Days" label="5+ Business Days" />
+                </Select>
+                    {errors.shippingTime && (
+                    <div className="input-feedback">{errors.shippingTime}</div>
+                    )}
             </Card>
 
-
-
-              <button type="submit" className="btn btn-primary">submit</button>
+                <div className="w-full sticky bottom-0 border-t-2 border-Grey bg-white z-50 ">
+                    <div className="flex my-2 p-3">
+                        <Button type="button">
+                            Cancel
+                        </Button>
+                        <Button className="bg-Black text-white w-3/5 ml-3" type="submit" onClick={() => setIsSubmitting(true)}>
+                            Save Product
+                        </Button>
+                    </div>
+                </div>
             </form>
+    
       )} 
     }
     
@@ -274,16 +392,5 @@ const AddProduct = () => {
 
 export default AddProduct
 
-
-            // <div className="w-full absolute bottom-0 border-t-2 border-Grey bg-white z-50 ">
-            //     <div className="flex my-2 p-3">
-            //         <Button>
-            //             Cancel
-            //         </Button>
-            //         <Button className="bg-Black text-white w-3/5 ml-3" onClick={ clickSubmit }>
-            //             Save Product
-            //         </Button>
-            //     </div>
-            // </div>
 
     

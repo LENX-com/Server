@@ -19,8 +19,6 @@ import Button from '../../../components/Buttons/Button';
     </li>
   ));
 
-  console.log(acceptedFiles)
-
   const fileRejectionItems = fileRejections.map(({ file, errors }) => (
     <li key={file.path}>
       {file.path} - {file.size} bytes

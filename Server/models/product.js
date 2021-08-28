@@ -18,7 +18,7 @@ const productSchema = new mongoose.Schema(
       enum: ["tag1", "tag2", "tag3", "tag4"],
       default: "tag1",
     },
-    ShippingPrice: {
+    shippingPrice: {
       type: Number,
       required: true
     },
@@ -30,7 +30,8 @@ const productSchema = new mongoose.Schema(
     },
     shippingTime: {
       type: String,
-      enum: ["1 Business Day"," 1-3 Business Days","3-5 Business Days", "5+ Business Days"],
+      enum: [ "1 Business Day", "1-3 Business Days","3-5 Business Days", "5+ Business Days"],
+      default: "3-5 Business Days",
       required: true
     },
      slug: {
@@ -68,7 +69,6 @@ const productSchema = new mongoose.Schema(
       {
         type: ObjectId,
         ref: "Sub",
-        required: true,
       },
     ],
     description: {

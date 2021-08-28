@@ -10,3 +10,19 @@
 .ql-container .ql-snow{
     min-height: 200px;
 }
+
+.input-feedback {
+    color: red;
+    margin-top: .25rem;
+}
+
+.input-symbol {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 28px;
+        left: 0;
+        padding-left: 12px;        
+}

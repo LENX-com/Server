@@ -15,7 +15,7 @@ export const createCategory = (token, category) => {
     })
     .catch((err) => {
       console.log(err);
-    });
+    }); 
 };
 
 export const updateCategory = (categoryId, userId, token, category) => {
@@ -39,10 +39,10 @@ export const createProduct = (token, product) => {
   return fetch(`${API}/product/create`, {
     method: "POST",
     headers: {
-      Accept: "application/json",
+      Accept: "*/*",
       Authorization: `Bearer ${token}`,
     },
-    body: (product),
+    body: product,
   })
     .then((response) => {
       return response.json();
