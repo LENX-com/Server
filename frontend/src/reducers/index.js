@@ -11,8 +11,9 @@ import { productReducer } from "./productReducer";
 import { ChatReducer } from "./ChatReducer";
 import { cartReducer } from "./cartReducers";
 import { userReducer } from "./userReducer";
-import { searchProductReducer } from './searchProductReducer'
-import { questionReducer } from './questionReducer'
+import { searchProductReducer } from './searchProductReducer';
+import { questionReducer } from './questionReducer';
+import { adminReducer } from './adminReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   chat: ChatReducer,
   searchProduct: searchProductReducer,
   questions : questionReducer,
+  admin: adminReducer,
 });
 
 export default rootReducer;

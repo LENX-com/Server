@@ -4,6 +4,7 @@ import Dropzone from "react-dropzone";
 import { AiFillFileImage } from "react-icons/ai";
 import { MdArrowBack } from "react-icons/md";
 import * as Yup from "yup";
+import { Alert } from '@windmill/react-ui'
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import SectionTitle from "../components/Typography/SectionTitle";
 import ReactQuill from 'react-quill';
@@ -26,6 +27,9 @@ const AddProduct = () => {
     const [ category, setCategory ] = useState('')
     const [ subs, setSubs ] = useState('')
     const [ isSubmitting, setIsSubmitting ] = useState(false)
+    const [ isCreated, setIsCreated] = useState(false)
+
+    console.log( isCreated )
     
     const FILE_SIZE = 160 * 1024;
     const SUPPORTED_FORMATS = [
@@ -151,6 +155,7 @@ const validatorForm = Yup.object().shape({
 
             createProduct(token, formData)
             resetForm({values: ''})
+            setIsCreated(true)
 
           }}>
 
@@ -175,6 +180,16 @@ const validatorForm = Yup.object().shape({
         
          return (
             <form onSubmit={handleSubmit}>
+                { isCreated && 
+                    <div className ="absolute top-0 z-50 w-full">
+                        <Alert className="w-full" type="success" onClose={() => setIsCreated(false)}>
+                            Product created succesfuly
+                            <div className="mt-2">
+                                <Link to="/admin/dashboard" className="underline"> Go back to dashboard </Link> 
+                            </div>
+                        </Alert>
+                    </div>
+                }
             <Card>
                 <div className="mb-4">
                     <Label>
@@ -273,7 +288,7 @@ const validatorForm = Yup.object().shape({
                 <div className="shadow-separator">
                     <Label className="mb-3">
                         <span> Product Status </span>
-                        <Select className="Selection mt-1 p-2 rounded-md shadow-button"
+                        <Select className="Selection mt-1 p-2 rounded-md shadow-button bg-white"
                                  name="status"
                                 value={values.status}
                                 onChange={handleChange}
@@ -314,7 +329,7 @@ const validatorForm = Yup.object().shape({
                 </div>
                 <Label className="my-2">
                      <span> Category </span>
-                    <Select className="Selection mt-1 p-2 rounded-md shadow-button" name="category" id="category"
+                    <Select className="Selection mt-1 p-2 rounded-md shadow-button bg-white" name="category" id="category"
                                 value={values.category}
                                 onChange={handleCategory}>
 
@@ -335,7 +350,7 @@ const validatorForm = Yup.object().shape({
                     )}
                 <Label className="my-2">
                      <span> Subcategory </span>
-                    <Select className="Selection mt-1 p-2 rounded-md shadow-button" name="subs" id="subs"
+                    <Select className="Selection mt-1 p-2 rounded-md shadow-button bg-white" name="subs" id="subs"
                             value={values.subs}
                             onChange={handleChange}>
 
@@ -353,7 +368,7 @@ const validatorForm = Yup.object().shape({
             </Card>
 
             <Card title="Shipping Time" className="mb-12">
-                <Select className="Selection mt-1 p-2 rounded-md shadow-button"
+                <Select className="Selection mt-1 p-2 rounded-md shadow-button bg-white"
                         name="shippingTime"
                         id="shippingTime"
                         value={values.shippingTime}
@@ -386,6 +401,7 @@ const validatorForm = Yup.object().shape({
     }
     
     </Formik>
+    
     </div>
     </>
     )};

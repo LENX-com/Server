@@ -218,3 +218,18 @@ export const fetchProductsByFilter = async (arg) =>
   
   export const getProductsByCount = async (count) =>
   await axios.get(`${API}/products/${count}`);
+
+
+export const adminProducts = (arg) => async (dispatch) => {
+  try {
+    const res = await axios.post(`${API}/search/filters`, arg);
+    dispatch({
+      type: "ADMIN_PRODUCTS",
+      payload: res.data,
+    })
+  } catch(err) {
+    dispatch({
+      type: "ADMIN_PRODUCT_ERROR",
+    })
+  }
+}

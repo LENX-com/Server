@@ -47,7 +47,7 @@ const AddProduct = () => {
   };
 
   const clickSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault();  
     setValues({ ...values, error: "", loading: true });
 
     createProduct(token, formData).then((data) => {

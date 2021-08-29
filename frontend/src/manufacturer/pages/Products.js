@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SectionTitle from "../components/Typography/SectionTitle";
 import Profile from '../components/Store/Profile'
 import ProductList from '../components/Store/ProductList'
+import { useSelector, useDispatch } from 'react-redux'
 import Card from '../../components/Cards/Card'
+import {  adminProducts } from "../../actions/productAction";
 import  Button from '../../components/Buttons/Button'
 import { AiOutlineEllipsis, AiFillCamera, AiFillFileImage, AiOutlinePlus } from "react-icons/ai"
 import { Dropdown, DropdownItem, Badge } from '@windmill/react-ui'
@@ -11,18 +13,48 @@ import { Link } from 'react-router-dom'
 
 
 const Store = ({match}) => {
+ const dispatch = useDispatch()
  const [isOpen, setIsOpen] = useState(false)
  const [ menu, setMenu ] = useState(0)
- const fakeArray = Array(5).fill(5)
+ const { user } = useSelector((state) => state.auth);
+ const { products } = useSelector((state) => state.admin);
+ const [ status, setStatus ] = useState('active')
+ const [ filteredProducts, setFilteredProducts ] = useState('')
+
+ console.log(filteredProducts)
+ console.log(products)
  
  const State = [
     { name: "My products"},
-    { name: "Delivered"},
+    { name: "Delivered"},  
     { name: " On hold "},
 ]
 function toggleDropdown() {
   setIsOpen(!isOpen)
 }
+
+  useEffect(() => {
+      dispatch(adminProducts({author : user._id }))
+       const filter = products.filter(function (el) {
+              return el.status === status;
+            });
+        setFilteredProducts(filter)
+    }, [])
+    
+    // useEffect will update the products with the status [' active' , ' draft ', ' inactive ' ]
+    useEffect(() => {
+        const filter = products && products.filter(function (el) {
+              return el.status === status;
+            });
+        setFilteredProducts(filter)
+    }, [status, products])
+
+  const menuOptions = [ "active", "draft", "inactive" ]
+
+  const handleMenu = (data, i) => {
+      setMenu(i)
+      setStatus(data)
+  }
 
   const DropdownMenu = () => (
 
@@ -41,24 +73,15 @@ function toggleDropdown() {
         <div className="shadow-separator">
             <div className="p-2">
                 <ul className="flex flex-wrap">
-                    <li className= {`${menu === 0 ? 'border-b-2 border-orange text-Black' : 'text-Black-medium'} w-auto p-2 cursor-pointer`} >
-                        <div
-                             onClick = {(() => setMenu(0))}>
-                        Active
-                        </div>
-                    </li>
-                    <li className= {`${menu === 1 ? 'border-b-2 border-orange text-Black' : 'text-Black-medium'} w-auto p-2 cursor-pointer`} >
-                        <div
-                            onClick = {(() => setMenu(1))}>
-                        Draft
-                        </div>
-                    </li>
-                    <li className= {`${menu === 2 ? 'border-b-2 border-orange text-Black' : 'text-Black-medium'} w-auto p-2 cursor-pointer `} >
-                        <div 
-                            onClick = {(() => setMenu(2))}>
-                        Archived
-                        </div>
-                    </li>
+                    { menuOptions.map((data, i)=> (
+                        <li key= { i } className= {`${menu === i ? 'border-b-2 border-orange text-Black' : 'text-Black-medium'} w-auto p-2 cursor-pointer`} >
+                            <div
+                                onClick = { () => handleMenu( data, i )}
+                                className="capitalize">
+                            {data}
+                            </div>
+                        </li>
+                    ))}
                 </ul>
             </div>
         </div>
@@ -97,7 +120,9 @@ function toggleDropdown() {
 
             <div className="bg-white shadow-button relative my-2 ">
                 <SelectionMenu />
-                <ProductList />
+                { filteredProducts &&
+                    <ProductList products= { filteredProducts } status = { status } />
+                }
             </div>
 
         </div>

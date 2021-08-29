@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
 import { Dropdown, DropdownItem, Badge, Input, Label } from '@windmill/react-ui'
 import { AiOutlineEllipsis, AiOutlineClose, AiOutlineEdit } from "react-icons/ai"
+import { Cat } from '../../../marketplace/assets/icons'
+import Button from '../../../components/Buttons/Button'
+import SectionTitle from '../../../components/Typography/SectionTitle'
+import { Link } from 'react-router-dom'
 import { Desktop, Mobile } from '../../../ScreenSize'
 
-const ProductList = () => {
+const ProductList = ({products, status }) => {
     
     const [isOpen, setIsOpen] = useState({
         index : false,
@@ -12,7 +16,6 @@ const ProductList = () => {
 
     const { index, open } = isOpen;
 
-    const fakeArray = Array(5).fill(5)
 
       const DropdownMenu = ({i}) => (
 
@@ -28,11 +31,7 @@ const ProductList = () => {
       </Dropdown>
   )
 
-  console.log(index)
-  console.log(open)
-  
-
-  const ProductCard = ({i}) => (
+  const ProductCard = ({i, product}) => (
     <div className="flex bg-white shadow-separator px-2">
         <div className="w-2/5">
             <div className="p-3">
@@ -48,13 +47,13 @@ const ProductList = () => {
             <div className="w-1/2 h-full">
                 <div className="my-auto mt-4">
                     <div className=" text-Black-medium text-sm mx-auto text-center">
-                        Desktop
+                        {product.name}
                     </div>
                     <div className="p-3 my-auto font-bold text-Black text-base text-center">
-                        £21.99
+                        £{product.price}
                     </div>
                     <div className="text-center">
-                         <Badge type="success"> Active </Badge>
+                         <Badge type="success"> { product.status } </Badge>
                     </div>
                 </div>
             </div>
@@ -143,12 +142,28 @@ const ProductList = () => {
                 <div className="p-2 my-2 shadow-separator">
                      <Input aria-label="Bad" placeholder="Search for products" className="p-2 border-2 border-border rounded-md"/>
                 </div>
-                {fakeArray.map( (data, i) => (
-                    <ProductCard i = {i} />
-                ))}
+                { products.length === 0 ? 
+                <div className="mt-4 overflow-hidden p-3">
+                    <SectionTitle> {`Ooops... there are no ${status} products`} </SectionTitle>
+                    <div>
+                        <Cat />
+                    </div>
+                    <div className="grid mb-3">
+                        <Link to="admin/dashboard/products/add-product" className="mx-auto">
+                            <Button className=""> Create a product </Button>
+                        </Link>
+                    </div>
+                </div>
+                : (products?.map( (product, i) => (
+                    <Fragment key={ i }>
+                        <ProductCard i = {i} product= { product } />
+                    </Fragment>
+                )))
+            }
             </Mobile>
         </>
     )
 }
 
 export default ProductList
+
