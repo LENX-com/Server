@@ -15,7 +15,7 @@ const Product = (props) => {
   const [relatedProduct, setRelatedProduct] = useState([]);
   const [error, setError] = useState(false);
   
-
+  
 
   //changed api endpoint to redux
   useEffect(() => {  

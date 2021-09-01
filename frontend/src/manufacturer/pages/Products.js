@@ -7,7 +7,7 @@ import Card from '../../components/Cards/Card'
 import {  adminProducts } from "../../actions/productAction";
 import  Button from '../../components/Buttons/Button'
 import { AiOutlineEllipsis, AiFillCamera, AiFillFileImage, AiOutlinePlus } from "react-icons/ai"
-import { Dropdown, DropdownItem, Badge } from '@windmill/react-ui'
+import { Dropdown, DropdownItem, Input } from '@windmill/react-ui'
 import { Link } from 'react-router-dom'
 
 
@@ -20,10 +20,8 @@ const Store = ({match}) => {
  const { products } = useSelector((state) => state.admin);
  const [ status, setStatus ] = useState('active')
  const [ filteredProducts, setFilteredProducts ] = useState('')
+ const [ isRemoved, setIsRemoved ] = useState(false)
 
- console.log(filteredProducts)
- console.log(products)
- 
  const State = [
     { name: "My products"},
     { name: "Delivered"},  
@@ -32,14 +30,15 @@ const Store = ({match}) => {
 function toggleDropdown() {
   setIsOpen(!isOpen)
 }
-
+ 
   useEffect(() => {
       dispatch(adminProducts({author : user._id }))
        const filter = products.filter(function (el) {
               return el.status === status;
             });
         setFilteredProducts(filter)
-    }, [])
+    }, [ ]) 
+
     
     // useEffect will update the products with the status [' active' , ' draft ', ' inactive ' ]
     useEffect(() => {
@@ -70,6 +69,7 @@ function toggleDropdown() {
       </Dropdown>
   )
     const SelectionMenu = () => (
+        <>
         <div className="shadow-separator">
             <div className="p-2">
                 <ul className="flex flex-wrap">
@@ -85,6 +85,10 @@ function toggleDropdown() {
                 </ul>
             </div>
         </div>
+        <div className="p-2 my-2 shadow-separator">
+            <Input aria-label="Bad" placeholder="Search for products" className="p-2 border-2 border-border rounded-md"/>
+        </div>
+        </>
     )
 
 
@@ -121,7 +125,10 @@ function toggleDropdown() {
             <div className="bg-white shadow-button relative my-2 ">
                 <SelectionMenu />
                 { filteredProducts &&
-                    <ProductList products= { filteredProducts } status = { status } />
+                    <ProductList
+                                products= { filteredProducts }
+                                status = { status }
+                    />
                 }
             </div>
 

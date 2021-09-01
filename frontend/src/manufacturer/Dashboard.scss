@@ -134,3 +134,10 @@ button {
 .banner {
     background: #ff5c00;
 }
+
+//QUILL EDITOR
+@media screen and (min-width: 760px) {
+    .ql-editor {
+        min-height: 400px !important;
+    }
+}

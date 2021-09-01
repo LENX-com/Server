@@ -11,6 +11,8 @@ import {
   GET_POST,
   ADD_COMMENT,
   REMOVE_COMMENT,
+  ADMIN_BLOGS,
+  ADMIN_BLOG_ERROR
 } from "./types";
 import { API } from "../config";
 import axios from "axios";
@@ -124,6 +126,25 @@ export const getPost = (id) => async (dispatch) => {
     });
   }
 };
+
+
+// Get posts for admin dashboard
+export const getPostsByUser = () => async (dispatch) => {
+  try {
+    const res = await api.get(`${API}/blogs/user`);
+    dispatch({
+      type: ADMIN_BLOGS,
+      payload: res.data,
+    });
+    console.log(res);
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err, status: err },
+    });
+  }
+};
+
 
 // Add comment
 export const addComment = (postId, formData) => async (dispatch) => {

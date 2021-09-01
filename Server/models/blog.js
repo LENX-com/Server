@@ -7,18 +7,36 @@ const BlogSchema = new Schema({
   },
   title:{
     type: String,
-    required: true
+    required: true,
+    trim: true,
   },
   text: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
   },
   name: {
-    type: String
+    type: String 
   },
   avatar: {
     type: String
   },
+  status: {
+      type: String,
+      enum: ["active", "draft", "inactive"],
+      default: "active",
+      required: true
+  },
+  photo: [
+      {
+      url :{
+        type: String
+      },
+      public_id: {
+        type:String
+      },
+      },
+    ],
   likes: [
     {
       user: { 

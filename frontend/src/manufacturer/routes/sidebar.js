@@ -6,7 +6,7 @@ const routes = [
     name: 'Dashboard', // name that appear in Sidebar
   },
   {
-    path: `${address}/my-orders`,
+    path: `${address}/orders`,
     icon: 'TablesIcon',
     name: 'My orders',
   },
@@ -24,6 +24,11 @@ const routes = [
     path: `${address}/products`,
     icon: 'FormsIcon',
     name: 'Products',
+  },
+  {
+    path: `${address}/blogs`,
+    icon: 'FormsIcon',
+    name: 'Blogs',
   },
 ]
 

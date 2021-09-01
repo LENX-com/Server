@@ -4,14 +4,14 @@ import Dropzone from "react-dropzone";
 import { AiFillFileImage, AiOutlineClose } from "react-icons/ai";
 import { MdArrowBack } from "react-icons/md";
 import * as Yup from "yup";
-import { Alert } from '@windmill/react-ui'
+import { Alert, Badge } from '@windmill/react-ui'
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import SectionTitle from "../components/Typography/SectionTitle";
 import ReactQuill from 'react-quill';
 import { useDispatch, useSelector } from 'react-redux'
 import { getSubs, getSubByCategory } from "../../actions/subCategoryAction";
-import { createProduct } from "../ApiAdmin";
 import { Input, Label, Select } from '@windmill/react-ui'
+import {  getSingleProduct, updateProduct } from "../../actions/productAction";
 import { getCategories} from "../../actions/categoryAction";
 import Card from '../../components/Cards/Card';
 import Button from '../../components/Buttons/Button';
@@ -20,27 +20,49 @@ import 'react-quill/dist/quill.snow.css';
 
 
 
-const AddProduct = () => {
+const EditProduct = ({match}) => {
     const history = useHistory();
     const categories = useSelector((state) => state.category.categories);
-    const { token } = useSelector((state) => state.auth);
+    const { token, user } = useSelector((state) => state.auth);
+    const { singleProduct } = useSelector((state) => state.admin);
     const [ category, setCategory ] = useState('')
     const [ subs, setSubs ] = useState('')
     const [ isSubmitting, setIsSubmitting ] = useState(false)
     const [ isCreated, setIsCreated] = useState(false)
-    
+    const [ product, setProduct ] = useState('')
+    const [ok, setOk] = useState(false)
+    const [ isSaved, setIsSaved ] = useState(false)
 
      const dispatch = useDispatch();
 
+     //If the product is not saved it will prevent the user from closing the tab instantly
+     if (!isSaved) {
+         window.onbeforeunload = confirmExit;
+         function confirmExit() {
+            return "You have attempted to leave this page. Are you sure?";
+        }
+    }
+
     useEffect(() => {
+        const productId = ( match.params.productId )
         dispatch(getCategories())
-    }, [])
+        dispatch(getSingleProduct(productId))
+          setTimeout(() => {
+            setOk(true)
+            }, 500)
+    }, [match])
 
     useEffect(() => {
       if(category) {
     getSubByCategory(category).then((res) => setSubs(res.data));
       }
   }, [category]);
+
+  const handleReset = (resetForm) => {
+  if (window.confirm('Reset?')) {
+    resetForm();
+  }
+};
 
 
 const thumbsContainer = {
@@ -118,7 +140,18 @@ const validatorForm = Yup.object().shape({
 
 
     return (
-    <>
+        <>
+        {/*
+            Basically I am veryfying whether the single product loaded becomes true, then a settimeout function wchich will set out okay to true, once both conditions
+            are true the function will render the form. The okay function delays the rendering in order to dispatch the newer product loaded, otherwise it will load the previous product and
+            product from redux.
+
+            Thanks for reading and peace
+         
+         */}
+
+        { singleProduct && ok ? 
+        <>
         <div className="relative my-2 h-10 ">
             <div className=" absolute top-2 left-0 z-50">
                 <div className="flex">
@@ -130,21 +163,26 @@ const validatorForm = Yup.object().shape({
                 </div>
             </div>
         </div>
-        <div className="px-2 mt-2">
-            <SectionTitle> Add product </SectionTitle>
+        <div className="px-2 mt-2 flex">
+            <div>
+                <SectionTitle> { singleProduct.name } </SectionTitle>
+            </div>
+            <div className="ml-3">
+                <Badge type={ singleProduct.status === "active" ? `success` : 'warning' } className="capitalize"> { singleProduct.status } </Badge>
+            </div>
         </div>
       <div className="container relative">
         <Formik
           initialValues={{
-            name: '',
-            price: 1,
-            subs: "",
-            status:"",
-            category: '',
-            shippingPrice: 0,
-            shippingTime:'',
-            quantity: 1 ,
-            description: '',
+            name: singleProduct.name,
+            price: singleProduct.price,
+            subs: singleProduct.subs,
+            status: singleProduct.status,
+            category: singleProduct.category?._id,
+            shippingPrice: singleProduct.shippingPrice,
+            shippingTime: singleProduct.shippingTime,
+            quantity: singleProduct.quantity,
+            description: singleProduct.description,
             file: [],
           }}
 
@@ -153,10 +191,13 @@ const validatorForm = Yup.object().shape({
           validateOnBlur={isSubmitting}
 
           onSubmit= { async (values, {resetForm, validate}) => {
+            
+            console.log(values)
 
 
             let formData = new FormData();
 
+        
             formData.append("name", values.name);
             formData.append("price", values.price);
             formData.append("subs", values.subs);
@@ -166,14 +207,15 @@ const validatorForm = Yup.object().shape({
             formData.append("quantity", values.quantity);
             formData.append("description", values.description);
             formData.append("shippingTime", values.shippingTime);
-     
+            
+    
             for (let i = 0; i <= values.file.length; i++) {
               formData.append(`file`, values.file[i] );
-            }
+                }
 
-            createProduct(token, formData)
-            resetForm({values: ''})
+            dispatch(updateProduct( singleProduct._id, formData))
             setIsCreated(true)
+            setIsSaved(true)
 
           }}>
 
@@ -266,7 +308,7 @@ const validatorForm = Yup.object().shape({
                         <aside style={thumbsContainer}>
                             {values.file?.map((data, i) => {
                                 return (
-                                <div style={thumb} key={data.name} className="relative">
+                                <div style={thumb} key={data.name}>
                                     <div style={thumbInner}>
                                         <img
                                         alt="preview"
@@ -274,7 +316,21 @@ const validatorForm = Yup.object().shape({
                                         style={img}
                                         />
                                     </div>
-                                     <div className=" absolute top-2 right-1 z-50">     
+                                </div>
+                                )
+                            })}
+
+                            {singleProduct.photo?.map((data, i) => {
+                                return (
+                                <div style={thumb} key={data.name} className="relative">
+                                    <div style={thumbInner}>
+                                        <img
+                                        alt="preview"
+                                        src={data.url}
+                                        style={img}
+                                        />
+                                    </div>
+                                    <div className=" absolute top-2 right-1 z-50">     
                                         <button
                                             className="rounded-full w-5 h-5 bg-Grey-light p-0 border-0 inline-flex items-center justify-center text-white">
                                             <AiOutlineClose className="w-3 h-3"/>
@@ -438,9 +494,12 @@ const validatorForm = Yup.object().shape({
     
     </div>
     </>
+    : null 
+    }
+    </>
     )};
 
-export default AddProduct
+export default EditProduct
 
 
     

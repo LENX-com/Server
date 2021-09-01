@@ -170,10 +170,10 @@ export const searchProduct = (params) => async (dispatch) => {
 };
 
 // delete product
-export const deleteProduct = (productId, userId) => async (dispatch) => {
+export const deleteProduct = (productId) => async (dispatch) => {
   try {
-    const res = await api.delete(`${API}/product/${productId}/${userId}`);
-    dispatch({
+    const res = await api.delete(`${API}/product/delete/${productId}`);
+    dispatch({  
       type: "DELETE_PRODUCT",
       payload: res.data,
     });
@@ -199,6 +199,7 @@ export const getProduct = (productId) => async (dispatch) => {
 };
 // update product
 export const updateProduct = (productId, product) => async (dispatch) => {
+  console.log(product)
   try {
     const res = await api.put(`${API}/edit/product/${productId}`, product);
     dispatch({
@@ -233,3 +234,17 @@ export const adminProducts = (arg) => async (dispatch) => {
     })
   }
 }
+
+export const getSingleProduct = (productId) => async (dispatch) => {
+  try {
+    const res = await api.get(`${API}/product/${productId}`);
+    dispatch({
+      type: "ADMIN_SINGLE_PRODUCT",
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: "ADMIN_PRODUCT_ERROR",
+    });
+  }
+};

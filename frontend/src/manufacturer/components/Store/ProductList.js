@@ -1,6 +1,8 @@
 import React, { useState, Fragment } from 'react'
 import { Dropdown, DropdownItem, Badge, Input, Label } from '@windmill/react-ui'
-import { AiOutlineEllipsis, AiOutlineClose, AiOutlineEdit } from "react-icons/ai"
+import { AiOutlineEllipsis, AiOutlineClose, AiOutlineEdit, AiOutlinePlus } from "react-icons/ai"
+import { deleteProduct } from '../../../actions/productAction'
+import { useDispatch } from 'react-redux'
 import { Cat } from '../../../marketplace/assets/icons'
 import Button from '../../../components/Buttons/Button'
 import SectionTitle from '../../../components/Typography/SectionTitle'
@@ -13,39 +15,46 @@ const ProductList = ({products, status }) => {
         index : false,
         open: false
     })
+    const dispatch = useDispatch();
 
     const { index, open } = isOpen;
 
+    //This functions makes the user click a pop up before removing the product, we passing the product id as a paramater.
+    const removeProduct = (id) => {
+        if(window.confirm('Delete the item?')){
+            dispatch(deleteProduct(id))
+        }
+    }
 
-      const DropdownMenu = ({i}) => (
-
-      <Dropdown isOpen={ open && index === i } onClose={() => setIsOpen({ open: false})} className="z-50 w-auto top-4 left-4">
-        <DropdownItem tag="a" href="#" className="flex">
-          <div> <AiOutlineEdit className="my-auto mr-2 text-lg" /> </div>
-          <div className="text-Black-medium">Edit Product</div>
-        </DropdownItem>
-        <DropdownItem className="flex mb-auto" >
-          <div> <AiOutlineClose className="my-auto mr-2 text-lg" /> </div>
-          <div  className="text-Black-medium truncate "> Remove Product</div>
-        </DropdownItem>
-      </Dropdown>
-  )
+      const DropdownMenu = ({i, product}) => {
+        return (
+            <Dropdown isOpen={ open && index === i } onClose={() => setIsOpen({ open: false})} className="z-50 w-auto top-4 left-4">
+                <Link to = { `/admin/dashboard/products/edit/${product._id}` } >
+                    <DropdownItem tag="div"  className="flex">
+                        <div> <AiOutlineEdit className="my-auto mr-2 text-lg" /> </div>
+                    <div className="text-Black-medium">Edit Product</div>
+                    </DropdownItem>
+                </Link>
+                <DropdownItem className="flex mb-auto" onClick={ () => removeProduct(product._id) } >
+                <div> <AiOutlineClose className="my-auto mr-2 text-lg" /> </div>
+                <div  className="text-Black-medium truncate "> Remove Product</div>
+                </DropdownItem>
+            </Dropdown>
+        )
+    }
 
   const ProductCard = ({i, product}) => (
     <div className="flex bg-white shadow-separator px-2">
-        <div className="w-2/5">
-            <div className="p-3">
-                <img
-                    alt="ecommerce"
-                    className="lg:w-1/2 lg:h-auto  h-22 w-22 object-cover object-center rounded" 
-                    src="https://cdn.shopify.com/s/files/1/0597/7974/3953/products/download_1_350x350.png?v=1629802376"
-                 />
-            </div>
+        <div className="w-2/5 my-3 nr-3">
+             <div
+                className="relative rounded-md bg-cover bg-center h-28 bg-Grey p-2" 
+                style = {{backgroundImage: `url(${product.photo && product.photo[0]?.url})`}}
+            />
         </div>
 
-        <div className="relative w-3/5">
-            <div className="w-1/2 h-full">
-                <div className="my-auto mt-4">
+        <div className="relative w-3/5 my-auto">
+            <div className="w-1/2 h-full ml-2">
+                <div className="my-auto">
                     <div className=" text-Black-medium text-sm mx-auto text-center">
                         {product.name}
                     </div>
@@ -53,7 +62,7 @@ const ProductList = ({products, status }) => {
                         £{product.price}
                     </div>
                     <div className="text-center">
-                         <Badge type="success"> { product.status } </Badge>
+                         <Badge type={ product.status === "active" ? `success` : 'neutral' }> { product.status } </Badge>
                     </div>
                 </div>
             </div>
@@ -64,7 +73,7 @@ const ProductList = ({products, status }) => {
                    <AiOutlineEllipsis className="m-auto text-2xl font-bold" />
                 </div>
             </button>
-            <DropdownMenu i = { i } />
+            <DropdownMenu i = { i } product = { product}/>
         </div>
     </div>
   ) 
@@ -80,7 +89,7 @@ const ProductList = ({products, status }) => {
                                 <thead className="bg-gray-50">
                                     <tr>
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-Black-medium uppercase tracking-wider">
-                                            Name
+                                            Product
                                         </th>
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-Black-medium uppercase tracking-wider">
                                             Title
@@ -89,48 +98,71 @@ const ProductList = ({products, status }) => {
                                             Status
                                         </th>
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-Black-medium uppercase tracking-wider">
-                                            Role
+                                            Inventory
                                         </th>
                                         <th scope="col" className="relative px-6 py-3">
                                             <span className="sr-only">Edit</span>
                                         </th>
                                         </tr>
                                 </thead>
+                                    { products.length === 0 ? 
+                                    <div className="mt-4 overflow-hidden p-3">
+                                        <SectionTitle> {`Ooops... there are no ${status} products`} </SectionTitle>
+                                        <div>
+                                            <Cat />
+                                        </div>
+                                        <div className="grid mb-3">
+                                            <Link to="/admin/dashboard/products/add-product" className="mx-auto">
+                                                <Button className="font-bold flex">
+                                                    <AiOutlinePlus className="my-auto mr-2"/>
+                                                    Create a product
+                                                </Button>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                
+                                    :
+                                
                                 <tbody className="bg-white divide-y divide-gray-200">
-                                    <tr>
+                                    { products && products.map( (product, i) => (
+                                    <>
+                                        <tr className="relative">
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <div className="">
+                                                        <div
+                                                            className="relative rounded-md bg-cover bg-center h-28 w-28 bg-Grey p-2 " 
+                                                            style = {{backgroundImage: `url(${product.photo && product.photo[0]?.url})`}}
+                                                        />
+                                                </div>
+                                            </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="flex items-center">
-                                                <div className="flex-shrink-0 h-10 w-10">
-                                                    <img className="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1619914775389-748e5e136c26?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218fHx8fHx8fHwxNjIwMTk4MjAw&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=100" alt="" />
-                                                </div>
-                                                <div className="ml-4">
-                                                    <div className="text-sm font-medium text-gray-900">
-                                                        Flora Wu
-                                                    </div>
-                                                    <div className="text-sm text-gray-500">
-                                                        flora.wu@example.com
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <div className="text-base text-Black-medium"> { product.name } </div>
+                                            <div className="text-base font-bold"> £ { product.price } </div>
                                         </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <div className="text-sm text-gray-900">Software engineer</div>
-                                        <div className="text-sm text-gray-500">IT</div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                            Active
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        Admin
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    </td>
-                                </tr>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <Badge type={ product.status === "active" ? `success` : 'neutral' } className="px-2 inline-flex text-xs leading-5">
+                                                { product.status }
+                                            </Badge>
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <span className="text-orange">{ product.quantity }</span> in stock
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium relative">
+                                            <button
+                                                className="m-auto"
+                                                onClick={() => setIsOpen({open: !open, index: i})}>
+                                                <div className="m-auto">
+                                                <AiOutlineEllipsis className="m-auto text-2xl font-bold" />
+                                                </div>
+                                            </button>
+                                            <DropdownMenu i = { i } product = { product}/>
+                                        </td>
+                                    </tr>
+                                </>
+                                    ))}
                             {/* More people... */}
                             </tbody>
+                        }
                         </table>
                         </div>
                     </div>
@@ -139,9 +171,6 @@ const ProductList = ({products, status }) => {
             </Desktop>
 
             <Mobile>
-                <div className="p-2 my-2 shadow-separator">
-                     <Input aria-label="Bad" placeholder="Search for products" className="p-2 border-2 border-border rounded-md"/>
-                </div>
                 { products.length === 0 ? 
                 <div className="mt-4 overflow-hidden p-3">
                     <SectionTitle> {`Ooops... there are no ${status} products`} </SectionTitle>
@@ -149,8 +178,11 @@ const ProductList = ({products, status }) => {
                         <Cat />
                     </div>
                     <div className="grid mb-3">
-                        <Link to="admin/dashboard/products/add-product" className="mx-auto">
-                            <Button className=""> Create a product </Button>
+                        <Link to="/admin/dashboard/products/add-product" className="mx-auto">
+                            <Button className="font-bold flex">
+                                <AiOutlinePlus className="my-auto mr-2"/>
+                                Create a product
+                            </Button>
                         </Link>
                     </div>
                 </div>

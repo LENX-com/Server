@@ -3,12 +3,20 @@ const router = express.Router();
 const { check, validationResult } = require("express-validator/check");
 const { following } = require("../models/follow");
 const { isAdmin, requireSignin } = require("../controller/auth.controller");
-const { auth } = require("../middlewares/verify");
 const _ = require("lodash");
-
+const { auth, protected } = require("../middlewares/verify");
 const Blog = require("../models/blog");
 const { User } = require("../models/user");
 const checkObjectId = require("../middlewares/checkObjectId");
+const multer = require("multer");
+const storage = multer.diskStorage({
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage })
+
 
 //get all users for demo purpose
 router.get("/all", auth, async (req, res) => {
@@ -50,10 +58,13 @@ router.post("/blog/following/single", auth, async (req, res) => {
 router.post(
   "/blog",
   auth,
+  protected(1),
+  upload.single("file"),
   check("text", "Text is required").not().isEmpty(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log(errors)
       return res.status(400).json({ errors: errors.array() });
     }
 
@@ -63,8 +74,10 @@ router.post(
       const newBlog = new Blog({
         title: req.body.title,
         text: req.body.text,
+        avatar: user.avatar,
         name: user.name,
         user: req.user._id,
+        status: req.body.status,
       });
 
       const blog = await newBlog.save();
@@ -89,6 +102,17 @@ router.get("/blog", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
+//Get blogs by user for the admin dashboard 
+router.get("/blogs/user", auth, protected(1), async (req, res ) => {
+  try {
+    const Blogs = await Blog.find({user : req.user._id});
+    res.json(Blogs);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});  
 
 // @route    GET api/Blogs/:id
 // @desc     Get Blog by ID

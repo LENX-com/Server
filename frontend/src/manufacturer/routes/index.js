@@ -11,7 +11,6 @@ const Tables = lazy(() => import('../pages/Tables'))
 const Page404 = lazy(() => import('../pages/404'))
 const Blank = lazy(() => import('../pages/Blank'))
 const Orders = lazy(() => import('../pages/Orders'))
-const Blog = lazy(() => import('../pages/Blog'))
 const AddNewPost = lazy(() => import('../pages/AddNewPost'))
 const Profile = lazy(() => import('../pages/Profile'))
 const Reviews = lazy(() => import('../pages/Reviews'))
@@ -23,6 +22,9 @@ const FindStatusOrder = lazy(() => import('../pages/FindStatusOrder'))
 const FetchConversation = lazy(() => import('../../chat/FetchConversation'))
 const Products = lazy(() => import('../pages/Products'))
 const AddProduct = lazy(() => import('../pages/AddProduct'))
+const EditProduct = lazy(() => import('../pages/EditProduct'))
+const Blog = lazy(() => import('../pages/Blog'))
+const AddBlog = lazy(() => import('../pages/AddBlog'))
 
 
 const routes = 
@@ -110,6 +112,18 @@ const routes =
   {
     path: `${address}/products/add-product`,
     component: AddProduct,
+  },
+  {
+    path: `${address}/products/edit/:productId`,
+    component: EditProduct,
+  },
+    {
+    path: `${address}/blogs/`,
+    component: Blog,
+  },
+  {
+    path: `${address}/blogs/add-blog/`,
+    component: AddBlog,
   },
   
 ]

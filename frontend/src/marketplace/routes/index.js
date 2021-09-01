@@ -29,7 +29,8 @@ const routes = [
   {
     path: `${address}/products/:productId`,
     component: Product,
-    path: `${address}/products/reviews/:productId`, 
+  },  
+  { path: `${address}/products/reviews/:productId`, 
     component: ProductReview, 
   },
   {

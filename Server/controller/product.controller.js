@@ -95,21 +95,36 @@ exports.createProduct = async (req, res) => {
 //edit a product
 exports.editProduct = async (req, res) => {
   const file = req.file;
-  console.log(req.file);   
+  console.log(req.file)
+    
   try {
+    if (file) {
+    var imageList = []
+    
+    for(var i=0;i<req.files.length;i++){
+      var locaFilePath = req.files[i].path
+      var result = await cloudinary.uploader.upload( locaFilePath )
+      console.log(result)
+      imageList.push({
+        url : result.url,
+        public_id : result.public_id
+      })
+    }
+
+    }  
+
     const product = await Product.findById(req.params.productId);
     if (!product) {
       return res.status(400).json({ error: "no product found with that id" });
     }
-    if (!file) throw new Error("Enter a valid file");
-    await cloudinary.uploader.destroy(product.photoId);
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      resource_type: "auto",
-      invalidate: true,
-    });
+
     const { ...args } = req.body;
-    args.photo = result.secure_url;
-    args.photoId = result.public_id;
+    if ( imageList){ 
+    args.photo = imageList;
+    }
+
+    console.log(args)
+
     const updated = await Product.findOneAndUpdate(req.params.productId, args, {
       new: true,
     });
@@ -128,7 +143,7 @@ exports.deleteProduct = async (req, res) => {
     console.log(error);
     return res.status(500).json({ error: error });
   }
-};
+};  
 
 //get product by its id
 exports.getProductById = async (req, res) => {
@@ -416,7 +431,7 @@ exports.listSearch = (req, res) => {
     }).select("-photo");
   }
 };
-
+   
 exports.decreaseQuantity = (req, res, next) => {
   let bulkOps = req.body.order.products.map((item) => {
     return {

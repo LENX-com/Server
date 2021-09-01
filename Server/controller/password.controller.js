@@ -20,7 +20,7 @@ exports.forgotPasswordController = (req, res) => {
   } else {
     User.findOne(
       {
-        email
+        email  
       },
       (err, user) => {
         if (err || !user) {
