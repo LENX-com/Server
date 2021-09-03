@@ -11,11 +11,10 @@ import { Dropdown, DropdownItem, Input } from '@windmill/react-ui'
 import { Link } from 'react-router-dom'
 
 
-
 const Store = ({match}) => {
  const dispatch = useDispatch()
  const [isOpen, setIsOpen] = useState(false)
- const [ menu, setMenu ] = useState(0)
+ const [ menu, setMenu ] = useState(0)  
  const { user } = useSelector((state) => state.auth);
  const { products } = useSelector((state) => state.admin);
  const [ status, setStatus ] = useState('active')
@@ -122,7 +121,7 @@ function toggleDropdown() {
                 </Link>
             </div>
 
-            <div className="bg-white shadow-button relative my-2 ">
+            <div className="bg-white shadow-button relative my-2 mb-8">
                 <SelectionMenu />
                 { filteredProducts &&
                     <ProductList

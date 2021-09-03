@@ -8,7 +8,14 @@ const { auth, protected } = require("../middlewares/verify");
 const Blog = require("../models/blog");
 const { User } = require("../models/user");
 const checkObjectId = require("../middlewares/checkObjectId");
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API,
+    api_secret: process.env.CLOUDINARY_SECRET
+});  
 const multer = require("multer");
+
 const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}_${file.originalname}`);
@@ -43,6 +50,8 @@ router.get("/blog/following", auth, async (req, res) => {
 //get all blogs for a single manufacturer you are following.
 router.post("/blog/following/single", auth, async (req, res) => {
   try {
+    console.log(req.body)
+
     const user = await following.find({ userId: req.user.id });
 
     const resp = await Blog.find({ user: req.body.manufacturerId });
@@ -62,14 +71,34 @@ router.post(
   upload.single("file"),
   check("text", "Text is required").not().isEmpty(),
   async (req, res) => {
+    
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       console.log(errors)
       return res.status(400).json({ errors: errors.array() });
     }
+    const file = req.file
+    console.log(file)
 
     try {
       const user = await User.findById(req.user._id).select("-password");
+      
+       if (!file) throw new Error("Enter a valid file");
+
+    var imageList = []
+    
+    if(file){
+      var locaFilePath = req.file.path
+      var result = await cloudinary.uploader.upload( locaFilePath )
+      console.log(result)
+      imageList.push({
+        url : result.url,
+        public_id : result.public_id
+      })
+    }
+
+    
 
       const newBlog = new Blog({
         title: req.body.title,
@@ -78,17 +107,71 @@ router.post(
         name: user.name,
         user: req.user._id,
         status: req.body.status,
+        photo: imageList,
+        tags: req.body.tags
       });
 
       const blog = await newBlog.save();
 
       res.json(blog);
     } catch (err) {
-      console.error(err.message);
+      console.log(err);
       res.status(500).send("Server Error");
     }
   }
 );
+
+
+//edit a blog
+
+router.put("/blog/edit/:blogId", auth,
+  protected(1),
+  upload.single("file"),
+  check("text", "Text is required").not().isEmpty(),
+  
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log(errors)
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const file = req.file
+    console.log(file)
+
+    try {
+
+    var imageList = []
+    
+    if(file){
+      var locaFilePath = req.file.path
+      var result = await cloudinary.uploader.upload( locaFilePath )
+      console.log(result)
+      imageList.push({
+        url : result.url,
+        public_id : result.public_id
+      })
+    }
+    
+    const blog = await Blog.findById(req.params.blogId);
+    if (!blog) {
+      return res.status(400).json({ error: "no blog found with that id" });
+    }
+
+    const { ...args } = req.body;
+    if ( imageList && file ){ 
+    args.photo = imageList;
+    }
+    
+    const updated = await Blog.findOneAndUpdate(req.params.blogId, args, {
+      new: true,
+    });
+    return res.status(200).json({ data: updated });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: error });
+  }
+});
+
 
 // @route    GET api/Blogs
 // @desc     Get all Blogs

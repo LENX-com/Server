@@ -1,18 +1,54 @@
-import React from 'react'
+import React, { useState } from 'react'
 import moment from 'moment'
 import parse from 'html-react-parser';
+import { Dropdown, DropdownItem } from '@windmill/react-ui'
+import { AiOutlineEllipsis, AiOutlineClose, AiOutlineEdit } from "react-icons/ai"
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { deletePost } from '../../../actions/postAction'
 
 
-const BlogCard = ({blog}) => {
-    const MAX_LENGTH = 250
+const BlogCard = ({blog, i}) => {
+    const MAX_LENGTH = 200
+    const [isOpen, setIsOpen] = useState({
+        index : false,
+        open: false
+    })
+
+    const { index, open } = isOpen;
+
+    const dispatch = useDispatch()
+    
+        //This functions makes the user click a pop up before removing the blog, we passing the blog id as a paramater.
+    const removeBlog = (id) => {
+        if(window.confirm('Delete the item?')){
+            dispatch(deletePost(blog._id))
+        }
+    }
+        const DropdownMenu = ({i}) => {
+        return (
+            <Dropdown isOpen={ open && index === i } onClose={() => setIsOpen({ open: false})} className="z-50 w-auto top-4 right-2 left-auto">
+                <Link to = { `/admin/dashboard/blogs/edit/${blog._id}` } >
+                    <DropdownItem tag="div"  className="flex">
+                        <div> <AiOutlineEdit className="my-auto mr-2 text-lg" /> </div>
+                    <div className="text-Black-medium">Edit Blog</div>
+                    </DropdownItem>
+                </Link>
+                <DropdownItem className="flex mb-auto" onClick={ () => removeBlog(blog._id) } >
+                <div> <AiOutlineClose className="my-auto mr-2 text-lg" /> </div>
+                <div  className="text-Black-medium truncate "> Remove Blog</div>
+                </DropdownItem>
+            </Dropdown>
+        )
+    }
     
     return (
         <>
-            <div className="max-w-2xl mx-auto overflow-hidden bg-white rounded-lg shadow-product dark:bg-gray-800">
-                <img className="object-cover w-full h-48" src="https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="Article" />
+            <div className="max-w-2xl mx-auto overflow-hidden bg-white rounded-lg shadow-product relative">
+                <img className="object-cover w-full h-48" src= { blog.photo[0]?.url } alt="Article" />
                 <div className="p-6">
                 <div>
-                    <a href="#" className="block mt-2 text-2xl font-semibold text-gray-800 dark:text-white hover:text-gray-600 hover:underline"> { blog.title } </a>
+                    <div className="block mt-2 text-2xl font-semibold text-gray-800 "> { blog.title } </div>
                 </div>
                     <div className="mt-2 text-sm text-Black-medium dark:text-gray-400">
                         {parse(`${blog.text.substring(0, MAX_LENGTH)}${blog.text.length > 250 ? "..." : ""}`)}
@@ -27,6 +63,14 @@ const BlogCard = ({blog}) => {
                     </div>
                 </div>
                 </div>
+                <button
+                    className="absolute right-0 top-0"
+                    onClick={() => setIsOpen({open: !open, index: i})}>
+                    <div className="m-auto rounded-lg bg-Grey-light px-3">
+                        <AiOutlineEllipsis className="text-white m-auto text-2xl font-bold" />
+                    </div>
+                </button>
+                <DropdownMenu i = { i } /> 
             </div>
         </>
     )

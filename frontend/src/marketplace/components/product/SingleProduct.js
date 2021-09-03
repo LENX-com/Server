@@ -7,6 +7,7 @@ import {
   MdArrowBack,
   MdFavorite,
 } from "react-icons/md";
+import parse from 'html-react-parser';
 import Card from "../../../components/Cards/Card";
 import Button from "../../../components/Buttons/Button";
 import { addToCart} from "../../../actions/cartActions";
@@ -86,7 +87,7 @@ const SingleProduct = ({ product}) => {
                     <Link to={`/marketplace/products/reviews/${product._id}`} className="underline"> { product.comments.length === 1 ? `${product.comments.length} review` : `${product.comments.length} reviews` }</Link>
                 </span>
               </div>
-              <p className="leading-relaxed"> { product.description } </p>
+              <div> { parse(product.description) } </div>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
               </div>  
             </div>

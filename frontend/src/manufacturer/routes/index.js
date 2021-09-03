@@ -25,6 +25,7 @@ const AddProduct = lazy(() => import('../pages/AddProduct'))
 const EditProduct = lazy(() => import('../pages/EditProduct'))
 const Blog = lazy(() => import('../pages/Blog'))
 const AddBlog = lazy(() => import('../pages/AddBlog'))
+const EditBlog = lazy(() => import('../pages/EditBlog'))
 
 
 const routes = 
@@ -124,6 +125,10 @@ const routes =
   {
     path: `${address}/blogs/add-blog/`,
     component: AddBlog,
+  },
+  {
+    path: `${address}/blogs/edit/:blogId`,
+    component: EditBlog,
   },
   
 ]

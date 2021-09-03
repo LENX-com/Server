@@ -3,6 +3,7 @@ const initialState = {
   singleProduct: undefined ,
   errors: {},
   blogs: [],
+  singleBlog: undefined,
   loading: false,
 };
 
@@ -41,6 +42,11 @@ export const adminReducer = (state = initialState, action) => {
       case "ADMIN_BLOG_ADDED":
       return {
         ...state
+      };
+      case "SINGLE_BLOG_ADMIN":
+      return {
+        ...state,
+        singleBlog: action.payload,
       };
     default:
       return state;

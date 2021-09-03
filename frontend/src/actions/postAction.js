@@ -73,13 +73,9 @@ export const removeLike = (id, token) => async (dispatch) => {
 };
 
 // Delete post
-export const deletePost = (id, token) => async (dispatch) => {
+export const deletePost = (id) => async (dispatch) => {
   try {
-    await axios.delete(`${API}/blog/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    await api.delete(`${API}/blog/${id}`);
     dispatch({
       type: DELETE_POST,
       payload: id,
@@ -139,11 +135,45 @@ export const getPostsByUser = () => async (dispatch) => {
     console.log(res);
   } catch (err) {
     dispatch({
-      type: POST_ERROR,
+      type: ADMIN_BLOG_ERROR,
       payload: { msg: err, status: err },
     });
   }
 };
+
+// Get post
+export const getPostAdmin = (id) => async (dispatch) => {
+  try {
+    const res = await api.get(`${API}/blog/${id}`);
+    dispatch({
+      type:  "SINGLE_BLOG_ADMIN",
+      payload: res.data,
+    });
+    console.log(res);
+  } catch (err) {
+    dispatch({
+      type: ADMIN_BLOG_ERROR,
+      payload: { msg: err, status: err },
+    });
+  }
+};
+
+export const editPost = (id, formData) => async (dispatch) => {
+  try {
+    const res = await api.put(`${API}/blog/edit/${id}`, formData);
+    dispatch({
+      type:  "EDIT_ADMIN_BLOGS",
+      payload: res.data,
+    });
+    console.log(res);
+  } catch (err) {
+    dispatch({
+      type: "ADMIN_BLOG_ERROR",
+      payload: { msg: err, status: err },
+    });
+  }
+};
+
 
 
 // Add comment

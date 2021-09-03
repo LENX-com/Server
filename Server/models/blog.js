@@ -18,6 +18,10 @@ const BlogSchema = new Schema({
   name: {
     type: String 
   },
+  tags: {
+    type: Array,
+    required: true 
+  },
   avatar: {
     type: String
   },
@@ -25,8 +29,8 @@ const BlogSchema = new Schema({
       type: String,
       enum: ["active", "draft", "inactive"],
       default: "active",
-      required: true
   },
+
   photo: [
       {
       url :{

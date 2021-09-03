@@ -14,9 +14,7 @@ const productSchema = new mongoose.Schema(
       //maxlength: 32
     },   
     tags: {
-      type: String,
-      enum: ["tag1", "tag2", "tag3", "tag4"],
-      default: "tag1",
+      type: Array,
     },
     shippingPrice: {
       type: Number,

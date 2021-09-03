@@ -49,7 +49,7 @@ router.post(
   createProduct
 );  
 router.get("/query-catalogues", searchCatalogue);
-router.get("/query-products", searchProductsCatalogue);
+router.get("/query-products", searchProductsCatalogue);  
 router.get("/query-stores", searchStoresCatalogue);
 router.get("/products", list);
 router.post("/products/by/search", listBySearch);

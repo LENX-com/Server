@@ -95,7 +95,6 @@ exports.createProduct = async (req, res) => {
 //edit a product
 exports.editProduct = async (req, res) => {
   const file = req.file;
-  console.log(req.file)
     
   try {
     if (file) {
@@ -119,6 +118,7 @@ exports.editProduct = async (req, res) => {
     }
 
     const { ...args } = req.body;
+    args.slug = slugify(req.body.name);
     if ( imageList){ 
     args.photo = imageList;
     }
@@ -143,7 +143,7 @@ exports.deleteProduct = async (req, res) => {
     console.log(error);
     return res.status(500).json({ error: error });
   }
-};  
+};
 
 //get product by its id
 exports.getProductById = async (req, res) => {

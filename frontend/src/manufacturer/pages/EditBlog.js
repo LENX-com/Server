@@ -11,10 +11,9 @@ import { Link, useHistory, useRouteMatch, Prompt } from "react-router-dom";
 import SectionTitle from "../components/Typography/SectionTitle";
 import ReactQuill from 'react-quill';
 import { useDispatch, useSelector } from 'react-redux'
-import { getSubs, getSubByCategory } from "../../actions/subCategoryAction";
+import { getPostAdmin, editPost } from "../../actions/postAction";
 import { addPost } from "../../actions/postAction";
 import { Input, Label, Select } from '@windmill/react-ui'
-import { getCategories} from "../../actions/categoryAction";
 import _ from 'lodash'
 import Card from '../../components/Cards/Card';
 import Button from '../../components/Buttons/Button';
@@ -23,18 +22,15 @@ import 'react-quill/dist/quill.snow.css';
 
 
 
-const AddBlog = () => {
+const EditBlog = ({match}) => {
     const history = useHistory();
-    const categories = useSelector((state) => state.category.categories);
+    const blog = useSelector((state) => state.admin.singleBlog);
     const [ category, setCategory ] = useState('')
     const [ isSubmitting, setIsSubmitting ] = useState(false)
     const [ isCreated, setIsCreated] = useState(false)
+    const [ ok, setOk ] = useState(false)
     
-
-     const dispatch = useDispatch();
-
-
-    const PromptIfDirty = () => {
+        const PromptIfDirty = () => {
         const formik = useFormikContext();
         return (
             <Prompt
@@ -42,7 +38,18 @@ const AddBlog = () => {
             message="Are you sure you want to leave? You have with unsaved changes."
             />
         );
-    };
+        };
+
+     const dispatch = useDispatch();
+     
+
+     useEffect(() => {
+        dispatch(getPostAdmin(match.params.blogId))
+          setTimeout(() => {
+            setOk(true)
+            }, 500)
+     }, [])
+
 
     const BlogCreated = () => (
         <div className ="absolute top-0 z-50 w-full">
@@ -118,16 +125,21 @@ const validatorForm = Yup.object().shape({
             </div>
         </div>
         <div className="px-2 mt-2">
-            <SectionTitle> Add blog post </SectionTitle>
+            <SectionTitle> Edit blog post </SectionTitle>
         </div>
+
+        {/* When the blog is dispatch we wait until the respinse is okay then we set the state to okay
+            once both conditions are true then we render the blog, otherwise it will load the blog from the previous state  */}
+
+      { blog && ok && 
       <div className="container relative">
         <Formik
           initialValues={{
-            title: '',
-            text: '',
+            title: blog.title,
+            text: blog.text,
             file: [],
-            category: "",
-            tags: [],
+            status: blog.status,
+            tags: blog.tags,
           }}
 
           validationSchema={validatorForm}
@@ -143,17 +155,16 @@ const validatorForm = Yup.object().shape({
             formData.append("text", values.text);
             formData.append("category", values.category);
 
-               // we loop the tags array and assign a value to each task in the form, if any tag is undefined its value will not be looped.           
+            // we loop the tags array and assign a value to each task in the form, if any tag is undefined its value will not be looped.           
             for (let i = 0; i <= values.tags.length; i++) {
               values.tags[i] !== undefined && formData.append(`tags`, values.tags[i] );
             }
 
-     
             for (let i = 0; i <= values.file.length; i++) {
               formData.append(`file`, values.file[i] );
             }
 
-            dispatch(addPost(formData))
+            dispatch(editPost(blog._id, formData))
             resetForm({values: ''})
             setIsCreated(true)
 
@@ -173,28 +184,24 @@ const validatorForm = Yup.object().shape({
           dirty
         } = formik;
 
-        console.log(values.tags)
+        console.log(dirty)
         
         const handleCategory = (e) => {
             setFieldValue("category", e.target.value)
             setCategory(e.target.value)
         }
 
-        console.log(values.file)
         
          return (
             <form onSubmit={handleSubmit} >
                 
-                {/* Pop that shows that the blog was created succesfully */}
                 { isCreated && 
                     <BlogCreated />
                 }
-
-                {/* If the user has not submitted the form it will prevent the user from leaving the page */}
                 <PromptIfDirty />
 
                 <div className="grid grid-cols-3 gap-4 mb-4 mobile:grid-cols-1 mobile:pb-10">
-                    <Card className="col-span-2 mobile:cols-span-1 lg:rounded-sm">
+                    <Card className="col-span-2 lg:rounded-sm mobile:col-span-1">
                         <div className="mb-4">
                             <Label>
                                 <span className="text-base font-medium"> Add Title </span>
@@ -222,7 +229,7 @@ const validatorForm = Yup.object().shape({
                         </div>
                     </Card>
 
-                    <Card className="lg:rounded-sm mobile:col-span-2">
+                    <Card className="lg:rounded-sm">
                         <span className="text-base font-medium my-2"> Blog preview </span>
 
                     { values.file.length < 1 &&
@@ -288,7 +295,7 @@ const validatorForm = Yup.object().shape({
                         
                          
                             <div className='mt-4'>
-                                <span className="text-base font-medium"> Add or change tags (up to 4) so readers know what your story is aboute </span>
+                                <span className="text-base font-medium"> Add or change tags (up to 4) so readers know what your story is about </span>
                                 <div className="Form">
                                     <div className="TagForm mt-3">
                                     <AiFillTags className="InputIcon text-lg mx-2" />
@@ -297,7 +304,8 @@ const validatorForm = Yup.object().shape({
                                         type="text"
                                         placeholder="Add a tag..."
                                         onKeyPress={event => {
-                                        if (event.key === "Enter") {
+                                        
+                                        if ( event.key === "Enter") {
                                             event.preventDefault();
                                             values.tags.length < 4 && setFieldValue( "tags" ,[...values.tags, event.target.value]);
                                             event.target.value = "";
@@ -329,13 +337,13 @@ const validatorForm = Yup.object().shape({
 
 
 
-                        <div className=" absolute bottom-4 right-4 mobile:hidden">
+                        <div className="mobile:hidden absolute bottom-4 right-4">
                             <Button disabled = { _.isEmpty(values.title && values.text) }
                                     className= {`bg-Black text-white ${ _.isEmpty(values.title && values.text) && 'bg-opacity-40 cursor-text' }`}
                                     type="submit" 
                                     onClick={() => setIsSubmitting(true)}
                             >
-                               Publish
+                               Update
                             </Button>
                         </div>
                     </Card>
@@ -347,8 +355,8 @@ const validatorForm = Yup.object().shape({
                             Cancel
                         </Button>
                         <Button
-                                disabled = { _.isEmpty(values.title && values.text) }
-                                className= {`bg-Black text-white w-3/5 ml-3  ${ _.isEmpty(values.title && values.text) && 'bg-opacity-40 cursor-text' }`} type="submit" onClick={() => setIsSubmitting(true)}>
+                                disabled = { !dirty }
+                                className= {`bg-Black text-white w-3/5 ml-3  ${!dirty && 'bg-opacity-40 cursor-text' }`} type="submit" onClick={() => setIsSubmitting(true)}>
                             Save Blog post
                         </Button>
                     </div>
@@ -363,18 +371,19 @@ const validatorForm = Yup.object().shape({
     </Formik>
     
     </div>
+    }
     </>
     
     )};
 
-    AddBlog.propTypes = {
-        addPost: PropTypes.func.isRequired
+    EditBlog.propTypes = {
+        editPost: PropTypes.func.isRequired
     };
 
 export default connect(
   null,
-  { addPost }
-)(AddBlog);
+  { editPost }
+)(EditBlog);
 
 
     

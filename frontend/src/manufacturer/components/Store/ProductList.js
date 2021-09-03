@@ -3,9 +3,10 @@ import { Dropdown, DropdownItem, Badge, Input, Label } from '@windmill/react-ui'
 import { AiOutlineEllipsis, AiOutlineClose, AiOutlineEdit, AiOutlinePlus } from "react-icons/ai"
 import { deleteProduct } from '../../../actions/productAction'
 import { useDispatch } from 'react-redux'
-import { Cat } from '../../../marketplace/assets/icons'
+import Lottie from 'react-lottie';
 import Button from '../../../components/Buttons/Button'
 import SectionTitle from '../../../components/Typography/SectionTitle'
+import animationData from '../../../assets/lotties/shopping'
 import { Link } from 'react-router-dom'
 import { Desktop, Mobile } from '../../../ScreenSize'
 
@@ -24,6 +25,38 @@ const ProductList = ({products, status }) => {
         if(window.confirm('Delete the item?')){
             dispatch(deleteProduct(id))
         }
+    }
+
+    const NoResultsFound = () => {
+        const defaultOptions = {
+            loop: true,
+            autoplay: true,
+            animationData: animationData,
+            rendererSettings: {
+                preserveAspectRatio: "xMidYMid slice"
+            }
+        };
+
+        return (
+            <div>
+                <div className="text-center">
+                    <SectionTitle> { `No ${status} products found` } </SectionTitle>
+                </div>
+                <Lottie 
+                    options={defaultOptions}
+                    height={275}
+                    width={275}
+                />
+                <div className="grid mb-3">
+                    <Link to="/admin/dashboard/products/add-product" className="mx-auto">
+                        <Button className="font-bold flex">
+                             <AiOutlinePlus className="my-auto mr-2"/>
+                                Create a product
+                        </Button>
+                    </Link>
+                </div>
+            </div>
+        )
     }
 
       const DropdownMenu = ({i, product}) => {
@@ -85,6 +118,12 @@ const ProductList = ({products, status }) => {
                     <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                       <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                           { products.length === 0 ? 
+                                    <div className="mt-4 overflow-hidden p-3">
+                                        <NoResultsFound />
+                                    </div>
+                                :
+
                             <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
                                     <tr>
@@ -105,23 +144,6 @@ const ProductList = ({products, status }) => {
                                         </th>
                                         </tr>
                                 </thead>
-                                    { products.length === 0 ? 
-                                    <div className="mt-4 overflow-hidden p-3">
-                                        <SectionTitle> {`Ooops... there are no ${status} products`} </SectionTitle>
-                                        <div>
-                                            <Cat />
-                                        </div>
-                                        <div className="grid mb-3">
-                                            <Link to="/admin/dashboard/products/add-product" className="mx-auto">
-                                                <Button className="font-bold flex">
-                                                    <AiOutlinePlus className="my-auto mr-2"/>
-                                                    Create a product
-                                                </Button>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                
-                                    :
                                 
                                 <tbody className="bg-white divide-y divide-gray-200">
                                     { products && products.map( (product, i) => (
@@ -160,10 +182,10 @@ const ProductList = ({products, status }) => {
                                     </tr>
                                 </>
                                     ))}
-                            {/* More people... */}
                             </tbody>
-                        }
+                        
                         </table>
+                        }
                         </div>
                     </div>
                     </div>
@@ -172,25 +194,17 @@ const ProductList = ({products, status }) => {
 
             <Mobile>
                 { products.length === 0 ? 
-                <div className="mt-4 overflow-hidden p-3">
-                    <SectionTitle> {`Ooops... there are no ${status} products`} </SectionTitle>
-                    <div>
-                        <Cat />
+                    <div className="mt-4 overflow-hidden p-3">
+                        <NoResultsFound />
                     </div>
-                    <div className="grid mb-3">
-                        <Link to="/admin/dashboard/products/add-product" className="mx-auto">
-                            <Button className="font-bold flex">
-                                <AiOutlinePlus className="my-auto mr-2"/>
-                                Create a product
-                            </Button>
-                        </Link>
-                    </div>
-                </div>
-                : (products?.map( (product, i) => (
-                    <Fragment key={ i }>
-                        <ProductCard i = {i} product= { product } />
-                    </Fragment>
-                )))
+                : 
+                <>
+                    {products?.map( (product, i) => (
+                        <Fragment key={ i }>
+                            <ProductCard i = {i} product= { product } />
+                        </Fragment>
+                    ))}
+                </>
             }
             </Mobile>
         </>

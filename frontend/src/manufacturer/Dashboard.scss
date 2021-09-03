@@ -141,3 +141,12 @@ button {
         min-height: 400px !important;
     }
 }
+@media screen and (max-width: 360px) {
+    .ql-editor {
+        min-height: 400px !important;
+    }
+}
+
+   .products .ql-editor {
+        min-height: 200px !important;
+    }

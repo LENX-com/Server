@@ -5,7 +5,7 @@ import { addPost } from '../../../actions/postAction.js';
 import { isAuthenticated } from '../../../actions/authAction';
 
 const PostForm = ({ addPost }) => {
-  const [text, setText] = useState('');
+  const [text, setText] = useState('');  
   const { user, token } = isAuthenticated();
 
   return (

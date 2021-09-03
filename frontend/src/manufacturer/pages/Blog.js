@@ -4,10 +4,12 @@ import BlogCard from '../components/Blog/BlogCard'
 import { useSelector, useDispatch } from 'react-redux'
 import Card from '../../components/Cards/Card'
 import {  getPostsByUser } from "../../actions/postAction";
+import animationData from '../../assets/lotties/blogging'
 import  Button from '../../components/Buttons/Button'
 import { AiOutlineEllipsis, AiFillCamera, AiFillFileImage, AiOutlinePlus } from "react-icons/ai"
 import { Dropdown, DropdownItem, Input } from '@windmill/react-ui'
 import { Link } from 'react-router-dom'
+import Lottie from 'react-lottie';
 
 
 
@@ -28,7 +30,7 @@ const Blog = ({match}) => {
               return el.status === status;
             });
         setFilteredBlogs(filter)
-    }, [ ]) 
+    }, [ dispatch ]) 
 
     
     // useEffect will update the products with the status [' active' , ' draft ', ' inactive ' ]
@@ -82,6 +84,30 @@ const Blog = ({match}) => {
         </>
     )
 
+    const NoResultsFound = () => {
+        const defaultOptions = {
+            loop: true,
+            autoplay: true,
+            animationData: animationData,
+            rendererSettings: {
+                preserveAspectRatio: "xMidYMid slice"
+            }
+        };
+
+        return (
+            <div>
+                <div className="text-center">
+                    <SectionTitle> { `No ${status} blogs found` } </SectionTitle>
+                </div>
+                <Lottie 
+                    options={defaultOptions}
+                    height={275}
+                    width={275}
+                />
+            </div>
+        )
+    }
+
 
     return (
         <div>
@@ -92,16 +118,22 @@ const Blog = ({match}) => {
                         <AiOutlinePlus className="my-auto mr-2"/>
                     <span className="font-bold"> Add a blog </span>
                     </Button>
-                </Link>
+                </Link>  
             </div>
 
-            <div className="bg-white shadow-button relative my-2 lg:rounded-md">
+            <div className="bg-white shadow-button relative my-2 lg:rounded-md mb-5"> 
                 <SelectionMenu />
-                <div className="grid sm:grid-cols-1  lg:grid-cols-4 gap-10 p-4">
-                  {filteredBlogs && filteredBlogs.map( blog => (
-                    <BlogCard blog= { blog } />
-                  ))}
+                { filteredBlogs && filteredBlogs.length !== 0 ?
+                <div className="pb-4">
+                    <div className="grid sm:grid-cols-1  lg:grid-cols-4 md:grid-cols-3 gap-10 p-4">
+                    {filteredBlogs && filteredBlogs.map( (blog, i) => (
+                        <BlogCard blog= { blog } i = {i} />
+                    ))}
+                    </div>
                 </div>
+                :
+                <NoResultsFound />
+                }
             </div>
 
         </div>
