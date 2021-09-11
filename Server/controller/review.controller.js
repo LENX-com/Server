@@ -1,40 +1,153 @@
 const Product = require("../models/product");
-const { Review, Upvote, Downvote } = require("../models/review");
+const { User } = require("../models/user");
+const Review = require("../models/review");
 const cloudinary = require("cloudinary").v2;
+const { check, validationResult } = require("express-validator/check");
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
   api_secret: process.env.API_SECRET,
 });
+const _ = require("lodash")
+
+
 exports.addReview = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.productId);
+    const review = await Review.find({ storeId: req.body.userId });
+    
+    const user = await User.findById(req.body.userId);
+    if( !user ) {
+      throw new Error (" This user does not exist")
+    }
+    
+    //check if user has already reviewed the store
+    var hasReviewed = false;
+    for (var i = 0; i < review.length; i++) {
+      if (_.isEqual(review[i].author, req.user._id)) {
+          hasReviewed = true;
+          break;
+        }
+    }
+    if ( hasReviewed ) {
+      throw new Error("You have already reviewed pal")
+    }
+
     const file = req.file;
-    if (!file) throw new Error("Enter a valid file");
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      resource_type: "auto",
-    });
+    if (file) {
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        resource_type: "auto",
+      });
+    }
+
     const { ...args } = req.body;
-    args.url = result.secure_url
-    args.productID = product._id;
-    args.userId = req.user._id;
-    const newVideo = await Review.create(args);
-    return res.status(200).json({ data: newVideo });
+    args.storeId = user._id;
+    args.author = req.user._id
+    
+
+    const newReview = await Review.create(args);
+      //  const newReview = "cool";
+    return res.status(200).json({ data: newReview });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error });
   }
 };
 
-exports.getReviews = async (req, res) => {
+
+exports.getReviewsByManufacturer = async (req, res) => {
   try {
-    const review = await Review.find({ productID: req.params.productId });
+    const user = await User.find({ slug: req.params.storeSlug })
+    if ( !user ) {
+      throw new Error ( "This user does not exist" ) 
+    }
+
+    const review = await Review.find({ storeId: user[0]._id }).populate(
+      "author", " _id name avatar "
+    );
+
+    if ( !review || review.length === 0 ){
+      throw new Error ( "This review does not exist" )
+    }
+
+    console.log(review)
+
     return res.json({ data: review });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error });
   }
 };
+
+exports.addResponse =  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }  
+
+    try {
+      const review = await Review.findById(req.params.reviewId);
+
+      if(!review) {
+        throw new Error ("This review does not exist")
+      }
+
+         
+    //check if user has already responded the review
+    var hasResponded = false;
+    for (var i = 0; i < review.responses.length; i++) {
+      if (_.isEqual(review.responses[i].user._id, req.user._id)) {
+          hasResponded = true;
+          break;
+        }
+    }
+    if ( hasResponded ) {
+      throw new Error("You have already responded pal")
+    }
+
+      const newResponse = {
+         response: req.body.response,
+         user: req.user._id
+      }
+      review.responses.unshift(newResponse);
+
+      await review.save();
+
+      res.json(review.responses);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+  }
+
+  exports.removeResponse = async (req, res) => {
+  try {
+    const review = await Review.findById(req.params.reviewId);
+    console.log(review)
+    if(!review ){
+      throw new Error ("This review does not exist")
+    }
+
+    console.log(req.user._id)
+    
+    // Check the review has not been responded yet
+    if (!review.responses.some((response) => _.isEqual(response.user, req.user._id))) {
+      return res.status(400).json({ msg: "Review has not yet been responded" });
+    }
+
+    // remove the response
+    review.responses = review.responses.filter(
+      ({ user }) => !_.isEqual(user, req.user._id)
+    );
+
+    await review.save();
+
+    return res.json(review.responses);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+}
+
 
 exports.upVote = async (req, res) => {
   try {

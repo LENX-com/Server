@@ -49,6 +49,7 @@ router.get("/blog/following", auth, async (req, res) => {
 });
 //get all blogs for a single manufacturer you are following.
 router.post("/blog/following/single", auth, async (req, res) => {
+
   try {
     console.log(req.body)
 
@@ -71,6 +72,7 @@ router.post(
   upload.single("file"),
   check("text", "Text is required").not().isEmpty(),
   async (req, res) => {
+    console.log(req.body)
     
 
     const errors = validationResult(req);

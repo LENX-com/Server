@@ -4,6 +4,7 @@ const initialState = {
   errors: {},
   blogs: [],
   singleBlog: undefined,
+  reviews: false,
   loading: false,
 };
 
@@ -47,6 +48,24 @@ export const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         singleBlog: action.payload,
+      };
+      case "REVIEWS_ADMIN":
+        return {
+        ...state,
+        reviews: action.payload.data,
+      };
+      case "REVIEWS_ADMIN_ERROR":
+        return {
+        ...state,
+        errors: action.payload,
+      };
+       case "SEND_RESPONSE":
+        return {
+        ...state,
+      };
+      case "REMOVE_RESPONSE":
+      return {
+        ...state,
       };
     default:
       return state;

@@ -51,7 +51,7 @@ const BlogCard = ({blog, i}) => {
                     <div className="block mt-2 text-2xl font-semibold text-gray-800 "> { blog.title } </div>
                 </div>
                     <div className="mt-2 text-sm text-Black-medium dark:text-gray-400">
-                        {parse(`${blog.text.substring(0, MAX_LENGTH)}${blog.text.length > 250 ? "..." : ""}`)}
+                        {parse(`${blog.text.substring(0, MAX_LENGTH)}${blog.text.length > MAX_LENGTH ? "..." : ""}`)}
                     </div>
                 <div className="mt-4">
                     <div className="flex items-center">

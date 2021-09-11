@@ -50,12 +50,15 @@ App.use("/api", require("./routes/order"));
 App.use("/api", require("./routes/chat"));
 App.use("/api", require("./routes/manufacturer"));
 App.use("/api", require("./routes/review"));
-App.use("/api", require("./routes/marketplace"));
 App.use("/api", require("./routes/message"));
 App.use("/api", require("./routes/conversation"));
 App.use("/api", require("./routes/blog"));
 App.use("/api", require("./routes/subCategory"));
 App.use("/api", require("./routes/question"));
+App.get('/api/config/paypal', (req, res) => {
+  console.log(process.env.PAYPAL_CLIENT_ID)
+  res.send(process.env.PAYPAL_CLIENT_ID);
+});
 
 
 // Initialise passport middleware

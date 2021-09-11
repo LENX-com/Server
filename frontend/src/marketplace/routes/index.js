@@ -11,6 +11,8 @@ const Manufacturer = lazy(() => import("../pages/Manufacturer"));
 const Blog = lazy(() => import("../../components/Blog/Blog"));
 const Search = lazy(() => import("../pages/SearchResult"));
 const Questions = lazy(() => import('../pages/Questions'))
+const Basket = lazy(() => import('../pages/Basket'))
+const Checkout = lazy(() => import('../components/checkout/Checkout'))
 
 const routes = [
   {
@@ -52,6 +54,14 @@ const routes = [
   {
     path: `${address}/questions/:productId`, 
     component: Questions, 
+  },
+  {
+    path: `${address}/checkout`, 
+    component: Checkout, 
+  },
+  {
+    path: `${address}/basket`, 
+    component: Basket, 
   }
 ];
 export default routes;

@@ -7,12 +7,12 @@ import { conversation, order, Information} from '../icons'
 import RoundIcon from '../components/RoundIcon'
 import {data}from '../utils/demo/tableData'
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-
+import { listMyOrders } from '../../actions/orderAction'
 import { NavLink, useRouteMatch } from 'react-router-dom'
 import { HiChevronRight } from 'react-icons/hi'
 import ChatElement from '../components/chat/ChatElement'
 import OrderItem from '../components/orders/OrderItem' 
-import { useSelector } from 'react-redux' 
+import { useSelector, useDispatch } from 'react-redux' 
 
 
 // install Swiper modules
@@ -24,10 +24,17 @@ const Dashboard = () => {
   const { path } = useRouteMatch();
   const address = "/user/dashboard"
   const { user }  = useSelector( state => state.auth);
+  const orders = useSelector( state => state.order.myOrders)
+
+  const dispatch = useDispatch();
 
   // pagination setup 
   const resultsPerPage = 10
   const totalResults = data.length
+
+  useEffect(() => {
+    dispatch(listMyOrders())
+    }, [dispatch])
 
   // pagination change control
   function onPageChange(p) {
@@ -47,18 +54,24 @@ const Dashboard = () => {
 
         <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-3 mt-5">
 
-        {/* Order Card */}
-        <CardInfo title="My orders"
-                  button="See all"
-                  link= {`${address}/my-orders`}
-          icon = {<RoundIcon
-            icon={order}
-            iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500"
-            className="mr-4"
-          />}>
-            {<OrderItem/>}
-        </CardInfo>
+
+
+        <>
+          { orders &&
+            <CardInfo title="My orders"
+                      button="See all"
+                      link= {`${address}/my-orders`}
+              icon = {<RoundIcon
+                icon={order}
+                iconColorClass="text-orange-500 dark:text-orange-100"
+                bgColorClass="bg-orange-100 dark:bg-orange-500"
+                className="mr-4"
+              />}>
+                {<OrderItem/>}
+            </CardInfo>
+          }
+        </>
+  
       
 
         {/* Conversation Card */}

@@ -11,32 +11,10 @@ const manufacturerSchema = new mongoose.Schema(
     team: {
       type: String,
     },
-    comments: [
-    {
-      user: {
-        type: ObjectId,
-        ref: "User"
-      },
-      title: {
-        type: String,
-        required: true
-      },
-      text: {
-        type: String,
-        required: true
-      },
-      name: {  
-        type: String
-      },
-      avatar: {
-        type: String
-      },
-      date: {
-        type: Date,
-        default: Date.now
-      }
-    }
-  ],
+    reviews: [{
+      type: ObjectId,
+      ref: "Review"
+  }]
   },
   { timestamps: true }
 );

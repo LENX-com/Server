@@ -3,19 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { HiChevronRight } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import { Badge } from "@windmill/react-ui";
-import { orderByUser } from "../../../actions/orderAction";
 
 const OrderItem = () => {
   const dispatch = useDispatch();
-  const myorders = useSelector((state) => state.order.orders);
+  const { myOrders } = useSelector((state) => state.order.order);
   const [order, setOrder] = useState([]);
+ 
   useEffect(() => {
-    dispatch(orderByUser());
-  }, [dispatch]);
-
-  useEffect(() => {
-    setOrder(myorders.slice(5));
-  }, [myorders]);
+    myOrders  && setOrder(myOrders.slice(5));
+  }, [myOrders]);
+  
   return (
     <>
       {!order.length

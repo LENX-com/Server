@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken"); // this generates signed token
 const expressJwt = require("express-jwt"); // for the authorization check
 const { OAuth2Client } = require("google-auth-library");
 const Session = require("../models/session");
+const slugify = require("slugify");
 
 exports.authUser = async (req, res) => {
   try {
@@ -30,15 +31,20 @@ exports.signup = (req, res) => {
   // });
 
   // req.body.sessionId = session._id;
+  const { ...args } = req.body
 
-  const user = new User(req.body);
+  if (req.body.role === 1) {
+    args.slug = slugify(args.name) 
+  }
+
+  const user = new User(args);
 
   user.save((err, user) => {
     if (err) {
       return res.status(400).json({
         err: errorHandler(err),
       });
-    }
+    }  
     res.json({ user });
   });
 };
@@ -48,8 +54,6 @@ exports.signin = (req, res) => {
 
   //find the user based inb email
   const { email, password } = req.body;
-
-  console.log(req.body);
 
   User.findOne({ email }, (err, user) => {
     if (err || !user) {

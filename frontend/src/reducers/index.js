@@ -6,7 +6,6 @@ import { postReducer } from "./postReducer";
 import { alertReducer } from "./alertReducer";
 import { wishListReducer } from "./wishlistReducer";
 import { categoryReducer } from "./categoryReducers";
-import { orderReducer as order } from "./orderReducer";
 import { productReducer } from "./productReducer";
 import { ChatReducer } from "./ChatReducer";
 import { cartReducer } from "./cartReducers";
@@ -14,12 +13,13 @@ import { userReducer } from "./userReducer";
 import { searchProductReducer } from './searchProductReducer';
 import { questionReducer } from './questionReducer';
 import { adminReducer } from './adminReducer';
+import { orderReducer as order }
+from './orderReducer'
 
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
   search: searchReducer,
-  order,
   cart: cartReducer,
   product: productReducer,
   errors: errorReducer,
@@ -31,6 +31,7 @@ const rootReducer = combineReducers({
   searchProduct: searchProductReducer,
   questions : questionReducer,
   admin: adminReducer,
+  order,
 });
 
 export default rootReducer;

@@ -5,7 +5,7 @@ const { auth } = require("../middlewares/verify");
 
 const {
   signup,
-  signin,
+  signin, 
   signout,
   requireSignin,
   authUser,

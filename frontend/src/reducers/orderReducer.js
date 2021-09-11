@@ -1,86 +1,117 @@
 const initialState = {
-  // orders: [
-  //   {
-  //     name: "Printers",
-  //     _id: 1,
-  //     status: "Processing",
-  //   },
-  //   {
-  //     name: "Acessories",
-  //     _id: 10,
-  //     status: "Not processing",
-  //   },
-  //   {
-  //     name: "Utensils",
-  //     status: "Shipped",
-  //     _id: 12,
-  //   },
-  //   {
-  //     name: "Gadgets",
-  //     status: "Delivered",
-  //     _id: 14,
-  //   },
-  //   {
-  //     name: "Alexia",
-  //     status: "Delivered",
-  //     _id: 142334,
-  //   },
-  //   {
-  //     name: "Sprint wears",
-  //     status: "Shipped",
-  //     _id: 1443333,
-  //   },
-  //   {
-  //     name: "Furnitures",
-  //     status: "Processing",
-  //     _id: 142234,
-  //   },
-  //   {
-  //     name: "Blenders",
-  //     status: "Processing",
-  //     _id: 14332224,
-  //   },
-  // ],
-  orders: [],
-  statusValues: [],
-  errors: {},
-  loading: false,
+    order: "",
+    myOrders: "",
+    orderItems: [],
+    success:"",
+    loading: "",
+    error:"",
 };
 
 export const orderReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "GET_ORDERS":
-      return {
+    case "ORDER_CREATE_REQUEST":
+         return {
+          ...state,
+          loading: false,
+        };
+    case "ORDER_CREATE_SUCCESS":
+      return { 
         ...state,
-        orders: action.payload,
         loading: false,
-      };
-    case "GET_ORDERS_BY_USER":
-      return {
-        ...state,
-        // orders: state.orders,
-        orders: action.payload.orders,
-        loading: false,
-      };
-    case "ORDER_STATUS_VALUES":
-      return {
-        ...state,
-        statusValues: action.payload,
-        loading: false,
-      };
-    case "UPDATE_ORDER":
-      return {
-        ...state,
         order: action.payload,
+        success: true };
+    case "ORDER_CREATE_FAIL":
+      return { 
+        ...state,
         loading: false,
-      };
-    case "ORDER_ERROR":
+        error: action.payload 
+        };
+    case "ORDER_DETAILS_REQUEST":
+      return { 
+        ...state,
+        loading: true 
+        };
+    case "ORDER_DETAILS_SUCCESS":
+      return { 
+        ...state,
+        loading: false,
+        order: action.payload
+        };
+    case "ORDER_DETAILS_FAIL":
       return {
         ...state,
-        error: action.payload,
+        loading: false, error:
+        action.payload
+        };
+    case "MY_ORDER_LIST_REQUEST":
+      return {
+        ...state,
+        myOrders: action.payload,
+        loading: true 
+        };
+    case "MY_ORDER_LIST_SUCCESS":
+      return { 
+        ...state,
+        loading: false, 
+        myOrders: action.payload 
+        };
+    case "MY_ORDER_LIST_FAIL":
+      return { 
+        ...state,
+        loading: false, 
+        error: action.payload 
+        };
+    case "ORDER_LIST_REQUEST":
+      return { 
+        ...state,
+        loading: true 
+        };
+    case "ORDER_LIST_SUCCESS":
+      return { 
+        ...state,
+        loading: false, 
+        orders: action.payload 
+        };
+    case "ORDER_LIST_FAIL":
+      return { 
+        ...state,
+        loading: false, 
+        error: action.payload 
+        };
+    case "ORDER_PAY_REQUEST":
+      return { 
+        ...state,
+        loading: true 
+        };
+    case "ORDER_PAY_SUCCESS":
+      return { 
+        ...state,
+        loading: false, 
+        success: true 
+        };
+    case "ORDER_PAY_FAIL":
+      return { 
+        ...state,
         loading: false,
-      };
-    default:
-      return state;
+        error: action.payload
+        };
+    case "ORDER_DELETE_REQUEST":
+      return { 
+        ...state,
+        loading: true 
+        };
+    case "ORDER_DELETE_SUCCESS":
+      return { 
+        ...state,
+        loading: false,
+        success: true 
+        };
+    case "ORDER_DELETE_FAIL":
+      return { 
+        ...state,
+        loading: false, 
+        error: action.payload 
+        };
+    default: return state;
   }
-};
+}

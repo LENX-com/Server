@@ -152,7 +152,7 @@ const validatorForm = Yup.object().shape({
             for (let i = 0; i <= values.file.length; i++) {
               formData.append(`file`, values.file[i] );
             }
-
+            
             dispatch(addPost(formData))
             resetForm({values: ''})
             setIsCreated(true)

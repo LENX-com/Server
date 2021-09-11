@@ -2,58 +2,64 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const { ObjectId } = mongoose.Schema.Types;
 
-const CartItemSchema = new mongoose.Schema(
-  {
-    productId: { type: ObjectId, ref: "Product" },
-    userId: { type: ObjectId, ref: "User" },
-    name: String,
-    price: Number,
-    count: Number,
+
+const shippingSchema = {
+  address: { type: String, required: true },
+  city: { type: String, required: true },
+  postalCode: { type: String, required: true },
+  country: { type: String, required: true, default: "United Kingdom" },
+  mobile: { type: Number, required:true }
+};
+
+const paymentSchema = {
+  paymentMethod: { type: String, required: true },
+  orderID: { type: String, required: true },
+  payerID:  { type: String, required: true },
+  paymentID: { type: String, },
+};
+
+const orderItemSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  qty: { type: Number, required: true },
+  price: { type: String, required: true },
+  manufacturerId: { type: ObjectId, ref: 'User', required: true },
+  product: {
+    type: ObjectId,
+    ref: 'Product',
+    required: true
   },
-  { timestamps: true }
-);
+});
 
-const CartItem = mongoose.model("CartItem", CartItemSchema);
-
-const OrderSchema = new mongoose.Schema(
-  {
-    product: [
-      {
-        type: ObjectId,
-        ref: "Product",
-      },
-    ],
-    description: {
-      type: String,
-    },
-    transaction_id: {},
-    amount: { type: Number },
-    address: String,
-    shippingMethod: {
-      type: String,
-      required: false,
-    },
-    trackingInformation: {
-      type: String,
-      required: false,
-    },
-    status: {
+const orderSchema = new mongoose.Schema({
+  user: { type: ObjectId, ref: 'User', required: true },
+  orderItems: [orderItemSchema],
+  email: { type: String, required:true},
+  shipping: shippingSchema,
+  payment: paymentSchema,
+  itemsPrice: { type: Number },
+  shippingPrice: { type: Number },
+  totalPrice: { type: Number },
+  mobile: { type: Number },
+  status: {
       type: String,
       default: "Not processed",
       enum: [
         "Not processed",
         "Processing",
-        "Shipped",
+        "Shipped",  
         "Delivered",
         "Cancelled",
       ], // enum means string objects
-    },
-    updated: Date,
-    userId: { type: ObjectId, ref: "User" },
+   },
+  isPaid: { type: Boolean, default: false },
+  notes: {
+    type: Array,
   },
-  { timestamps: true }
-);
+  paidAt: { type: Date },
+  isDelivered: { type: Boolean, default: false },
+  deliveredAt: { type: Date },
+}, {
+  timestamps: true
+});
 
-const Order = mongoose.model("Order", OrderSchema);
-
-module.exports = { Order, CartItem };
+module.exports = mongoose.model("Order", orderSchema);

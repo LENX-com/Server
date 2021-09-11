@@ -17,7 +17,9 @@ import {
   Input
 } from '@windmill/react-ui'
 import { Link } from 'react-router-dom'
+import Card from '../../components/Cards/Card'
 import {data} from '../utils/demo/tableData'
+import PageTitle from '../components/Typography/PageTitle'
 import { EditIcon, TrashIcon } from '../icons'
 
   const response2 = data.concat([])
@@ -59,41 +61,39 @@ const Orders = () => {
   }, [pageTable2])
 
   const [ menu, setMenu ] = useState(0)
+  const [ status, setStatus] = useState(false)
   const fakeArray = Array(5).fill(5)
 
-  const State = [
-    { name: "Shipped"},
-    { name: "Delivered"},
-    { name: " On hold "},
-  ]
+  const menuOptions = [ "Shipped", "Delivered", "On hold"]
 
-  return (
-    <div className="my-3">
-      <div className="px-2">
-        <SectionTitle>Orders</SectionTitle>
-      </div>
-      <dv className="grid grid-cols-3 mb-2">
-        {State.map((data, i) => (
-          <div>
-            <div className= {` ${ menu === i ? "bg-orange shadow-none text-white" : ""} bg-white px-2 py-1 m-2 shadow-product rounded-md w-auto`}>
-              <div onClick = {(() => setMenu(i))}>
-                <div className="text-sm mx-1 whitespace-nowrap">
-                  <h2>
-                  { data.name }
-                  </h2>
-                </div>
-              </div>
+  const handleMenu = (data, i) => {
+    setMenu(i)
+    setStatus(data)
+  }
+
+      const SelectionMenu = () => (
+        <>
+        <div className="shadow-separator">
+            <div className="p-2">
+                <ul className="flex flex-wrap">
+                    { menuOptions.map((data, i)=> (
+                        <li key= { data } className= {`${menu === i ? 'border-b-2 border-orange text-Black' : 'text-Black-medium'} w-auto p-2 cursor-pointer`} >
+                            <div
+                                onClick = { () => handleMenu( data, i )}
+                                className="capitalize">
+                            {data}
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             </div>
-          </div>
-          ))}
-        </dv>
-          
-          <div className="mb-3 px-2">
-            <Label className="p-2 border-2 border-border rounded-md mt-b bg-white"> 
-              <Input className="mt-1" type="text" placeholder="Search for orders"/>
-            </Label>
-          </div>
-
+        </div>
+        <div className="p-2 my-2 shadow-separator">
+            <Input aria-label="Bad" placeholder="Search for reviews" className="p-2 border-2 border-border rounded-md"/>
+        </div>
+        </>
+    )
+   const OrderTable = () => (
       <TableContainer className="mb-8">
         <Table>
           <TableHeader>
@@ -114,7 +114,7 @@ const Orders = () => {
                     <div>
                       <p className="font-semibold">{user.name}</p>
                     </div>
-                  </div>
+                  </div>  
                 </TableCell>
                 <TableCell>
                   <span className="text-sm">$ {user.amount}</span>
@@ -147,7 +147,16 @@ const Orders = () => {
           />
         </TableFooter>
       </TableContainer>
-    </div>
+   )
+
+  return (
+    <>
+      <PageTitle> Orders </PageTitle>
+      <Card>
+        <SelectionMenu />
+        <OrderTable />
+      </Card>
+    </>
   )
 }
 

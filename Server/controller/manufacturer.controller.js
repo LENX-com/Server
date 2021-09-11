@@ -105,6 +105,7 @@ exports.manufacturerReview = async (req, res) => {
         avatar: req.user.avatar,
       },
     };
+    
 
     const newComment = await Manufacturer.create(comment);
     return res

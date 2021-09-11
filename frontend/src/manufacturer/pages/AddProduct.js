@@ -208,8 +208,6 @@ const validatorForm = Yup.object().shape({
             setFieldValue("category", e.target.value)
             setCategory(e.target.value)
         }
-
-        console.log(values.file)
         
          return (
             <form onSubmit={handleSubmit}>

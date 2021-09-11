@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { useState, Fragment, useRef, useEffect } from 'react'
+import { useState, Fragment, useRef, useEffect, } from 'react'
 import { AiOutlineShoppingCart, AiOutlineClose, AiFillStar } from "react-icons/ai";
 import { useSelector, useDispatch } from 'react-redux'
 import { Cat } from '../../assets/icons'
@@ -169,7 +169,9 @@ const CartPop = () => {
                 </div>
                 :
                 (cart && cart.map((product => (
-                    <Product product = { product } />
+                    <Fragment>
+                      <Product product = { product } />
+                    </Fragment>
                     ))))
                 }
                 </div>

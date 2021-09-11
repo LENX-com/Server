@@ -70,10 +70,12 @@ export const addToCart = (productId, qty) => async (dispatch, getState) => {
       payload: {
         product: res.data.data._id,
         quantity: res.data.data.quantity,
+        manufacturerId: res.data.data.author ,
         name: res.data.data.name,
         description: res.data.data.description,
         price: res.data.data.price,
         photo: res.data.data.photo,
+        shippingPrice: res.data.data.shippingPrice,
         qty: qty,
       },
     });

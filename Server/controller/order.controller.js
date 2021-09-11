@@ -1,39 +1,30 @@
-const { Order, CartItem } = require("../models/order");
+const Order = require("../models/order");
 const { sendEmail } = require("../utils/email");
 const Product = require("../models/product");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
 exports.allOrder = async (req, res) => {
   try {
-    const order = await Order.find().populate("product").populate("userId");
+    const order = await Order.find().populate("product").populate("user");
     return res.status(200).json({ data: order });
   } catch (error) {
-    console.log(error);
+    console.log(error);  
     return res.status(500).json({ error: error });
   }
 };
 
 //create order
 exports.createOrder = async (req, res) => {
-  const carts = await CartItem.find({ userId: req.user._id });  
   try {
+  console.log(req.body)
+
     const { ...args } = req.body;
-    args.userId = req.user._id;
-    args.product = carts.map((item) => item.productId);
+    args.user = req.user._id;
 
     const newOrder = await Order.create(args);
     if (!newOrder) {
       return res.status(400).json({ error: "order failed" });
     }
-    // await sendEmail(
-    //   req.user.email,
-    //   "Order created successfully",
-    //   {
-    //     name: "new charge",
-    //     link: "order link",
-    //   },
-    //   "../helpers/templates/order.ejs"
-    // );
     return res
       .status(200)
       .json({ data: newOrder, msg: "order initiated succesfully" });
@@ -42,34 +33,36 @@ exports.createOrder = async (req, res) => {
     return res.status(500).json(error);
   }
 };
-//create order
-exports.createOrders = async (req, res) => {
-  try {
-    const { ...args } = req.body;
-    args.userId = req.user._id;
-    // args.product = carts.map((item) => item.productId);
 
-    const newOrder = await Order.create(args);
-    if (!newOrder) {
-      return res.status(400).json({ error: "order failed" });
+exports.payment = async (req, res) => {
+
+  try {
+  const order = await Order.findById(req.params.orderId);
+  if(!order){
+    throw new Error ("Order does not exist")
+  }
+  if (order) {
+    order.isPaid = true;
+    order.paidAt = Date.now();
+    order.payment = {
+      paymentMethod: 'paypal',
+      paymentResult: {
+        payerID: req.body.payerID,
+        orderID: req.body.orderID,
+        paymentID: req.body.paymentID
+      }
     }
-    // await sendEmail(
-    //   req.user.email,
-    //   "Order created successfully",
-    //   {
-    //     name: "new charge",
-    //     link: "order link",
-    //   },
-    //   "../helpers/templates/order.ejs"
-    // );
+  }
+    const updatedOrder = await order.save();
     return res
-      .status(200)
-      .json({ data: newOrder, msg: "order initiated succesfully" });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error);
+    .status(200)
+    .json({ message: 'Order Paid.', order: updatedOrder });
+
+  } catch(err) {
+    return res.status(404).json({ message: err })
   }
 };
+
 
 //get all orders by authenticated user
 // exports.OrderByUser = async (req, res) => {
@@ -92,7 +85,7 @@ exports.createOrders = async (req, res) => {
 // };
 //get all orders by authenticated user
 exports.OrderByUser = async (req, res) => {
-  const orders = await Order.find({ userId: req.user._id }).populate("product")
+  const orders = await Order.find({ user: req.user._id }).populate("product")
   try {
     return res
       .status(200)
@@ -132,6 +125,8 @@ exports.Orderbyid = async (req, res) => {
     res.status(500).json({ error: error });
   }
 };
+
+
 
 //order status by admin
 exports.UpdateOrderStatus = async (req, res) => {

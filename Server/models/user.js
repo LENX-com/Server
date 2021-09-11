@@ -76,6 +76,12 @@ const userSchema = new mongoose.Schema(
       required: true,
       maxlenght: 32,
     },
+      slug: {
+      type: String,
+      unique: true,
+      lowercase: true,
+      index: true,
+    },
     title: {
       type: String,
       trim: true,
@@ -129,10 +135,10 @@ const userSchema = new mongoose.Schema(
     bgId: {
       type: String,
     },
-    date: {
-      type: Date,
-      default: Date.now,
-    },
+    reviews: [{
+      type: ObjectId,
+      ref: "Review"
+    }],
     session: [
       {
         type: ObjectId,

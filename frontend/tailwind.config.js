@@ -41,7 +41,8 @@ const colors = require('tailwindcss/colors')
         DEFAULT: '#eee',
         sd: '#ECECEC',
         light: '#7F7F7F',
-        border:'#dddddd'
+        border:'#dddddd',
+        dashboard:'#eff2f5',
       },
       background: '#f2f2f7',
       Black:{

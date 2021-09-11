@@ -11,12 +11,10 @@ const Tables = lazy(() => import('../pages/Tables'))
 const Page404 = lazy(() => import('../pages/404'))
 const Blank = lazy(() => import('../pages/Blank'))
 const Orders = lazy(() => import('../pages/Orders'))
-const AddNewPost = lazy(() => import('../pages/AddNewPost'))
 const Profile = lazy(() => import('../pages/Profile'))
 const Reviews = lazy(() => import('../pages/Reviews'))
 const FAQ = lazy(() => import('../pages/FAQ'))
 const SingleOrder = lazy(() => import('../pages/SingleOrder'))
-const WriteReview = lazy(() => import('../pages/WriteReview'))
 const SingleBlog = lazy(() => import('../pages/SingleBlog'))
 const FindStatusOrder = lazy(() => import('../pages/FindStatusOrder'))
 const FetchConversation = lazy(() => import('../../chat/FetchConversation'))
@@ -47,28 +45,12 @@ const routes =
     component: Charts,
   },
   {
-    path: `${address}/buttons`,
-    component: Buttons,
-  },
-  {
-    path: `${address}/modals`,
-    component: Modals,
-  },
-  {
-    path: `${address}/tables`,
-    component: Tables,
-  },
-  {
     path: `${address}/404`,
     component: Page404,
   },
   {
     path: `${address}/profile`,
     component: Profile,
-  },
-  {
-    path: `${address}/add-post`,
-    component: AddNewPost,
   },
   {
     path: '/blank',
@@ -83,7 +65,7 @@ const routes =
     component: Blog,
   },
   {
-    path: `${address}/my-reviews`,
+    path: `${address}/reviews`,
     component: Reviews,
   },
   {
@@ -93,10 +75,6 @@ const routes =
   {
     path: `${address}/order/:orderId`,
     component: SingleOrder,
-  },
-   {
-    path: `${address}/write-review`,
-    component: WriteReview,
   },
    {
     path: `${address}/blog/:id`,
