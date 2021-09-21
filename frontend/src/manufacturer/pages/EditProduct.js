@@ -11,7 +11,7 @@ import ReactQuill from 'react-quill';
 import { useDispatch, useSelector } from 'react-redux'
 import { getSubs, getSubByCategory } from "../../actions/subCategoryAction";
 import { Input, Label, Select } from '@windmill/react-ui'
-import {  getSingleProduct, updateProduct } from "../../actions/productAction";
+import {  getProduct, updateProduct } from "../../actions/productAction";
 import { getCategories} from "../../actions/categoryAction";
 import Card from '../../components/Cards/Card';
 import Button from '../../components/Buttons/Button';
@@ -24,7 +24,7 @@ const EditProduct = ({match}) => {
     const history = useHistory();
     const categories = useSelector((state) => state.category.categories);
     const { token, user } = useSelector((state) => state.auth);
-    const { singleProduct } = useSelector((state) => state.admin);
+    const singleProduct = useSelector((state) => state.product.product);
     const [ category, setCategory ] = useState('')
     const [ subs, setSubs ] = useState('')
     const [ isSubmitting, setIsSubmitting ] = useState(false)
@@ -44,9 +44,9 @@ const EditProduct = ({match}) => {
     }
 
     useEffect(() => {
-        const productId = ( match.params.productId )
+        const productSlug = ( match.params.productSlug )
         dispatch(getCategories())
-        dispatch(getSingleProduct(productId))
+        dispatch(getProduct(productSlug))
           setTimeout(() => {
             setOk(true)
             }, 500)
@@ -98,6 +98,10 @@ const img = {
 
 const validatorForm = Yup.object().shape({
                  name: 
+                    Yup.string()
+                    .required("Required"),
+                
+                summary:
                     Yup.string()
                     .required("Required"),
 
@@ -183,6 +187,7 @@ const validatorForm = Yup.object().shape({
             name: singleProduct.name,
             price: singleProduct.price,
             subs: singleProduct.subs,
+            summary: singleProduct.summary,
             status: singleProduct.status,
             category: singleProduct.category?._id,
             shippingPrice: singleProduct.shippingPrice,
@@ -209,6 +214,7 @@ const validatorForm = Yup.object().shape({
             formData.append("category", values.category);
             formData.append("shippingPrice", values.shippingPrice);
             formData.append("quantity", values.quantity);
+            formData.append("summary", values.summary);
             formData.append("description", values.description);
             formData.append("shippingTime", values.shippingTime);
             
@@ -274,6 +280,15 @@ const validatorForm = Yup.object().shape({
                         </Label>
                         {errors.name && (
                         <div className="input-feedback">{errors.name}</div>
+                        )}
+                    </div>
+                    <div className="my-2 summary">
+                        <span className="text-base font-medium p-2"> Add a summary </span>
+                        <Field name="summary">
+                            {({ field }) => <ReactQuill className="products" value={field.value} onChange={field.onChange(field.name)} />}
+                        </Field>
+                        {errors.summary && (
+                            <div className="input-feedback">{errors.summary}</div>
                         )}
                     </div>
                     <div className="my-2">

@@ -5,6 +5,7 @@ const initialState = {
   productsByFilter: [],
   productsSearched: [],
   product: null,
+  productReviews: [],
   errors: {},
   loading: false,
 };
@@ -23,6 +24,12 @@ export const productReducer = (state = initialState, action) => {
         product: action.payload.data,
         loading: false,
       };
+    case "PRODUCT_REVIEWS":
+      return {
+        ...state,
+        productReviews: action.payload,
+        loading: false,
+      };
     case "PRODUCT_BY_SELL":
       return {
         ...state,
@@ -32,7 +39,7 @@ export const productReducer = (state = initialState, action) => {
     case "GET_ARRIVAL_PRODUCTS":
       return {
         ...state,
-        productsByArrival: action.payload,
+        productsByArrival: action.payload,   
         loading: false,
       };
     case "GET_FILTERED_PRODUCT":
@@ -88,6 +95,14 @@ export const productReducer = (state = initialState, action) => {
         ...state,
         error: action.payload,
         loading: false,
+      };
+    case "PRODUCT_REVIEW_LIKE":
+      return {
+        ...state,
+      };
+    case "PRODUCT_REVIEW_UNLIKE":
+      return {
+        ...state,
       };
     default:
       return state;

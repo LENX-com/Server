@@ -29,7 +29,7 @@ const routes = [
     component: Category,
   },
   {
-    path: `${address}/products/:productId`,
+    path: `${address}/products/:productSlug`,
     component: Product,
   },  
   { path: `${address}/products/reviews/:productId`, 

@@ -1,40 +1,25 @@
-import { Dialog, Transition } from "@headlessui/react";
 import { useState, Fragment, useRef, useEffect } from "react";
-import {
-  AiOutlineShoppingCart,
-  AiOutlineClose,
-  AiFillStar,
-} from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
-import { Cat } from "../../assets/icons";
-import SectionTitle from "../../../components/Typography/SectionTitle";
 import _ from "lodash";
 import { Redirect, Link } from "react-router-dom";
-import { isAuth, authenticateHelper } from "../../../actions";
+import * as Yup from "yup";
 import { login } from "../../../actions/authAction";
 import Google from "../../../marketplace/containers/social-login/Google";
-import { ToastContainer, toast } from "react-toastify";
-import { Label, Input, Button } from "@windmill/react-ui";
-import ImageLight from "../../assets/img/login-office.jpeg";
-import ImageDark from "../../assets/img/login-office-dark.jpeg";
+import { Label, Input } from "@windmill/react-ui";
+import Button from '../../../components/Buttons/Button'
 import { GoMarkGithub as GithubIcon } from "react-icons/go";
+import { Formik, Field, FieldArray } from "formik";
 import {
   AiOutlineTwitter as TwitterIcon,
   AiFillGoogleCircle as GoogleCircle,
 } from "react-icons/ai";
+import { Desktop, Mobile } from '../../../ScreenSize' 
+import PopUp from '../pop/PopUp'
 
 const SignInPop = ({ isOpen = true, setIsOpen }) => {
   let completeButtonRef = useRef(null);
   const dispatch = useDispatch();
 
-  function closeModal() {
-    setIsOpen(false);
-    console.log("clicked");
-  }
-
-  function openModal() {
-    setIsOpen(true);
-  }
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -60,44 +45,69 @@ const SignInPop = ({ isOpen = true, setIsOpen }) => {
     dispatch(login(userData));
   };
 
-  const showError = () => (
-    <div>
-      <ToastContainer>
-        {toast.error({
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        })}
-      </ToastContainer>
-    </div>
-  );
+  const validatorForm = Yup.object().shape({
+                 name: 
+                    Yup.string()
+                    .required("Required"),
 
-  const signUpForm = () => (
-    <div className="flex items-center min-h-screen dark:bg-gray-900">
-      <div className="flex-1 h-full max-w-4xl my-4 overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
-        <div className="flex flex-col overflow-y-auto md:flex-row">
-          <div className="h-32 md:h-auto md:w-1/2">
-            <img
-              aria-hidden="true"
-              className="object-cover w-full h-full dark:hidden"
-              src={ImageLight}
-              alt="Office"
-            />
-            <img
-              aria-hidden="true"
-              className="hidden object-cover w-full h-full dark:block"
-              src={ImageDark}
-              alt="Office"
-            />
-          </div>
-          <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+                password:
+                    Yup.number()
+                    .required("Required")
+                    .integer()
+                    .min(1),
+              
+            })
+
+  
+
+
+  return (
+    <div>
+      <PopUp  isOpen = {isOpen} setIsOpen = {setIsOpen}  title="Login">
+      <Formik
+          initialValues={{
+            name: '',
+            password: "",
+          }}
+
+          validationSchema={validatorForm}
+          // validateOnChange={isSubmitting}
+          // validateOnBlur={isSubmitting}
+
+          onSubmit= { async (values, {resetForm, validate}) => {
+
+
+            let formData = new FormData();
+
+            formData.append("name", values.name);
+            formData.append("price", values.price);
+
+            login(formData)
+            resetForm({values: ''})
+
+          }}>
+
+              
+        {(formik) => {
+        const {
+          values,
+          handleChange,
+          handleSubmit,
+          errors,
+          touched,
+          setFieldValue,
+          handleBlur,
+          isValid,
+          dirty
+        } = formik;
+          
+      return (
+          
+      <form className="">
+        <div className="">
+          <main className="items-center justify-center">
             <div className="w-full">
               <h1 className="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
-                {" "}
                 Support and empower small businesses
               </h1>
               <Label className="p-2 border-2 border-border rounded-md">
@@ -122,7 +132,7 @@ const SignInPop = ({ isOpen = true, setIsOpen }) => {
 
               <Button
                 onClick={clickSubmit}
-                className="mt-4 bg-Blue focus:outline-none focus:ring-2 focus:ring-Blue focus:ring-opacity-30 "
+                className="mt-4 bg-Blue focus:outline-none focus:ring-2 focus:ring-Blue focus:ring-opacity-30 w-full text-white "
                 block
               >
                 Log in
@@ -139,16 +149,16 @@ const SignInPop = ({ isOpen = true, setIsOpen }) => {
 
               <hr className="my-6" />
 
-              <Button className="" block layout="outline">
-                <GoogleCircle className="w-6 h-6 mr-2" aria-hidden="true" />
+              <Button className="flex w-full text-center justify-center">
+                <GoogleCircle className="text-xl mr-2" aria-hidden="true" />
                 Continue with Google
               </Button>
-              <Button block layout="outline" className="mt-2">
-                <GithubIcon className="w-6 h-6 mr-2" aria-hidden="true" />
+              <Button className="mt-2 flex w-full text-center justify-center">
+                <GithubIcon className="text-xl mr-2" aria-hidden="true" />
                 Continue with Github
               </Button>
-              <Button className="mt-2" block layout="outline">
-                <TwitterIcon className="w-6 h-6 mr-2" aria-hidden="true" />
+              <Button className="mt-2 flex w-full text-center justify-center">
+                <TwitterIcon className="text-xl mr-2" aria-hidden="true" />
                 Continue with Twitter
               </Button>
 
@@ -163,85 +173,10 @@ const SignInPop = ({ isOpen = true, setIsOpen }) => {
             </div>
           </main>
         </div>
-      </div>
-    </div>
-  );
-
-  return (
-    <div>
-
-      <div ref={completeButtonRef}></div> 
-
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="fixed inset-0 overflow-y-auto"
-          style={{ zIndex: "999" }}
-          onClose={() => setIsOpen(false)}
-          open={isOpen}
-          initialFocus={completeButtonRef}
-        >
-          <div className="min-h-screen text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Dialog.Overlay className="fixed inset-0 blur-lg bg-background bg-opacity-70" />
-            </Transition.Child>
-
-         
-            <span
-              className="inline-block h-screen align-bottom"
-              aria-hidden="true"
-            >
-              &#8203;
-            </span>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <div
-                className="absolute bottom-0 w-full max-w-md overflow-hidden text-left align-middle transition-all transform bg-background shadow-xl  overflow-y-scroll"
-                style={{ height: "100vh" }}
-              >
-                <Dialog.Title
-                  as="div"
-                  className="border-b-2 border-Grey border-solid"
-                >
-                  <div className="px-4 py-2 flex bg-white">
-                    <h2 className="text-lg font-medium leading-6 text-gray-900 mt-2">
-                      {" "}
-                      Please Sign In{" "}
-                    </h2>
-                    <div
-                      onClick={() => dispatch({ type: "CLEAR_WISHLIST_ERROR"})}
-                      className="ml-auto text-xl text-white rounded-full p-2 bg-Black"
-                    >
-                      <AiOutlineClose />
-                    </div>
-                  </div>
-                </Dialog.Title>
-                {signUpForm()}
-              </div>
-            </Transition.Child>
-
-            <div
-              className="absolute bottom-0 border-t-2 border-Grey-border p-2 bg-white"
-              style={{ width: "100vw" }}
-            ></div>
-          </div>
-        </Dialog>
-      </Transition> 
+      </form>
+         )}}
+      </Formik>
+      </PopUp>
     </div>
   );
 };

@@ -97,14 +97,17 @@ exports.OrderByUser = async (req, res) => {
 };
 
 //get all orders by admin user
-exports.OrderByAdmin = async (req, res) => {
-  const orders = await Order.find({ authorId: req.user._id });
+exports.OrderByAdmin = async (req, res ) => {
+  console.log(req.user._id)
+
+  const orders = await Order.find({"orderItems.manufacturerId": req.user._id})
+
   try {
     if (!orders.length) {
       return res.status(400).json({ error: "No order yet" });
     }
     return res.status(200).json({ data: orders });
-  } catch (error) {
+  } catch (error) { 
     console.log(error);
     return res.status(500).json({ error: error });
   }

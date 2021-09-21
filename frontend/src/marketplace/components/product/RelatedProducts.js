@@ -42,7 +42,7 @@ const RelatedProducts = ( {relatedProduct, product} ) => {
         <Card title="Related products" className="overflow-x-hidden">
             <Swiper
                 spaceBetween={20}
-                slidesPerView={2}
+                slidesPerView={5}
             >
                 {fakeRelatedProducts.map( data => (
                     <SwiperSlide className="p-2">

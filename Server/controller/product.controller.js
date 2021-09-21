@@ -2,6 +2,7 @@ const formidable = require("formidable");
 const _ = require("lodash");
 const fs = require("fs");
 const Product = require("../models/product");
+const ProductReview = require("../models/productReview");
 const { User } = require("../models/user");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const slugify = require("slugify");
@@ -12,10 +13,6 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 })  
-
-
-
-
 
 //search system powerd by mongodb text search with indexes
 
@@ -81,6 +78,8 @@ exports.createProduct = async (req, res) => {
     const { ...args } = req.body;
     args.slug = slugify(req.body.name);
     args.author = req.user._id;
+    args.authorName = req.user.name;
+    args.authorAvatar = req.user.avatar;
     args.photo = imageList;
     const newProduct = await Product.create(args);
     return res.status(200).json(newProduct);
@@ -144,7 +143,7 @@ exports.deleteProduct = async (req, res) => {
     return res.status(500).json({ error: error });
   }
 };
-
+  
 //get product by its id
 exports.getProductById = async (req, res) => {
   try {
@@ -152,6 +151,27 @@ exports.getProductById = async (req, res) => {
       "category",
       "_id name"
     );
+    return res.status(200).json({ data: product });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: error });
+  }
+};
+
+exports.getProductBySlug = async (req, res) => {
+  try {
+    const product = await Product.findOne({ slug: req.params.slug })
+    .populate(
+      "category",
+      "_id name"
+    )
+    .populate(
+      "author"
+    );
+
+    if(!product){
+      throw new Error ("Product not found")
+    }
     return res.status(200).json({ data: product });
   } catch (error) {
     console.log(error);
@@ -194,36 +214,6 @@ exports.getProductByBrand = async (req, res) => {
     return res.status(500).json({ error: error });
   }
 };
-
-//write review for product
-exports.productReview =  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }  
-
-    try {
-      const user = await User.findById(req.user._id).select("-password");
-      const product = await Product.findById(req.params.id);
-
-      const newComment = {
-        title: req.body.title,
-        text: req.body.text,
-        name: user.name,
-        avatar: user.avatar,
-        user: req.user.id,
-      };
-
-      product.comments.unshift(newComment);
-
-      await product.save();
-
-      res.json(product.comments);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server Error");
-    }
-  }
 
 //****************************************old implementation **************************************************** */
 exports.productById = (req, res, next, id) => {
@@ -471,7 +461,7 @@ const handlePrice = async (req, res, price, category) => {
         $gte: price[0],
         $lte: price[1],
       }
-    }, {category})
+    }, {category})  
       .populate("category", "_id name")
       .populate("subs", "_id name")
       .populate("postedBy", "_id name")

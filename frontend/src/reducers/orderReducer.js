@@ -5,6 +5,8 @@ const initialState = {
     success:"",
     loading: "",
     error:"",
+    paymentMethod:"",
+    manufacturerOrders:""
 };
 
 export const orderReducer = (state = initialState, action) => {
@@ -106,7 +108,29 @@ export const orderReducer = (state = initialState, action) => {
         loading: false,
         success: true 
         };
+    case "PAYMENT_METHOD_PROVIDER":
+        return { 
+        ...state,
+        paymentMethod: action.payload
+        };
+    case "PAYMENT_METHOD_PROVIDER_FAIL":
+        return { 
+        ...state,
+        error: action.payload
+        };
     case "ORDER_DELETE_FAIL":
+      return { 
+        ...state,
+        loading: false, 
+        error: action.payload 
+        };
+      case "MANUFACTURER_ORDERS":
+      return { 
+        ...state,
+        loading: false, 
+        manufacturerOrders: action.payload 
+        };
+      case "MANUFACTURER_ORDERS_FAIL":
       return { 
         ...state,
         loading: false, 

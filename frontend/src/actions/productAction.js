@@ -10,7 +10,7 @@ export const createProduct = (product) => async (dispatch) => {
       type: "ADD_PRODUCT",
       payload: res.data,
     });
-  } catch (err) {
+  } catch (err) {    
     dispatch({
       type: "PRODUCT_ERROR",
     });
@@ -105,6 +105,24 @@ export const getProductsBySell = (sortBy) => async (dispatch) => {
     });
   }
 };
+
+// all products
+export const getProductReviews = (productId) => async (dispatch) => {
+  try {
+    const res = await api.get(
+      `${API}/product/reviews/${productId}`
+    );
+    dispatch({
+      type: "PRODUCT_REVIEWS",
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: "PRODUCT_ERROR",
+    });
+  }
+};
+
 // all products
 export const getProductsByArrival = (sortBy) => async (dispatch) => {
   try {
@@ -184,9 +202,10 @@ export const deleteProduct = (productId) => async (dispatch) => {
   }
 };
 // get product by id
-export const getProduct = (productId) => async (dispatch) => {
+export const getProduct = (slug) => async (dispatch) => {
+  console.log(slug)
   try {
-    const res = await api.get(`${API}/product/${productId}`);
+    const res = await api.get(`${API}/product/${slug}`);
     dispatch({
       type: "GET_PRODUCT",
       payload: res.data,
@@ -194,6 +213,7 @@ export const getProduct = (productId) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: "PRODUCT_ERROR",
+      payload: err
     });
   }
 };
@@ -240,7 +260,7 @@ export const getSingleProduct = (productId) => async (dispatch) => {
     const res = await api.get(`${API}/product/${productId}`);
     dispatch({
       type: "ADMIN_SINGLE_PRODUCT",
-      payload: res.data,
+      payload: res,
     });
   } catch (err) {
     dispatch({

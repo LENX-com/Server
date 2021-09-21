@@ -33,18 +33,20 @@ const {
   purchaseHistory,
   UpdateOrderStatus,
   Orderbyid,
+  OrderByAdmin
 } = require("../controller/order.controller");
 router.get("/order/status-values", auth, getStatusValues);
 router.put("/order/:orderId/pay", auth, payment);
 router.post("/order/create", auth, createOrder); 
 router.get("/orders", auth, allOrder);
+router.get("/orders/by/admin", auth, protected(1), OrderByAdmin);
 router.get("/order/purchaseHistory", auth, OrderByUser);
 router.get("/order/history", purchaseHistory);
 router.get("/order/:orderId", auth, Orderbyid);
 router.post(
   "/order/:orderId/update_status",
   auth,
-  protected(1),
+  protected(1), 
   UpdateOrderStatus
 );
 //****************************************************************orders routes********************************************************************//

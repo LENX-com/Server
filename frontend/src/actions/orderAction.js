@@ -90,24 +90,34 @@ export const deleteOrder = (orderId) => async (dispatch, getState) => {
   }
 }
 
+export const paymentMethodProcess = (paymentMethod) => async (dispatch) => {
+  try{
+    dispatch({ 
+      type: "PAYMENT_METHOD_PROVIDER",
+      payload: paymentMethod 
+    });
+  }
+  catch (error) {
+    dispatch({
+      type: "ORDER_DELETE_FAIL",
+      payload: error
+  });
+  }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const manufacturerOrders = () => async ( dispatch ) => {
+  try {
+    const res = await api.get(`${API}/orders/by/admin`)
+    dispatch({ 
+      type: "MANUFACTURER_ORDERS", 
+      payload:  res.data 
+    });
+  } catch (error) {
+    dispatch({ 
+      type: "MANUFACTURER_ORDERS_FAIL", 
+      payload: error.message });
+  }
+}
 
 
 // all orders

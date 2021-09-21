@@ -7,6 +7,14 @@ const productSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "User",
     },
+    authorAvatar: {
+      type: String,
+      required: true
+    },
+    authorName: {
+      type: String,
+      required: true 
+    },
     name: {
       type: String,
       trim: true,
@@ -38,29 +46,10 @@ const productSchema = new mongoose.Schema(
       lowercase: true,
       index: true,
     },
-      comments: [
+      reviews: [
     {
-      user: {
-        type: ObjectId
-      },
-      title: {
-        type: String,
-        required: true
-      },
-      text: {
-        type: String,
-        required: true
-      },
-      name: {  
-        type: String
-      },
-      avatar: {
-        type: String
-      },
-      date: {
-        type: Date,
-        default: Date.now
-      }
+      type: ObjectId,
+      ref: "ProductReview"
     }
   ],
     subs: [
@@ -74,6 +63,10 @@ const productSchema = new mongoose.Schema(
       required: true,
       //maxlength: 2000
     },
+    summary : {
+      type: String,
+      required: true
+    },
     price: {
       type: Number,
       trim: true,
@@ -84,13 +77,6 @@ const productSchema = new mongoose.Schema(
     discount: {
       type: Number,
     },
-    // category: [
-    //   {
-    //     type: ObjectId,
-    //     ref: "Category",
-    //     required: true,
-    //   },
-    // ],
     category: {
       type: ObjectId,
       ref: "Category",
@@ -118,14 +104,6 @@ const productSchema = new mongoose.Schema(
       },
       },
     ],
-    shipping: {
-      required: false,
-      type: Boolean,
-    },
-    shippingZone: {
-      type: String,
-      required: false,
-    },
   },
   { timestamps: true }
 );

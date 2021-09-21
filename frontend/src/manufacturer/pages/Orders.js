@@ -16,11 +16,13 @@ import {
   Label,
   Input
 } from '@windmill/react-ui'
+import { manufacturerOrders } from '../../actions/orderAction'
 import { Link } from 'react-router-dom'
 import Card from '../../components/Cards/Card'
 import {data} from '../utils/demo/tableData'
 import PageTitle from '../components/Typography/PageTitle'
 import { EditIcon, TrashIcon } from '../icons'
+import { useDispatch } from 'react-redux'
 
   const response2 = data.concat([])
 
@@ -42,6 +44,13 @@ const Orders = () => {
   function onPageChangeTable1(p) {
     setPageTable1(p)
   }
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(manufacturerOrders())
+    console.log({dude: "dude"})
+  }, [])
 
   // pagination change control
   function onPageChangeTable2(p) {
@@ -74,7 +83,7 @@ const Orders = () => {
       const SelectionMenu = () => (
         <>
         <div className="shadow-separator">
-            <div className="p-2">
+            <div className="p-2">  
                 <ul className="flex flex-wrap">
                     { menuOptions.map((data, i)=> (
                         <li key= { data } className= {`${menu === i ? 'border-b-2 border-orange text-Black' : 'text-Black-medium'} w-auto p-2 cursor-pointer`} >

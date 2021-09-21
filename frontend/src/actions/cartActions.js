@@ -76,6 +76,8 @@ export const addToCart = (productId, qty) => async (dispatch, getState) => {
         price: res.data.data.price,
         photo: res.data.data.photo,
         shippingPrice: res.data.data.shippingPrice,
+        manufacturerAvatar: res.data.data.authorAvatar,
+        manufacturerName: res.data.data.authorName,
         qty: qty,
       },
     });

@@ -20,7 +20,7 @@ exports.getUserById = async (req, res) => {
     .populate("story")
     .populate("blogs")
     .populate("reviews")
-    .populate("products");
+    .populate("products");  
   try {
     if (!user) {
       return res.json("no user found");
@@ -208,7 +208,7 @@ exports.validate = (req, res, next) => {
 //get wish list by authenticated user
 exports.getWishlist = async (req, res) => {
   const wish = await Wishlist.find({ userId: req.user._id }).populate(
-    "productId"
+    "product", "_id name photo"
   );
   try {
     return res.json(wish);
@@ -217,19 +217,24 @@ exports.getWishlist = async (req, res) => {
     return res.status(500).json({ error: error });
   }
 };
-
+  
 //add wish list
 exports.addWishlist = async (req, res) => {
   const product = await Product.findById(req.params.productId);
+
+  console.log(product)
+
   const wish = await Wishlist.find({ productId: req.params.productId });
-  try {
+  try { 
     if (wish.length > 0) {
       return res.status(400).json({ error: "wishlist already added" });
     }
     const data = {
       userId: req.user._id,
-      productId: product._id,
+      product: product._id,
     };
+
+    console.log(data)
     const resp = await Wishlist.create(data);
     return res.status(200).json(resp);
   } catch (error) {

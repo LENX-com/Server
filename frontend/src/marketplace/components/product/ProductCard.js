@@ -129,18 +129,19 @@ const ProductCard = ({
 
   return (
     <div className="shadow-product rounded-md ">
-      <div
-        className="relative rounded-md bg-cover bg-center h-36"
-        style={{
-          background: `url("https://i.etsystatic.com/9524040/c/1257/999/360/1779/il/7a575e/2221507815/il_340x270.2221507815_hzle.jpg")`,
-        }}
+      <div className="relative">
+      <img
+        className="relative rounded-t-md w-full h-36"
+        src= {`https://secure.img1-fg.wfcdn.com/im/50804568/resize-h160-w160%5Ecompr-r85/8783/87830915/Arras+2+Door+Wardrobe.jpg`}
+        alt ={ "product backgorund "}
       >
-        <div className="absolute top-2 right-2">
+      </img>
+     <div className="absolute top-2 right-2 cursor-pointer">
           <Like
             className="text-2xl text-white"
             onClick={() => console.log("this product was added to wishlist")}
           />
-        </div>
+      </div>
       </div>
       <div className="p-2">
         <h1 className="truncate">

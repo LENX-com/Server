@@ -258,6 +258,8 @@ router.put("/blog/like/:id", auth, checkObjectId("id"), async (req, res) => {
       return res.status(400).json({ msg: "Blog already liked" });
     }
 
+    
+
     blog.likes.unshift({ user: req.user.id });
 
     await blog.save();

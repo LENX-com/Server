@@ -6,6 +6,7 @@ const initialState = {
   singleBlog: undefined,
   reviews: false,
   loading: false,
+  reviewsTest: "",
 };
 
 export const adminReducer = (state = initialState, action) => {
@@ -37,7 +38,7 @@ export const adminReducer = (state = initialState, action) => {
       case "ADMIN_BLOG_ERROR":
       return {
         ...state,
-        errors: action.payload,
+        errors: action.payload,  
         loading: false,
       };
       case "ADMIN_BLOG_ADDED":
@@ -53,6 +54,11 @@ export const adminReducer = (state = initialState, action) => {
         return {
         ...state,
         reviews: action.payload.data,
+      };
+      case "REVIEWS_TEST":
+        return {
+        ...state,
+        reviewsTest: "test",
       };
       case "REVIEWS_ADMIN_ERROR":
         return {

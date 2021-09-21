@@ -18,7 +18,7 @@ from './orderReducer'
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  user: userReducer,
+  user: userReducer,   
   search: searchReducer,
   cart: cartReducer,
   product: productReducer,

@@ -8,7 +8,7 @@ const shippingSchema = {
   city: { type: String, required: true },
   postalCode: { type: String, required: true },
   country: { type: String, required: true, default: "United Kingdom" },
-  mobile: { type: Number, required:true }
+  mobile: { type: Number }
 };
 
 const paymentSchema = {
@@ -18,21 +18,43 @@ const paymentSchema = {
   paymentID: { type: String, },
 };
 
-const orderItemSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  qty: { type: Number, required: true },
-  price: { type: String, required: true },
-  manufacturerId: { type: ObjectId, ref: 'User', required: true },
-  product: {
-    type: ObjectId,
-    ref: 'Product',
-    required: true
+const orderItemSchema = [{
+  manufacturerId: { 
+    type: ObjectId, 
+    ref: 'User', 
+    required: true 
   },
-});
+  userId: { 
+    type: ObjectId,
+     ref: 'User', 
+     required: true 
+    },
+  products: [
+    {
+      name: { 
+        type: String, 
+        required: true 
+      },
+      qty: {
+         type: Number,
+          required: true
+         },
+      price: {
+         type: String, 
+         required: true
+         },
+      product: {
+        type: ObjectId,
+        ref: 'Product',
+        required: true
+      },
+  }
+]
+}];
 
 const orderSchema = new mongoose.Schema({
   user: { type: ObjectId, ref: 'User', required: true },
-  orderItems: [orderItemSchema],
+  orderItems: orderItemSchema,
   email: { type: String, required:true},
   shipping: shippingSchema,
   payment: paymentSchema,

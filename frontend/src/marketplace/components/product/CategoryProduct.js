@@ -147,7 +147,7 @@ const ProductCard = ({
       <div className="shadow-product rounded-md ">
         <div
           className="relative rounded-md bg-cover bg-center h-36"
-          style={{ background: `url("${product.photo}")` }}
+          style={{ background: `url("${product.photo[0].url}")` }}
         >
           <div
             className="absolute top-2 right-2 "

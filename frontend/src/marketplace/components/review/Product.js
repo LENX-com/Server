@@ -3,9 +3,10 @@ import Rating from 'react-rating'
 import { MdStarBorder, MdStar} from 'react-icons/md'
 import Button from '../../../components/Buttons/Button'
 import { addToCart} from "../../../actions/cartActions";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-const Product = ({product}) => {
+const Product = ({match}) => {
+  const product = useSelector((state) => state.product.product);
 
   const dispatch = useDispatch();
     return (
@@ -15,14 +16,13 @@ const Product = ({product}) => {
         <div className="w-1/3 bg-cover" style={{backgroundImage: `url(${product.photo})`}} />
         <div className="w-2/3 p-4 md:p-4">
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">{ product.name }</h1>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400"> {product.description } </p>
           <div className="flex mt-2 item-center">
               <Rating
-                className="mt-2 text-xl"
+                className="mt-2 text-xl"  
                 emptySymbol= { <MdStarBorder/> }
                 fullSymbol= { <MdStar/> }
                 readonly
-                initialRating={4.5}
+                initialRating={product.rating}
               />
           </div>
           <div className="flex justify-between mt-3 item-center">

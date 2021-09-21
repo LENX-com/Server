@@ -3,9 +3,9 @@ import  logo  from '../../assets/black logo.gif'
 
 const BannerBottom = () => {
     return (
-        <div className="w-full h-60 p-4 mt-3">
-            <div className="w-2/3 m-auto">
-                <img src={logo} alt={"cool"} />
+        <div className="w-full p-4 mt-3">
+            <div className="w-1/4 m-auto mobile:w-2/4">
+                <img src={logo} alt={"cool"}/>
             </div>
             <div className="text-Black font-bold text-xl text-center">
                 Think differently

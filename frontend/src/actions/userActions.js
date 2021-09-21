@@ -28,7 +28,7 @@ export const getFollowing = () => async (dispatch) => {
     dispatch({
       type: FOLLOW_ERROR,
     });
-  }
+  }  
 };
 
 export const getAllManufacturer = () => async (dispatch) => {
@@ -73,7 +73,7 @@ export const getReviewsByManufacturer = (slug) => async (dispatch) => {
     dispatch({
       type:REVIEWS_ADMIN_ERROR,
       payload: err
-    });
+    });   
   
   }
 };

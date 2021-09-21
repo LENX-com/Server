@@ -46,3 +46,38 @@ export  const getQuestionsByProduct = (productId) => async (dispatch) => {
     });
   }
 };
+
+
+// all products
+export  const QuestionUpvote = (questionId) => async (dispatch) => {
+  try {
+    const res = await api.get(
+      `${API}/question/${questionId}/upvote`
+    );
+    dispatch({
+      type: "QUESTION_UPVOTE",
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: "QUESTION_ERROR",
+    });
+  }
+};
+
+// all products
+export  const QuestionDownvote = (questionId) => async (dispatch) => {
+  try {
+    const res = await api.get(
+      `${API}/question/${questionId}/downvote`
+    );
+    dispatch({
+      type: "QUESTION_DOWNVOTE",
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: "QUESTION_ERROR",
+    });
+  }
+};

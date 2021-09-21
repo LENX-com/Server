@@ -1,21 +1,39 @@
-import React from 'react'
+import React, { useState} from 'react'
 import Card from '../../../components/Cards/Card'
 import Rating from 'react-rating'
-import { MdStarBorder, MdStar} from 'react-icons/md'
+import { useDispatch } from 'react-redux'
+import { Star, EmptyStar, Tree } from '../../assets/icons'
+import { AddLike, RemoveLike } from '../../../actions/reviewsAction'
 import { AiOutlineCaretUp, AiOutlineCaretDown } from 'react-icons/ai'
 import moment from 'moment'
 
-const Comment = ({comments}) => {
+const Comment = ({reviews}) => {
 
+    const dispatch = useDispatch()
+    const [ hasLiked, setHasLiked ] = useState(false)
+    const [ hasUnliked, setHasUnliked ] = useState(false)
+    
     //function to capitalise first letter
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
+    const handleLike = (review) => {
+        dispatch(AddLike(review))
+        setHasLiked(true)
+    }
+     const handleRemoveLike = (review) => {
+        dispatch(RemoveLike(review))
+        setHasLiked(false)
+        setHasUnliked(true)
+    }
 
     return (
         <>
-            {comments && comments.comments.map( comment => 
-                <Card>
+            {
+            reviews.length !== 0 ?
+            
+            reviews && reviews.map( comment => 
+                <div className="lg:mx-auto lg:w-3/5 bg-white border-box p-4 my-2">
                     <div className="flex items-center">
                         <div
                             className="rounded-full p-1 relative"
@@ -26,7 +44,7 @@ const Comment = ({comments}) => {
                             >
                                 <img
                                 className="h-10 w-10 rounded-full"
-                                src= {comment.avatar}
+                                src= {comment.author.avatar}
                                 alt="jkay"
                                 />
                             </a>
@@ -45,26 +63,43 @@ const Comment = ({comments}) => {
                         <div className="flex my-2 justify-between">
                             <Rating
                             className="mt-2 text-xl"
-                            emptySymbol= { <MdStarBorder/> }
-                            fullSymbol= { <MdStar/> }
+                            emptySymbol= { <EmptyStar className= "text-lg" style={{width:"16px", height: "16px"}}/> }
+                            fullSymbol= { <Star className= "text-lg" style={{width:"16px", height: "16px"}}/>}
                             readonly
-                            initialRating={4.5}
+                            initialRating={comment.rating}
                             />
                             <div className="mt-2"> { capitalizeFirstLetter(moment(comment.date).startOf('day').fromNow())}</div> 
                         </div>
-                        <div>
-                            <h1 className="text-lg font-bold"> {comment.title} </h1>
-                            <p className="text-gray-800 text-sm mt-2 leading-normal md:leading-relaxed"> { comment.text } </p>
-                        </div>
-                        <div className="text-xl relative h-12">
-                            <div className="absolute right-2 bottom-0">
-                                <AiOutlineCaretUp />
-                                    20
-                                <AiOutlineCaretDown />
+                        <div className="flex justify-between">
+                            <div>
+                                <h1 className="text-lg font-bold"> {comment.title} </h1>
+                                <p className="text-gray-800 text-sm mt-2 leading-normal md:leading-relaxed"> { comment.review } </p>
+                            </div>
+                            <div className="text-xl relative">
+                                <button className="m-auto cursor-pointer" 
+                                        onClick= {() => handleLike (comment._id)}
+                                >
+                                    <AiOutlineCaretUp className="m-auto  text-Black-medium text-lg"/>
+                                </button>
+                                    <h1 className="text-center  text-Black-medium  text-2xl"> {comment.likes?.length} </h1>
+                                <button className="m-auto  cursor-pointer"
+                                        onClick={() => handleRemoveLike(comment._id)}
+                                >
+                                    <AiOutlineCaretDown  className=" text-Black-medium text-lg"/>
+                                </button>
                             </div>
                         </div>
-                </Card>
-            )}
+                </div>
+            )
+            :
+
+            <div className="mb-4 h-full">
+                <div className="m-auto text-center">
+                    <Tree className="text-center mx-auto my-2"/>
+                    <span className="font-bold"> Sorry there are no reviews for this product </span>
+                </div>
+            </div>
+            }
         </>
     )
 }

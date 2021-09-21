@@ -2,7 +2,7 @@ import { api } from "../utils/api";
 import { API } from "../config";
 import { setAlert } from "./alertAction";
 
-export const addWishList = (productId) => async (dispatch) => {
+export const addWishList = (productId) => async (dispatch) => {  
   try {
     const resp = await api.post(`${API}/wishlist/create/${productId}`);
     dispatch({

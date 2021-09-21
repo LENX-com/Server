@@ -42,9 +42,10 @@ exports.answer =  async (req, res) => {
           throw new Error(" User does not exist ")
       }
 
+      console.log(req.body)
+
 
       const newComment = {
-        title: req.body.title,
         answer: req.body.answer,
         name: user.name,
         avatar: user.avatar,

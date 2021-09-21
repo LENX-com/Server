@@ -28,9 +28,9 @@ const {
   searchFilters, 
   searchCatalogue,
   listAll,
-  productReview,
   searchProductsCatalogue,
-  searchStoresCatalogue
+  getProductBySlug,
+  searchStoresCatalogue,
 } = require("../controller/product.controller");
 const { auth, protected } = require("../middlewares/verify");
 const { userById } = require("../controller/user.controller");
@@ -57,18 +57,16 @@ router.put("/edit/product/:productId", upload.array('file'), auth, protected(1),
 router.delete("/product/delete/:productId", auth, protected(1), deleteProduct);
 router.get("/products/by/category/:categoryId", getProductByCategory);
 router.get("/brands/:brandId", getProductByBrand);
-router.get("/product/:productId", getProductById);  
+router.get("/product/:slug", getProductBySlug);  
 router.post("/tags", getProductByTags);
 router.post("/search/filters", searchFilters);
+
+
 router.get("/products/:count", listAll);
 
-router.post(
-  "/product/comment/:id", checkObjectId("id"),
-  check("text", "Text is required").not().isEmpty(),
-  auth, productReview)
 //*********************************** */
   
-router.get("/products", list);
+router.get("/products", list);  
 router.get("/search", listSearch);
 router.get("/related/:productId", listRelated);
 router.post("/product/by/search", listBySearch);
@@ -78,3 +76,4 @@ router.post("/product/by/search", listBySearch);
 // router.param("productId", productById);
 
 module.exports = router;
+  

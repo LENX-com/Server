@@ -26,7 +26,7 @@ const PopularItems = () => {
     ]
     
     return (
-        <Card title="Popular Products">  
+        <Card title="Popular Products" className="lg:hidden">  
             { PopularProducts.map((data)=> (
                 <Link to="">
                     <div className="my-3 flex items-center lg:w-3/5 mx-auto sm:flex-row shadow-separator p-1 bg-white">

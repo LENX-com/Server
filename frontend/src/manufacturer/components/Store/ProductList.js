@@ -62,7 +62,7 @@ const ProductList = ({products, status }) => {
       const DropdownMenu = ({i, product}) => {
         return (
             <Dropdown isOpen={ open && index === i } onClose={() => setIsOpen({ open: false})} className="z-50 w-auto top-4 left-4">
-                <Link to = { `/admin/dashboard/products/edit/${product._id}` } >
+                <Link to = { `/admin/dashboard/products/edit/${product.slug}` } >
                     <DropdownItem tag="div"  className="flex">
                         <div> <AiOutlineEdit className="my-auto mr-2 text-lg" /> </div>
                     <div className="text-Black-medium">Edit Product</div>

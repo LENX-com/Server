@@ -1,59 +1,53 @@
 import React from 'react'
-import { Company, Shipping, Chat, StartUp } from '../../assets/icons'
+import { Chat} from '../../assets/icons'
 import Card from '../../../components/Cards/Card'
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useMediaQuery } from 'react-responsive'
+import { BsPeopleFill, BsFillChatSquareDotsFill } from "react-icons/bs";
+import { MdLocalShipping } from "react-icons/md";
+import { FaRocket }  from "react-icons/fa";
 
 const LinkFeatures = () => {
+
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
 
     const Feature = [
         {
             name: "Buy directly from brands",
-            icon: <Company />
+            icon: <BsPeopleFill className="h-7 w-7 text-center m-0" />
         },
         {
             name: " Fast shipping ",
-            icon: <Shipping />
+            icon: <MdLocalShipping  className="h-7 w-7 text-center m-0" />
         },
         {
             name: " Easy chat",
-            icon: <Chat />  
+            icon: <Chat className="h-7 w-7 text-center m-0" />  
         },
         {
             name: " Made by startups ",
-            icon: <StartUp />  
+            icon: < FaRocket className="h-7 w-7 text-center m-0" />  
         }
     ]
- 
-    const LinkFeature = () => {
-        return (
-            <Card>
-            <Swiper
-                    spaceBetween={5}
-                    slidesPerView={3}>
-
+    return (
+        <div className="mb-10 rounded-sm bg-white shadow-button">
+                <div className="grid grid-cols-4 gap-2 mobile:grid-cols-1">                
                     {Feature.map((data, i) => (
-                    <SwiperSlide>
-                        <div className="wrapper">
-                            <div className="font-xl p-2 h-16 w-16 text-center mx-auto">
-                                {data.icon}
-                            </div>
-                            <div className="icon-wrapper text-center text-sm">
+                        <div className=" m-auto text-center mobile:m-0 mobile:shadow-separator p-2">
+                            <div className="flex">
+                                <div className=" p-2 m-0 text-Blue rounded-full" style= {{border: "1px solid rgb(221, 221, 221)"}}>
+                                    {data.icon}
+                                </div>
+                                <div className="text-center text-lg my-auto ml-2">
                                 {data.name} 
+                                </div>
                             </div>
                         </div>
-                    </SwiperSlide>
-                    ))}
-            </Swiper>
-            </Card>
+                        ))}
+                </div>
+            </div>
         )
-    }
-
-    return (
-        <>
-         <LinkFeature />   
-        </>
-    )
 }
 
 export default LinkFeatures

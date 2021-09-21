@@ -19,6 +19,7 @@ import '../../styles/Form.scss'
 const Checkout = () => {
     const history = useHistory();
     const categories = useSelector((state) => state.category.categories);
+    const { user } = useSelector((state) => state.auth);
     const cart = useSelector((state) => state.cart.cartItems);
     const [ payment, setPayment ] = useState(false)
     const [ isPaid, setIsPaid ] = useState(false)
@@ -30,26 +31,6 @@ const Checkout = () => {
      const shippingPrice = cart.reduce((acc, item) => acc + item.qty * item.shippingPrice, 0).toFixed(2) 
      const totalPrice = Math.trunc(parseInt(subtotalPrice) + parseInt(shippingPrice))
 
-     console.log(totalPrice)
-
-      const Count = ({product}) => (
-      <div className="rounded-full shadow-button inline-block">
-                <div className="flex text-sm">
-                <button
-                    className="border-r border-Grey-border focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent rounded-l-full"
-                    onClick= { () => dispatch(addToCart(product.product, Math.max(1, product.qty - 1)))}>
-                    -
-                </button>
-                <div className="my-auto px-3 text-xs"> { product.qty } </div>
-                <button
-                  className="border-l border-Grey-border focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent rounded-r-full"
-                  onClick= {() => dispatch(addToCart(product.product, Math.min(20, product.qty + 1)))}
-                  >
-                    +
-                </button>
-                </div>
-                </div>
-  )
 
   const Product = ({product}) => (
            <div className="my-4 relative bg-white rounded-md shadow-product max-w-md mx-auto overflow-hidden">
@@ -73,25 +54,38 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-        <div className="flex justify-between p-2">
-            <div className="text-base font-bold">
-                <Count product= {product} />
-            </div>
-            <div>
-                <Button onClick= {(e) => {
-                  e.preventDefault();   
-                  dispatch(removeCart(product.product))
-                }}
-                className=" text-sm">
-                        Delete
-                </Button>
-            </div>
-        </div>
       </div>
   )
 
     const { order } = useSelector(state => state.order);
 
+    
+    //this functions maps all orders and gets the different manufacturers for the orders
+    var manufacturer = []
+    for (let i=0; i<cart.length; i++) {
+      if(!manufacturer.includes(cart[i].manufacturerId)){
+        manufacturer.push(cart[i].manufacturerId)
+      }
+    }
+
+    var orders = manufacturer.map( data => (
+    cart.filter(el => el.manufacturerId === data)
+    ))
+    
+  const pedidos = orders.map( data => {
+    return({
+      manufacturerId: data[0].manufacturerId,
+      userId: user._id,
+      products: data.map( product => ({
+        name: product.name,
+        qty: product.qty,
+        price: product.price,
+        product: product.product
+      }))
+    });
+  })
+
+  console.log({pedidos: pedidos})
 
 const thumbsContainer = {
   display: 'flex',
@@ -133,9 +127,8 @@ const validatorForm = Yup.object().shape({
                     Yup.string()
                      .required("Required"),
                 
-                number: 
+                mobile: 
                     Yup.string()
-                      .required()
                       .matches(/^[0-9]+$/, "Must be only digits")
                       .min(7, 'Number does not contain enough numbers ')
                       .max(15, 'The number contains too many numbers pal'),
@@ -151,6 +144,12 @@ const validatorForm = Yup.object().shape({
                 postalCode: 
                   Yup.string()
                     .required("Required"),
+                
+                email:
+                 Yup.string()
+                 .email('Must be a valid email')
+                 .max(255)
+                 .required('Email is required'), 
             })
 
 
@@ -189,21 +188,13 @@ const validatorForm = Yup.object().shape({
           validateOnBlur={isSubmitting}
 
           onSubmit= { async (values, {resetForm, validate}) => {
-
-            const items = cart.map(product => (
-              { name: product.name,
-                qty: product.qty,
-                price: product.price,
-                product: product.product,
-                manufacturerId: product.manufacturerId,
-              }));
-              
+            
               var isPaidAt = "";
 
               if(isPaid){
                 isPaidAt = Date.now()
               }
-
+              
             dispatch(createOrder({
                 name: values.name,
                 lastName: values.lastName,
@@ -218,8 +209,8 @@ const validatorForm = Yup.object().shape({
                 payment: payment,
                 totalPrice: totalPrice,
                 email: values.email,
-                orderItems: items
-            }))
+                orderItems: pedidos
+              }))
 
             setIsSubmitting(true)
 
@@ -395,10 +386,10 @@ const validatorForm = Yup.object().shape({
                   )))}
                     <div className= "bg-white mb-6">
                     <div>
-                    <div className="my-2 p-2 shadow-separator">
+                      <div className="my-2 p-2 shadow-separator">
                         <div className="text-base text-Black-medium my-auto flex justify-between">
                             Subtotal
-                            <div>
+                            <div className="font-bold">
                               £{subtotalPrice}
                             </div>
                         </div>
@@ -408,7 +399,7 @@ const validatorForm = Yup.object().shape({
                               £{shippingPrice}
                             </div>
                         </div>
-                    </div>
+                      </div>
                         <div className="text-Black text-lg font-bold flex justify-between">
                             TOTAL PRICE
                             <div>

@@ -8,7 +8,7 @@ import { Alert } from '@windmill/react-ui'
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import SectionTitle from "../components/Typography/SectionTitle";
 import ReactQuill from 'react-quill';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux' 
 import { getSubs, getSubByCategory } from "../../actions/subCategoryAction";
 import { createProduct } from "../ApiAdmin";
 import { Input, Label, Select } from '@windmill/react-ui'

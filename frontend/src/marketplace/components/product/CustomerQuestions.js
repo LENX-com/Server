@@ -1,52 +1,104 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '../../../components/Cards/Card'
-import { MdSearch} from 'react-icons/md'
+import Button from '../../../components/Buttons/Button'
 import { useDispatch, useSelector } from 'react-redux'
+import { Input } from '@windmill/react-ui' 
 import { MdChevronRight } from 'react-icons/md'
-import { getQuestionsByProduct  } from '../../../actions/questionAction'
+import { getQuestionsByProduct, createQuestion } from '../../../actions/questionAction'
 import { Link } from 'react-router-dom'
 
-const CustomerQuestions = ({product}) => {
+const CustomerQuestions = ({product, isOpenSign, setIsOpenSign}) => {
     const MAX_LENGTH = 80;
     const questions = useSelector((state) => state.questions.questions);
+    const { user, isAuthenticated } = useSelector((state) => state.auth);
+    const [ question, setQuestion ] = useState("")
+    const [ questionAsked, setQuestionAsked ] = useState(false)
+    const [error, setError ] = useState(false) 
 
     const dispatch = useDispatch();
 
     useEffect(() => {
       dispatch(getQuestionsByProduct(product?._id))
-    }, [product])
+    }, [product, question, dispatch]) 
+
+    const handleQuestion = (event) => {
+        if (!isAuthenticated) { 
+            setIsOpenSign(true)
+        } 
+        else if (question.length < 10) {
+           setError("The question is not long enough") 
+        } else{
+        event.preventDefault();
+            const questionData = {
+            question: question,
+            productId: product._ID,
+            author: {
+                id: user._id,
+                name: user.name,
+                avatar: user.avatar
+                },
+            };
+            dispatch(createQuestion(product._id, questionData));
+            setError(false )
+            setQuestion("")
+            setQuestionAsked(true)
+        }
+  };
+
+  const handleChange = (e) => {
+      setQuestion(e.target.value)
+  }
 
     return (
         <Card title="Customer Questions">
-             <div className="sidebar__search my-2">
-                    <form className="sidebar__search--container border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none my-auto flex">
-                        <MdSearch className="text-xl my-auto"/>
-                        <input  
-                            placeholder="Search for questions"
-                            type="text"
-                        />
-                        <button style={{ display: "none" }} type="submit" onClick={"search"}></button>
-                    </form>
+            <div className="mb-4">
+                <div className="m-auto text-center">
+                    <span className="font-bold text-center"> Have a question for {product.name}? </span>
                 </div>
-                <div className="p-2 border-Grey-border border solid rounded-md bg-white">
-
-                    {questions.slice(0, 5).map( ({question, answers}) => (
-                <div className="my-2">
-                        <div className="font-bold text-base my-2">
-                            Q: {question}
-                        </div>
-                        <div className="flex italic">
-                        <span className="font-bold italic">A: </span> {`${answers[0] !== undefined ? answers[0]?.answer.substring(0, MAX_LENGTH) : "" }...`}
-                        </div>
+                <div className="mx-auto my-3">
+                    <div className="max-w-md mx-auto">
+                    <Input className="bg-Grey-dashboard p-3 rounded-md my-2" value={question} onChange={handleChange} placeholder="Type your question here"/>
+                    { error && 
+                        <div className="my-2 text-red-500"> { error } </div>
+                    }
+                    <Button className="bg-Blue text-white my-1"
+                            onClick= {handleQuestion}
+                    >
+                                Send question
+                    </Button>
                     </div>
-                        ))}
-            </div>
-            <Link to = {`/marketplace/questions/${product._id}`} >
-                <div className="flex space-between my-3">
-                    <h1 className="ml-2">  See All {questions.length} answered questions </h1>
-                    <MdChevronRight className="text-2xl"/>
                 </div>
-            </Link>
+            </div>
+             { questions.filter(obj => obj.is_answered === true).length !== 0 ?
+                <>
+                    <div className="p-2 border-Grey-border border solid rounded-md bg-white">
+
+                        {questions.filter(obj => obj.is_answered === true).slice(0, 7).map( ({question, answers}) => (
+                    <div className="my-2">
+                            <div className="font-bold text-base my-2">  
+                                Q: {question}
+                            </div>
+                            <div className="flex italic">
+                            <span className="font-bold italic">A: </span> {`${answers[0] !== undefined ? answers[0]?.answer.substring(0, MAX_LENGTH) : "" }...`}
+                            </div>
+                        </div>
+                            ))}
+                    </div>
+                    <Link to = {`/marketplace/questions/${product._id}`} >
+                        <div className="flex space-between my-3">
+                            <h1 className="ml-2">  See All {questions.filter(obj => obj.is_answered === true).length} answered questions </h1>
+                            <MdChevronRight className="text-2xl"/>
+                        </div>
+                    </Link>
+                </>
+                :
+                <Link to = {`/marketplace/questions/${product._id}`} >
+                    <div className="flex space-between my-3">
+                        <h1 className="ml-2">  See All Questions </h1>
+                        <MdChevronRight className="text-2xl"/>
+                    </div>
+                </Link>
+            }
         </Card>
     )
 }

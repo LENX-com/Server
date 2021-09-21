@@ -55,6 +55,7 @@ App.use("/api", require("./routes/conversation"));
 App.use("/api", require("./routes/blog"));
 App.use("/api", require("./routes/subCategory"));
 App.use("/api", require("./routes/question"));
+App.use("/api", require("./routes/productReview"));
 App.get('/api/config/paypal', (req, res) => {
   console.log(process.env.PAYPAL_CLIENT_ID)
   res.send(process.env.PAYPAL_CLIENT_ID);

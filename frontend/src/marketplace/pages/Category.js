@@ -29,7 +29,10 @@ import { NoProduct } from '../assets/icons'
 
 const Shop = (props) => {
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.category.categories);
+
+
+  const categories = useSelector((state) => state.categories);
+
   const {productsByCategory} = useSelector((state) => state.product);
 
   const [myFilters, setMyFilters] = useState({

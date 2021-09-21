@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Product from '../components/review/Product'
+import { useDispatch, useSelector } from 'react-redux'
+import { getProductReviews } from "../../actions/productAction"
 import ReviewSearch from '../components/review/ReviewSearch'
 import Comment from '../components/review/Comment'
 import { read  } from '../components/ApiCore';
@@ -7,30 +9,19 @@ import { useHistory } from 'react-router-dom'
 import {  MdArrowBack } from 'react-icons/md'
 
 
-const ProductReview = (props) => {
+const ProductReview = ({match}) => {
 
     const [product, setProduct] = useState({});
     const [error, setError] = useState(false);
+    const reviews = useSelector((state) => state.product.productReviews)
+    const dispatch = useDispatch()
     
      const history = useHistory();
 
-    const loadSingleProduct = productId => {
-        read(productId).then(data => {
-            if (data.error) {
-                setError(data.error);
-            } else {
-                setProduct(data);
-                // fetch related products
-            }
-        });
-    };   
+     useEffect(() => {
+        dispatch(getProductReviews(match.params.productId))
+    }, [dispatch])   
   
-    useEffect(() => {
-        const productId = props.match.params.productId;
-        loadSingleProduct(productId);
-    }, [props]);
-
-    console.log(product.data)
 
 
     return (
@@ -44,11 +35,11 @@ const ProductReview = (props) => {
                             <MdArrowBack className="w-5 h-5"/>
                         </button>
                     </div>
-                    <ReviewSearch product = { product.data }/>
+                    <ReviewSearch reviews = { reviews }/>
            
-                    <Product product= { product.data }/>
+                    {/* <Product product= { product.data }/> */}
 
-                    <Comment comments = { product.data } />
+                    <Comment reviews = { reviews } />
 
                 </div>
             }

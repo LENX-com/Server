@@ -7,13 +7,14 @@ import { Card, CardBody, Avatar} from '@windmill/react-ui'
 import Button from '../../components/Buttons/Button'
 import { useDispatch, useSelector } from "react-redux";
 import { SwiperSlide, Swiper } from 'swiper/react'
-import { getQuestionsByProduct, createQuestion } from '../../actions/questionAction'
+import { getQuestionsByProduct, createQuestion, QuestionUpvote, QuestionDownvote, createAnswer } from '../../actions/questionAction'
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { Menu } from '@headlessui/react'
+import { useMediaQuery } from 'react-responsive'
 import { Filter } from '../assets/icons'
 import SectionTitle from '../../components/Typography/SectionTitle'
 import { Input, Label, Dropdown, DropdownItem, Badge } from '@windmill/react-ui'
-import AnswerPop from '../components/question/AnswerPop'
+import PopUp from '../components/pop/PopUp'
 import SignInPop from '../components/auth/SignInPop'
 
 
@@ -24,15 +25,23 @@ const Questions = (props) => {
     const { user, isAuthenticated } = useSelector((state) => state.auth);
     const [ question, setQuestion ] = useState("")
     const [ answers, setAnswers ] = useState(false)
+    const [answer, setAnswer ] = useState("")
     const [ isOpen, setIsOpen] = useState(false)
     const [ isOpen1, setIsOpen1] = useState(false)
     const [ singleQuestion, setSingleQuestion ] = useState(false)
+    const [ up, setUp ] = useState(false)
+    const [ isAnswered, setIsAnswered ] = useState(false)
+    const [isOpenAnswer, setIsOpenAnswer ] = useState(false)
+
+    console.log({single: singleQuestion})
 
     const productId = props.match.params.productId;
 
      useEffect(() => {
       dispatch(getQuestionsByProduct(productId))
-    }, [])
+    }, [up, dispatch, isAnswered])
+
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
    const clickSubmit = (event) => {
     if (!isAuthenticated) { setIsOpen(true)
@@ -53,29 +62,29 @@ const Questions = (props) => {
     setQuestion("")
   };
 
-  const DropDownMenu = () => (
-       <div className="">
-        <div className="h-10">
-            <button 
-                onClick={() => setIsOpen1(true)}
-                className="bg-Grey p-2 inline-flex justify-center rounded-full border border-gray-300 shadow-sm px-4 py-2  text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-orange">
-                <Filter />
-            </button>
-        </div>
-      <Dropdown isOpen={isOpen1} onClose={() => setIsOpen1(false)} className="w-auto">
-        <DropdownItem tag="a" href="#">
-          <div>Most recent</div>
-        </DropdownItem>
-        <DropdownItem onClick={() => alert('Alerts!')}>
-          <div>Top rated</div>
-        </DropdownItem>
-      </Dropdown>
-    </div>
-  )
+    const handleSendAnswer = (question) => {
+      const answerData = {
+          answer: answer,
+      };
+      dispatch(createAnswer(question, answerData))
+      setAnswer("")
+      setIsAnswered(true)
+    }
+
+
 
   const answerHandler = (question) => {
     setAnswers(question.answers)
     setSingleQuestion(question)
+}
+
+const handleUpvote = (question) => {
+    dispatch(QuestionUpvote(question))
+    setUp(true)
+}
+const handleDownvote = (question) => {
+    dispatch(QuestionDownvote(question))
+    setUp(true)
 }
 
     //Card to display questions  
@@ -83,7 +92,7 @@ const Questions = (props) => {
            <Card className="max-w-md">
                 <CardBody>
                     <div className="flex">
-                        <Avatar size="large" src= {question.author.avatar} alt="Judith" />
+                        <Avatar size="large" src= {question.author.avatar} alt= {question.author.name } />
                         <div className="ml-2">
                             <p className=" dark:text-gray-300"> {question.author.name} </p>
                         </div>
@@ -92,7 +101,7 @@ const Questions = (props) => {
                         {question.question}
                     </p>
                     <div className="flex justify-between">
-                        <div className="flex rounded-md border border-Grey-sd p-1"  onClick ={ () => answerHandler(question)}>
+                        <div className="flex border-box p-2 my-auto"  onClick ={ () => answerHandler(question)}>
                             <div>
                                 <AiOutlineComment className="my-auto text-lg mr-1" />
                             </div>
@@ -100,12 +109,16 @@ const Questions = (props) => {
                                 {question.answers.length}
                             </div>
                         </div>
-                        <div className="flex rounded-md border border-Grey-sd p-1">
-                            <AiOutlineArrowDown className="my-auto"/>
+                        <div className="flex border-box p-1">
+                            <button onClick={() => handleDownvote(question.id)}>
+                                <AiOutlineArrowDown className="my-auto"/>
+                            </button>
                             <p className="my-auto text-sm mx-2">
                                 {question.score}
                             </p>
-                            <AiOutlineArrowUp  className="my-auto"/>
+                            <button onClick={() => handleUpvote(question.id)}>
+                                <AiOutlineArrowUp  className="my-auto"/>
+                            </button>
                         </div>
                     </div>
                 </CardBody>
@@ -118,7 +131,8 @@ const Questions = (props) => {
                         <div className="flex">
                             <div
                                 className="rounded-full p-1 relative"
-                                style={{background: "#62D2A2"}}>
+                                // style={{background: "#62D2A2"}}
+                                >
                                 <a
                                     className="block bg-white p-1 rounded-full transform transition hover:-rotate-12 duration-300"
                                     href="#div"
@@ -129,21 +143,21 @@ const Questions = (props) => {
                                     alt= {answer.name}
                                     />
                                 </a>
-                                <div className="text-xs text-white bg-green-400 rounded-full p-1 absolute top-0 right-0 w-6 h-6 -mx-1" >
+                                {/* <div className="text-xs text-white bg-green-400 rounded-full p-1 absolute top-0 right-0 w-6 h-6 -mx-1" >
                                     <div className="mx-auto">
                                         97
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
-                            <div className="ml-2">
+                            <div className="ml-2 my-auto">
                                 <p className=" dark:text-gray-300"> {answer.name} </p>
                             </div>
                         </div>
                     </div>
-                    <p className="my-2 dark:text-gray-300 text-base ">
+                    <p className="my-2 text-Black text-lg text-center">
                         {answer.answer}
                     </p>
-                    <div className="flex justify-between relative h-6">
+                    {/* <div className="flex justify-between relative h-6">
                         <div className="flex rounded-md border border-Grey-sd p-1 absolute right-2">
                             <AiOutlineArrowDown className="my-auto"/>
                             <p className="my-auto text-sm mx-2">
@@ -151,13 +165,13 @@ const Questions = (props) => {
                             </p>
                             <AiOutlineArrowUp  className="my-auto"/>
                         </div>
-                    </div>
+                    </div> */}
                 </CardBody>
             </Card>
     )
 
     return (
-        <>
+        <div className="lg:w-5/6 lg:mx-auto">
             <div className="p-2 my-3 relative">
                 <div className="relative h-10">
                     <div className=" absolute top-2 left-0 z-50">
@@ -178,7 +192,7 @@ const Questions = (props) => {
                     </Label>
                     <div className="my-2">
                         <Button
-                            className="bg-orange-light text-white text-sm shadow-none"
+                            className="bg-Blue text-white text-sm shadow-none"
                             onClick= {clickSubmit}
                         >
                             Post Question
@@ -186,32 +200,20 @@ const Questions = (props) => {
                     </div>
                 </div>
             </div>
-            <div className="my-4">
+
+            <div className="my-4 p-4">
                 <div className="px-2"> 
                     <SectionTitle> Questions </SectionTitle>
                 </div>
                 {questions.length > 0 ?
                     <>
-                    <div className="px-2 mb-2">
-                        <div className="flex">
-                            <div className="w-4/5 mr-2">
-                                <Label className="p-2 border-2 border-border rounded-md bg-white"> 
-                                    <Input placeholder= "Search for questions" type="text"/>
-                                </Label>
-                            </div>
-                            <div className="z-50">
-                                <DropDownMenu />
-                            </div>
-                        </div>
-                    </div>
                     <Swiper
                         spaceBetween={20}
-                        slidesPerView={1}
+                        slidesPerView={ isTabletOrMobile ? 1 : 5 }
                         freeMode={true}
-                        style={{width:"100vw"}}
                         >
                         {questions?.map(( question ) => (
-                            <SwiperSlide className="w-3/4" key={question.name}>
+                            <SwiperSlide className="mobile:w-3/4" key={question.name}>
                                 <QuestionCard question = { question } />
                             </SwiperSlide>
                             ))
@@ -221,22 +223,16 @@ const Questions = (props) => {
                     :
                     <div className="p-2"> No questions for this product </div>
                 }
-            </div>
-    
             <div className="my-2 p-2">
                 <SectionTitle> Answers </SectionTitle>
                 { singleQuestion &&
-                    <div className="mb-4 flex justify-between">
+                    <div className="mb-4">
                         <div className="font-bold text-lg">
-                            {singleQuestion.question}
+                            Q: {singleQuestion.question}
                         </div>
-                    {!isAuthenticated ?
-                        <Button className="bg-orange-light text-white shadow-none text-sm" onClick={ () => setIsOpen(true)}>
+                        <Button className="bg-Blue text-white shadow-none text-sm my-2" onClick={() =>  !isAuthenticated ? setIsOpen(true) : setIsOpenAnswer(true)}>
                             Answer
                       </Button>
-                      :
-                     <AnswerPop question= {singleQuestion} />
-                    }
                     </div>
                 }               
              { answers.length > 0 ?
@@ -247,9 +243,35 @@ const Questions = (props) => {
                 ))
              : "No answers found"
             }
-            { !isAuthenticated && <SignInPop  isOpen={ isOpen } setIsOpen={ setIsOpen } /> }
             </div>
-        </>
+    
+            { !isAuthenticated && <SignInPop  isOpen={ isOpen } setIsOpen={ setIsOpen } /> }
+            
+            <PopUp isOpen={isOpenAnswer} setIsOpen={setIsOpenAnswer} title="Answer the question">
+                <div className="p-2">
+                    {singleQuestion && 
+                        <div className= "font-bold text-lg">
+                            {singleQuestion.question}
+                        </div>    
+                        }
+                    <div className="my-3">
+                        <input 
+                            className="shadow appearance-none border rounded py-2 h-28 text-Black w-full focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent p-2"
+                            value = {answer}
+                            type = "text"
+                            onChange = {(event) => setAnswer(event.target.value)}    
+                        />
+                    </div>
+                </div>
+                <div className="fixed bottom-0 border-t-2 border-Grey-border p-2 bg-white w-full">
+                    <div className="grid px-2">
+                        <Button className="bg-Black text-white" onClick ={() => handleSendAnswer(singleQuestion.id)}> Post answer </Button>
+                    </div>
+                </div>
+            </PopUp>
+
+            </div>
+        </div>
     )
 }
 

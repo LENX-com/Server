@@ -93,7 +93,7 @@ const routes =
     component: AddProduct,
   },
   {
-    path: `${address}/products/edit/:productId`,
+    path: `${address}/products/edit/:productSlug`,
     component: EditProduct,
   },
     {
